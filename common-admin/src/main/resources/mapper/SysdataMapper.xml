@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.SysdataMapper">
+
+    <select id="queryAll" resultType="com.common.system.entity.Sysdata">
+        select * from sysdata
+    </select>
+    <insert id="addSysData">
+        INSERT INTO sysdata(pid,title,dataname,operator,operatorTime) VALUES(#{pid},#{title},#{dataname},#{operator},SYSDATE())
+    </insert>
+    <update id="updateSysData">
+        UPDATE sysdata SET pid=#{pid} ,title=#{title},dataname=#{dataname},operator=#{operator},operatorTime=SYSDATE() where id =#{id}
+    </update>
+    <delete id="deleteSysData">
+        DELETE from sysdata where id=#{id} or pid =#{id}
+    </delete>
+    <select id="queryLocal" resultType="com.common.system.entity.Sysdata">
+        select * from sysdata where pid =#{pid}
+    </select>
+</mapper>

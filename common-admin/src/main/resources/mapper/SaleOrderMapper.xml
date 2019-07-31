@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.SaleOrderMapper">
+
+    <select id="querySaleOrder" resultType="com.common.system.entity.SaleOrder">
+        select * from sale_order
+    </select>
+    <insert id="addSaleOrder">
+INSERT into sale_order(saleNum,customerName,`date`,projectName,endDate,productNameOrder,productSpecificationsOrder,customerPressure,customerNums,address,receiver,telPhone,logisticsInformation,remarks,operator,operatorTime)VALUES(
+#{saleNum},#{customerName},#{date},#{projectName},#{endDate},#{productNameOrder},#{productSpecificationsOrder},#{customerPressure},#{customerNums},#{address},#{receiver},#{telPhone},#{logisticsInformation},#{remarks},#{operator},SYSDATE());
+    </insert>
+    <select id="queryNum" resultType="int">
+        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{date}
+    </select>
+    <delete id="deleteSaleOrder">
+        DELETE from sale_order where id in
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="searchSaleOrder" resultType="com.common.system.entity.SaleOrder">
+        select * from sale_order
+        <where>
+            <if test="saleNum !=''">`saleNum` = #{saleNum}</if>
+            <if test="customerName !=''">and customerName = #{customerName}  </if>
+            <if test="projectName !=''">and projectName = #{projectName}  </if>
+            <if test="productNameOrder !=''">and productNameOrder = #{productNameOrder}  </if>
+            <if test="productSpecificationsOrder !=''">and productSpecificationsOrder = #{productSpecificationsOrder}  </if>
+            <if test="operator !=''">and operator = #{operator}  </if>
+            <if test="startDate !=''">and operatorTime > #{startDate}</if>
+            <if test="endDate !=''"> <![CDATA[
+            and operatorTime<#{endDate}
+            ]]></if>
+        </where>
+    </select>
+</mapper>

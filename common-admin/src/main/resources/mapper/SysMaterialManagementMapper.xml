@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.SysMaterialManagementMapper">
+
+    <select id="queryAll" resultType="com.common.system.entity.SysMaterialManagement">
+        select * from sysmaterialmanagement
+    </select>
+    <insert id="addSysMaterial">
+        INSERT into sysmaterialmanagement(title,factory,materialtype,materialName,materialSpecification,remarks,operator,operatorTime,pid) VALUES (
+#{title},#{factory},#{materialtype},#{materialName},#{materialSpecification},#{remarks},#{operator},SYSDATE(),#{pid})
+    </insert>
+    <update id="updateSysMaterial">
+        UPDATE sysmaterialmanagement SET pid=#{pid} ,title=#{title},factory=#{factory},operator=#{operator},operatorTime=SYSDATE(),materialtype=#{materialtype},materialName=#{materialName},materialSpecification=#{materialSpecification},remarks=#{remarks} where id =#{id}
+    </update>
+    <delete id="deleteSysMaterial">
+        DELETE from sysmaterialmanagement where id=#{id} or pid =#{id}
+    </delete>
+    <select id="queryByPid" resultType="com.common.system.entity.SysMaterialManagement">
+        select * from sysmaterialmanagement where pid=#{pid}
+    </select>
+    <select id="querygoodsType" resultType="com.common.system.entity.SysMaterialManagement">
+        SELECT * from sysmaterialmanagement WHERE pid =(
+        SELECT id FROM sysmaterialmanagement WHERE factory=#{factory})
+    </select>
+</mapper>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" th:href="@{/adminlte/layui/css/layui.css}"  media="all"/>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<!--<div class="layui-btn-group demoTable">
+    <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
+    <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
+    <button class="layui-btn" data-type="isAll">验证是否全选</button>
+</div>-->
+<!--<h3 style="margin-top: -10px; margin-left:-10px;">检测入库</h3>-->
+<div class="demoTable">
+    订单编号：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="productNumSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+    </div>
+    产品名称：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="goodsNameSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+    </div>
+    产品规格:
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="goodsSpecificationsSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+    </div>
+    <div class="layui-inline" style="margin-left: -15px">操作员名称：</div>
+    <div class="layui-inline" style="width: 220px;">
+        <input class="layui-input"  id="operatorSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+    </div>
+    <button class="layui-btn layui-btn-sm" data-type="reload">查询</button><br/>
+    起始日期：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+    </div>
+    截止日期：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+    </div>
+
+</div>
+<script type="text/html" id="toolbarDemoProductData">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="addProduct" id="addProduct" >添加</button>
+        <!--<button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>-->
+        <button class="layui-btn layui-btn-sm" lay-event="deleteProduct" id="deleteProduct" >删除</button>
+    </div>
+</script>
+<table class="layui-table" lay-data="{url:'/order/productOrderDate', page:true, id:'idTest',toolbar:'#toolbarDemoProductData',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demo">
+    <thead>
+    <tr>
+        <th lay-data="{type:'checkbox', fixed: 'left'}" rowspan="2"></th>
+        <th lay-data="{field:'productNum', width:250}" rowspan="2">订单号</th>
+        <th lay-data="{field:'goodsName', width:150}" rowspan="2">产品名称</th>
+        <th lay-data="{field:'specifications',width:150}" rowspan="2">规格</th>
+        <th lay-data="{field:'pressure',width:150}" rowspan="2">使用压力</th>
+        <th lay-data="{field:'nums',width:150}" rowspan="2">数量</th>
+        <th lay-data="{align:'center'}" colspan="4">阀门信息</th>
+        <th lay-data="{align:'center'}" colspan="4">控制主板信息</th>
+        <th lay-data="{align:'center'}" colspan="4">通讯主板信息</th>
+        <th lay-data="{align:'center'}" colspan="4">485主板信息</th>
+        <th lay-data="{align:'center'}" colspan="16">功能参数</th>
+        <th lay-data="{field:'operator',width:150}" rowspan="2">操作人</th>
+        <th lay-data="{field:'operatorTime',width:150}" rowspan="2">操作时间</th>
+        <th lay-data="{field:'remarks',width:150}" rowspan="2">备注</th>
+    </tr>
+    <tr>
+        <th lay-data="{field:'valveSupplier', width:150 }">阀门供应商</th>
+        <th lay-data="{field:'valveName', width:150}">阀门名称</th>
+        <th lay-data="{field:'valveSpecifications', width:150}">阀门规格</th>
+        <th lay-data="{field:'intakeDirection', width:150}">进气方向</th>
+        <th lay-data="{field:'controlMainboardSupplier', width:150}">控制主板供应商</th>
+        <th lay-data="{field:'controlMainboardName', width:150 }">控制主板名称</th>
+        <th lay-data="{field:'controlMainboardSpecifications', width:150}">控制主板规格</th>
+        <th lay-data="{field:'version', width:150}">程序版本</th>
+        <th lay-data="{field:'telMainBoardSupplier', width:150}">通信主板供应商</th>
+        <th lay-data="{field:'telMainBoardName', width:150}">通信主板名称</th>
+        <th lay-data="{field:'telMainBoardSpecifications', width:150}">通信主板规格</th>
+        <th lay-data="{field:'telType', width:150}">通信方式</th>
+        <th lay-data="{field:'fourSupplier', width:150}">485供应商</th>
+        <th lay-data="{field:'fourMainBoardName', width:150}">485主板名称</th>
+        <th lay-data="{field:'fourSpecifications', width:150}">485主板规格</th>
+        <th lay-data="{field:'telProtocol', width:150}">通信协议</th>
+        <th lay-data="{field:'charMethod', width:150}">计费方式</th>
+        <th lay-data="{field:'signalSource', width:150}">信号来源</th>
+        <th lay-data="{field:'pulseEquivalent', width:150}">脉冲当量</th>
+        <th lay-data="{field:'alarmSquare', width:150}">报警方数</th>
+        <th lay-data="{field:'reservedAir', width:150}">预留气量</th>
+        <th lay-data="{field:'valveOpenTime', width:150}">开阀时间</th>
+        <th lay-data="{field:'valveCloseTime', width:150}">关阀时间</th>
+        <th lay-data="{field:'upperLimitOfRecharge', width:150}">充值上限</th>
+        <th lay-data="{field:'overdrawAir', width:150}">透支气量</th>
+        <th lay-data="{field:'gasCheck', width:150}">窃气检测</th>
+        <th lay-data="{field:'disconnectionCheck', width:150}">断线检测</th>
+        <th lay-data="{field:'lowPressureCheck', width:150}">低压检测</th>
+        <th lay-data="{field:'overcurrentCheck', width:150}">过流检测</th>
+        <th lay-data="{field:'microleakageCheck', width:150}">微漏检测</th>
+        <th lay-data="{field:'noContactCheck', width:150}">失联检测</th>
+        <th lay-data="{field:'stopUseCheck', width:150}">停用检测</th>
+    </tr>
+    </thead>
+</table>
+
+<script th:src="@{/adminlte/layui/layui.js}" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        //监听表格复选框选择
+        table.on('checkbox(demo)', function(obj){
+            console.log(obj)
+        });
+        //监听工具条
+        table.on('tool(demo)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'detail'){
+                layer.msg('ID：'+ data.id + ' 的查看操作');
+            } else if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                /*layer.alert('编辑行：<br/>'+ JSON.stringify(data))*/
+
+            }
+        });
+        //监听头工具栏事件
+        table.on('toolbar(demo)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id)
+                ,data = checkStatus.data//获取选中的数据
+                ,deList=[1];
+            data.forEach(function (n,i) {
+                deList.push(n.id)
+            });
+            deList.push(2);
+            switch(obj.event){
+                case 'addProduct':
+                    layer.open({
+                        type:2,
+                        title:'添加',
+                        area: ['1400px', '700px'],
+                        content: '/order/productOrderFrom',
+                        end:function(){
+                            table.reload('idTest');
+                        }
+                    });
+                    break;
+                case 'update':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时编辑一个');
+                    } else {
+                        var id =checkStatus.data[0].id;
+                        layer.confirm('确定？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "" ,//url
+                                data: {deList:JSON.stringify(deList)},
+                                success: function (result) {
+                                    if (result.success>0) {
+                                        alert("操作成功");
+                                        table.reload('idTest')
+                                    }else{
+                                        alert("系统错误");
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+                case 'deleteProduct':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else {
+                        layer.confirm('确定删除',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/order/delteProductOrder" ,//url
+                                data: {deList:JSON.stringify(deList)},
+                                success: function (result) {
+                                    if (result.success>0) {
+                                        alert("操作成功");
+                                        table.reload('idTest')
+                                    }else{
+                                        alert("系统错误");
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+            }
+        });
+        var $ = layui.$, active = {
+            /*     getCheckData: function(){ //获取选中数据
+                     var checkStatus = table.checkStatus('idTest')
+                         ,data = checkStatus.data;
+                     layer.alert(JSON.stringify(data));
+                 }
+                 ,getCheckLength: function(){ //获取选中数目
+                     var checkStatus = table.checkStatus('idTest')
+                         ,data = checkStatus.data;
+                     layer.msg('选中了：'+ data.length + ' 个');
+                 }
+                 ,isAll: function(){ //验证是否全选
+                     var checkStatus = table.checkStatus('idTest');
+                     layer.msg(checkStatus.isAll ? '全选': '未全选')
+                 }
+                 ,*/
+            reload:function () {
+                var productNum = $("#productNumSearch").val();
+                var goodsName = $("#goodsNameSearch").val();
+                var specifications = $("#goodsSpecificationsSearch").val();
+                var operator = $("#operatorSearch").val();
+                var startDate = $("#startDateSearch").val();
+                var endDate = $("#endDateSearch").val();
+                table.reload('idTest',{
+                    url:'/order/searchProductOrder',
+                    where:{productNum:productNum,goodsName:goodsName,specifications:specifications,operator:operator,startDate:startDate,endDate:endDate,page:1,limit:10}  ,
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                })
+
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#startDateSearch' //指定元素
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#endDateSearch' //指定元素
+            ,type: 'datetime'
+        });
+    });
+</script>
+
+</body>
+</html>

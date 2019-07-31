@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8"/>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" href="/adminlte/layui/css/layui.css" media="all"/>
+    <style>
+        .layui-form-label{
+            width: 93px;
+            font-family: 宋体;
+        }
+    </style>
+</head>
+<body >
+<form class="layui-form" action="#" style="background-color: #FFFFFF">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 5px;">
+        <legend style="color: #0d6aad;font-family: 黑体">订单信息</legend>
+    </fieldset>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">产品名称</label>
+            <div class="layui-input-inline">
+                <select name="goodsName" lay-verify="required" lay-search="">
+                    <option value="皮膜表">皮膜表</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">产品规格</label>
+            <div class="layui-input-inline">
+                <select name="specifications" lay-verify="required" lay-search="">
+                    <option value="DN-50">DN-50</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">使用压力</label>
+            <div class="layui-input-inline">
+                <input type="text" name="pressure" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">数量</label>
+            <div class="layui-input-inline">
+                <input type="text" name="nums" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入">
+            </div>
+        </div>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 3px;">
+        <legend style="color: #0d6aad;font-family: 黑体">阀门信息</legend>
+    </fieldset>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">供应商</label>
+            <div class="layui-input-inline">
+                <select name="valveSupplier" lay-verify="required" lay-search="">
+                    <option value="天和">天和</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">阀门名称</label>
+            <div class="layui-input-inline">
+                <select name="valveName" lay-verify="required" lay-search="">
+                    <option value="球阀">球阀</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">阀门规格</label>
+            <div class="layui-input-inline">
+                <select name="valveSpecifications" lay-verify="required" lay-search="">
+                    <option value="DN25">DN25</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">进气方向</label>
+            <div class="layui-input-inline">
+            <select name="intakeDirection" lay-verify="required" lay-search="">
+                <option value=""></option>
+                <option value="左进气">左进气</option>
+                <option value="右进气">右进气</option>
+            </select>
+            </div>
+        </div>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 3px;">
+        <legend style="color: #0d6aad;font-family: 黑体">主板信息</legend>
+    </fieldset>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">控制主板供应商</label>
+            <div class="layui-input-inline">
+                <select name="controlMainboardSupplier" lay-verify="required" lay-search="">
+                    <option value="2">2</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">控制主板名称</label>
+            <div class="layui-input-inline">
+                <select name="controlMainboardName" lay-verify="required" lay-search="">
+                    <option value="3">3</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">规格</label>
+            <div class="layui-input-inline">
+                <select name="controlMainboardSpecifications" lay-verify="required" lay-search="">
+                    <option value="4">4</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">程序版本</label>
+            <div class="layui-input-inline">
+                <input type="text" name="version" lay-verify="" placeholder="" autocomplete="off" class="layui-input" placeholder="请输入">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">通信主板供应商</label>
+            <div class="layui-input-inline">
+                <select name="telMainBoardSupplier" lay-verify="required" lay-search="">
+                    <option value="5">5</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">通信主板名称</label>
+            <div class="layui-input-inline">
+                <select name="telMainBoardName" lay-verify="required" lay-search="">
+                    <option value="6">6</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">规格</label>
+            <div class="layui-input-inline">
+                <select name="telMainBoardSpecifications" lay-verify="required" lay-search="">
+                    <option value="7">7</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">通信方式</label>
+            <div class="layui-input-inline">
+
+                <select name="telType" lay-verify="required" lay-search="">
+                    <option value=""></option>
+                    <option value="无">无</option>
+                    <option value="LORA">LORA</option>
+                    <option value="FSK">FSK</option>
+                    <option value="GPRS">GPRS</option>
+                    <option value="移动NB-IOT">移动NB-IOT</option>
+                    <option value="电信NB-IOT">电信NB-IOT</option>
+                    <option value="联通NB-IOT">联通NB-IOT</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">485主板供应商</label>
+            <div class="layui-input-inline">
+                <select name="fourSupplier" lay-verify="required" lay-search="">
+                    <option value=""></option>
+                    <option value="">直接选择或搜索选择</option>
+                    <option value="1">layer</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">485主板名称</label>
+            <div class="layui-input-inline">
+                <select name="fourMainBoardName" lay-verify="required" lay-search="">
+                    <option value=""></option>
+                    <option value="">直接选择或搜索选择</option>
+                    <option value="1">layer</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">规格</label>
+            <div class="layui-input-inline">
+                <select name="fourSpecifications" lay-verify="required" lay-search="">
+                    <option value=""></option>
+                    <option value="1">layer</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">通信协议</label>
+            <div class="layui-input-inline">
+              <!--  <input type="text" name="telProtocol" lay-verify="" placeholder="" autocomplete="off" class="layui-input">-->
+                <select name="telProtocol" lay-verify="required" lay-search="">
+                    <option value=""></option>
+                    <option value="苍南">苍南</option>
+                    <option value="天信">天信</option>
+                    <option value="爱知">爱知</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 3px;">
+        <legend style="color: #0d6aad;font-family: 黑体">功能参数</legend>
+    </fieldset>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">计费方式</label>
+            <div class="layui-input-inline">
+                <select name="charMethod" lay-verify="required" lay-search="">
+                    <option value=""></option>
+                    <option value="金额">金额</option>
+                    <option value="气量">气量</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">信号来源</label>
+            <div class="layui-input-inline">
+                <select name="signalSource" lay-verify="required" lay-search="">
+                    <option value=""></option>
+                    <option value="流量计低有效">流量计低有效</option>
+                    <option value="干簧管">干簧管</option>
+                    <option value="流量计高有效">流量计高有效</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">脉冲当量</label>
+            <div class="layui-input-inline">
+                <select name="pulseEquivalent" lay-verify="required" lay-search="">
+                    <option value=""></option>
+                    <option value="0.01方">0.01方</option>
+                    <option value="0.1方">0.1方</option>
+                    <option value="1方">1方</option>
+                    <option value="10方">10方</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">报警方数</label>
+            <div class="layui-input-inline">
+                <input type="text" name="alarmSquare" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">预留气量</label>
+            <div class="layui-input-inline">
+                <input type="text" name="reservedAir" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">开阀时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="valveOpenTime" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">关阀时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="valveCloseTime" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">充值上限</label>
+            <div class="layui-input-inline">
+                <input type="text" name="upperLimitOfRecharge" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">透支气量</label>
+            <div class="layui-input-inline">
+                <input type="text" name="overdrawAir" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">窃气检测</label>
+            <div class="layui-input-inline">
+                <select name="gasCheck" lay-verify="required" lay-search="">
+                    <option value=""></option>
+                    <option value="启用">启用</option>
+                    <option value="未启用">未启用</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">断线检测</label>
+            <div class="layui-input-inline">
+                <select name="disconnectionCheck" lay-verify="required" lay-search="">
+                    <option value=""></option>
+                    <option value="启用">启用</option>
+                    <option value="未启用">未启用</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">低压检测</label>
+            <div class="layui-input-inline">
+             <!--   <input type="text" name="lowPressureCheck" lay-verify="" placeholder="" autocomplete="off" class="layui-input">-->
+                <select name="lowPressureCheck" lay-verify="required" lay-search="">
+                    <option value=""></option>
+                    <option value="启用">启用</option>
+                    <option value="未启用">未启用</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">过流检测</label>
+            <div class="layui-input-inline">
+                <select name="overcurrentCheck" lay-verify="required" lay-search="">
+                    <option value=""></option>
+                    <option value="启用">启用</option>
+                    <option value="未启用">未启用</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">微漏检测</label>
+            <div class="layui-input-inline">
+                <select name="microleakageCheck" lay-verify="required" lay-search="">
+                    <option value=""></option>
+                    <option value="启用">启用</option>
+                    <option value="未启用">未启用</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">失联检测</label>
+            <div class="layui-input-inline">
+                <select name="noContactCheck" lay-verify="required" lay-search="">
+                    <option value=""></option>
+                    <option value="启用">启用</option>
+                    <option value="未启用">未启用</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">停用检测</label>
+            <div class="layui-input-inline">
+                <!--<input type="text" name="stopUseCheck" lay-verify="" placeholder="" autocomplete="off" class="layui-input">-->
+                <select name="stopUseCheck" lay-verify="required" lay-search="">
+                    <option value=""></option>
+                    <option value="启用">启用</option>
+                    <option value="未启用">未启用</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <input style="width: 1050px;" type="text" name="remarks" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="text-align: center;">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="demo">立即提交</button>
+           <!-- <button type="reset" class="layui-btn layui-btn-primary">重置</button>-->
+        </div>
+    </div>
+</form>
+<script src="/adminlte/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="/adminlte/layui/jquery-3.2.1.min.js"></script>
+<script>
+    layui.use('form', function() {
+        var form = layui.form;
+        form.on('submit(demo)', function(data){
+           /* console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+            console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+            console.log(data.field) *///当前容器的全部表单字段，名值对形式：{name: value}
+           /* console.log(JSON.stringify(data.field));*/
+            $.ajax({
+                url: "/order/addProductOrder",
+                async: true,
+                type: "post",
+                data: JSON.stringify(data.field),
+                dataType: "json",
+                contentType: 'application/json; charset=UTF-8',
+                success: function(result) {
+                    if(result.success >0) {
+                        alert("操作成功");
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    } else {
+                        console.log(result.date);
+                        alert("系统错误");
+                    }
+                }
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+       /* window.location.href="/";*/
+      /*  form.render();*/
+    });
+
+
+</script>
+</body>
+
+</html>

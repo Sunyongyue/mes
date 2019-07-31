@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.PubProductMapper">
+
+    <select id="queryPubProduct" resultType="com.common.system.entity.PubProduct">
+       SELECT * from pubProduct,product_order WHERE pubProduct.productNum=product_order.productNum
+    </select>
+    <insert id="addPubProduct">
+        INSERT into pubProduct(productNum,valveNUms,vavleProductDate,controlMainBoardNums,controlMainBoardProductDate,telMainBoardNums,telMainBoardProductDate,cardNum,iMSI,iMEI,iCCID,fourMainBoardNums,fourMainBoardProductDate,assembler,tester,productDate,testRemarks)VALUES(
+#{productNum},#{valveNUms},#{vavleProductDate},#{controlMainBoardNums},#{controlMainBoardProductDate},#{telMainBoardNums},#{telMainBoardProductDate},#{cardNum},#{iMSI},#{iMEI},#{iCCID},#{fourMainBoardNums},#{fourMainBoardProductDate},#{assembler},#{tester},SYSDATE(),#{testRemarks})
+    </insert>
+    <update id="updatePubProduct">
+        update pubProduct set tester=#{tester},testDate=SYSDATE() where ids=#{ids}
+    </update>
+    <delete id="dtletePubProduct">
+        DELETE from pubProduct where ids in
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="searchPubProduct" resultType="com.common.system.entity.PubProduct">
+        select  * from pubProduct,product_order
+        <where>
+            <if test="1!=0">pubProduct.productNum=product_order.productNum</if>
+            <if test="productNum !=''">and pubProduct.productNum = #{productNum}</if>
+            <if test="goodsName !=''">and product_order.goodsName = #{goodsName}  </if>
+            <if test="specifications !=''">and product_order.specifications = #{specifications}  </if>
+            <if test="operator !=''">and pubProduct.assembler = #{operator} </if>
+            <if test="startDate !=''">and pubProduct.productDate > #{startDate}</if>
+            <if test="endDate !=''"> <![CDATA[
+            and pubProduct.productDate<#{endDate}
+            ]]></if>
+        </where>
+    </select>
+</mapper>

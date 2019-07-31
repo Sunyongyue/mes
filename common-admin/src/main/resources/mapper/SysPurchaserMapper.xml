@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.SysPurchaserMapper">
+    <select id="queryAll" resultType="com.common.system.entity.SysPurchaser">
+        select * from syspurchaser
+    </select>
+   <update id="updatePurchaser">
+       update syspurchaser set `local` =#{local} ,purchaserNums=#{purchaserNums},purchaserName=#{purchaserName},gasGroup=#{gasGroup},contacts=#{contacts},tel=#{tel},
+       ipAddress=#{ipAddress},ipPort=#{ipPort},email=#{email},localMore=#{localMore},remarks=#{remarks},operator=#{operator},operatorTime=SYSDATE() where id =#{id}
+   </update>
+    <insert id="addPurchaser">
+        insert into syspurchaser (`local`,purchaserNums,purchaserName,gasGroup,contacts,tel,ipAddress,ipPort,email,localMore,remarks,operator,operatorTime) values
+        (#{local},#{purchaserNums},#{purchaserName},#{gasGroup},#{contacts},#{tel},#{ipAddress},#{ipPort},#{email},#{localMore},#{remarks},#{operator},SYSDATE())
+    </insert>
+    <delete id="deletePurchaser">
+    delete from syspurchaser where id=#{id}
+    </delete>
+    <select id="searchPurchaser" resultType="com.common.system.entity.SysPurchaser">
+        select * from syspurchaser
+        <where>
+            <if test="purchaserName !=''">purchaserName = #{purchaserName}</if>
+            <if test="purchaserNums !=''">and purchaserNums = #{purchaserNums}</if>
+            <if test="local !=''">and `local` = #{local}</if>
+            <!--<if test="statusArray != null">
+                status In
+                <foreach collection="statusArray" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>-->
+        </where>
+        ORDER BY id
+    </select>
+    <select id="local" resultType="string">
+        SELECT distinct `local` FROM syspurchaser
+    </select>
+</mapper>

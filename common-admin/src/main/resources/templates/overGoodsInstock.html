@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" th:href="@{/adminlte/layui/css/layui.css}"  media="all"/>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<div class="demoTable">
+    订单编号：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="productNumSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+    </div>
+    产品名称：
+    <div class="layui-inline" style="width: 220px;">
+        <input class="layui-input"  id="goodsNameSearch" autocomplete="off" style="width: 200px;height: 25px" />
+    </div>
+    产品规格：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="goodsSpecificationsSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+    </div>
+    <div class="layui-inline" style="margin-left: -15px">操作员名称：</div>
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="operatorSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+    </div><br/>
+    起始日期：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+    </div>
+    截止日期：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+    </div>
+    <button class="layui-btn layui-btn-sm" data-type="reload">查询</button>
+</div>
+<div id="add-main" style="display: none;">
+    <div class="my-form">
+        <div class="layui-form-item my-form-item" style="margin-top: 20px;margin-left: -40px">
+            <label class="layui-form-label layui-icon"  style="width: 170px;">任务单号:</label>
+            <div class="layui-input-inline">
+                <input id="productNumAdd" type="text" name="productNumAdd" autocomplete="off"
+                       class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item my-form-item"  style="margin-left: -40px">
+            <label class="layui-form-label layui-icon"  style="width: 170px">备注:</label>
+            <div class="layui-input-inline">
+                <input id="remarksAdd" type="text" name="remarksAdd"  autocomplete="off"
+                       class="layui-input"/>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="toolbarDemoOverGoodsIn">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="adds" id="add" >添加</button>
+        <!--<button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>-->
+        <button class="layui-btn layui-btn-sm" lay-event="deletes" id="delete" >删除</button>
+      <!--  <button class="layui-btn layui-btn-sm" lay-event="upload" id="upload" >导入</button>-->
+    </div>
+</script>
+<table class="layui-table" lay-data="{url:'/overGoods/queryOverGoodsInStock', page:true, id:'idTest',toolbar:'#toolbarDemoOverGoodsIn',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demo">
+    <thead>
+    <tr>
+        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+        <th lay-data="{field:'productNum', width:150}">任务单号</th>
+        <th lay-data="{field:'goodsName', width:150}">产品名称</th>
+        <th lay-data="{field:'specifications', width:150}">产品规格</th>
+        <th lay-data="{field:'intakeDirection', width:150}">进气方向</th>
+        <th lay-data="{field:'testDate', width:150 }">生产日期</th>
+        <!--<th lay-data="{field:'goodsStock', width:150 }">入库仓库</th>-->
+        <th lay-data="{field:'nums', width:150,totalRow:true}">入库数量</th>
+        <!--<th lay-data="{field:'addGoodsNums', width:150,totalRow:true}">入库后数量</th>-->
+        <th lay-data="{field:'operator', width:150}">操作人</th>
+        <th lay-data="{field:'operatorTime', width:150}">操作时间</th>
+        <th lay-data="{field:'testRemarks', width:150}">备注</th>
+    </tr>
+    </thead>
+</table>
+
+<script th:src="@{/adminlte/layui/layui.all.js}" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        //监听表格复选框选择
+        table.on('checkbox(demo)', function(obj){
+            console.log(obj)
+        });
+        //监听工具条
+        table.on('tool(demo)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'detail'){
+                layer.msg('ID：'+ data.id + ' 的查看操作');
+            } else if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                /*layer.alert('编辑行：<br/>'+ JSON.stringify(data))*/
+
+            }
+        });
+        //监听头工具栏事件
+        table.on('toolbar(demo)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id)
+                ,data = checkStatus.data//获取选中的数据
+                ,deList=[1];
+            data.forEach(function (n,i) {
+                deList.push(n.id)
+            });
+            deList.push(2);
+            switch(obj.event){
+                case 'adds':
+                    layer.open({
+                        type:1,
+                        title:'添加',
+                        btnAlign: 'c',
+                        area: ['370px', '300px'],
+                        content: $("#add-main"),
+                        btn:['保存','取消'],
+                        yes:function(index,layero){
+                            var productNum =top.$('#productNumAdd').val();
+                            var testRemarks =top.$("#remarksAdd").val();
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/overGoods/addOverGoodsInStock" ,//url
+                                data: {productNum:productNum,testRemarks:testRemarks},
+                                success: function (result) {
+                                    console.log(result);//打印服务端返回的数据(调试用)
+                                    if (result.success >0) {
+                                        alert("操作成功");
+                                        table.reload('idTest');
+                                    }else{
+                                        alert("系统错误");
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+
+                            layer.close(index);
+                        },
+                        btn2:function (index) {
+                            layer.close(index);
+                        }
+                    })
+                    break;
+                case 'deletes':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else {
+                        layer.confirm('确定删除',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/overGoods/deleteOverGoodsInStock" ,//url
+                                data: {deList:JSON.stringify(deList)},
+                                success: function (result) {
+                                    if (result.success>0) {
+                                        alert("操作成功");
+                                        table.reload('idTest')
+                                    }else{
+                                        alert("系统错误");
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+            }
+        });
+        var $ = layui.$, active = {
+            reload:function () {
+                var startDate = $("#startDateSearch").val();
+                var productNum = $("#productNumSearch").val();
+                var goodsName = $("#goodsNameSearch").val();
+                var specifications = $("#goodsSpecificationsSearch").val();
+                var operator = $("#operatorSearch").val();
+                var endDate = $("#endDateSearch").val();
+                table.reload('idTest',{
+                    url:'/overGoods/searchOverGoodsInStock',
+                    where:{productNum:productNum,goodsName:goodsName,specifications:specifications,operator:operator,startDate:startDate,endDate:endDate,page:1,limit:10}  ,
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                })
+
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#startDateSearch' //指定元素
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#endDateSearch' //指定元素
+            ,type: 'datetime'
+        });
+    });
+</script>
+
+</body>
+</html>

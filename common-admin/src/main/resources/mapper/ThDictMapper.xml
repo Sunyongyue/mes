@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.ThDictMapper">
+
+    <select id="queryAll" resultType="com.common.system.entity.ThDict">
+        select * from thdict
+    </select>
+    <insert id="addThDict">
+        INSERT INTO thDict(pid,title,goodsName,goodsType,goodsUnit,goodsStock) VALUES(#{pid},#{title},#{goodsName},#{goodsType},#{goodsUnit},#{goodsStock})
+    </insert>
+    <update id="updateThDict">
+        UPDATE thdict SET pid=#{pid} ,title=#{title},goodsName=#{goodsName},goodsType=#{goodsType},goodsUnit=#{goodsUnit},goodsStock=#{goodsStock} where id =#{id}
+    </update>
+    <delete id="deleteThDict">
+        DELETE from thdict where id=#{id} or pid =#{id}
+    </delete>
+</mapper>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/adminlte/layui/css/layui.css"/>
+    <style type="text/css">
+        ul{margin-top:5px;}
+        li{margin-top:3px;}.layui-form-switch{margin-top: 0;}
+        #tree1 ul+ul{border-top: 1px dashed #e2e2e2;}
+    </style>
+</head>
+<body>
+<h3>物料编码</h3>
+<table class="layui-table layui-form" id="tree-table" lay-size="sm"></table>
+<div id="add-main" style="display: none;">
+    <div class="my-form">
+        <form class="layui-form"  lay-skin="line">
+            <div class="layui-form-item my-form-item" style="margin-top: 10px">
+                <label class="layui-form-label layui-icon" style="width: 120px">&#xe642;父ID:</label>
+                <div class="layui-input-inline">
+                    <input id="pid" type="text" name="pid" lay-verify="required" placeholder="请输入父ID" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item" style="margin-top: 10px">
+                <label class="layui-form-label layui-icon" style="width: 120px">&#xe642;物料编码:</label>
+                <div class="layui-input-inline">
+                    <input id="title" type="text" name="title" lay-verify="required" placeholder="请输入物料编码" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item">
+                <label class="layui-form-label layui-icon" style="width: 120px">&#xe642;物料名称:</label>
+                <div class="layui-input-inline">
+                    <input id="goodsName" type="text" name="goodsName" lay-verify="required" placeholder="请输入物料名称" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item" >
+                <label class="layui-form-label layui-icon"  style="width: 120px">&#xe642;规格型号:</label>
+                <div class="layui-input-inline">
+                    <input id="goodsType" type="text" name="goodsType" lay-verify="required" placeholder="请输入规格型号" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item" >
+                <label class="layui-form-label layui-icon"  style="width: 120px">&#xe642;产品单位:</label>
+                <div class="layui-input-inline">
+                    <input id="goodsUnit" type="text" name="goodsUnit" lay-verify="required" placeholder="请输入产品单位" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item" >
+                <label class="layui-form-label layui-icon"  style="width: 120px">&#xe642;默认仓库:</label>
+                <div class="layui-input-inline">
+                    <input id="goodsStock" type="text" name="goodsStock" lay-verify="required" placeholder="请输入默认仓库" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="/adminlte/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.config({
+        base: '/adminlte/layui/lay/modules/',
+    })
+    layui.use(['treeTable','layer','code','form'],function(){
+        var o = layui.$,
+            form = layui.form,
+            layer = layui.layer,
+            treeTable = layui.treeTable;
+        var	re = treeTable.render({
+            elem: '#tree-table',
+            url:"/tree/treeDate",
+            icon_key: 'title',
+            end: function(e){
+                form.render();
+            },
+            cols: [
+                {
+                    key: 'title',
+                    title: '物料编码',
+                    width: '100px',
+                    template: function(item){
+                        if(item.level == 0){
+                            return '<span style="color:red;">'+item.title+'</span>';
+                        }else if(item.level == 1){
+                            return '<span style="color:green;">'+item.title+'</span>';
+                        }else if(item.level == 2){
+                            return '<span style="color:blue;">'+item.title+'</span>';
+                        }else if(item.level == 3){
+                            return '<span style="color:#1a2226;">'+item.title+'</span>';
+                        }else if(item.level == 4){
+                            return '<span style="color:#aaa;">'+item.title+'</span>';
+                        }
+                    }
+                },
+                {
+                    key: 'id',
+                    title: 'ID',
+                    width: '100px',
+                    align: 'center',
+                },
+                {
+                    key: 'pid',
+                    title: '父ID',
+                    width: '100px',
+                    align: 'center',
+                },
+               /* {
+                    key: 'goodsCode',
+                    title: '物料编码',
+                    width: '100px',
+                    align: 'center',
+                },*/
+                {
+                    key: 'goodsName',
+                    title: '物料名称',
+                    width: '160px',
+                    align: 'center',
+                },
+                {
+                    key: 'goodsType',
+                    title: '规格型号',
+                    width: '160px',
+                    align: 'center',
+                },
+                {
+                    key: 'goodsUnit',
+                    title: '产品单位',
+                    width: '160px',
+                    align: 'center',
+                },
+                {
+                    key: 'goodsStock',
+                    title: '默认仓库名称',
+                    width: '160px',
+                    align: 'center',
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    template: function(item){
+                        return '<a lay-filter="add">添加</a> | <a lay-filter="edit">编辑</a> | <a lay-filter="delete" style="color: red">删除</a>';
+                    }
+                }
+            ]
+        });
+        // 监听自定义
+        treeTable.on('tree(add)',function(data){
+            layer.open({
+                type:1,
+                title:'添加字典信息',
+                btnAlign: 'c',
+                area: ['400px', '400px'],
+                content: $("#add-main"),
+                btn:['保存','取消'],
+                success:function (layero, index) {
+                    top.$('#pid').val(data.item.id);
+                },
+                yes:function(index,layero){
+                    var title =top.$('#title').val();
+                    var goodsName =top.$("#goodsName").val();
+                    var goodsType =top.$("#goodsType").val();
+                    var goodsUnit =top.$("#goodsUnit").val();
+                    var goodsStock =top.$("#goodsStock").val();
+                  /*  console.log(title+"p"+goodsName+"id"+"-"+goodsType+"-"+goodsUnit+"-"+goodsStock+data.item.id+"-"+data.item.pid);*/
+                    $.ajax({
+                        //几个参数需要注意一下
+                        type: "POST",//方法类型
+                        dataType: "json",//预期服务器返回的数据类型
+                        url: "/tree/treeDateAdd" ,//url
+                        data: {title:title,goodsName:goodsName,goodsType:goodsType,goodsUnit:goodsUnit,goodsStock:goodsStock,id:data.item.id,pid:data.item.pid},
+                        success: function (result) {
+                            console.log(result);//打印服务端返回的数据(调试用)
+                            if (result.success >0) {
+                                alert("操作成功");
+                                treeTable.render(re);
+                            }else{
+                                alert("系统错误");
+                            }
+                        },
+                        error : function() {
+                            alert("异常！");
+                        }
+                    });
+
+                    layer.close(index);
+                },
+                btn2:function (index) {
+                    layer.close(index);
+                }
+            })
+        })
+        treeTable.on('tree(edit)',function(data){
+            layer.msg(JSON.stringify(data));
+            layer.open({
+                type:1,
+                title:'修改字典信息',
+                btnAlign: 'c',
+                area: ['400px', '400px'],
+                content: $("#add-main"),
+                btn:['保存','取消'],
+                success: function (layero, index) {
+                    top.$('#pid').val(data.item.pid);
+                    top.$('#title').val(data.item.title);
+                    top.$('#goodsName').val(data.item.goodsName);
+                    top.$('#goodsType').val(data.item.goodsType);
+                    top.$('#goodsUnit').val(data.item.goodsUnit);
+                    top.$('#goodsStock').val(data.item.goodsStock);
+                },
+                yes:function(index,layero){
+                    var title =top.$('#title').val();
+                    var goodsName =top.$("#goodsName").val();
+                    var goodsType =top.$("#goodsType").val();
+                    var goodsUnit =top.$("#goodsUnit").val();
+                    var goodsStock =top.$("#goodsStock").val();
+                    var pid = top.$('#pid').val();
+                    console.log(title+"p"+goodsName+"id"+"-"+goodsType+"-"+goodsUnit+"-"+goodsStock+data.item.id+"-"+data.item.pid);
+                    $.ajax({
+                        //几个参数需要注意一下
+                        type: "POST",//方法类型
+                        dataType: "json",//预期服务器返回的数据类型
+                        url: "/tree/updateDateAdd" ,//url
+                        data: {title:title,goodsName:goodsName,goodsType:goodsType,goodsUnit:goodsUnit,goodsStock:goodsStock,id:data.item.id,pid:pid},
+                        success: function (result) {
+                            if (result.success>0) {
+                                alert("操作成功");
+                                treeTable.render(re);
+                            }else{
+                                alert("系统错误");
+                            }
+                        },
+                        error : function() {
+                            alert("异常！");
+                        }
+                    });
+
+                    layer.close(index);
+                },
+                btn2:function (index) {
+                    layer.close(index);
+                }
+            })
+        });
+        treeTable.on('tree(delete)',function(data){
+            layer.confirm('确定删除',{btn: ['确定', '取消'], title: "提示"},function(index){
+                console.log(data.item.id+"-----"+data.item.pid);
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "/tree/deleteDate" ,//url
+                    data: {id:data.item.id,pid:data.item.pid},
+                    success: function (result) {
+                        console.log(result);//打印服务端返回的数据(调试用)
+                        if (result.success>0) {
+                            alert("操作成功");
+                            treeTable.render(re);
+                        }else{
+                            alert("系统错误");
+                        }
+                    },
+                    error : function() {
+                        alert("异常！");
+                    }
+                });
+                layer.close(index);
+            });
+        });
+        // 刷新重载树表（一般在异步处理数据后刷新显示）
+        o('.refresh').click(function(){
+            re.data.push({"id":50,"pid":0,"title":"1-4"},{"id":51,"pid":50,"title":"1-4-1"});
+            treeTable.render(re);
+        })
+    })
+</script>
+</body>
+</html>

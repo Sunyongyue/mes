@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.GoodsRegStockMapper">
+    <select id="queryGoodsRegStock" resultType="com.common.system.entity.GoodsRegStock">
+        select * from goods_regStock
+    </select>
+    <insert id="addGoodsRegStock">
+        INSERT into goods_regStock(`local`,goodsType,goodsName,specifications,`status`,reason,department,nums,supplierName,remarks,operator,operatorTime)VALUES(
+        #{local},#{goodsType},#{goodsName},#{specifications},'异常',#{reason},#{department},#{nums},#{supplierName},#{remarks},#{operator},SYSDATE())
+</insert>
+    <update id="updateGoodsRegStock">
+        update goods_regStock set `local`=#{local},goodsType=#{goodsType},goodsName=#{goodsName},specifications=#{specifications},nums=#{nums},supplierName=#{supplierName}
+        ,reason=#{reason},department=#{department},remarks=#{remarks},operator=#{operator},operatorTime=SYSDATE() where id=#{id}
+    </update>
+    <delete id="deleteGoodsRegStock">
+        delete from goods_regStock where id=#{id}
+    </delete>
+    <select id="searchGoodsRegStock" resultType="com.common.system.entity.GoodsRegStock">
+        select * from goods_regStock
+        <where>
+            <if test="local !=''">`local` = #{local}</if>
+            <if test="supplierName !=''">and supplierName = #{supplierName}</if>
+            <if test="goodsType !='请选择类别' and goodsType !='请选择类别请选择类别' and goodsType !='请选择类别请选择类别请选择类别' and goodsType !='请选择类别请选择类别请选择类别请选择类别'">and goodsType = #{goodsType}</if>
+            <if test="goodsName !='请选择名称' and goodsName !='请选择名称请选择名称' and goodsName !='请选择名称请选择名称请选择名称' and goodsName !='请选择名称请选择名称请选择名称请选择名称'">and goodsName = #{goodsName}</if>
+            <if test="specifications !='请选择规格'and specifications !='请选择规格请选择规格' and specifications !='请选择规格请选择规格请选择规格' and specifications !='请选择规格请选择规格请选择规格请选择规格'">and specifications = #{specifications}</if>
+            <if test="startDate !=''">and operatorTime > #{startDate}</if>
+            <if test="endDate !=''"> <![CDATA[
+            and operatorTime<#{endDate}
+            ]]></if>
+            <!--<if test="statusArray != null">
+                status In
+                <foreach collection="statusArray" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>-->
+        </where>
+        ORDER BY id
+    </select>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.DistributNumberMapper">
+
+    <select id="queryDistributNumber" resultType="com.common.system.entity.DistributNumber">
+        select * from distribut_number
+    </select>
+    <select id="queryByNumber" resultType="com.common.system.entity.DistributNumber">
+           select * from distribut_number where controlMainNum=#{number}
+    </select>
+   <insert id="addDistributNumberMapper">
+        INSERT INTO distribut_number(telNum,controlMainNum,telMainNum,fourMainNum,`status`,remarks,operator,operatorTime)VALUES
+        (#{telNum},#{controlMainNum},#{telMainNum},#{fourMainNum},'正常',#{remarks},#{operator},SYSDATE())
+    </insert>
+    <delete id="deleteDistributNumberMapper">
+        DELETE from distribut_number where id in
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="distributNumberSearch" resultType="com.common.system.entity.DistributNumber">
+        select * from distribut_number
+        <where>
+            <if test="telNum !=''">`telNum` = #{telNum}</if>
+            <if test="mainBoardNum !=''">and controlMainNum = #{mainBoardNum} or telMainNum = #{mainBoardNum} or fourMainNum = #{mainBoardNum}  </if>
+            <if test="startDate !=''">and operatorTime > #{startDate}</if>
+            <if test="endDate !=''"> <![CDATA[
+            and operatorTime<#{endDate}
+            ]]></if>
+        </where>
+    </select>
+</mapper>

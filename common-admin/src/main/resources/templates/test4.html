@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/adminlte/layui/css/layui.css" media="all" />
+    <style>
+        /* 防止下拉框的下拉列表被隐藏---必须设置--- 此样式和表格的样式有冲突 如果表格列数太多 会出现错乱的情况 目前我的解决方法是忽略下拉框的美化渲染 <select lay-ignore> */
+
+        .layui-table-cell {
+            overflow: visible;
+        }
+
+        .layui-table-box {
+            overflow: visible;
+        }
+
+        .layui-table-body {
+            overflow: visible;
+        }
+        /* 设置下拉框的高度与表格单元相同 */
+
+        td .layui-form-select {
+            margin-top: -10px;
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+    </style>
+</head>
+
+<body class="childrenBody">
+<div style="padding:15px;">
+    <form class="layui-form" id="fromId" action="#">
+        <script type="text/html" id="selectTool">
+            <select name="selectDemo" lay-filter="selectDemo" >
+                <option value="">请选择或输入</option>
+                <option value="1">一</option>
+                <option value="2">二</option>
+            </select>
+        </script>
+        <script type="text/html" id="selectTool1">
+            <select name="selectDemo1" lay-filter="selectDemo1">
+                <option value="">请选择或输入</option>
+                <option value="1">一</option>
+                <option value="2">二</option>
+            </select>
+        </script>
+        <script type="text/html" id="selectTool2">
+            <select name="selectDemo2" lay-filter="selectDemo2" >
+                <option value="">请选择或输入</option>
+                <option value="1">一</option>
+                <option value="2">二</option>
+            </select>
+        </script>
+        <script type="text/html" id="selectTool3">
+            <select name="selectDemo3" lay-filter="selectDemo3" >
+                <option value="">请选择或输入</option>
+                <option value="1">一</option>
+                <option value="2">二</option>
+            </select>
+        </script>
+        <script type="text/html" id="selectTool4">
+            <select name="selectDemo4" lay-filter="selectDemo4" >
+                <option value="">请选择或输入</option>
+                <option value="1">一</option>
+                <option value="2">二</option>
+            </select>
+        </script>
+        <script type="text/html" id="toolbarDemo">
+            <div align="left" class="layui-btn-container">
+                <button id="addTable" class="layui-btn layui-btn-sm layui-btn-normal" lay-event="add">添加行</button>
+            </div>
+        </script>
+        <script type="text/html" id="bar">
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
+        <table id="demo" lay-filter="tableFilter"></table>
+        <div class="layui-form-item" style="margin-top: 30px;text-align: center;">
+            <button class="layui-btn" lay-submit="" lay-filter="*">保存</button>
+            <a href="" class="layui-btn">返回</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="/adminlte/layui/layui.js"></script>
+<script>
+    layui.use(['laydate', 'table', 'form', 'jquery'], function() {
+        var table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            $ = layui.jquery;
+        form.on('select(selectDemo)', function(data) {
+            //这里是当选择一个下拉选项的时候 把选择的值赋值给表格的当前行的缓存数据 否则提交到后台的时候下拉框的值是空的
+            var elem = data.othis.parents('tr');
+            var dataindex = elem.attr("data-index");
+            $.each(tabledata, function(index, value) {
+                if(value.LAY_TABLE_INDEX == dataindex) {
+                    value.local = data.value;
+                }
+            });
+        });
+        form.on('select(selectDemo1)', function(data) {
+            //这里是当选择一个下拉选项的时候 把选择的值赋值给表格的当前行的缓存数据 否则提交到后台的时候下拉框的值是空的
+            var elem = data.othis.parents('tr');
+            var dataindex = elem.attr("data-index");
+            $.each(tabledata, function(index, value) {
+                if(value.LAY_TABLE_INDEX == dataindex) {
+                    value.supplierName = data.value;
+                }
+            });
+        });
+        form.on('select(selectDemo2)', function(data) {
+            //这里是当选择一个下拉选项的时候 把选择的值赋值给表格的当前行的缓存数据 否则提交到后台的时候下拉框的值是空的
+            var elem = data.othis.parents('tr');
+            var dataindex = elem.attr("data-index");
+            $.each(tabledata, function(index, value) {
+                if(value.LAY_TABLE_INDEX == dataindex) {
+                    value.goodsName = data.value;
+                }
+            });
+        });
+        form.on('select(selectDemo3)', function(data) {
+            //这里是当选择一个下拉选项的时候 把选择的值赋值给表格的当前行的缓存数据 否则提交到后台的时候下拉框的值是空的
+            var elem = data.othis.parents('tr');
+            var dataindex = elem.attr("data-index");
+            $.each(tabledata, function(index, value) {
+                if(value.LAY_TABLE_INDEX == dataindex) {
+                    value.goodsType = data.value;
+                }
+            });
+        });
+        form.on('select(selectDemo4)', function(data) {
+            //这里是当选择一个下拉选项的时候 把选择的值赋值给表格的当前行的缓存数据 否则提交到后台的时候下拉框的值是空的
+            var elem = data.othis.parents('tr');
+            var dataindex = elem.attr("data-index");
+            $.each(tabledata, function(index, value) {
+                if(value.LAY_TABLE_INDEX == dataindex) {
+                    value.specifications = data.value;
+                }
+            });
+        });
+
+        //第一个实例 加载表格
+        var tableIns = table.render({
+            elem: '#demo',
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'print', 'exports'],
+            limit: 100,
+            cols: [
+                [ //表头
+                    {
+                        field: 'local',
+                        title: '地区',
+                        templet: '#selectTool'
+                    }, {
+                    field: 'supplierName',
+                    title: '供应商名称',
+                    templet: '#selectTool1'
+                }, {
+                    field: 'goodsType',
+                    title: '物料类别',
+                    templet: '#selectTool2'
+                }, {
+                    field: 'goodsName',
+                    title: '物料名称',
+                    templet: '#selectTool3'
+                }, {
+                    field: 'specifications',
+                    title: '物料规格',
+                    templet: '#selectTool4'
+                }, {
+                    field: 'nums',
+                    title: '出库数量',
+                    edit: 'text'
+                }, {
+                    field: 'outStockType',
+                    title: '出库分类',
+                    edit: 'text'
+                }, {
+                    field: 'remarks',
+                    title: '备注',
+                    edit: 'text'
+                }, {
+                    title: '操作',
+                    align: 'center',
+                    toolbar: '#bar'
+                }
+                ]
+            ],
+            data: [{
+                "local": "",
+                "supplierName": "",
+                "goodsType": "",
+                "goodsName": "",
+                "specifications": "",
+                "nums": "",
+                "outStockType": "",
+                "remarks": ""
+            },{
+                "local": "",
+                "supplierName": "",
+                "goodsType": "",
+                "goodsName": "",
+                "specifications": "",
+                "nums": "",
+                "outStockType": "",
+                "remarks": ""
+            },{
+                "local": "",
+                "supplierName": "",
+                "goodsType": "",
+                "goodsName": "",
+                "specifications": "",
+                "nums": "",
+                "outStockType": "",
+                "remarks": ""
+            },{
+                "local": "",
+                "supplierName": "",
+                "goodsType": "",
+                "goodsName": "",
+                "specifications": "",
+                "nums": "",
+                "outStockType": "",
+                "remarks": ""
+            },{
+                "local": "",
+                "supplierName": "",
+                "goodsType": "",
+                "goodsName": "",
+                "specifications": "",
+                "nums": "",
+                "outStockType": "",
+                "remarks": ""
+            },{
+                "local": "",
+                "supplierName": "",
+                "goodsType": "",
+                "goodsName": "",
+                "specifications": "",
+                "nums": "",
+                "outStockType": "",
+                "remarks": ""
+            },{
+                "local": "",
+                "supplierName": "",
+                "goodsType": "",
+                "goodsName": "",
+                "specifications": "",
+                "nums": "",
+                "outStockType": "",
+                "remarks": ""
+            },{
+                "local": "",
+                "supplierName": "",
+                "goodsType": "",
+                "goodsName": "",
+                "specifications": "",
+                "nums": "",
+                "outStockType": "",
+                "remarks": ""
+            },{
+                "local": "",
+                "supplierName": "",
+                "goodsType": "",
+                "goodsName": "",
+                "specifications": "",
+                "nums": "",
+                "outStockType": "",
+                "remarks": ""
+            },{
+                "local": "",
+                "supplierName": "",
+                "goodsType": "",
+                "goodsName": "",
+                "specifications": "",
+                "nums": "",
+                "outStockType": "",
+                "remarks": ""
+            },{
+                "local": "",
+                "supplierName": "",
+                "goodsType": "",
+                "goodsName": "",
+                "specifications": "",
+                "nums": "",
+                "outStockType": "",
+                "remarks": ""
+            },{
+                "local": "",
+                "supplierName": "",
+                "goodsType": "",
+                "goodsName": "",
+                "specifications": "",
+                "nums": "",
+                "outStockType": "",
+                "remarks": ""
+            },{
+                "local": "",
+                "supplierName": "",
+                "goodsType": "",
+                "goodsName": "",
+                "specifications": "",
+                "nums": "",
+                "outStockType": "",
+                "remarks": ""
+            },{
+                "local": "",
+                "supplierName": "",
+                "goodsType": "",
+                "goodsName": "",
+                "specifications": "",
+                "nums": "",
+                "outStockType": "",
+                "remarks": ""
+            }]
+            ,
+            done: function(res, curr, count) {
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                tabledata = res.data;
+                //去掉下拉框的失焦事件 否则在下拉框里输入值 失焦后变回下拉选项里的值了 没有需要的同学忽略掉即可
+                $('.layui-form-select').find('input').unbind("blur");
+                //这里是表格重载的时候 回显下拉框的数据
+                $('tr').each(function(e) {
+                    var $cr = $(this);
+                    var dataindex = $cr.attr("data-index");
+                    $.each(tabledata, function(index, value) {
+                        if(value.LAY_TABLE_INDEX == dataindex) {
+                            $cr.find('input').val(value.materialcode);
+                        }
+                    });
+                });
+            }
+        });
+        var tabledata;
+        //监听工具条删除按钮
+        table.on('tool(tableFilter)', function(obj) {
+            if(obj.event === 'del') {
+                obj.del();
+            };
+        });
+
+        //头工具栏添加按钮事件
+        table.on('toolbar(tableFilter)', function(obj) {
+            if(obj.event === 'add') {
+                tabledata.push({
+                    "local": "",
+                    "supplierName": "",
+                    "goodsType": "",
+                    "goodsName": "",
+                    "specifications": "",
+                    "nums": "",
+                    "outStockType": "",
+                    "remarks": ""
+                });
+
+                table.reload('demo', {
+                    data: tabledata
+                });
+
+            }
+        });
+        //提交数据到后台保存
+        form.on('submit(*)', function(data) {
+            // console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+            // console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+            //  console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+            console.log(tabledata);//当前容器的全部表单字段，名值对形式：{name: value}
+            $.ajax({
+                url: "",
+                async: true,
+                type: "post",
+                data: JSON.stringify(tabledata),
+                success: function(data) {
+                    if(typeof(data) == 'string') {
+                        data = JSON.parse(data)
+                    }
+                    if(data.code == 0) {
+                        layer.msg(data.msg);
+                        window.location.href = "";
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
+    });
+</script>
+
+</body>
+
+</html>

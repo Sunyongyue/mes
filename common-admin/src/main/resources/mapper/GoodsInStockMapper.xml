@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.GoodsInStockMapper">
+    <select id="queryGoodsInStock" resultType="com.common.system.entity.GoodsInStock">
+        select * from goods_inStock
+    </select>
+    <select id="queryBypipelineNumber" resultType="com.common.system.entity.GoodsInStock">
+        select * from goods_inStock where pipelineNumber=#{pipelineNumber}
+    </select>
+    <insert id="addGoodsInStock">
+        INSERT into goods_inStock(`local`,goodsType,goodsName,specifications,goodsProduceDate,`status`,goodsNums,supplierName,pipelineNumber,operators,cardNums,IMSI,IMEI,ICCID,remarks,operator,operatorTime)VALUES(
+        #{local},#{goodsType},#{goodsName},#{specifications},#{goodsProduceDate},'正常',#{goodsNums},#{supplierName},#{pipelineNumber},#{operators},#{cardNums},#{IMSI},#{IMEI},#{ICCID},#{remarks},#{operator},SYSDATE())
+    </insert>
+    <update id="updateGoodsInStock">
+        update goods_inStock set `local`=#{local},goodsType=#{goodsType},goodsName=#{goodsName},specifications=#{specifications},goodsProduceDate=#{goodsProduceDate},`status`=#{status},goodsNums=#{goodsNums},supplierName=#{supplierName},pipelineNumber=#{pipelineNumber},
+        operators=#{operators},cardNums=#{cardNums},IMSI=#{IMSI},IMEI=#{IMEI},ICCID=#{ICCID},remarks=#{remarks},operator=#{operator},operatorTime=SYSDATE() where id=#{id}
+    </update>
+    <delete id="deleteGoodsInStock">
+        delete from goods_inStock where id=#{id}
+    </delete>
+    <select id="searchGoodsInStock" resultType="com.common.system.entity.GoodsInStock">
+        select * from goods_inStock
+        <where>
+            <if test="local !=''">`local` = #{local}</if>
+            <if test="supplierName !=''">and supplierName = #{supplierName}</if>
+            <if test="goodsType !='' and goodsType !='请选择类别' and goodsType !='请选择类别请选择类别' and goodsType !='请选择类别请选择类别请选择类别' and goodsType !='请选择类别请选择类别请选择类别请选择类别'">and goodsType = #{goodsType}</if>
+            <if test="goodsName !='' and goodsName !='请选择名称' and goodsName !='请选择名称请选择名称' and goodsName !='请选择名称请选择名称请选择名称' and goodsName !='请选择名称请选择名称请选择名称请选择名称'">and goodsName = #{goodsName}</if>
+            <if test="specifications !=''and specifications !='请选择规格'and specifications !='请选择规格请选择规格' and specifications !='请选择规格请选择规格请选择规格' and specifications !='请选择规格请选择规格请选择规格请选择规格'">and specifications = #{specifications}</if>
+            <if test="startDate !=''">and goodsProduceDate > #{startDate}</if>
+            <if test="endDate !=''"> <![CDATA[
+            and goodsProduceDate<#{endDate}
+            ]]></if>
+            <!--<if test="statusArray != null">
+                status In
+                <foreach collection="statusArray" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>-->
+        </where>
+        ORDER BY id
+    </select>
+</mapper>

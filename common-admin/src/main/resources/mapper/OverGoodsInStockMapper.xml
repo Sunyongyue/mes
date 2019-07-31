@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.OverGoodsInStockMapper">
+
+    <select id="queryOverGoodsInStock" resultType="com.common.system.entity.OverGoodsInStock">
+        select * from over_goods_inStock
+    </select>
+   <insert id="addOverGoodsInStock">
+       INSERT into over_goods_inStock(productNum,goodsName,specifications,intakeDirection,testDate,nums,operator,operatorTime,testRemarks)VALUES(
+       #{productNum},#{goodsName},#{specifications},#{intakeDirection},#{testDate},#{nums},#{operator},SYSDATE(),#{testRemarks})
+    </insert>
+    <delete id="deleteOverGoodsInStock">
+        DELETE from over_goods_inStock where id in
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="searchOverGoodsInStock" resultType="com.common.system.entity.OverGoodsInStock">
+        select * from over_goods_inStock
+        <where>
+            <if test="productNum !=''">`productNum` = #{productNum}</if>
+            <if test="goodsName !=''">and `goodsName` = #{goodsName}</if>
+            <if test="specifications !=''">and specifications = #{specifications} </if>
+            <if test="operator !=''">and operator = #{operator} </if>
+            <if test="startDate !=''">and operatorTime > #{startDate}</if>
+            <if test="endDate !=''"> <![CDATA[
+            and operatorTime<#{endDate}
+            ]]></if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title>用户管理界面</title>
+    <link rel="stylesheet" th:href="@{/adminlte/layui/css/layui.css}"  media="all"/>
+</head>
+<style>
+    .layui-table-cell {
+        text-align: center;
+    }
+    .my-form {
+        margin-top: 5%;
+    }
+    .item{
+        margin-left: 130px;
+    }
+    .my-form-item{
+        padding-top: 20px;
+    }
+</style>
+
+<body>
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+
+<div id="add-main" style="display: none;">
+    <div class="my-form">
+        <form class="layui-form" action="/user/add" method="POST" lay-skin="line">
+            <div class="layui-form-item my-form-item">
+                <label class="layui-form-label layui-icon">&#xe770;</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" lay-verify="required" placeholder="请输入用户名" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item">
+                <label class="layui-form-label layui-icon">&#xe673;</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+           <!-- <div class="layui-form-item my-form-item">
+                <div class="layui-input-block item">
+                    <button class="layui-btn" lay-submit="" lay-filter="demo1" id="submit1">保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>-->
+        </form>
+    </div>
+</div>
+
+<script type="text/html" id="toolbarDemo">
+
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+        <button class="layui-btn layui-btn-sm layui-icon" lay-event="add">&#xe654;</button>
+        <button class="layui-btn layui-btn-sm layui-icon" lay-event="batchDel">&#xe640;</button>
+        <div class="layui-btn layui-btn-sm">
+            <input type="text" name="search"/>
+        </div>
+        <button class="layui-btn layui-btn-sm layui-icon" lay-event="search">&#xe615;</button>
+        <button class="layui-btn layui-btn-sm layui-icon" lay-event="flush">&#xe669;</button>
+    </div>
+</script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs layui-icon" lay-event="del">&#xe640;</a>
+</script>
+
+<script th:src="@{/adminlte/layui/layui.all.js}" charset="utf-8"></script>
+<script>
+    layui.use(['table', 'layer'], function () {
+        var table = layui.table,
+            layer = layui.layer;
+        var $ = layui.$;
+
+        table.render({
+            url: "/test1"   //换成自己的url
+            , method: "GET"
+            , elem: '#test'
+            , toolbar: '#toolbarDemo'
+            , title: '用户数据表'
+            , cols: [
+                [
+                    {type: 'checkbox', fixed: 'left'}
+                    , {field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true}
+                    , {field: 'testname', title: '用户名', width: 120, edit: 'text'}
+                    , {field: 'testpassword', title: '密码', width: 250}
+                    , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+                ]
+            ]
+            , page: true
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：' + data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                    break;
+                case 'add':
+                    layer.open({
+                            title: '增加用户',
+                            /*如果是外部的html，type2，内部，type1*/
+                            type: 1,
+                            btnAlign: 'c',
+                            area: ['400px', '340px'],
+                            content: $("#add-main").html(),
+                            btn:['保存','取消'],
+                            yes:function (index,layero) {
+                                console.log(index,layero)
+                        }
+                            //未做的是去监听表单提交，给后台发送ajax请求
+                        }
+                    )
+                    ;
+                    break;
+                case
+                'batchDel'
+                :
+                    /*发送ajax请求到后台执行批量删除*/
+                    break;
+                case
+                'flush'
+                :
+                    table.reload('test', {
+                        url: "/test1"
+                        , method: "GET"
+                    });
+                    break;
+                case
+                'search'
+                :
+                    layer.msg("根据用户名查找");
+                    var name = $('input[name="search"]').val();
+                    table.reload('test', {
+                        url: 'user/search',    //换成自己的url
+                        where: {
+                            name: name,
+                        },
+                        page: {
+                            curr: 1
+                        }
+                    });
+                    break;
+            }
+            ;
+        });
+
+        //监听单元格编辑
+        table.on('edit(test)', function (obj) {
+            var value = obj.value //得到修改后的值
+                , data = obj.data //得到所在行所有键值
+                , field = obj.field; //得到字段
+
+            $.ajax({
+                url: '/user/update',      //换成自己的url
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (e) {
+                    if (e.code == 0) {
+                        layer.msg(e.msg);
+                    } else {
+                        layer.msg(e.msg);
+                    }
+                },
+                error: function (e) {
+                    layer.msg(e);
+                }
+            })
+        });
+
+        //监听行工具事件
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del();
+                    layer.close(index);
+                    $.ajax({
+                        url: "/user/del",    //换成自己的url
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            id: data.id
+                        },
+                        success: function (e) {
+                            if (e.code == 0) {
+                                layer.msg(e.msg);
+                            } else {
+                                layer.msg(e.msg);
+                            }
+                        },
+                        error: function (e) {
+                            layer.msg(e);
+                        }
+                    })
+                });
+            } else if (obj.event == 'add') {
+                $.ajax({
+                    url: "/user/add",      //这里换成自己的url即可
+                    type: "POST",
+                    dataType: "json",
+                    data: data,
+                    success: function (e) {
+                        if (e.code == 0) {
+                            layer.msg(e.msg);
+                        } else {
+                            layer.msg(e.msg);
+                        }
+                    },
+                    error: function (e) {
+                        layer.msg(e);
+                    }
+                })
+            }
+        });
+    })
+</script>
+</body>
+</html>

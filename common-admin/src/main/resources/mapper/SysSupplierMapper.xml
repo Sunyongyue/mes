@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.SysSupplierMapper">
+
+    <select id="queryAll" resultType="com.common.system.entity.SysSupplier">
+        select * from syssupplier
+    </select>
+    <update id="updateSupplier">
+       update syssupplier set `local` =#{local} ,supplierNums=#{supplierNums},supplierName=#{supplierName},contacts=#{contacts},tel=#{tel},email=#{email},localMore=#{localMore},remarks=#{remarks},operator=#{operator},operatorTime=SYSDATE() where id =#{id}
+   </update>
+    <insert id="addSupplier">
+        insert into syssupplier (`local`,supplierNums,supplierName,contacts,tel,email,localMore,remarks,operator,operatorTime) values
+        (#{local},#{supplierNums},#{supplierName},#{contacts},#{tel},#{email},#{localMore},#{remarks},#{operator},SYSDATE())
+    </insert>
+    <delete id="deleteSupplier">
+    delete from syssupplier where id=#{id}
+    </delete>
+    <select id="searchSupplier" resultType="com.common.system.entity.SysSupplier">
+        select * from syssupplier
+        <where>
+            <if test="supplierName !=''">supplierName = #{supplierName}</if>
+            <if test="supplierNums !=''">and supplierNums = #{supplierNums}</if>
+            <if test="local !=''">and `local` = #{local}</if>
+            <!--<if test="statusArray != null">
+                status In
+                <foreach collection="statusArray" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>-->
+        </where>
+        ORDER BY id
+    </select>
+    <select id="local" resultType="string">
+        SELECT distinct `local` FROM syssupplier
+    </select>
+    <select id="supplierNameSearch" resultType="string">
+        SELECT distinct supplierName FROM syssupplier where `local`=#{local}
+    </select>
+</mapper>
