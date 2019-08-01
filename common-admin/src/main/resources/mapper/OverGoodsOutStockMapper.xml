@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.OverGoodsOutStockMapper">
+    <select id="queryOverGoodsOutStock" resultType="com.common.system.entity.OverGoodsOutStock">
+        SELECT  * from over_goods_outStock,sale_order,pubproduct,product_order where over_goods_outStock.productNum=pubproduct.productNum and over_goods_outStock.productNum=product_order.productNum and over_goods_outStock.salenum =sale_order.saleNum   ORDER BY over_goods_outStock.getOutFactoryTime desc
+    </select>
+    <insert id="addOverGoodsOutStock">
+      INSERT into over_goods_outStock(productNum,salenum,outFactoryMan,getOutFactoryTime,outStockNums,outStockType,outStockremarks)VALUES(
+      #{productNum},#{salenum},#{outFactoryMan},SYSDATE(),1,#{outStockType},#{outStockremarks})
+    </insert>
+    <select id="searchOverGoodsOutStock" resultType="com.common.system.entity.OverGoodsOutStock">
+        select * from over_goods_outStock,sale_order,pubproduct,product_order
+        <where>
+            <if test="1!=0"> over_goods_outStock.productNum=pubproduct.productNum and over_goods_outStock.productNum=product_order.productNum and over_goods_outStock.salenum =sale_order.saleNum</if>
+            <if test="salenum !=''">and over_goods_outStock.salenum = #{salenum}</if>
+            <if test="productNameOrder !=''">and sale_order.productNameOrder = #{productNameOrder}</if>
+            <if test="productSpecificationsOrder !='' ">and sale_order.productSpecificationsOrder = #{productSpecificationsOrder}</if>
+            <if test="outFactoryMan !='' ">and over_goods_outStock.outFactoryMan = #{outFactoryMan}</if>
+            <if test="startDate !=''">and over_goods_outStock.getOutFactoryTime > #{startDate}</if>
+            <if test="endDate !=''"> <![CDATA[
+            and over_goods_outStock.getOutFactoryTime<#{endDate}
+            ]]></if>
+            <!--<if test="statusArray != null">
+                status In
+                <foreach collection="statusArray" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>-->
+        </where>
+        ORDER BY over_goods_outStock.getOutFactoryTime desc
+    </select>
+</mapper>

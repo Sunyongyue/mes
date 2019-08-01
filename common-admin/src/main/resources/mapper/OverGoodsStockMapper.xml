@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.OverGoodsStockMapper">
+    <select id="queryOverGoodsStock" resultType="com.common.system.entity.OverGoodsStock">
+        select * from over_goods_stock ORDER BY operatorTime desc
+    </select>
+    <select id="queryExist" resultType="com.common.system.entity.OverGoodsStock">
+         select * from over_goods_stock where goodsName=#{goodsName} and specifications=#{specifications} and intakeDirection=#{intakeDirection}
+    </select>
+    <select id="serchOverGoodsStock" resultType="com.common.system.entity.OverGoodsStock">
+        select * from over_goods_stock
+        <where>
+            <if test="goodsName !=''">`goodsName` = #{goodsName}</if>
+            <if test="specifications !=''">and specifications = #{specifications}</if>
+            <if test="intakeDirection !='' ">and intakeDirection = #{intakeDirection}</if>
+            <if test="operator !='' ">and operator = #{operator}</if>
+            <if test="startDate !=''">and operatorTime > #{startDate}</if>
+            <if test="endDate !=''"> <![CDATA[
+            and operatorTime<#{endDate}
+            ]]></if>
+            <!--<if test="statusArray != null">
+                status In
+                <foreach collection="statusArray" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>-->
+        </where>
+        ORDER BY operatorTime desc
+    </select>
+    <insert id="addOverGoodsStock">
+      INSERT into over_goods_stock(goodsName,specifications,intakeDirection,stockWarehouse,nums,operator,operatorTime,remarks)VALUES(
+      #{goodsName},#{specifications},#{intakeDirection},'成品库',#{nums},#{operator},SYSDATE(),#{remarks})
+    </insert>
+   <update id="deleteGoodsStock">
+        update over_goods_stock set nums=(nums-#{nums}),operator=#{operator},operatorTime=SYSDATE() where  goodsName=#{goodsName} and specifications=#{specifications} and  intakeDirection=#{intakeDirection} and nums>=#{nums}
+   </update>
+    <update id="updateGoodsStock">
+        update over_goods_stock set nums=(nums+#{nums}),operator=#{operator},operatorTime=SYSDATE() where  goodsName=#{goodsName} and specifications=#{specifications} and  intakeDirection=#{intakeDirection}
+    </update>
+</mapper>

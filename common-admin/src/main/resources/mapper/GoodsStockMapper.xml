@@ -34,7 +34,7 @@
         )
     </insert>
    <update id="deleteGoodsStock">
-        update goods_stock set nums=(nums-#{nums}),operator=#{operator},operatorTime=SYSDATE() where goodsType=#{goodsType} and goodsName=#{goodsName} and specifications=#{specifications} and `local`=#{local} and supplierName=#{supplierName} and nums>#{nums}
+        update goods_stock set nums=(nums-#{nums}),operator=#{operator},operatorTime=SYSDATE() where goodsType=#{goodsType} and goodsName=#{goodsName} and specifications=#{specifications} and `local`=#{local} and supplierName=#{supplierName} and nums>=#{nums}
    </update>
     <update id="updateGoodsStock">
         update goods_stock set nums=(nums+#{nums}),operator=#{operator},operatorTime=SYSDATE() where goodsType=#{goodsType} and goodsName=#{goodsName} and specifications=#{specifications} and `local`=#{local} and supplierName=#{supplierName}

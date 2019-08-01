@@ -17,27 +17,31 @@
     <div class="layui-inline" style="width: 220px">
         <input class="layui-input"  id="goodsSpecificationsSearch" autocomplete="off" style="width: 200px;height: 25px"/>
     </div>
+    进气方向：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="intakeDirection" autocomplete="off" style="width: 200px;height: 25px"/>
+    </div>
     <div class="layui-inline" style="margin-left: -15px">操作员名称：</div>
     <div class="layui-inline" style="width: 220px">
         <input class="layui-input"  id="operatorSearch" autocomplete="off" style="width: 200px;height: 25px"/>
-    </div>
+    </div><br/>
     起始日期：
     <div class="layui-inline" style="width: 220px">
         <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
-    </div><br/>
+    </div>
     截止日期：
     <div class="layui-inline" style="width: 220px">
         <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
     </div>
     <button class="layui-btn layui-btn-sm" data-type="reload">查询</button>
 </div>
-<table class="layui-table" lay-data="{url:'', page:true, id:'idTest',toolbar: 'true',defaultToolbar:['exports'] }" lay-filter="demo">
+<table class="layui-table" lay-data="{url:'/overGoods/queryOverGoodsStock', page:true, id:'idTest',toolbar: 'true',defaultToolbar:['exports'] }" lay-filter="demo">
     <thead>
     <tr>
         <th lay-data="{field:'goodsName', width:150}">产品名称</th>
         <th lay-data="{field:'specifications', width:150}">产品规格</th>
-        <th lay-data="{field:'goodsType', width:150}">进气方向</th>
-        <th lay-data="{field:'goodsStock', width:150 }">库存仓库</th>
+        <th lay-data="{field:'intakeDirection', width:150}">进气方向</th>
+        <th lay-data="{field:'stockWarehouse', width:150 }">库存仓库</th>
         <th lay-data="{field:'nums', width:150,totalRow:true}">库存数量</th>
         <th lay-data="{field:'operator', width:150}">操作人</th>
         <th lay-data="{field:'operatorTime', width:150}">操作时间</th>
@@ -50,6 +54,28 @@
 <script>
     layui.use('table', function(){
         var table = layui.table;
+        var $ = layui.$, active = {
+            reload:function () {
+                var startDate = $("#startDateSearch").val();
+                var intakeDirection = $("#intakeDirection").val();
+                var goodsName = $("#goodsNameSearch").val();
+                var specifications = $("#goodsSpecificationsSearch").val();
+                var operator = $("#operatorSearch").val();
+                var endDate = $("#endDateSearch").val();
+                table.reload('idTest',{
+                    url:'/overGoods/serchOverGoodsStock',
+                    where:{intakeDirection:intakeDirection,goodsName:goodsName,specifications:specifications,operator:operator,startDate:startDate,endDate:endDate,page:1,limit:10}  ,
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                })
+
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
     });
     layui.use('laydate', function(){
         var laydate = layui.laydate;
@@ -62,6 +88,7 @@
             ,type: 'datetime'
         });
     });
+
 </script>
 
 </body>

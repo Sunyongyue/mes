@@ -78,31 +78,30 @@
     <!--<button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>-->
    <!-- <button class="layui-btn layui-btn-sm" lay-event="delete" id="delete" >删除</button>-->
 </div>
-<table class="layui-table" lay-data="{url:'/production/pubProductDate', page:true, id:'OverOut',toolbar:'#toolbarDemoOverOut',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoOverOut">
+<table class="layui-table" lay-data="{url:'/overGoods/queryOverGoodsOutStock', page:true, id:'OverOut',toolbar:'#toolbarDemoOverOut',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoOverOut">
     <thead>
     <tr>
-        <th lay-data="{type:'checkbox', fixed: 'left'}" rowspan="2"></th>
-        <th lay-data="{align:'center'}" colspan="8">订货信息</th>
+     <!--   <th lay-data="{type:'checkbox', fixed: 'left'}" rowspan="2"></th>-->
+        <th lay-data="{align:'center'}" colspan="9">订货信息</th>
         <th lay-data="{align:'center'}" colspan="6">阀门信息</th>
         <th lay-data="{align:'center'}" colspan="5">控制主板信息</th>
         <th lay-data="{align:'center'}" colspan="10">通讯主板信息</th>
         <th lay-data="{align:'center'}" colspan="6">485主板信息</th>
-        <th lay-data="{align:'center'}" colspan="6">生产信息</th>
-        <th lay-data="{field:'operator',width:150}" rowspan="2">出库数量</th>
-        <th lay-data="{field:'operator',width:150}" rowspan="2">出库分类</th>
-        <th lay-data="{field:'operator',width:150}" rowspan="2">操作人</th>
-        <th lay-data="{field:'operatorTime',width:150}" rowspan="2">操作时间</th>
-        <th lay-data="{field:'remarks',width:150}" rowspan="2">备注</th>
+        <th lay-data="{align:'center'}" colspan="7">生产信息</th>
+        <th lay-data="{field:'outStockNums',width:150}" rowspan="2">出库数量</th>
+        <th lay-data="{field:'outStockType',width:150}" rowspan="2">出库分类</th>
+        <th lay-data="{field:'outStockremarks',width:150}" rowspan="2">备注</th>
     <tr>
         <!--<th lay-data="{field:'productNum', width:250}" >生产订单号</th>-->
-        <th lay-data="{field:'goodsName', width:150}" >客户名称</th>
-        <th lay-data="{field:'goodsName', width:150}" >订单日期</th>
-        <th lay-data="{field:'goodsName', width:150}" >工程名称</th>
-        <th lay-data="{field:'goodsName', width:150}" >需求日期</th>
-        <th lay-data="{field:'goodsName', width:150}" >产品名称</th>
-        <th lay-data="{field:'specifications',width:150}" >规格</th>
-        <th lay-data="{field:'pressure',width:150}" >使用压力</th>
-        <th lay-data="{field:'nums',width:150}" >数量</th>
+        <th lay-data="{field:'saleNum', width:150}" >销售订单号</th>
+        <th lay-data="{field:'customerName', width:150}" >客户名称</th>
+        <th lay-data="{field:'date', width:150}" >订单日期</th>
+        <th lay-data="{field:'projectName', width:150}" >工程名称</th>
+        <th lay-data="{field:'endDate', width:150}" >需求日期</th>
+        <th lay-data="{field:'productNameOrder', width:150}" >产品名称</th>
+        <th lay-data="{field:'productSpecificationsOrder',width:150}" >规格</th>
+        <th lay-data="{field:'customerPressure',width:150}" >使用压力</th>
+        <th lay-data="{field:'customerNums',width:150}" >数量</th>
         <th lay-data="{field:'valveSupplier', width:150 }">阀门供应商</th>
         <th lay-data="{field:'valveNUms', width:150 }">阀门编号</th>
         <th lay-data="{field:'valveName', width:150}">阀门名称</th>
@@ -131,12 +130,13 @@
         <th lay-data="{field:'fourSpecifications', width:150}">485主板规格</th>
         <th lay-data="{field:'telProtocol', width:150}">通信协议</th>
         <th lay-data="{field:'fourMainBoardProductDate', width:150}">生产日期</th>
-        <th lay-data="{field:'fourMainBoardNums', width:150}">装配人</th>
-        <th lay-data="{field:'fourMainBoardName', width:150}">装配时间</th>
-        <th lay-data="{field:'fourSpecifications', width:150}">检测人</th>
-        <th lay-data="{field:'telProtocol', width:150}">检测时间</th>
-        <th lay-data="{field:'fourMainBoardProductDate', width:150}">出厂检测人</th>
-        <th lay-data="{field:'fourMainBoardProductDate', width:150}">出厂检测时间</th>
+        <th lay-data="{field:'productNum', width:150}">生产订单号</th>
+        <th lay-data="{field:'assembler', width:150}">装配人</th>
+        <th lay-data="{field:'productDate', width:150}">装配时间</th>
+        <th lay-data="{field:'tester', width:150}">检测人</th>
+        <th lay-data="{field:'testDate', width:150}">检测时间</th>
+        <th lay-data="{field:'outFactoryMan', width:150}">出厂检测人</th>
+        <th lay-data="{field:'getOutFactoryTime', width:150}">出厂检测时间</th>
     </tr>
     </thead>
 </table>
@@ -169,16 +169,16 @@
                         btn:['保存','取消'],
                         content: $("#add-main-civil"),
                         yes:function(index,layero){
-                            var testRemarks =top.$("#remarksAdd").val();
-                            var valveNUms =top.$("#vavleNumAdd").val();
-                            var controlMainBoardNums =top.$("#mainBoardNumAdd").val();
-                            var productNum =top.$("#productNumAdd").val();
+                            var saleNumAdd =top.$("#saleNumAdd").val();
+                            var productNumAdd =top.$("#productNumAdd").val();
+                            var outStockType =top.$("#outStockType").val();
+                            var remarksAdd =top.$("#remarksAdd").val();
                             $.ajax({
                                 //几个参数需要注意一下
                                 type: "POST",//方法类型
                                 dataType: "json",//预期服务器返回的数据类型
-                                url: "" ,//url
-                                data: {testRemarks:testRemarks,valveNUms:valveNUms,controlMainBoardNums:controlMainBoardNums,productNum:productNum},
+                                url: "/overGoods/addOverGoodsOutStock" ,//url
+                                data: {outStockNums:1,productNum:productNumAdd,salenum:saleNumAdd,outStockType:outStockType,outStockremarks:remarksAdd},
                                 success: function (result) {
                                     console.log(result);//打印服务端返回的数据(调试用)
                                     if (result.success >0) {
@@ -282,9 +282,10 @@
                 var operator = $("#operatorSearch").val();
                 var startDate = $("#startDateSearch").val();
                 var endDate = $("#endDateSearch").val();
+              /*  console.log(productNum+goodsName+specifications+operator+startDate+endDate);*/
                 table.reload('OverOut',{
-                    url:'',
-                    where:{productNum:productNum,goodsName:goodsName,specifications:specifications,operator:operator,startDate:startDate,endDate:endDate,page:1,limit:10}  ,
+                    url:'/overGoods/searchOverGoodsOutStock',
+                    where:{salenum:productNum,productNameOrder:goodsName,productSpecificationsOrder:specifications,outFactoryMan:operator,startDate:startDate,endDate:endDate,page:1,limit:10}  ,
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
