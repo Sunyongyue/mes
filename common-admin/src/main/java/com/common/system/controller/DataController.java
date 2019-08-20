@@ -29,8 +29,25 @@ public class DataController {
     @RequestMapping("/treeDateAdd")
     @ResponseBody
     public String treeDateAdd(int pid, String title, String dataname,@SessionAttribute ShiroUser user){
-        JSONObject object = sysDataService.addSysData(pid, title, dataname,user.getUsername());
-        return object.toJSONString();
+        int i = sysDataService.selectCount(pid);
+        String s = intToString(i+1);
+        if (title.equals("00")){
+            JSONObject object = sysDataService.addSysData(pid, s, dataname,user.getUsername());
+            return object.toJSONString();
+        }else{
+            JSONObject object = sysDataService.addSysData(pid, title+s, dataname,user.getUsername());
+            return object.toJSONString();
+        }
+    }
+    public String intToString(int i){
+        if (i<10){
+            return ("0"+i);
+        }else if (i>=100){
+            return (""+i);
+        }else {
+            return ""+i;
+        }
+
     }
     @RequestMapping("/updateDateAdd")
     @ResponseBody
@@ -41,8 +58,17 @@ public class DataController {
     @RequestMapping("/deleteDate")
     @ResponseBody
     public String deleteDate(int id){
-        JSONObject object = sysDataService.deleteSysData(id);
-        return object.toJSONString();
+        int i = sysDataService.selectCount(id);
+        if (i>0){
+            JSONObject object =new JSONObject();
+            object.put("success",i);
+            object.put("date"," 还有子项,不能删除");
+            return object.toString();
+        }else {
+            JSONObject object = sysDataService.deleteSysData(id);
+            return object.toJSONString();
+        }
+
     }
     @RequestMapping("/queryLocal")
     @ResponseBody

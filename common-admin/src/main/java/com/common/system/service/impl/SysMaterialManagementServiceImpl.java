@@ -59,6 +59,12 @@ public class SysMaterialManagementServiceImpl implements SysMaterialManagementSe
     }
 
     @Override
+    public int selectCountSysMaterialManagement(int pid) {
+        int i = managementMapper.selectCountSysMaterialManagement(pid);
+        return i;
+    }
+
+    @Override
     public JSONObject querygoodsType(String factory) {
         List<SysMaterialManagement> sysMaterialManagements = managementMapper.querygoodsType(factory);
         String s = JSON.toJSONString(sysMaterialManagements);

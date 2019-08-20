@@ -38,6 +38,13 @@ public class ProductOrderController {
             System.out.println(s1);}*/
         return mav;
     }
+    @RequestMapping("/printProductOrder")
+    public ModelAndView printProductOrder(Integer id){
+        ModelAndView mav = new ModelAndView("printProductOrder");
+        ProductOrder productOrder = orderService.queryById(id);
+        mav.addObject("productOrder",productOrder);
+        return mav;
+    }
     @RequestMapping("/productOrderDate")
     @ResponseBody
     public String productOrderDate(Integer page, Integer limit){

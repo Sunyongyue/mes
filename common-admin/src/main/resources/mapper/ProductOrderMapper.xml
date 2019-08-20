@@ -12,6 +12,12 @@ INSERT into product_order(productNum,alarmSquare,`charMethod`,`controlMainboardN
     <select id="queryNums" resultType="int">
         SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{date}
     </select>
+    <select id="queryByProductNum" resultType="com.common.system.entity.ProductOrder">
+        select * from product_order where productNum=#{productNum}
+    </select>
+    <select id="queryById" resultType="com.common.system.entity.ProductOrder">
+        select * from product_order where id=#{id}
+    </select>
     <delete id="delteProductOrder">
         DELETE from product_order where id in
         <foreach collection="array" item="item" open="(" close=")" separator=",">

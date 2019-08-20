@@ -3,6 +3,8 @@ package com.common.system.service;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 
 public interface SysSupplierService {
     JSONObject queryAll(Integer page, Integer limit);
@@ -12,4 +14,5 @@ public interface SysSupplierService {
     JSONObject searchSupplier(@Param("supplierNums") String supplierNums, @Param("local") String local, @Param("supplierName") String supplierName,int page,int limit);
     JSONObject local();
     JSONObject supplierNameSearch( String local);
+    JSONObject supplierNameOrder();
 }

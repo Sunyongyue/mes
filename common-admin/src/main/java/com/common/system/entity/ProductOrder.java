@@ -40,7 +40,7 @@ public class ProductOrder {
     //透支气量
     private int overdrawAir;
     //使用压力
-    private int pressure;
+    private String pressure;
     //脉冲当量
     private String pulseEquivalent;
     //备注
@@ -82,7 +82,7 @@ public class ProductOrder {
     //操作时间
     private String operatorTime;
     public ProductOrder(){}
-    public ProductOrder(int id, String productNum, int alarmSquare, String charMethod, String controlMainboardName, String controlMainboardSpecifications, String controlMainboardSupplier, String disconnectionCheck, String fourMainBoardName, String fourSpecifications, String fourSupplier, String gasCheck, String goodsName, String intakeDirection, String lowPressureCheck, String microleakageCheck, String noContactCheck, int nums, String overcurrentCheck, int overdrawAir, int pressure, String pulseEquivalent, String remarks, int reservedAir, String signalSource, String specifications, String stopUseCheck, String telMainBoardName, String telMainBoardSpecifications, String telMainBoardSupplier, String telProtocol, String telType, int upperLimitOfRecharge, int valveCloseTime, String valveName, int valveOpenTime, String valveSpecifications, String valveSupplier, String version, String operator, String operatorTime) {
+    public ProductOrder(int id, String productNum, int alarmSquare, String charMethod, String controlMainboardName, String controlMainboardSpecifications, String controlMainboardSupplier, String disconnectionCheck, String fourMainBoardName, String fourSpecifications, String fourSupplier, String gasCheck, String goodsName, String intakeDirection, String lowPressureCheck, String microleakageCheck, String noContactCheck, int nums, String overcurrentCheck, int overdrawAir, String pressure, String pulseEquivalent, String remarks, int reservedAir, String signalSource, String specifications, String stopUseCheck, String telMainBoardName, String telMainBoardSpecifications, String telMainBoardSupplier, String telProtocol, String telType, int upperLimitOfRecharge, int valveCloseTime, String valveName, int valveOpenTime, String valveSpecifications, String valveSupplier, String version, String operator, String operatorTime) {
         this.id = id;
         this.productNum = productNum;
         this.alarmSquare = alarmSquare;
@@ -286,11 +286,11 @@ public class ProductOrder {
         this.overdrawAir = overdrawAir;
     }
 
-    public int getPressure() {
+    public String getPressure() {
         return pressure;
     }
 
-    public void setPressure(int pressure) {
+    public void setPressure(String pressure) {
         this.pressure = pressure;
     }
 

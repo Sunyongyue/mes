@@ -14,7 +14,7 @@
                             <ul class="treeview-menu">
                             <#list menu.child as child>
                                 <li>
-                                    <a target="navTab" <#if child.url="druid" || child.url="doc.html"||child.url="swagger-ui.html"> target_type="iframe" fresh="false" </#if>href="${child.url}">
+                                    <a target="navTab" <#if child.url="druid" || child.url="doc.html"||child.url="swagger-ui.html"> target_type="iframe" fresh="true" </#if>href="${child.url}">
                                         <i class="fa fa-inbox"></i> <span>${child.name}</span>
                                     </a>
                                 </li>
@@ -82,7 +82,7 @@
     <div class="pull-right hidden-xs">
         <b>Version</b> 2.3.6
     </div>
-    <strong>Copyright &copy; 2019-2026 <a href="">TianHe</a>.
+    <strong>Copyright &copy; 2019-2226 <a href="">TianHe</a>.
     </strong> All rights reserved.
 </footer>
 </#macro>
@@ -155,7 +155,6 @@
             list[i].checked = status;
         }
     }
-
     function iFrameHeight() {
         var ifm = document.getElementById("content");
         var subWeb = document.frames ? document.frames["content"].document : ifm.contentDocument;

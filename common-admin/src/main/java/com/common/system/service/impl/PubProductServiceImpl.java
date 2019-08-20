@@ -41,22 +41,48 @@ public class PubProductServiceImpl implements PubProductService {
     }
 
     @Override
+    public PubProduct queryOneByids(int ids) {
+        PubProduct pubProduct = pubProductMapper.queryOneByids(ids);
+        return pubProduct;
+    }
+
+    @Override
     public JSONObject addPubProduct(String productNum, String valveNUms, String controlMainBoardNums, String assembler, String tester, String testRemarks) {
         List<GoodsInStock> goodsInStocks = inStockMapper.queryBypipelineNumber(valveNUms);
+        String valveProduceDate="";
+        if (!(goodsInStocks.isEmpty())){
+            valveProduceDate = goodsInStocks.get(0).getGoodsProduceDate();
+        }
         List<DistributNumber> distributNumbers = numberMapper.queryByNumber(controlMainBoardNums);
-        String telMainNum = distributNumbers.get(0).getTelMainNum();
-        String fourMainNum = distributNumbers.get(0).getFourMainNum();
+        String telMainNum="";
+        String fourMainNum="";
+        if (!(distributNumbers.isEmpty())){
+            telMainNum = distributNumbers.get(0).getTelMainNum();
+            fourMainNum = distributNumbers.get(0).getFourMainNum();
+        }
         List<GoodsInStock> fourInStocks = inStockMapper.queryBypipelineNumber(fourMainNum);
-        String fourProduceDate = fourInStocks.get(0).getGoodsProduceDate();
+        String fourProduceDate="";
+        if (!(fourInStocks.isEmpty())){
+            fourProduceDate = fourInStocks.get(0).getGoodsProduceDate();
+        }
         List<GoodsInStock> telInStocks = inStockMapper.queryBypipelineNumber(telMainNum);
-        String telProduceDate = telInStocks.get(0).getGoodsProduceDate();
-        String cardNums = telInStocks.get(0).getCardNums();
-        String imsi = telInStocks.get(0).getIMSI();
-        String imei = telInStocks.get(0).getIMEI();
-        String iccid = telInStocks.get(0).getICCID();
+        String telProduceDate = "";
+        String cardNums = "";
+        String imsi = "";
+        String imei = "";
+        String iccid = "";
+        if (!(telInStocks.isEmpty())){
+            telProduceDate = telInStocks.get(0).getGoodsProduceDate();
+            cardNums = telInStocks.get(0).getCardNums();
+            imsi = telInStocks.get(0).getIMSI();
+            imei = telInStocks.get(0).getIMEI();
+            iccid = telInStocks.get(0).getICCID();
+        }
         List<GoodsInStock> controlInStocks = inStockMapper.queryBypipelineNumber(controlMainBoardNums);
-        String controlProduceDate = controlInStocks.get(0).getGoodsProduceDate();
-        String valveProduceDate = goodsInStocks.get(0).getGoodsProduceDate();
+        String controlProduceDate ="";
+        if (!(controlInStocks.isEmpty())){
+            controlProduceDate = controlInStocks.get(0).getGoodsProduceDate();
+        }
         int i = pubProductMapper.addPubProduct(productNum, valveNUms, valveProduceDate, controlMainBoardNums, controlProduceDate, telMainNum, telProduceDate, cardNums, imsi, imei, iccid, fourMainNum, fourProduceDate, assembler, tester, testRemarks);
         JSONObject object = new JSONObject();
         object.put("success",i);

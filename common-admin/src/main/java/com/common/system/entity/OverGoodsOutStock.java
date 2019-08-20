@@ -2,6 +2,8 @@ package com.common.system.entity;
 
 public class OverGoodsOutStock {
     private int id;
+    //出厂编号
+    private String outStockNumbers;
     //销售订单号
     private String saleNum;
     //客户名称
@@ -92,8 +94,9 @@ public class OverGoodsOutStock {
     //备注
     private String outStockremarks;
     public OverGoodsOutStock(){}
-    public OverGoodsOutStock(int id, String saleNum, String customerName, String date, String projectName, String endDate, String productNameOrder, String productSpecificationsOrder, String customerPressure, int customerNums, String valveSupplier, String valveNUms, String valveName, String valveSpecifications, String intakeDirection, String vavleProductDate, String controlMainboardName, String controlMainboardSpecifications, String controlMainboardSupplier, String controlMainBoardNums, String controlMainBoardProductDate, String telMainBoardName, String telMainBoardSpecifications, String telMainBoardSupplier, String telMainBoardNums, String telMainBoardProductDate, String cardNum, String iMSI, String iMEI, String iCCID, String telType, String fourMainBoardName, String fourSpecifications, String fourSupplier, String fourMainBoardNums, String fourMainBoardProductDate, String telProtocol, String productNum, String assembler, String tester, String productDate, String testDate, String outFactoryMan, String getOutFactoryTime, int outStockNums, String outStockType, String outStockremarks) {
+    public OverGoodsOutStock(int id, String outStockNumbers, String saleNum, String customerName, String date, String projectName, String endDate, String productNameOrder, String productSpecificationsOrder, String customerPressure, int customerNums, String valveSupplier, String valveNUms, String valveName, String valveSpecifications, String intakeDirection, String vavleProductDate, String controlMainboardName, String controlMainboardSpecifications, String controlMainboardSupplier, String controlMainBoardNums, String controlMainBoardProductDate, String telMainBoardName, String telMainBoardSpecifications, String telMainBoardSupplier, String telMainBoardNums, String telMainBoardProductDate, String cardNum, String iMSI, String iMEI, String iCCID, String telType, String fourMainBoardName, String fourSpecifications, String fourSupplier, String fourMainBoardNums, String fourMainBoardProductDate, String telProtocol, String productNum, String assembler, String tester, String productDate, String testDate, String outFactoryMan, String getOutFactoryTime, int outStockNums, String outStockType, String outStockremarks) {
         this.id = id;
+        this.outStockNumbers = outStockNumbers;
         this.saleNum = saleNum;
         this.customerName = customerName;
         this.date = date;
@@ -148,6 +151,14 @@ public class OverGoodsOutStock {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getOutStockNumbers() {
+        return outStockNumbers;
+    }
+
+    public void setOutStockNumbers(String outStockNumbers) {
+        this.outStockNumbers = outStockNumbers;
     }
 
     public String getSaleNum() {
@@ -491,7 +502,7 @@ public class OverGoodsOutStock {
     }
 
     public void setGetOutFactoryTime(String getOutFactoryTime) {
-        this.getOutFactoryTime = getOutFactoryTime.substring(0,19);
+        this.getOutFactoryTime = getOutFactoryTime;
     }
 
     public int getOutStockNums() {
@@ -522,6 +533,7 @@ public class OverGoodsOutStock {
     public String toString() {
         return "OverGoodsOutStock{" +
                 "id=" + id +
+                ", outStockNumbers='" + outStockNumbers + '\'' +
                 ", saleNum='" + saleNum + '\'' +
                 ", customerName='" + customerName + '\'' +
                 ", date='" + date + '\'' +

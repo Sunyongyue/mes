@@ -35,35 +35,35 @@
     <div class="my-form">
         <form class="layui-form"  lay-skin="line">
             <div class="layui-form-item my-form-item" style="margin-top: 10px">
-                <label class="layui-form-label layui-icon" style="width: 170px">&#xe642;所在地区:</label>
+                <label class="layui-form-label layui-icon" style="width: 170px">所在地区:</label>
                 <div class="layui-input-inline">
                     <input id="local" type="text" name="local" lay-verify="required" placeholder="请输入所在地区" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item my-form-item" style="margin-top: 10px">
-                <label class="layui-form-label layui-icon" style="width: 170px">&#xe642;供应商编号:</label>
+                <label class="layui-form-label layui-icon" style="width: 170px">供应商编号:</label>
                 <div class="layui-input-inline">
                     <input id="supplierNumsAdd" type="text" name="supplierNumsAdd" lay-verify="required" placeholder="请输入供应商编号" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item my-form-item">
-                <label class="layui-form-label layui-icon" style="width: 170px">&#xe642;供应商名称:</label>
+                <label class="layui-form-label layui-icon" style="width: 170px">供应商名称:</label>
                 <div class="layui-input-inline">
                     <input id="supplierNameAdd" type="text" name="supplierNameAdd" lay-verify="required" placeholder="请输入供应商" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;联系人:</label>
+                <label class="layui-form-label layui-icon"  style="width: 170px">联系人:</label>
                 <div class="layui-input-inline">
                     <input id="contacts" type="text" name="contacts" lay-verify="required" placeholder="请输入联系人" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;联系电话:</label>
+                <label class="layui-form-label layui-icon"  style="width: 170px">联系电话:</label>
                 <div class="layui-input-inline">
                     <input id="tel" type="text" name="tel" lay-verify="required" placeholder="请输入联系电话" autocomplete="off"
                            class="layui-input"/>
@@ -77,14 +77,14 @@
                 </div>
             </div>-->
             <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;详细地址:</label>
+                <label class="layui-form-label layui-icon"  style="width: 170px">详细地址:</label>
                 <div class="layui-input-inline">
                     <input id="localMore" type="text" name="localMore" lay-verify="required" placeholder="请输入详细地址" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;备注:</label>
+                <label class="layui-form-label layui-icon"  style="width: 170px">备注:</label>
                 <div class="layui-input-inline">
                     <input id="remarks" type="text" name="remarks" lay-verify="required" placeholder="请输入备注" autocomplete="off"
                            class="layui-input"/>
@@ -105,20 +105,20 @@
     <thead>
     <tr>
         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-        <th lay-data="{field:'local', width:150, sort: true}">所在地区</th>
-        <th lay-data="{field:'supplierName', width:150}">供应商名称</th>
         <th lay-data="{field:'supplierNums', width:150}">供应商编号</th>
+        <th lay-data="{field:'local', width:150}">所在地区</th>
+        <th lay-data="{field:'supplierName', width:150}">供应商名称</th>
         <th lay-data="{field:'contacts', width:150 }">联系人</th>
         <th lay-data="{field:'tel', width:150}">联系电话</th>
         <th lay-data="{field:'localMore', width:150 }">详细地址</th>
         <th lay-data="{field:'operator', width:150}">操作人</th>
-        <th lay-data="{field:'operatorTime', width:300}">操作时间</th>
-        <th lay-data="{field:'remarks', width:300}">备注</th>
+        <th lay-data="{field:'operatorTime', width:180}">操作时间</th>
+        <th lay-data="{field:'remarks', width:180}">备注</th>
     </tr>
     </thead>
 </table>
 
-<script th:src="@{/adminlte/layui/layui.js}" charset="utf-8"></script>
+<script th:src="@{/adminlte/layui/layui.all.js}" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
     layui.use('table', function(){
@@ -291,13 +291,13 @@
 //指定允许上传的文件类型
         upload.render({
             elem: '#upload'
-            ,url: ''
+            ,url: '/supplier/upload'
             ,accept: 'file' //普通文件
             ,exts: 'xlsx' //只允许上传excel文件
             ,done: function(res){
                 if(res.code == 0){ //上传成功
                     layer.msg(res.msg);
-
+                    table.reload('idTest')
                 }else{
                     layer.msg('上传失败');
                 }

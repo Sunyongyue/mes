@@ -30,12 +30,60 @@ public class SysMaterialManagementController {
     @RequestMapping("/addSysMaterial")
     @ResponseBody
     public String addSysMaterial(int pid, String title, String factory, String materialtype, String materialName, String materialSpecification, String remarks,@SessionAttribute ShiroUser user){
-        JSONObject object = managementService.addSysMaterial(pid, title, factory, materialtype, materialName, materialSpecification, remarks, user.getUsername());
+        if(title.length()==2){
+            materialtype="";
+            materialName="";
+            materialSpecification="";
+
+        }else if (title.length()==4){
+            factory="";
+            materialName="";
+            materialSpecification="";
+        }else if (title.length()==6){
+            factory="";
+            materialtype="";
+            materialSpecification="";
+        }else if (title.length()==8){
+            factory="";
+            materialName="";
+            materialtype="";
+        }
+        int i = managementService.selectCountSysMaterialManagement(pid);
+        String s = intToString(i + 1);
+        JSONObject object = managementService.addSysMaterial(pid, title+s, factory, materialtype, materialName, materialSpecification, remarks, user.getUsername());
         return object.toJSONString();
+    }
+    public String intToString(int i){
+        if (i<10){
+            return ("0"+i);
+        }else if (i>=100){
+            return (""+i);
+        }else {
+            return ""+i;
+        }
+
     }
     @RequestMapping("/updateSysMaterial")
     @ResponseBody
     public String updateSysMaterial(int pid, String title, String factory, String materialtype, String materialName, String materialSpecification, String remarks,@SessionAttribute ShiroUser user,int id){
+        if(title.length()==4){
+            materialtype="";
+            materialName="";
+            materialSpecification="";
+
+        }else if (title.length()==6){
+            factory="";
+            materialName="";
+            materialSpecification="";
+        }else if (title.length()==8){
+            factory="";
+            materialtype="";
+            materialSpecification="";
+        }else if (title.length()==10){
+            factory="";
+            materialName="";
+            materialtype="";
+        }
         JSONObject object = managementService.updateSysMaterial(pid, title, factory, materialtype, materialName, materialSpecification, remarks, user.getUsername(), id);
         return object.toJSONString();
     }

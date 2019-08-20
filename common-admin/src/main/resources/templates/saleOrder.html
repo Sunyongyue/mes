@@ -25,19 +25,19 @@
         <div class="layui-inline">
             <label class="layui-form-label">客户名称</label>
             <div class="layui-input-inline">
-                <input type="text" name="customerName" lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+                <input type="text" name="customerName" lay-verify="required" placeholder="请输入客户名称" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">订单日期</label>
             <div class="layui-input-inline">
-                <input type="text" name="date" id="date" placeholder="" autocomplete="off" class="layui-input">
+                <input type="text" name="date" id="date" lay-verify="required" placeholder="请选择订单日期" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">工程名称</label>
             <div class="layui-input-inline">
-                <input type="text" name="projectName"  placeholder="" autocomplete="off" class="layui-input">
+                <input type="text" name="projectName"  lay-verify="required" placeholder="请输入工程名称" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">需求日期</label>
             <div class="layui-input-inline">
-                <input type="text" name="endDate" id="endDate" lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+                <input type="text" name="endDate" id="endDate" lay-verify="required" placeholder="请选择需求日期" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
@@ -53,8 +53,6 @@
             <div class="layui-input-inline">
                 <select name="productNameOrder" lay-verify="required" lay-search="">
                     <option value=""></option>
-                    <option value="皮膜表">皮膜表</option>
-                    <option value="阀门">阀门</option>
                 </select>
             </div>
         </div>
@@ -63,8 +61,6 @@
             <div class="layui-input-inline">
                 <select name="productSpecificationsOrder" lay-verify="required" lay-search="">
                     <option value=""></option>
-                    <option value="DN40">DN40</option>
-                    <option value="DN25">DN25</option>
                 </select>
             </div>
         </div>
@@ -73,19 +69,22 @@
         <div class="layui-inline">
             <label class="layui-form-label">使用压力</label>
             <div class="layui-input-inline">
-                <input type="text" name="customerPressure"  lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+               <!-- <input type="text" name="customerPressure"  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">-->
+                <select name="customerPressure" lay-verify="required" lay-search="">
+                    <option value=""> </option>
+                </select>
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">数量</label>
             <div class="layui-input-inline">
-                <input type="text" name="customerNums"  lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+                <input type="text" name="customerNums"  lay-verify="required|number" placeholder="请输入数量" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">收货地址</label>
             <div class="layui-input-inline">
-                <input type="text" name="address"  lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+                <input type="text" name="address"  lay-verify="required" placeholder="请输入收货地址" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -93,26 +92,26 @@
         <div class="layui-inline">
             <label class="layui-form-label">收货人</label>
             <div class="layui-input-inline">
-                <input type="text" name="receiver"  lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+                <input type="text" name="receiver"  lay-verify="required" placeholder="请输入收货人" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">联系电话</label>
             <div class="layui-input-inline">
-                <input type="text" name="telPhone"  lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+                <input type="text" name="telPhone"  lay-verify="phone" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">物流信息</label>
             <div class="layui-input-inline">
-                <input type="text" name="logisticsInformation"  lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+                <input type="text" name="logisticsInformation"  lay-verify="" placeholder="请输入物流信息" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">备注</label>
         <div class="layui-input-block">
-            <input style="width: 800px;" type="text" name="remarks" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+            <input style="width: 800px;" type="text" name="remarks" lay-verify="title" autocomplete="off" placeholder="请输入备注" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item" style="margin-top: 30px">
@@ -164,7 +163,78 @@
 
         });
     });
-
+    $(function(){
+        loadSelect2();specifications2();pressure2();
+    })
+    function loadSelect2() {
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/queryLocal" ,//url
+            data:{pid:102},
+            success: function (result) {
+                if (result.success>0) {
+                    var list =result.date;
+                    $("[name='productNameOrder']").empty();
+                    var op="";
+                    var bp="请选择产品名称";
+                    $("[name='productNameOrder']").append("<option value="+op+">"+bp+"</option>");
+                    $.each(list,function (i,val) {
+                        $("[name='productNameOrder']").append("<option value="+val+">"+val+"</option>");
+                    });
+                }else{
+                    alert("信息错误");
+                }
+            }
+        });
+    }
+    function specifications2() {
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/queryLocal" ,//url
+            data:{pid:103},
+            success: function (result) {
+                if (result.success>0) {
+                    var list =result.date;
+                    $("[name='productSpecificationsOrder']").empty();
+                    var op="";
+                    var bp="请选择产品规格";
+                    $("[name='productSpecificationsOrder']").append("<option value="+op+">"+bp+"</option>");
+                    $.each(list,function (i,val) {
+                        $("[name='productSpecificationsOrder']").append("<option value="+val+">"+val+"</option>");
+                    });
+                }else{
+                    alert("信息错误");
+                }
+            }
+        });
+    }
+    function pressure2() {
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/queryLocal" ,//url
+            data:{pid:104},
+            success: function (result) {
+                if (result.success>0) {
+                    var list =result.date;
+                    $("[name='customerPressure']").empty();
+                    var op="";
+                    var bp="请选择使用压力";
+                    $("[name='customerPressure']").append("<option value="+op+">"+bp+"</option>");
+                    $.each(list,function (i,val) {
+                        $("[name='customerPressure']").append("<option value="+val+">"+val+"</option>");
+                    });
+                }else{
+                    alert("信息错误");
+                }
+            }
+        });
+    }
 </script>
 </body>
 

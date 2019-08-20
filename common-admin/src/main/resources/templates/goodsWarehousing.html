@@ -17,31 +17,31 @@
 <div class="demoTable">
     所在地区：
     <div class="layui-inline" style="width: 220px">
-        <select name="localSearch" lay-verify=""  style="width: 210px" onchange="supplierNameSearch()">
+        <select name="localSearch" lay-verify=""  style="width: 200px" onchange="supplierNameSearch()">
             <option value="" ></option>
         </select>
     </div>
     <div class="layui-inline" style="margin-left: -15px">供应商名称：</div>
     <div class="layui-inline" style="width: 220px;">
-        <select name="supplierNameSearch" lay-verify=""  style="width: 210px" onchange="goodsType()">
+        <select name="supplierNameSearch" lay-verify=""  style="width: 200px" onchange="goodsType()">
             <option value="" ></option>
         </select>
     </div>
     物料类别：
     <div class="layui-inline" style="width: 220px">
-        <select name="goodsTypeSearch" lay-verify=""  style="width: 210px" onchange="goodsName()">
+        <select name="goodsTypeSearch" lay-verify=""  style="width: 200px" onchange="goodsName()">
             <option value="" ></option>
         </select>
     </div>
     物料名称：
     <div class="layui-inline" style="width: 220px">
-        <select name="goodsNameSearch" lay-verify=""  style="width: 210px" onchange="specifications()">
+        <select name="goodsNameSearch" lay-verify=""  style="width: 200px" onchange="specifications()">
             <option value="" ></option>
         </select>
     </div><br/>
     物料规格：
     <div class="layui-inline" style="width: 220px">
-        <select name="specificationsSearch" lay-verify=""  style="width: 210px" >
+        <select name="specificationsSearch" lay-verify=""  style="width: 200px" >
             <option value="" ></option>
         </select>
     </div>
@@ -58,118 +58,137 @@
 <div id="add-main" style="display: none;">
     <div class="my-form">
             <div class="layui-form-item my-form-item" style="margin-top: 10px">
-                <label class="layui-form-label layui-icon" style="width: 170px">&#xe642;所在地区:</label>
-                <div class="layui-input-inline">
-                    <select id="localAdd"  style="width: 190px;height: 25px;margin-top: 8px" onchange="supplierNameSearchAdd()">
-                        <option value="" >请选择地区</option>
-                    </select>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>所在地区:</label>
+                    <div class="layui-input-inline">
+                        <select id="localAdd"  style="width: 190px;height: 25px;margin-top: 8px" onchange="supplierNameSearchAdd()">
+                            <option value="" >请选择地区</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="layui-form-item my-form-item" style="margin-top: 10px">
-                <label class="layui-form-label layui-icon" style="width: 170px">&#xe642;供应商名称:</label>
-                <div class="layui-input-inline">
-                 <!--   <input id="supplierNameAdd" type="text" name="supplierNameAdd" lay-verify="required" placeholder="请输入供应商名称" autocomplete="off"
-                           class="layui-input"/>-->
-                    <select id="supplierNameAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="goodsTypeAdd()">
-                        <option value="" >请选择供应商</option>
-                    </select>
-                </div>
-            </div>
-            <div class="layui-form-item my-form-item">
-                <label class="layui-form-label layui-icon" style="width: 170px">&#xe642;物料类别:</label>
-                <div class="layui-input-inline">
-                   <!-- <input id="goodsTypeAdd" type="text" name="goodsTypeAdd" lay-verify="required" placeholder="请输入物料类别" autocomplete="off"
-                           class="layui-input"/>-->
-                    <select id="goodsTypeAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="goodsNameAdd()">
-                        <option value="" >请选择类别</option>
-                    </select>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>供应商名称:</label>
+                    <div class="layui-input-inline">
+                        <!--   <input id="supplierNameAdd" type="text" name="supplierNameAdd" lay-verify="required" placeholder="请输入供应商名称" autocomplete="off"
+                                  class="layui-input"/>-->
+                        <select id="supplierNameAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="goodsTypeAdd()">
+                            <option value="" >请选择供应商</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="layui-form-item my-form-item">
-                <label class="layui-form-label layui-icon" style="width: 170px">&#xe642;物料名称:</label>
-                <div class="layui-input-inline">
-                  <!--  <input id="goodsNameAdd" type="text" name="goodsNameAdd" lay-verify="required" placeholder="请输入物料名称" autocomplete="off"
-                           class="layui-input"/>-->
-                    <select id="goodsNameAdd"  lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="specificationsAdd()">
-                        <option value="" >请选择名称</option>
-                    </select>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>物料类别:</label>
+                    <div class="layui-input-inline">
+                        <!-- <input id="goodsTypeAdd" type="text" name="goodsTypeAdd" lay-verify="required" placeholder="请输入物料类别" autocomplete="off"
+                                class="layui-input"/>-->
+                        <select id="goodsTypeAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="goodsNameAdd()">
+                            <option value="" >请选择类别</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>物料名称:</label>
+                    <div class="layui-input-inline">
+                        <!--  <input id="goodsNameAdd" type="text" name="goodsNameAdd" lay-verify="required" placeholder="请输入物料名称" autocomplete="off"
+                                 class="layui-input"/>-->
+                        <select id="goodsNameAdd"  lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="specificationsAdd()">
+                            <option value="" >请选择名称</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="layui-form-item my-form-item">
-                <label class="layui-form-label layui-icon" style="width: 170px">&#xe642;规格:</label>
-                <div class="layui-input-inline">
-                    <!--<input id="specificationsAdd" type="text" name="specificationsAdd" lay-verify="required" placeholder="请输入物料规格" autocomplete="off"
-                           class="layui-input"/>-->
-                    <select id="specificationsAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" >
-                        <option value="" >请选择规格</option>
-                    </select>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>物料规格:</label>
+                    <div class="layui-input-inline">
+                        <!--<input id="specificationsAdd" type="text" name="specificationsAdd" lay-verify="required" placeholder="请输入物料规格" autocomplete="off"
+                               class="layui-input"/>-->
+                        <select id="specificationsAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" >
+                            <option value="" >请选择规格</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-icon"  style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>生产日期:</label>
+                    <div class="layui-input-inline">
+                        <input id="produceDateAdd" type="text" name="produceDateAdd" lay-verify="required" placeholder="请输入生产日期" autocomplete="off"
+                               class="layui-input"/>
+                    </div>
                 </div>
             </div>
+
             <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;生产日期:</label>
-                <div class="layui-input-inline">
-                    <input id="produceDateAdd" type="text" name="produceDateAdd" lay-verify="required" placeholder="请输入生产日期" autocomplete="off"
-                           class="layui-input"/>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-icon"  style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>入库数量:</label>
+                    <div class="layui-input-inline">
+                        <input id="numsAdd" type="text" name="numsAdd" lay-verify="required" placeholder="请输入入库数量" autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-icon"  style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>物料流水号起:</label>
+                    <div class="layui-input-inline">
+                        <input id="pipelineNumberStart" type="text" name="pipelineNumber" lay-verify="required" placeholder="请输入物料流水号起" autocomplete="off"
+                               class="layui-input"/>
+                    </div>
                 </div>
             </div>
+
             <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;入库数量:</label>
-                <div class="layui-input-inline">
-                    <input id="numsAdd" type="text" name="numsAdd" lay-verify="required" placeholder="请输入入库数量" autocomplete="off"
-                           class="layui-input"/>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-icon"  style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>物料流水号止:</label>
+                    <div class="layui-input-inline">
+                        <input id="pipelineNumberEnd" type="text" name="pipelineNumberEnd" lay-verify="required" placeholder="请输入物料流水号止" autocomplete="off"
+                               class="layui-input"/>
+                    </div>
                 </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-icon"  style="width: 170px">运营商:</label>
+                    <div class="layui-input-inline">
+                        <input id="operatorsAdd" type="text" name="operatorsAdd" lay-verify="required" placeholder="请输入运营商" autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+
             </div>
             <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;物料流水号起:</label>
-                <div class="layui-input-inline">
-                    <input id="pipelineNumberStart" type="text" name="pipelineNumber" lay-verify="required" placeholder="请输入物料流水号起" autocomplete="off"
-                           class="layui-input"/>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-icon"  style="width: 170px">卡号:</label>
+                    <div class="layui-input-inline">
+                        <input id="CardNumsAdd" type="text" name="CardNums" lay-verify="required" placeholder="请输入卡号" autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-icon"  style="width: 170px">IMSI号:</label>
+                    <div class="layui-input-inline">
+                        <input id="IMSIAdd" type="text" name="IMSI" lay-verify="required" placeholder="请输入IMSI号" autocomplete="off"
+                               class="layui-input"/>
+                    </div>
                 </div>
             </div>
+
             <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;物料流水号止:</label>
-                <div class="layui-input-inline">
-                    <input id="pipelineNumberEnd" type="text" name="pipelineNumberEnd" lay-verify="required" placeholder="请输入物料流水号止" autocomplete="off"
-                           class="layui-input"/>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-icon"  style="width: 170px">IMEI号:</label>
+                    <div class="layui-input-inline">
+                        <input id="IMEIAdd" type="text" name="IMEI" lay-verify="required" placeholder="请输入IMEI号" autocomplete="off"
+                               class="layui-input"/>
+                    </div>
                 </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-icon"  style="width: 170px">ICCID号:</label>
+                    <div class="layui-input-inline">
+                        <input id="ICCIDAdd" type="text" name="ICCID" lay-verify="required" placeholder="请输入ICCID号" autocomplete="off"
+                               class="layui-input"/>
+                    </div>
+                </div>
+
             </div>
             <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;运营商:</label>
-                <div class="layui-input-inline">
-                    <input id="operatorsAdd" type="text" name="operatorsAdd" lay-verify="required" placeholder="请输入运营商" autocomplete="off"
-                           class="layui-input"/>
-                </div>
-            </div>
-            <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;卡号:</label>
-                <div class="layui-input-inline">
-                    <input id="CardNumsAdd" type="text" name="CardNums" lay-verify="required" placeholder="请输入卡号" autocomplete="off"
-                           class="layui-input"/>
-                </div>
-            </div>
-            <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;IMSI号:</label>
-                <div class="layui-input-inline">
-                    <input id="IMSIAdd" type="text" name="IMSI" lay-verify="required" placeholder="请输入IMSI号" autocomplete="off"
-                           class="layui-input"/>
-                </div>
-            </div>
-            <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;IMEI号:</label>
-                <div class="layui-input-inline">
-                    <input id="IMEIAdd" type="text" name="IMEI" lay-verify="required" placeholder="请输入IMEI号" autocomplete="off"
-                           class="layui-input"/>
-                </div>
-            </div>
-            <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;ICCID号:</label>
-                <div class="layui-input-inline">
-                    <input id="ICCIDAdd" type="text" name="ICCID" lay-verify="required" placeholder="请输入ICCID号" autocomplete="off"
-                           class="layui-input"/>
-                </div>
-            </div>
-            <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;备注:</label>
+                <label class="layui-form-label layui-icon"  style="width: 170px">备注:</label>
                 <div class="layui-input-inline">
                     <input id="remarksAdd" type="text" name="remarksAdd" lay-verify="required" placeholder="请输入备注" autocomplete="off"
                            class="layui-input"/>
@@ -189,23 +208,23 @@
     <thead>
     <tr>
         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+        <th lay-data="{field:'pipelineNumber', width:180}">物料流水号</th>
         <th lay-data="{field:'goodsType', width:150}">物料类别</th>
         <th lay-data="{field:'goodsName', width:150}">物料名称</th>
-        <th lay-data="{field:'specifications', width:150}">规格</th>
+        <th lay-data="{field:'specifications', width:150}">物料规格</th>
         <th lay-data="{field:'goodsProduceDate', width:150}">生产日期</th>
         <th lay-data="{field:'status', width:150 ,totalRowText:'合计：'}">产品状态</th>
         <!--<th lay-data="{field:'goodsStock', width:150 }">入库仓库</th>-->
         <th lay-data="{field:'goodsNums', width:150,totalRow:true}">入库数量</th>
         <!--<th lay-data="{field:'addGoodsNums', width:150,totalRow:true}">入库后数量</th>-->
         <th lay-data="{field:'supplierName', width:150}">供应商名称</th>
-        <th lay-data="{field:'pipelineNumber', width:150}">物料流水号</th>
         <th lay-data="{field:'operators', width:150}">运营商</th>
         <th lay-data="{field:'cardNums', width:150}">卡号</th>
         <th lay-data="{field:'iMSI', width:150}">IMSI号</th>
         <th lay-data="{field:'iMEI', width:150}">IMEI号</th>
         <th lay-data="{field:'iCCID', width:150}">ICCID号</th>
         <th lay-data="{field:'operator', width:150}">操作人</th>
-        <th lay-data="{field:'operatorTime', width:150}">操作时间</th>
+        <th lay-data="{field:'operatorTime', width:180}">操作时间</th>
         <th lay-data="{field:'remarks', width:150}">备注</th>
     </tr>
     </thead>
@@ -250,7 +269,7 @@
                         type:1,
                         title:'添加',
                         btnAlign: 'c',
-                        area: ['500px', '600px'],
+                        area: ['900px', '600px'],
                         content: $("#add-main"),
                         btn:['保存','取消'],
                         yes:function(index,layero){
@@ -270,28 +289,31 @@
                             var ICCID =top.$("#ICCIDAdd").val();
                             var remark =top.$("#remarksAdd").val();
                              console.log(local+"-"+supplierNameAdd+"-"+goodsNameAdd+"-"+goodsType+"-"+specifications+"-"+produceDate+"-"+operators+"-"+nums+pipelineNumberStart+pipelineNumberEnd+remark+CardNums+IMSI+IMEI+ICCID);
-                            $.ajax({
-                                //几个参数需要注意一下
-                                type: "POST",//方法类型
-                                dataType: "json",//预期服务器返回的数据类型
-                                url: "/goodsInStock/addGoodsInStock" ,//url
-                                data: {local:local,goodsType:goodsType,goodsName:goodsNameAdd,supplierName:supplierNameAdd,specifications:specifications,goodsProduceDate:produceDate,goodsNums:nums,pipelineNumberStart:pipelineNumberStart,pipelineNumberEnd:pipelineNumberEnd,operators:operators,cardNums:CardNums,
-                                    IMSI:IMSI,IMEI:IMEI,ICCID:ICCID,remarks:remark},
-                                success: function (result) {
-                                    console.log(result);//打印服务端返回的数据(调试用)
-                                    if (result.success >0) {
-                                        alert("操作成功");
-                                        table.reload('idTest');
-                                    }else{
-                                        alert("系统错误");
+                            if(local==""||supplierNameAdd==""||goodsNameAdd=="请选择名称"||goodsType=="请选择类别"||specifications=="请选择规格"||nums==""||pipelineNumberStart==""||pipelineNumberEnd==""){
+                                alert("您还有必填项未填！")
+                            }else{
+                                $.ajax({
+                                    //几个参数需要注意一下
+                                    type: "POST",//方法类型
+                                    dataType: "json",//预期服务器返回的数据类型
+                                    url: "/goodsInStock/addGoodsInStock" ,//url
+                                    data: {local:local,goodsType:goodsType,goodsName:goodsNameAdd,supplierName:supplierNameAdd,specifications:specifications,goodsProduceDate:produceDate,goodsNums:nums,pipelineNumberStart:pipelineNumberStart,pipelineNumberEnd:pipelineNumberEnd,operators:operators,cardNums:CardNums,
+                                        IMSI:IMSI,IMEI:IMEI,ICCID:ICCID,remarks:remark},
+                                    success: function (result) {
+                                        console.log(result);//打印服务端返回的数据(调试用)
+                                        if (result.success >0) {
+                                            alert("操作成功");
+                                            table.reload('idTest');
+                                        }else{
+                                            alert("系统错误");
+                                        }
+                                    },
+                                    error : function() {
+                                        alert("异常！");
                                     }
-                                },
-                                error : function() {
-                                    alert("异常！");
-                                }
-                            });
-
-                            layer.close(index);
+                                });
+                                layer.close(index);
+                            }
                         },
                         btn2:function (index) {
                             layer.close(index);
@@ -439,15 +461,15 @@
         var laydate = layui.laydate;
         laydate.render({
             elem: '#startDateSearch' //指定元素
-            ,type: 'datetime'
+
         });
         laydate.render({
             elem: '#endDateSearch' //指定元素
-            ,type: 'datetime'
+
         });
         laydate.render({
             elem: '#produceDateAdd' //指定元素
-            ,type: 'datetime'
+
         });
     });
     layui.use(['upload'],function(){

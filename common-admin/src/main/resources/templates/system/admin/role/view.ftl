@@ -1,3 +1,4 @@
+<h4 style="margin-top: -50px">查看角色</h4>
 <div class="row">
 	<div class="col-md-12">
 		<div class="box-body  no-padding">
@@ -10,7 +11,7 @@
                 	<td>角色值：</td>
                 	<td>${role.value}</td>
                 </tr>
-                <tr>
+              <#--  <tr>
                 	<td>拥有权限：</td>
                 	<td>
 						<#if role.permissionList??>
@@ -19,7 +20,7 @@
 							</#list>
 						</#if>
                 	</td>
-                </tr>
+                </tr>-->
                 <tr>
                 	<td>创建时间：</td>
                 	<td>${role.createTime?string('yyyy-MM-dd HH:mm:ss')}</td>

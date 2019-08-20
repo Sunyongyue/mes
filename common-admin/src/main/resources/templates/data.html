@@ -21,15 +21,15 @@
                            class="layui-input"/>
                 </div>
             </div>-->
-            <div class="layui-form-item my-form-item" style="margin-top: 10px">
-                <label class="layui-form-label layui-icon" style="width: 120px">&#xe642;代码:</label>
+         <!--   <div class="layui-form-item my-form-item" style="margin-top: 10px">
+                <label class="layui-form-label layui-icon" style="width: 120px">代码:</label>
                 <div class="layui-input-inline">
                     <input id="title" type="text" name="title" lay-verify="required" placeholder="请输入代码" autocomplete="off"
                            class="layui-input"/>
                 </div>
-            </div>
-            <div class="layui-form-item my-form-item">
-                <label class="layui-form-label layui-icon" style="width: 120px">&#xe642;数据名称:</label>
+            </div>-->
+            <div class="layui-form-item my-form-item" style="margin-top: 30px">
+                <label class="layui-form-label layui-icon" style="width: 80px">名称:</label>
                 <div class="layui-input-inline">
                     <input id="goodsName" type="text" name="goodsName" lay-verify="required" placeholder="请输入数据名称" autocomplete="off"
                            class="layui-input"/>
@@ -41,24 +41,24 @@
 <div id="update-main" style="display: none;">
     <div class="my-form">
         <form class="layui-form"  lay-skin="line">
-            <div class="layui-form-item my-form-item" style="margin-top: 10px">
-                <label class="layui-form-label layui-icon" style="width: 120px">&#xe642;父ID:</label>
+          <!--  <div class="layui-form-item my-form-item" style="margin-top: 10px">
+                <label class="layui-form-label layui-icon" style="width: 120px">父ID:</label>
                 <div class="layui-input-inline">
                     <input id="pid" type="text" name="pid" lay-verify="required" placeholder="请输入父ID" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item my-form-item" style="margin-top: 10px">
-                <label class="layui-form-label layui-icon" style="width: 120px">&#xe642;代码:</label>
+                <label class="layui-form-label layui-icon" style="width: 120px">代码:</label>
                 <div class="layui-input-inline">
                     <input id="updatetitle" type="text" name="title" lay-verify="required" placeholder="请输入代码" autocomplete="off"
                            class="layui-input"/>
                 </div>
-            </div>
-            <div class="layui-form-item my-form-item">
-                <label class="layui-form-label layui-icon" style="width: 120px">&#xe642;数据名称:</label>
+            </div>-->
+            <div class="layui-form-item my-form-item" style="margin-top: 30px">
+                <label class="layui-form-label layui-icon" style="width: 80px">名称:</label>
                 <div class="layui-input-inline">
-                    <input id="updategoodsName" type="text" name="goodsName" lay-verify="required" placeholder="请输入数据名称" autocomplete="off"
+                    <input id="updategoodsName" type="text" name="goodsName" lay-verify="required" placeholder="请输入名称" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
@@ -100,7 +100,7 @@
                 {
                     key: 'dataname',
                     title: '数据名称',
-                    width: '200px',
+                    width: '300px',
                     template: function(item){
                         if(item.level == 0){
                             return '<span style="color:red;">'+item.dataname+'</span>';
@@ -160,37 +160,44 @@
                 type:1,
                 title:'添加字典信息',
                 btnAlign: 'c',
-                area: ['400px', '300px'],
+                area: ['300px', '200px'],
                 content: $("#add-main"),
                 btn:['保存','取消'],
                 success:function (layero, index) {
                    /* top.$('#pid').val(data.item.id);*/
+                    /*top.$('#title').val("");*/
+                    top.$("#goodsName").val("");
                 },
                 yes:function(index,layero){
-                    var title =top.$('#title').val();
+                    var title =data.item.title;
                     var dataname =top.$("#goodsName").val();
-                    /*  console.log(title+"p"+goodsName+"id"+"-"+goodsType+"-"+goodsUnit+"-"+goodsStock+data.item.id+"-"+data.item.pid);*/
-                    $.ajax({
-                        //几个参数需要注意一下
-                        type: "POST",//方法类型
-                        dataType: "json",//预期服务器返回的数据类型
-                        url: "/treeDateAdd" ,//url
-                        data: {title:title,dataname:dataname,pid:data.item.id},
-                        success: function (result) {
-                            console.log(result);//打印服务端返回的数据(调试用)
-                            if (result.success >0) {
-                                alert("操作成功");
-                                treeTable.render(re);
-                            }else{
-                                alert("系统错误");
+                    if (dataname==""){
+                        alert("名称不能为空")
+                    }else {
+                        $.ajax({
+                            //几个参数需要注意一下
+                            type: "POST",//方法类型
+                            dataType: "json",//预期服务器返回的数据类型
+                            url: "/treeDateAdd" ,//url
+                            data: {title:title,dataname:dataname,pid:data.item.id},
+                            success: function (result) {
+                                console.log(result);//打印服务端返回的数据(调试用)
+                                if (result.success >0) {
+                                    alert("操作成功");
+                                    treeTable.render(re);
+                                }else{
+                                    alert("系统错误");
+                                }
+                            },
+                            error : function() {
+                                alert("异常！");
                             }
-                        },
-                        error : function() {
-                            alert("异常！");
-                        }
-                    });
+                        });
 
-                    layer.close(index);
+                        layer.close(index);
+                    }
+                    /*  console.log(title+"p"+goodsName+"id"+"-"+goodsType+"-"+goodsUnit+"-"+goodsStock+data.item.id+"-"+data.item.pid);*/
+
                 },
                 btn2:function (index) {
                     layer.close(index);
@@ -202,38 +209,42 @@
                 type:1,
                 title:'修改字典信息',
                 btnAlign: 'c',
-                area: ['400px', '300px'],
+                area: ['300px', '200px'],
                 content: $("#update-main"),
                 btn:['保存','取消'],
                 success: function (layero, index) {
-                    top.$('#pid').val(data.item.pid);
-                    top.$('#updatetitle').val(data.item.title);
+                    /*top.$('#pid').val(data.item.pid);
+                    top.$('#updatetitle').val(data.item.title);*/
                     top.$('#updategoodsName').val(data.item.dataname);
                 },
                 yes:function(index,layero){
-                    var title =top.$('#updatetitle').val();
+                    var title =data.item.title;
                     var dataname =top.$("#updategoodsName").val();
-                    var pid = top.$('#pid').val();
-                    $.ajax({
-                        //几个参数需要注意一下
-                        type: "POST",//方法类型
-                        dataType: "json",//预期服务器返回的数据类型
-                        url: "/updateDateAdd" ,//url
-                        data: {title:title,dataname:dataname,id:data.item.id,pid:pid,operator:data.item.operator,operatorTime:data.item.operatorTime},
-                        success: function (result) {
-                            if (result.success>0) {
-                                alert("操作成功");
-                                treeTable.render(re);
-                            }else{
-                                alert("系统错误");
+                    var pid = data.item.pid;
+                    if (dataname==""){
+                        alert("名称不能为空")
+                    }else {
+                        $.ajax({
+                            //几个参数需要注意一下
+                            type: "POST",//方法类型
+                            dataType: "json",//预期服务器返回的数据类型
+                            url: "/updateDateAdd" ,//url
+                            data: {title:title,dataname:dataname,id:data.item.id,pid:pid,operator:data.item.operator,operatorTime:data.item.operatorTime},
+                            success: function (result) {
+                                if (result.success>0) {
+                                    alert("操作成功");
+                                    treeTable.render(re);
+                                }else{
+                                    alert("系统错误");
+                                }
+                            },
+                            error : function() {
+                                alert("异常！");
                             }
-                        },
-                        error : function() {
-                            alert("异常！");
-                        }
-                    });
+                        });
+                        layer.close(index);
+                    }
 
-                    layer.close(index);
                 },
                 btn2:function (index) {
                     layer.close(index);
@@ -252,8 +263,10 @@
                     success: function (result) {
                         console.log(result);//打印服务端返回的数据(调试用)
                         if (result.success>0) {
-                            alert("操作成功");
+                            alert(result.date);
                             treeTable.render(re);
+                        }else if(result.success==0){
+                            alert(result.date);
                         }else{
                             alert("系统错误");
                         }

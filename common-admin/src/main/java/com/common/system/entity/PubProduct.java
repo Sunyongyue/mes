@@ -42,7 +42,7 @@ public class PubProduct {
     //透支气量
     private int overdrawAir;
     //使用压力
-    private int pressure;
+    private String pressure;
     //脉冲当量
     private String pulseEquivalent;
     //备注
@@ -115,7 +115,7 @@ public class PubProduct {
     //备注
     private String testRemarks;
     public PubProduct(){}
-    public PubProduct(int ids, int id, String productNum, int alarmSquare, String charMethod, String controlMainboardName, String controlMainboardSpecifications, String controlMainboardSupplier, String disconnectionCheck, String fourMainBoardName, String fourSpecifications, String fourSupplier, String gasCheck, String goodsName, String intakeDirection, String lowPressureCheck, String microleakageCheck, String noContactCheck, int nums, String overcurrentCheck, int overdrawAir, int pressure, String pulseEquivalent, String remarks, int reservedAir, String signalSource, String specifications, String stopUseCheck, String telMainBoardName, String telMainBoardSpecifications, String telMainBoardSupplier, String telProtocol, String telType, int upperLimitOfRecharge, int valveCloseTime, String valveName, int valveOpenTime, String valveSpecifications, String valveSupplier, String version, String operator, String operatorTime, String valveNUms, String vavleProductDate, String controlMainBoardNums, String controlMainBoardProductDate, String telMainBoardNums, String telMainBoardProductDate, String cardNum, String iMSI, String iMEI, String iCCID, String fourMainBoardNums, String fourMainBoardProductDate, String assembler, String tester, String productDate, String testDate, String testRemarks) {
+    public PubProduct(int ids, int id, String productNum, int alarmSquare, String charMethod, String controlMainboardName, String controlMainboardSpecifications, String controlMainboardSupplier, String disconnectionCheck, String fourMainBoardName, String fourSpecifications, String fourSupplier, String gasCheck, String goodsName, String intakeDirection, String lowPressureCheck, String microleakageCheck, String noContactCheck, int nums, String overcurrentCheck, int overdrawAir, String pressure, String pulseEquivalent, String remarks, int reservedAir, String signalSource, String specifications, String stopUseCheck, String telMainBoardName, String telMainBoardSpecifications, String telMainBoardSupplier, String telProtocol, String telType, int upperLimitOfRecharge, int valveCloseTime, String valveName, int valveOpenTime, String valveSpecifications, String valveSupplier, String version, String operator, String operatorTime, String valveNUms, String vavleProductDate, String controlMainBoardNums, String controlMainBoardProductDate, String telMainBoardNums, String telMainBoardProductDate, String cardNum, String iMSI, String iMEI, String iCCID, String fourMainBoardNums, String fourMainBoardProductDate, String assembler, String tester, String productDate, String testDate, String testRemarks) {
         this.ids = ids;
         this.id = id;
         this.productNum = productNum;
@@ -345,11 +345,11 @@ public class PubProduct {
         this.overdrawAir = overdrawAir;
     }
 
-    public int getPressure() {
+    public String getPressure() {
         return pressure;
     }
 
-    public void setPressure(int pressure) {
+    public void setPressure(String pressure) {
         this.pressure = pressure;
     }
 
@@ -510,7 +510,7 @@ public class PubProduct {
     }
 
     public void setOperatorTime(String operatorTime) {
-        this.operatorTime = operatorTime;
+        this.operatorTime = operatorTime.substring(0,19);
     }
 
     public String getValveNUms() {

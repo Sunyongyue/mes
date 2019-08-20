@@ -13,5 +13,6 @@ public interface SysdataMapper {
     int addSysData(@Param("pid") int pid, @Param("title") String title, @Param("dataname") String dataname,@Param("operator") String operator);
     int updateSysData(@Param("pid") int pid,@Param("title") String title,@Param("dataname") String dataname,@Param("id") int id,@Param("operator") String operator,@Param("operatorTime") String operatorTime);
     int deleteSysData(@Param("id") int id);
+    int selectCount(@Param("pid") int pid);
     List<Sysdata> queryLocal(@Param("pid") int pid);
 }

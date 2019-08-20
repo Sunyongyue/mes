@@ -18,6 +18,9 @@
     <select id="queryByPid" resultType="com.common.system.entity.SysMaterialManagement">
         select * from sysmaterialmanagement where pid=#{pid}
     </select>
+    <select id="selectCountSysMaterialManagement" resultType="int">
+        select COUNT(*) FROM sysmaterialmanagement where pid =#{pid};
+    </select>
     <select id="querygoodsType" resultType="com.common.system.entity.SysMaterialManagement">
         SELECT * from sysmaterialmanagement WHERE pid =(
         SELECT id FROM sysmaterialmanagement WHERE factory=#{factory})

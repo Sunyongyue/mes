@@ -17,31 +17,31 @@
 <div class="demoTable">
     所在地区：
     <div class="layui-inline" style="width: 220px">
-        <select name="localSearch3" lay-verify=""  style="width: 210px" onchange="supplierNameSearch()">
+        <select name="localSearch3" lay-verify=""  style="width: 200px" onchange="supplierNameSearch()">
             <option value="" ></option>
         </select>
     </div>
     <div class="layui-inline" style="margin-left: -15px">供应商名称：</div>
     <div class="layui-inline" style="width: 220px;">
-        <select name="supplierNameSearch3" lay-verify=""  style="width: 210px" onchange="goodsType()">
+        <select name="supplierNameSearch3" lay-verify=""  style="width: 200px" onchange="goodsType()">
             <option value="" ></option>
         </select>
     </div>
     物料类别：
     <div class="layui-inline" style="width: 220px">
-        <select name="goodsTypeSearch3" lay-verify=""  style="width: 210px" onchange="goodsName()">
+        <select name="goodsTypeSearch3" lay-verify=""  style="width: 200px" onchange="goodsName()">
             <option value="" ></option>
         </select>
     </div>
     物料名称：
     <div class="layui-inline" style="width: 220px">
-        <select name="goodsNameSearch3" lay-verify=""  style="width: 210px" onchange="specifications()">
+        <select name="goodsNameSearch3" lay-verify=""  style="width: 200px" onchange="specifications()">
             <option value="" ></option>
         </select>
     </div><br/>
     物料规格：
     <div class="layui-inline" style="width: 220px">
-        <select name="specificationsSearch3" lay-verify=""  style="width: 210px" >
+        <select name="specificationsSearch3" lay-verify=""  style="width: 200px" >
             <option value="" ></option>
         </select>
     </div>
@@ -56,99 +56,117 @@
     <button class="layui-btn layui-btn-sm" data-type="reload">查询</button>
 </div>
 <div id="add-main" style="display: none;">
-    <div class="my-form">
+    <div id="my-from">
         <div class="layui-form-item my-form-item" style="margin-top: 10px">
-            <label class="layui-form-label layui-icon" style="width: 170px">&#xe642;所在地区:</label>
-            <div class="layui-input-inline">
-                <select id="localAdd"  style="width: 190px;height: 25px;margin-top: 8px" onchange="supplierNameSearchAdd()">
-                    <option value="" >请选择地区</option>
-                </select>
+            <div class="layui-inline">
+                <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>所在地区:</label>
+                <div class="layui-input-inline">
+                    <select id="localAdd"  style="width: 190px;height: 25px;margin-top: 8px" onchange="supplierNameSearchAdd()">
+                        <option value="" >请选择地区</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="layui-form-item my-form-item" style="margin-top: 10px">
-            <label class="layui-form-label layui-icon" style="width: 170px">&#xe642;供应商名称:</label>
-            <div class="layui-input-inline">
-                <!--   <input id="supplierNameAdd" type="text" name="supplierNameAdd" lay-verify="required" placeholder="请输入供应商名称" autocomplete="off"
-                          class="layui-input"/>-->
-                <select id="supplierNameAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="goodsTypeAdd()">
-                    <option value="" >请选择供应商</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item my-form-item">
-            <label class="layui-form-label layui-icon" style="width: 170px">&#xe642;物料类别:</label>
-            <div class="layui-input-inline">
-                <!-- <input id="goodsTypeAdd" type="text" name="goodsTypeAdd" lay-verify="required" placeholder="请输入物料类别" autocomplete="off"
-                        class="layui-input"/>-->
-                <select id="goodsTypeAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="goodsNameAdd()">
-                    <option value="" >请选择类别</option>
-                </select>
+            <div class="layui-inline">
+                <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>供应商名称:</label>
+                <div class="layui-input-inline">
+                    <!--   <input id="supplierNameAdd" type="text" name="supplierNameAdd" lay-verify="required" placeholder="请输入供应商名称" autocomplete="off"
+                              class="layui-input"/>-->
+                    <select id="supplierNameAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="goodsTypeAdd()">
+                        <option value="" >请选择供应商</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="layui-form-item my-form-item">
-            <label class="layui-form-label layui-icon" style="width: 170px">&#xe642;物料名称:</label>
-            <div class="layui-input-inline">
-                <!--  <input id="goodsNameAdd" type="text" name="goodsNameAdd" lay-verify="required" placeholder="请输入物料名称" autocomplete="off"
-                         class="layui-input"/>-->
-                <select id="goodsNameAdd"  lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="specificationsAdd()">
-                    <option value="" >请选择名称</option>
-                </select>
+            <div class="layui-inline">
+                <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>物料类别:</label>
+                <div class="layui-input-inline">
+                    <!-- <input id="goodsTypeAdd" type="text" name="goodsTypeAdd" lay-verify="required" placeholder="请输入物料类别" autocomplete="off"
+                            class="layui-input"/>-->
+                    <select id="goodsTypeAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="goodsNameAdd()">
+                        <option value="" >请选择类别</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>物料名称:</label>
+                <div class="layui-input-inline">
+                    <!--  <input id="goodsNameAdd" type="text" name="goodsNameAdd" lay-verify="required" placeholder="请输入物料名称" autocomplete="off"
+                             class="layui-input"/>-->
+                    <select id="goodsNameAdd"  lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="specificationsAdd()">
+                        <option value="" >请选择名称</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="layui-form-item my-form-item">
-            <label class="layui-form-label layui-icon" style="width: 170px">&#xe642;规格:</label>
-            <div class="layui-input-inline">
-                <!--<input id="specificationsAdd" type="text" name="specificationsAdd" lay-verify="required" placeholder="请输入物料规格" autocomplete="off"
-                       class="layui-input"/>-->
-                <select id="specificationsAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" >
-                    <option value="" >请选择规格</option>
-                </select>
+            <div class="layui-inline">
+                <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>规格:</label>
+                <div class="layui-input-inline">
+                    <!--<input id="specificationsAdd" type="text" name="specificationsAdd" lay-verify="required" placeholder="请输入物料规格" autocomplete="off"
+                           class="layui-input"/>-->
+                    <select id="specificationsAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" >
+                        <option value="" >请选择规格</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label layui-icon"  style="width: 170px">返退原因:</label>
+                <div class="layui-input-inline">
+                    <input id="reason" type="text" name="reason" lay-verify="required" placeholder="请输入原因" autocomplete="off"
+                           class="layui-input"/>
+                </div>
             </div>
         </div>
         <div class="layui-form-item my-form-item" >
-            <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;返退原因:</label>
-            <div class="layui-input-inline">
-                <input id="reason" type="text" name="reason" lay-verify="required" placeholder="请输入原因" autocomplete="off"
-                       class="layui-input"/>
+            <div class="layui-inline">
+                <label class="layui-form-label layui-icon"  style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>返退部门:</label>
+                <div class="layui-input-inline">
+                    <input id="department" type="text" name="department" lay-verify="required" placeholder="请输入部门" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label layui-icon"  style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>返退数量:</label>
+                <div class="layui-input-inline">
+                    <input id="nums" type="text" name="nums" lay-verify="required" placeholder="请输入数量" autocomplete="off"
+                           class="layui-input"/>
+                </div>
             </div>
         </div>
         <div class="layui-form-item my-form-item" >
-            <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;返退部门:</label>
-            <div class="layui-input-inline">
-                <input id="department" type="text" name="department" lay-verify="required" placeholder="请输入部门" autocomplete="off"
-                       class="layui-input"/>
-            </div>
-        </div>
-        <div class="layui-form-item my-form-item" >
-            <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;返退数量:</label>
-            <div class="layui-input-inline">
-                <input id="nums" type="text" name="nums" lay-verify="required" placeholder="请输入数量" autocomplete="off"
-                       class="layui-input"/>
-            </div>
-        </div>
-        <div class="layui-form-item my-form-item" >
-            <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;备注:</label>
-            <div class="layui-input-inline">
-                <input id="remarksAdd" type="text" name="remarksAdd" lay-verify="required" placeholder="请输入备注" autocomplete="off"
-                       class="layui-input"/>
+            <div class="layui-inline">
+                <label class="layui-form-label layui-icon"  style="width: 170px">备注:</label>
+                <div class="layui-input-inline">
+                    <input id="remarksAdd" type="text" name="remarksAdd" lay-verify="required" placeholder="请输入备注" autocomplete="off"
+                           class="layui-input"/>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<table class="layui-table" lay-data="{totalRow:true,url:'/goodSRegStock/goodSRegStockData', page:true, id:'idTest',toolbar:'default',defaultToolbar:['exports'] }" lay-filter="demo">
+<script type="text/html" id="toolbarDemobuz">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add" id="add" >添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>
+        <button class="layui-btn layui-btn-sm" lay-event="delete" id="delete" >删除</button>
+       <!-- <button class="layui-btn layui-btn-sm" lay-event="upload" id="upload" >导入</button>-->
+    </div>
+</script>
+<table class="layui-table" lay-data="{totalRow:true,url:'/goodSRegStock/goodSRegStockData', page:true, id:'idTest',toolbar:'#toolbarDemobuz',defaultToolbar:['exports'] }" lay-filter="demo">
     <thead>
     <tr>
         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
         <th lay-data="{field:'goodsType', width:150, sort: true}">物料类别</th>
         <th lay-data="{field:'goodsName', width:150}">物料名称</th>
-        <th lay-data="{field:'specifications', width:150}">规格</th>
+        <th lay-data="{field:'specifications', width:150}">物料规格</th>
         <th lay-data="{field:'status', width:150}">产品状态</th>
         <th lay-data="{field:'reason', width:150 }">返退原因</th>
         <th lay-data="{field:'department', width:150 ,totalRowText:'合计：'}">返退部门</th>
         <th lay-data="{field:'nums', width:150,totalRow:true}">返退数量</th>
         <th lay-data="{field:'supplierName', width:150}">供应商名称</th>
         <th lay-data="{field:'operator', width:150}">操作人</th>
-        <th lay-data="{field:'operatorTime', width:150}">操作时间</th>
+        <th lay-data="{field:'operatorTime', width:180}">操作时间</th>
         <th lay-data="{field:'remarks', width:150}">备注</th>
     </tr>
     </thead>
@@ -192,7 +210,7 @@
                         type:1,
                         title:'添加',
                         btnAlign: 'c',
-                        area: ['500px', '600px'],
+                        area: ['800px', '400px'],
                         content: $("#add-main"),
                         btn:['保存','取消'],
                         yes:function(index,layero){
@@ -205,27 +223,30 @@
                             var reason =top.$("#reason").val();
                             var department =top.$("#department").val();
                             var remarks =top.$("#remarksAdd").val();
-                            $.ajax({
-                                //几个参数需要注意一下
-                                type: "POST",//方法类型
-                                dataType: "json",//预期服务器返回的数据类型
-                                url: "/goodSRegStock/addGoodsRegStock" ,//url
-                                data: {local:local,supplierName:supplierName,goodsName:goodsName,goodsType:goodsType,specifications:specifications,reason:reason,department:department,nums:nums,remarks:remarks},
-                                success: function (result) {
-                                    console.log(result);//打印服务端返回的数据(调试用)
-                                    if (result.success >0) {
-                                        alert("操作成功");
-                                        table.reload('idTest');
-                                    }else{
-                                        alert("系统错误");
+                            if (specifications=="请选择规格"||nums==""||department=="") {
+                              alert("您还有必填项未填！")
+                            }else {
+                                $.ajax({
+                                    //几个参数需要注意一下
+                                    type: "POST",//方法类型
+                                    dataType: "json",//预期服务器返回的数据类型
+                                    url: "/goodSRegStock/addGoodsRegStock" ,//url
+                                    data: {local:local,supplierName:supplierName,goodsName:goodsName,goodsType:goodsType,specifications:specifications,reason:reason,department:department,nums:nums,remarks:remarks},
+                                    success: function (result) {
+                                        console.log(result);//打印服务端返回的数据(调试用)
+                                        if (result.success >0) {
+                                            alert("操作成功");
+                                            table.reload('idTest');
+                                        }else{
+                                            alert("系统错误");
+                                        }
+                                    },
+                                    error : function() {
+                                        alert("异常！");
                                     }
-                                },
-                                error : function() {
-                                    alert("异常！");
-                                }
-                            });
-
-                            layer.close(index);
+                                });
+                                layer.close(index);
+                            }
                         },
                         btn2:function (index) {
                             layer.close(index);

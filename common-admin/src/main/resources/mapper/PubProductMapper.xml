@@ -5,6 +5,9 @@
     <select id="queryPubProduct" resultType="com.common.system.entity.PubProduct">
        SELECT * from pubProduct,product_order WHERE pubProduct.productNum=product_order.productNum
     </select>
+    <select id="queryOneByids" resultType="com.common.system.entity.PubProduct">
+         SELECT * from pubProduct,product_order WHERE pubProduct.productNum=product_order.productNum and pubProduct.ids=#{ids}
+    </select>
     <insert id="addPubProduct">
         INSERT into pubProduct(productNum,valveNUms,vavleProductDate,controlMainBoardNums,controlMainBoardProductDate,telMainBoardNums,telMainBoardProductDate,cardNum,iMSI,iMEI,iCCID,fourMainBoardNums,fourMainBoardProductDate,assembler,tester,productDate,testRemarks)VALUES(
 #{productNum},#{valveNUms},#{vavleProductDate},#{controlMainBoardNums},#{controlMainBoardProductDate},#{telMainBoardNums},#{telMainBoardProductDate},#{cardNum},#{iMSI},#{iMEI},#{iCCID},#{fourMainBoardNums},#{fourMainBoardProductDate},#{assembler},#{tester},SYSDATE(),#{testRemarks})

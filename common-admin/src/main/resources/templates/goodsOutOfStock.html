@@ -17,31 +17,31 @@
 <div class="demoTable">
     所在地区：
     <div class="layui-inline" style="width: 220px">
-        <select name="localSearch1" lay-verify=""  style="width: 210px" onchange="supplierNameSearch()">
+        <select name="localSearch1" lay-verify=""  style="width: 200px" onchange="supplierNameSearch()">
             <option value="" ></option>
         </select>
     </div>
     <div class="layui-inline" style="margin-left: -15px">供应商名称：</div>
     <div class="layui-inline" style="width: 220px;">
-        <select name="supplierNameSearch1" lay-verify=""  style="width: 210px" onchange="goodsType()">
+        <select name="supplierNameSearch1" lay-verify=""  style="width: 200px" onchange="goodsType()">
             <option value="" ></option>
         </select>
     </div>
     物料类别：
     <div class="layui-inline" style="width: 220px">
-        <select name="goodsTypeSearch1" lay-verify=""  style="width: 210px" onchange="goodsName()">
+        <select name="goodsTypeSearch1" lay-verify=""  style="width: 200px" onchange="goodsName()">
             <option value="" ></option>
         </select>
     </div>
     物料名称：
     <div class="layui-inline" style="width: 220px">
-        <select name="goodsNameSearch1" lay-verify=""  style="width: 210px" onchange="specifications()">
+        <select name="goodsNameSearch1" lay-verify=""  style="width: 200px" onchange="specifications()">
             <option value="" ></option>
         </select>
     </div><br/>
     物料规格：
     <div class="layui-inline" style="width: 220px">
-        <select name="specificationsSearch1" lay-verify=""  style="width: 210px" >
+        <select name="specificationsSearch1" lay-verify=""  style="width: 200px" >
             <option value="" ></option>
         </select>
     </div>
@@ -65,16 +65,16 @@
     <tr>
         <th lay-data="{field:'goodsType', width:150}">物料类别</th>
         <th lay-data="{field:'goodsName', width:150}">物料名称</th>
-        <th lay-data="{field:'specifications', width:150}">规格</th>
+        <th lay-data="{field:'specifications', width:150}">物料规格</th>
        <!-- <th lay-data="{field:'goodsProduceDate', width:150}">生产日期</th>-->
         <th lay-data="{field:'status', width:150}">产品状态</th>
         <th lay-data="{field:'outStockType', width:150 ,totalRowText:'合计：'}">出库分类</th>
         <th lay-data="{field:'nums', width:150,totalRow:true}">出库数量</th>
-        <th lay-data="{field:'outGoodsNums', width:150,totalRow:true}">出库后数量</th>
-        <th lay-data="{field:'pipelineNumber', width:150}">物料流水号</th>
+    <!--    <th lay-data="{field:'outGoodsNums', width:150,totalRow:true}">出库后数量</th>
+        <th lay-data="{field:'pipelineNumber', width:150}">物料流水号</th>-->
         <th lay-data="{field:'supplierName', width:150}">供应商名称</th>
         <th lay-data="{field:'operator', width:150}">操作人</th>
-        <th lay-data="{field:'operatorTime', width:150}">操作时间</th>
+        <th lay-data="{field:'operatorTime', width:180}">操作时间</th>
         <th lay-data="{field:'remarks', width:150}">备注</th>
     </tr>
     </thead>

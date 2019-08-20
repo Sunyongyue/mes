@@ -12,6 +12,7 @@ import com.common.system.mapper.ProductOrderMapper;
 import com.common.system.mapper.SaleOrderMapper;
 import com.common.system.service.OverGoodsOutStockService;
 import com.github.pagehelper.PageHelper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,12 +45,12 @@ public class OverGoodsOutStockServiceImpl implements OverGoodsOutStockService {
     }
 
     @Override
-    public JSONObject addOverGoodsOutStock(String productNum, String salenum, String outFactoryMan, String getOutFactoryTime, int outStockNums, String outStockType, String outStockremarks) {
+    public JSONObject addOverGoodsOutStock(String outStockNumbers, String productNum, String salenum, String outFactoryMan, String getOutFactoryTime, int outStockNums, String outStockType, String outStockremarks) {
         List<SaleOrder> saleOrders = saleOrderMapper.searchSaleOrder(salenum, "", "", "", "", "", "", "");
         List<ProductOrder> productOrders = productOrderMapper.searchProductOrder(productNum, "", "", "", "", "");
         int i1 = goodsStockMapper.deleteGoodsStock(saleOrders.get(0).getProductNameOrder(), saleOrders.get(0).getProductSpecificationsOrder(), productOrders.get(0).getIntakeDirection(), outStockNums,outFactoryMan);
         if (i1>0){
-            int i = outStockMapper.addOverGoodsOutStock(productNum, salenum, outFactoryMan, getOutFactoryTime, outStockNums, outStockType, outStockremarks);
+            int i = outStockMapper.addOverGoodsOutStock(outStockNumbers,productNum, salenum, outFactoryMan, getOutFactoryTime, outStockNums, outStockType, outStockremarks);
             JSONObject object = new JSONObject();
             object.put("success",i);
             return object;}else {
@@ -61,11 +62,11 @@ public class OverGoodsOutStockServiceImpl implements OverGoodsOutStockService {
     }
 
     @Override
-    public JSONObject searchOverGoodsOutStock(String salenum, String productNameOrder, String productSpecificationsOrder, String outFactoryMan, String startDate, String endDate,Integer page,Integer limit) {
-        List<OverGoodsOutStock> overGoodsOutStocks = outStockMapper.searchOverGoodsOutStock(salenum, productNameOrder, productSpecificationsOrder, outFactoryMan, startDate, endDate);
+    public JSONObject searchOverGoodsOutStock(String outStockNumbers,String salenum, String productNameOrder, String productSpecificationsOrder, String outFactoryMan, String startDate, String endDate,Integer page,Integer limit) {
+        List<OverGoodsOutStock> overGoodsOutStocks = outStockMapper.searchOverGoodsOutStock(outStockNumbers,salenum, productNameOrder, productSpecificationsOrder, outFactoryMan, startDate, endDate);
         int size = overGoodsOutStocks.size();
         PageHelper.startPage(page,limit);
-        List<OverGoodsOutStock> overGoodsOutStock = outStockMapper.searchOverGoodsOutStock(salenum, productNameOrder, productSpecificationsOrder, outFactoryMan, startDate, endDate);
+        List<OverGoodsOutStock> overGoodsOutStock = outStockMapper.searchOverGoodsOutStock(outStockNumbers,salenum, productNameOrder, productSpecificationsOrder, outFactoryMan, startDate, endDate);
         String s = JSON.toJSONString(overGoodsOutStock);
         JSONArray array = JSONArray.parseArray(s);
         JSONObject object = new JSONObject();

@@ -69,6 +69,12 @@ public class GoodsStockServiceImpl implements GoodsStockService {
     }
 
     @Override
+    public int deleteOne() {
+        int i = goodsStockMapper.deleteOne();
+        return i;
+    }
+
+    @Override
     public List<GoodsStock> queryExist(String local, String supplierName, String goodsType, String goodsName, String specifications) {
         List<GoodsStock> goodsStocks = goodsStockMapper.queryExist(local, supplierName, goodsType, goodsName, specifications);
         return goodsStocks;

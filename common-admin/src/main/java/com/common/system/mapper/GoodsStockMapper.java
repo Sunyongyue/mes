@@ -12,6 +12,7 @@ public interface GoodsStockMapper {
     int addGoodsStock(@Param("local") String local,@Param("supplierName") String supplierName,@Param("goodsType") String goodsType,@Param("goodsName") String goodsName,@Param("specifications") String specifications,@Param("goodsProduceDate") String goodsProduceDate,@Param("goodsStock") String goodsStock,@Param("nums") int nums,@Param("remarks") String remarks,@Param("operator") String operator);
     int deleteGoodsStock(@Param("local") String local,@Param("supplierName") String supplierName,@Param("goodsType") String goodsType,@Param("goodsName") String goodsName,@Param("specifications") String specifications,@Param("nums") int nums,@Param("operator") String operator);
     int updateGoodsStock(@Param("local") String local,@Param("supplierName") String supplierName,@Param("goodsType") String goodsType,@Param("goodsName") String goodsName,@Param("specifications") String specifications,@Param("nums") int nums,@Param("operator") String operator);
+    int deleteOne();
     List<GoodsStock> queryExist(@Param("local") String local,@Param("supplierName") String supplierName,@Param("goodsType") String goodsType,@Param("goodsName") String goodsName,@Param("specifications") String specifications);
     List<String> locals();
     List<String> supplierNames();

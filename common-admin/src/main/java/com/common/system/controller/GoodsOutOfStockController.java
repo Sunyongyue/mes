@@ -52,12 +52,13 @@ public class GoodsOutOfStockController {
                 int i1 = goodsStockService.deleteGoodsStock(local, supplierName, goodsName, goodsType, specifications,nums,user.getUsername());
                 if (i1>0){
                     date.add(local+" "+supplierName+" "+goodsType+""+goodsName+""+specifications+" 数量："+nums+"出库成功");
-                    goodsOutStockService.addGoodsOutStock(goodsName,goodsType,specifications,"正常",outStockType,nums,"10086",supplierName,remarks,user.getUsername(),local);
+                    goodsOutStockService.addGoodsOutStock(goodsName,goodsType,specifications,"正常",outStockType,nums,"/",supplierName,remarks,user.getUsername(),local);
                 }else{
                     date.add(local+" "+supplierName+" "+goodsType+""+goodsName+""+specifications+" 数量："+nums+"出库失败，请检查库存");
                 }
             }
         }
+        goodsStockService.deleteOne();
         JSONObject object =new JSONObject();
         object.put("success",1);
         object.put("date",date);

@@ -104,4 +104,15 @@ public class SysSupplierServiceImpl implements SysSupplierService {
         object.put("success",1);
         return object;
     }
+
+    @Override
+    public JSONObject supplierNameOrder() {
+        List<String> strings = supplierMapper.supplierNameOrder();
+        String s = JSON.toJSONString(strings);
+        JSONArray array = JSONArray.parseArray(s);
+        JSONObject object =new JSONObject();
+        object.put("date",array);
+        object.put("success",1);
+        return object;
+    }
 }

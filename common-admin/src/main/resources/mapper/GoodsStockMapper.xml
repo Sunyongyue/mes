@@ -39,6 +39,9 @@
     <update id="updateGoodsStock">
         update goods_stock set nums=(nums+#{nums}),operator=#{operator},operatorTime=SYSDATE() where goodsType=#{goodsType} and goodsName=#{goodsName} and specifications=#{specifications} and `local`=#{local} and supplierName=#{supplierName}
     </update>
+    <delete id="deleteOne">
+        delete from goods_stock where nums=0;
+    </delete>
     <select id="locals" resultType="string">
         SELECT distinct `local` FROM goods_stock
     </select>

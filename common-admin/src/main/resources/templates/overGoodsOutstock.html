@@ -9,9 +9,13 @@
 </head>
 <body>
 <div class="demoTable">
-    订单编号：
+    <div class="layui-inline" style="margin-left: -27px">销售任务单号：</div>
     <div class="layui-inline" style="width: 220px">
         <input class="layui-input"  id="productNumSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+    </div>
+    出厂编号：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="outStockNumbersSearch" autocomplete="off" style="width: 200px;height: 25px"/>
     </div>
     产品名称：
     <div class="layui-inline" style="width: 220px">
@@ -21,11 +25,11 @@
     <div class="layui-inline" style="width: 220px">
         <input class="layui-input"  id="goodsSpecificationsSearch" autocomplete="off" style="width: 200px;height: 25px"/>
     </div>
+    <button class="layui-btn layui-btn-sm" data-type="reload">查询</button><br/>
     <div class="layui-inline" style="margin-left: -15px">操作员名称：</div>
     <div class="layui-inline" style="width: 220px;">
         <input class="layui-input"  id="operatorSearch" autocomplete="off" style="width: 200px;height: 25px"/>
     </div>
-    <button class="layui-btn layui-btn-sm" data-type="reload">查询</button><br/>
     起始日期：
     <div class="layui-inline" style="width: 220px">
         <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
@@ -40,7 +44,7 @@
     <div class="my-form">
         <div class="layui-form-item my-form-item" style="margin-top: 10px">
             <div class="layui-inline">
-                <label class="layui-form-label">销售订单编号</label>
+                <label class="layui-form-label">销售任务单号</label>
                 <div class="layui-input-inline">
                     <input type="text" id="saleNumAdd" name="saleNumAdd"  autocomplete="off" class="layui-input">
                 </div>
@@ -48,9 +52,17 @@
         </div>
         <div class="layui-form-item my-form-item" style="margin-top: 10px">
             <div class="layui-inline">
-                <label class="layui-form-label">生产订单编号</label>
+                <label class="layui-form-label">生产任务单号</label>
                 <div class="layui-input-inline">
                     <input type="text" id="productNumAdd" name="productNumAdd"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item my-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">出厂编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="outStockNumbers" name="outStockNums" autocomplete="off" class="layui-input" >
                 </div>
             </div>
         </div>
@@ -72,17 +84,19 @@
         </div>
     </div>
 </div>
-<div class="layui-btn-container" id="toolbarDemoOverOut" style="display: none">
+<script type="text/html" id="toolbarDemoOverOut">
+<div class="layui-btn-container">
     <button class="layui-btn layui-btn-sm" lay-event="add" id="add" >出库</button>
   <!--  <button class="layui-btn layui-btn-sm" lay-event="check" id="check" >检测</button>-->
     <!--<button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>-->
-   <!-- <button class="layui-btn layui-btn-sm" lay-event="delete" id="delete" >删除</button>-->
+  <!--  <button class="layui-btn layui-btn-sm" lay-event="upload" id="upload" >导入</button>-->
 </div>
+</script>
 <table class="layui-table" lay-data="{url:'/overGoods/queryOverGoodsOutStock', page:true, id:'OverOut',toolbar:'#toolbarDemoOverOut',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoOverOut">
     <thead>
     <tr>
      <!--   <th lay-data="{type:'checkbox', fixed: 'left'}" rowspan="2"></th>-->
-        <th lay-data="{align:'center'}" colspan="9">订货信息</th>
+        <th lay-data="{align:'center'}" colspan="10">订货信息</th>
         <th lay-data="{align:'center'}" colspan="6">阀门信息</th>
         <th lay-data="{align:'center'}" colspan="5">控制主板信息</th>
         <th lay-data="{align:'center'}" colspan="10">通讯主板信息</th>
@@ -93,7 +107,8 @@
         <th lay-data="{field:'outStockremarks',width:150}" rowspan="2">备注</th>
     <tr>
         <!--<th lay-data="{field:'productNum', width:250}" >生产订单号</th>-->
-        <th lay-data="{field:'saleNum', width:150}" >销售订单号</th>
+       <th lay-data="{field:'outStockNumbers', width:250}" >出厂编号</th>
+        <th lay-data="{field:'saleNum', width:150}" >销售任务单号</th>
         <th lay-data="{field:'customerName', width:150}" >客户名称</th>
         <th lay-data="{field:'date', width:150}" >订单日期</th>
         <th lay-data="{field:'projectName', width:150}" >工程名称</th>
@@ -141,7 +156,7 @@
     </thead>
 </table>
 
-<script th:src="@{/adminlte/layui/layui.js}" charset="utf-8"></script>
+<script th:src="@{/adminlte/layui/layui.all.js}" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
     layui.use('table', function(){
@@ -171,6 +186,7 @@
                         yes:function(index,layero){
                             var saleNumAdd =top.$("#saleNumAdd").val();
                             var productNumAdd =top.$("#productNumAdd").val();
+                            var outStockNumbers =top.$("#outStockNumbers").val();
                             var outStockType =top.$("#outStockType").val();
                             var remarksAdd =top.$("#remarksAdd").val();
                             $.ajax({
@@ -277,6 +293,7 @@
                  ,*/
             reload:function () {
                 var productNum = $("#productNumSearch").val();
+                var outStockNumbers = $("#outStockNumbersSearch").val();
                 var goodsName = $("#goodsNameSearch").val();
                 var specifications = $("#goodsSpecificationsSearch").val();
                 var operator = $("#operatorSearch").val();
@@ -285,7 +302,7 @@
               /*  console.log(productNum+goodsName+specifications+operator+startDate+endDate);*/
                 table.reload('OverOut',{
                     url:'/overGoods/searchOverGoodsOutStock',
-                    where:{salenum:productNum,productNameOrder:goodsName,productSpecificationsOrder:specifications,outFactoryMan:operator,startDate:startDate,endDate:endDate,page:1,limit:10}  ,
+                    where:{outStockNumbers:outStockNumbers,salenum:productNum,productNameOrder:goodsName,productSpecificationsOrder:specifications,outFactoryMan:operator,startDate:startDate,endDate:endDate,page:1,limit:10}  ,
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
@@ -308,6 +325,28 @@
         laydate.render({
             elem: '#endDateSearch' //指定元素
             ,type: 'datetime'
+        });
+    });
+    layui.use(['upload'],function(){
+        var $ = layui.jquery,
+            upload = layui.upload;
+//指定允许上传的文件类型
+        upload.render({
+            elem: '#upload'
+            ,url: '/overGoods/uploadOutStock'
+            ,accept: 'file' //普通文件
+            ,exts: 'xlsx' //只允许上传excel文件
+            ,done: function(res){
+                if(res.code == 0){ //上传成功
+                    layer.msg(res.msg);
+                    table.reload('OverOut');
+                }else{
+                    layer.msg('上传失败');
+                }
+            }
+            ,error: function(index, upload){
+                layer.msg('上传失败');
+            }
         });
     });
 </script>

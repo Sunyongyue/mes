@@ -36,4 +36,7 @@
     <select id="supplierNameSearch" resultType="string">
         SELECT distinct supplierName FROM syssupplier where `local`=#{local}
     </select>
+    <select id="supplierNameOrder" resultType="string">
+        SELECT distinct supplierName FROM syssupplier
+    </select>
 </mapper>

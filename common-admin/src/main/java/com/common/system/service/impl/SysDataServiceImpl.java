@@ -47,7 +47,14 @@ public class SysDataServiceImpl implements SysDataService {
         int i = sysdataMapper.deleteSysData(id);
         JSONObject object =new JSONObject();
         object.put("success",i);
+        object.put("date","操作成功");
         return object;
+    }
+
+    @Override
+    public int selectCount(int pid) {
+        int i = sysdataMapper.selectCount(pid);
+        return i;
     }
 
     @Override

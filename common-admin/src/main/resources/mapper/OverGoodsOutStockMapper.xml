@@ -5,13 +5,14 @@
         SELECT  * from over_goods_outStock,sale_order,pubproduct,product_order where over_goods_outStock.productNum=pubproduct.productNum and over_goods_outStock.productNum=product_order.productNum and over_goods_outStock.salenum =sale_order.saleNum   ORDER BY over_goods_outStock.getOutFactoryTime desc
     </select>
     <insert id="addOverGoodsOutStock">
-      INSERT into over_goods_outStock(productNum,salenum,outFactoryMan,getOutFactoryTime,outStockNums,outStockType,outStockremarks)VALUES(
-      #{productNum},#{salenum},#{outFactoryMan},SYSDATE(),1,#{outStockType},#{outStockremarks})
+      INSERT into over_goods_outStock(outStockNumbers,productNum,salenum,outFactoryMan,getOutFactoryTime,outStockNums,outStockType,outStockremarks)VALUES(
+      #{outStockNumbers},#{productNum},#{salenum},#{outFactoryMan},SYSDATE(),1,#{outStockType},#{outStockremarks})
     </insert>
     <select id="searchOverGoodsOutStock" resultType="com.common.system.entity.OverGoodsOutStock">
         select * from over_goods_outStock,sale_order,pubproduct,product_order
         <where>
             <if test="1!=0"> over_goods_outStock.productNum=pubproduct.productNum and over_goods_outStock.productNum=product_order.productNum and over_goods_outStock.salenum =sale_order.saleNum</if>
+            <if test="outStockNumbers !=''">and over_goods_outStock.outStockNumbers = #{outStockNumbers}</if>
             <if test="salenum !=''">and over_goods_outStock.salenum = #{salenum}</if>
             <if test="productNameOrder !=''">and sale_order.productNameOrder = #{productNameOrder}</if>
             <if test="productSpecificationsOrder !='' ">and sale_order.productSpecificationsOrder = #{productSpecificationsOrder}</if>

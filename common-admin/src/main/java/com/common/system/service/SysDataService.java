@@ -9,5 +9,6 @@ public interface SysDataService {
     JSONObject addSysData(@Param("pid") int pid, @Param("title") String title, @Param("dataname") String dataname,@Param("operator") String operator);
     JSONObject updateSysData(@Param("pid") int pid,@Param("title") String title,@Param("dataname") String dataname,int id,@Param("operator") String operator,@Param("operatorTime") String operatorTime);
     JSONObject deleteSysData(@Param("id") int id);
+    int selectCount(@Param("pid") int pid);
     JSONObject queryLocal( int pid);
 }

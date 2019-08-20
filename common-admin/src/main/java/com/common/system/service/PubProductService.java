@@ -1,10 +1,12 @@
 package com.common.system.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.common.system.entity.PubProduct;
 import org.apache.ibatis.annotations.Param;
 
 public interface PubProductService {
     JSONObject queryPubProduct(Integer page,Integer limit);
+    PubProduct queryOneByids(@Param("ids") int ids );
     JSONObject  addPubProduct(@Param("productNum") String productNum, @Param("valveNUms") String valveNUms,  @Param("controlMainBoardNums") String controlMainBoardNums,@Param("assembler") String assembler,@Param("tester") String tester,@Param("testRemarks") String testRemarks);
     JSONObject  updatePubProduct(@Param("ids") int ids ,@Param("tester") String tester);
     JSONObject  dtletePubProduct(@Param("array") int[] array );

@@ -14,7 +14,7 @@ public class Sysdata {
         this.title = title;
         this.dataname = dataname;
         this.operator = operator;
-        this.operatorTime = operatorTime;
+        this.operatorTime = operatorTime.substring(0,19);
     }
 
     public int getId() {
@@ -62,7 +62,7 @@ public class Sysdata {
     }
 
     public void setOperatorTime(String operatorTime) {
-        this.operatorTime = operatorTime;
+        this.operatorTime = operatorTime.substring(0,19);
     }
 
     @Override

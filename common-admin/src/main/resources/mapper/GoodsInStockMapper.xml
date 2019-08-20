@@ -9,7 +9,7 @@
     </select>
     <insert id="addGoodsInStock">
         INSERT into goods_inStock(`local`,goodsType,goodsName,specifications,goodsProduceDate,`status`,goodsNums,supplierName,pipelineNumber,operators,cardNums,IMSI,IMEI,ICCID,remarks,operator,operatorTime)VALUES(
-        #{local},#{goodsType},#{goodsName},#{specifications},#{goodsProduceDate},'正常',#{goodsNums},#{supplierName},#{pipelineNumber},#{operators},#{cardNums},#{IMSI},#{IMEI},#{ICCID},#{remarks},#{operator},SYSDATE())
+        #{local},#{goodsType},#{goodsName},#{specifications},#{goodsProduceDate},'正常',1,#{supplierName},#{pipelineNumber},#{operators},#{cardNums},#{IMSI},#{IMEI},#{ICCID},#{remarks},#{operator},SYSDATE())
     </insert>
     <update id="updateGoodsInStock">
         update goods_inStock set `local`=#{local},goodsType=#{goodsType},goodsName=#{goodsName},specifications=#{specifications},goodsProduceDate=#{goodsProduceDate},`status`=#{status},goodsNums=#{goodsNums},supplierName=#{supplierName},pipelineNumber=#{pipelineNumber},

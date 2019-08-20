@@ -122,7 +122,7 @@ public class SysSupplier {
     }
 
     public void setOperatorTime(String operatorTime) {
-        this.operatorTime = operatorTime;
+        this.operatorTime = operatorTime.substring(0,19);
     }
 
     @Override

@@ -11,6 +11,7 @@ public interface SysMaterialManagementMapper {
     int addSysMaterial(@Param("pid") int pid,@Param("title") String title,@Param("factory") String factory,@Param("materialtype") String materialtype,@Param("materialName") String materialName,@Param("materialSpecification") String materialSpecification,@Param("remarks") String remarks,@Param("operator") String operator);
     int updateSysMaterial(@Param("pid") int pid,@Param("title") String title,@Param("factory") String factory,@Param("materialtype") String materialtype,@Param("materialName") String materialName,@Param("materialSpecification") String materialSpecification,@Param("remarks") String remarks,@Param("operator") String operator,@Param("id") int id);
     int deleteSysMaterial(@Param("id") int id);
+    int selectCountSysMaterialManagement(@Param("pid") int pid);
     List<SysMaterialManagement> queryByPid(@Param("pid") int pid);
     List<SysMaterialManagement> querygoodsType(@Param("factory") String factory);
 }

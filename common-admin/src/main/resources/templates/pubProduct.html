@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="demoTable">
-    订单编号：
+    <div class="layui-inline" style="margin-left: -27px"> 生产任务单号：</div>
     <div class="layui-inline" style="width: 220px">
         <input class="layui-input"  id="productNumSearch" autocomplete="off" style="width: 200px;height: 25px"/>
     </div>
@@ -40,9 +40,9 @@
     <div class="my-form">
         <div class="layui-form-item my-form-item" style="margin-top: 10px">
             <div class="layui-inline">
-                <label class="layui-form-label">订单编号</label>
+                <label class="layui-form-label">生产任务单号</label>
                 <div class="layui-input-inline">
-                    <input type="text" id="productNumAdd" name="productNumAdd" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入">
+                    <input type="text" id="productNumAdd" name="productNumAdd" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入生产任务单号">
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">阀门编号</label>
                 <div class="layui-input-inline">
-                    <input type="text" id="vavleNumAdd" name="vavleNum" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入">
+                    <input type="text" id="vavleNumAdd" name="vavleNum" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入阀门编号">
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">主板编号</label>
                 <div class="layui-input-inline">
-                    <input type="text" id="mainBoardNumAdd" name="mainBoardNum" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入">
+                    <input type="text" id="mainBoardNumAdd" name="mainBoardNum" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入主板编号">
                 </div>
             </div>
         </div>
@@ -66,25 +66,28 @@
             <div class="layui-inline">
                 <label class="layui-form-label">备注</label>
                 <div class="layui-input-inline">
-                    <input type="text" id="remarksAdd" name="remarks" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入">
+                    <input type="text" id="remarksAdd" name="remarks" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入备注">
                 </div>
             </div>
         </div>
     </div>
 </div>
-    <div class="layui-btn-container" id="toolbarDemoPub" style="display: none">
+<script type="text/html" id="toolbarDemoPub">
+    <div class="layui-btn-container" >
         <button class="layui-btn layui-btn-sm" lay-event="add" id="add" >添加</button>
         <button class="layui-btn layui-btn-sm" lay-event="check" id="check" >检测</button>
         <!--<button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>-->
+        <!--  <button class="layui-btn layui-btn-sm" lay-event="upload" id="upload" >导入</button>-->
         <button class="layui-btn layui-btn-sm" lay-event="delete" id="delete" >删除</button>
     </div>
+</script>
 <table class="layui-table" lay-data="{url:'/production/pubProductDate', page:true, id:'idTestPub',toolbar:'#toolbarDemoPub',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoPub">
     <thead>
     <tr>
         <th lay-data="{type:'checkbox', fixed: 'left'}" rowspan="2"></th>
-        <th lay-data="{field:'productNum', width:250}" rowspan="2">生产任务订单号</th>
+        <th lay-data="{field:'productNum', width:250}" rowspan="2">生产任务单号</th>
         <th lay-data="{field:'goodsName', width:150}" rowspan="2">产品名称</th>
-        <th lay-data="{field:'specifications',width:150}" rowspan="2">规格</th>
+        <th lay-data="{field:'specifications',width:150}" rowspan="2">产品规格</th>
         <th lay-data="{field:'pressure',width:150}" rowspan="2">使用压力</th>
         <th lay-data="{field:'nums',width:150}" rowspan="2">数量</th>
         <th lay-data="{align:'center'}" colspan="6">阀门信息</th>
@@ -134,7 +137,7 @@
     </thead>
 </table>
 
-<script th:src="@{/adminlte/layui/layui.js}" charset="utf-8"></script>
+<script th:src="@{/adminlte/layui/layui.all.js}" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
     layui.use('table', function(){
@@ -173,7 +176,7 @@
                         type:1,
                         title:'添加',
                         btnAlign: 'c',
-                        area: ['320px', '380px'],
+                        area: ['330px', '380px'],
                         btn:['保存','取消'],
                         content: $("#add-main-civil"),
                         yes:function(index,layero){
@@ -217,7 +220,7 @@
                     } else if(data.length > 1){
                         layer.msg('只能同时检测一个');
                     } else {
-                        var id =checkStatus.data[0].id;
+                        var id =checkStatus.data[0].ids;
                         layer.confirm('确定检测？',{btn: ['确定', '取消'], title: "提示"},function(index){
                             $.ajax({
                                 //几个参数需要注意一下
@@ -318,6 +321,28 @@
         laydate.render({
             elem: '#endDateSearch' //指定元素
             ,type: 'datetime'
+        });
+    });
+    layui.use(['upload'],function(){
+        var $ = layui.jquery,
+            upload = layui.upload;
+//指定允许上传的文件类型
+        upload.render({
+            elem: '#upload'
+            ,url: '/production/uploadPubProduct'
+            ,accept: 'file' //普通文件
+            ,exts: 'xlsx' //只允许上传excel文件
+            ,done: function(res){
+                if(res.code == 0){ //上传成功
+                    layer.msg(res.msg);
+                    table.reload('idTestPub');
+                }else{
+                    layer.msg('上传失败');
+                }
+            }
+            ,error: function(index, upload){
+                layer.msg('上传失败');
+            }
         });
     });
 </script>

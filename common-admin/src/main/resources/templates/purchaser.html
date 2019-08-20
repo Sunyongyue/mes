@@ -35,56 +35,56 @@
     <div class="my-form">
         <form class="layui-form"  lay-skin="line">
             <div class="layui-form-item my-form-item" style="margin-top: 10px">
-                <label class="layui-form-label layui-icon" style="width: 170px">&#xe642;所在地区:</label>
+                <label class="layui-form-label layui-icon" style="width: 170px">所在地区:</label>
                 <div class="layui-input-inline">
                     <input id="local" type="text" name="local" lay-verify="required" placeholder="请输入所在地区" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item my-form-item" style="margin-top: 10px">
-                <label class="layui-form-label layui-icon" style="width: 170px">&#xe642;采购商编号:</label>
+                <label class="layui-form-label layui-icon" style="width: 170px">采购商编号:</label>
                 <div class="layui-input-inline">
                     <input id="purchaserNumsAdd" type="text" name="purchaserNumsAdd" lay-verify="required" placeholder="请输入采购商编号" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item my-form-item">
-                <label class="layui-form-label layui-icon" style="width: 170px">&#xe642;采购商名称:</label>
+                <label class="layui-form-label layui-icon" style="width: 170px">采购商名称:</label>
                 <div class="layui-input-inline">
                     <input id="purchaserNameAdd" type="text" name="purchaserName" lay-verify="required" placeholder="请输入采购商名称" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;燃气集团:</label>
+                <label class="layui-form-label layui-icon"  style="width: 170px">燃气集团:</label>
                 <div class="layui-input-inline">
                     <input id="gasGroup" type="text" name="gasGroup" lay-verify="required" placeholder="请输入燃气集团" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;联系人:</label>
+                <label class="layui-form-label layui-icon"  style="width: 170px">联系人:</label>
                 <div class="layui-input-inline">
                     <input id="contacts" type="text" name="contacts" lay-verify="required" placeholder="请输入联系人" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;联系电话:</label>
+                <label class="layui-form-label layui-icon"  style="width: 170px">联系电话:</label>
                 <div class="layui-input-inline">
                     <input id="tel" type="text" name="tel" lay-verify="required" placeholder="请输入物料流水号起" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;IP地址:</label>
+                <label class="layui-form-label layui-icon"  style="width: 170px">IP地址:</label>
                 <div class="layui-input-inline">
                     <input id="ipAddress" type="text" name="ipAddress" lay-verify="required" placeholder="请输入物料流水号止" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;端口号:</label>
+                <label class="layui-form-label layui-icon"  style="width: 170px">端口号:</label>
                 <div class="layui-input-inline">
                     <input id="ipPort" type="text" name="ipPort" lay-verify="required" placeholder="请输入物料流水号止" autocomplete="off"
                            class="layui-input"/>
@@ -98,14 +98,14 @@
                 </div>
             </div>-->
             <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;详细地址:</label>
+                <label class="layui-form-label layui-icon"  style="width: 170px">详细地址:</label>
                 <div class="layui-input-inline">
                     <input id="localMore" type="text" name="localMore" lay-verify="required" placeholder="请输入详细地址" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item my-form-item" >
-                <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;备注:</label>
+                <label class="layui-form-label layui-icon"  style="width: 170px">备注:</label>
                 <div class="layui-input-inline">
                     <input id="remarks" type="text" name="remarks" lay-verify="required" placeholder="请输入备注" autocomplete="off"
                            class="layui-input"/>
@@ -126,9 +126,9 @@
     <thead>
     <tr>
         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+        <th lay-data="{field:'purchaserNums', width:150}">采购商编号</th>
         <th lay-data="{field:'local', width:150, sort: true}">所在地区</th>
         <th lay-data="{field:'purchaserName', width:150}">采购商名称</th>
-        <th lay-data="{field:'purchaserNums', width:150}">采购商编号</th>
         <th lay-data="{field:'gasGroup', width:150}">燃气集团</th>
         <th lay-data="{field:'contacts', width:150 }">联系人</th>
         <th lay-data="{field:'tel', width:150}">联系电话</th>
@@ -136,13 +136,13 @@
         <th lay-data="{field:'ipAddress', width:150}">IP地址</th>
         <th lay-data="{field:'ipPort', width:150}">端口号</th>
         <th lay-data="{field:'operator', width:150}">操作人</th>
-        <th lay-data="{field:'operatorTime', width:300}">操作时间</th>
+        <th lay-data="{field:'operatorTime', width:180}">操作时间</th>
         <th lay-data="{field:'remarks', width:150}">备注</th>
     </tr>
     </thead>
 </table>
 
-<script th:src="@{/adminlte/layui/layui.js}" charset="utf-8"></script>
+<script th:src="@{/adminlte/layui/layui.all.js}" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
     layui.use('table', function(){
@@ -327,13 +327,13 @@
 //指定允许上传的文件类型
         upload.render({
             elem: '#upload'
-            ,url: ''
+            ,url: '/purchaser/upload'
             ,accept: 'file' //普通文件
             ,exts: 'xlsx' //只允许上传excel文件
             ,done: function(res){
                 if(res.code == 0){ //上传成功
                     layer.msg(res.msg);
-
+                    table.reload('idTest')
                 }else{
                     layer.msg('上传失败');
                 }

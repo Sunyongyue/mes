@@ -100,7 +100,7 @@ public class GoodsInStock {
     }
 
     public void setGoodsProduceDate(String goodsProduceDate) {
-        this.goodsProduceDate = goodsProduceDate;
+        this.goodsProduceDate = goodsProduceDate.substring(0,11);
     }
 
     public String getStatus() {
@@ -196,7 +196,7 @@ public class GoodsInStock {
     }
 
     public void setOperatorTime(String operatorTime) {
-        this.operatorTime = operatorTime;
+        this.operatorTime = operatorTime.substring(0,19);
     }
 
     @Override
