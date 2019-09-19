@@ -8,6 +8,7 @@ import com.common.system.mapper.GoodsInStockMapper;
 import com.common.system.service.GoodsInStockService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +35,8 @@ public class GoodsInStockServiceImpl implements GoodsInStockService {
     }
 
     @Override
-    public JSONObject addGoodsInStock(String local, String goodsType, String goodsName, String specifications, String goodsProduceDate, String status, int goodsNums, String supplierName, String pipelineNumber, String operators, String cardNums, String IMSI, String IMEI, String ICCID, String remarks, String operator) {
-        int i = goodsInStockMapper.addGoodsInStock(local, goodsType, goodsName, specifications, goodsProduceDate, status, goodsNums, supplierName, pipelineNumber, operators, cardNums, IMSI, IMEI, ICCID, remarks, operator);
+    public JSONObject addGoodsInStock(String local, String goodsType, String goodsName, String specifications, String goodsProduceDate, String status, int goodsNums, String supplierName, String pipelineNumber, String operators, String cardNums, String IMSI, String IMEI, String ICCID, String remarks, String operator, String activeTime, String shutdownTime) {
+        int i = goodsInStockMapper.addGoodsInStock(local, goodsType, goodsName, specifications, goodsProduceDate, status, goodsNums, supplierName, pipelineNumber, operators, cardNums, IMSI, IMEI, ICCID, remarks, operator,activeTime,shutdownTime);
         JSONObject object = new JSONObject();
         object.put("success",i);
         return object;
@@ -59,8 +60,8 @@ public class GoodsInStockServiceImpl implements GoodsInStockService {
     }
 
     @Override
-    public JSONObject updateGoodsInStock(int id, String local, String goodsType, String goodsName, String specifications, String goodsProduceDate, String status, int goodsNums, String supplierName, String pipelineNumber, String operators, String cardNums, String IMSI, String IMEI, String ICCID, String remarks, String operator) {
-        int i = goodsInStockMapper.updateGoodsInStock(id, local, goodsType, goodsName, specifications, goodsProduceDate, status, goodsNums, supplierName, pipelineNumber, operators, cardNums, IMSI, IMEI, ICCID, remarks, operator);
+    public JSONObject updateGoodsInStock(int id, String local, String goodsType, String goodsName, String specifications, String goodsProduceDate, String status, int goodsNums, String supplierName, String pipelineNumber, String operators, String cardNums, String IMSI, String IMEI, String ICCID, String remarks, String operator,String activeTime, String shutdownTime) {
+        int i = goodsInStockMapper.updateGoodsInStock(id, local, goodsType, goodsName, specifications, goodsProduceDate, status, goodsNums, supplierName, pipelineNumber, operators, cardNums, IMSI, IMEI, ICCID, remarks, operator,activeTime,shutdownTime);
         JSONObject object = new JSONObject();
         object.put("success",i);
         return object;

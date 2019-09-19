@@ -3,14 +3,17 @@
 <mapper namespace="com.common.system.mapper.PubProductMapper">
 
     <select id="queryPubProduct" resultType="com.common.system.entity.PubProduct">
-       SELECT * from pubProduct,product_order WHERE pubProduct.productNum=product_order.productNum
+       SELECT * from pubProduct,product_order WHERE pubProduct.productNum=product_order.productNum  ORDER BY pubProduct.productDate desc
     </select>
     <select id="queryOneByids" resultType="com.common.system.entity.PubProduct">
          SELECT * from pubProduct,product_order WHERE pubProduct.productNum=product_order.productNum and pubProduct.ids=#{ids}
     </select>
+    <select id="queryOneByproductNum" resultType="com.common.system.entity.PubProduct">
+         SELECT * from pubProduct,product_order WHERE pubProduct.productNum=product_order.productNum and product_order.productNum =#{productNum}
+    </select>
     <insert id="addPubProduct">
-        INSERT into pubProduct(productNum,valveNUms,vavleProductDate,controlMainBoardNums,controlMainBoardProductDate,telMainBoardNums,telMainBoardProductDate,cardNum,iMSI,iMEI,iCCID,fourMainBoardNums,fourMainBoardProductDate,assembler,tester,productDate,testRemarks)VALUES(
-#{productNum},#{valveNUms},#{vavleProductDate},#{controlMainBoardNums},#{controlMainBoardProductDate},#{telMainBoardNums},#{telMainBoardProductDate},#{cardNum},#{iMSI},#{iMEI},#{iCCID},#{fourMainBoardNums},#{fourMainBoardProductDate},#{assembler},#{tester},SYSDATE(),#{testRemarks})
+        INSERT into pubProduct(productNum,valveNUms,vavleProductDate,controlMainBoardNums,controlMainBoardProductDate,telMainBoardNums,telMainBoardProductDate,cardNum,iMSI,iMEI,iCCID,fourMainBoardNums,fourMainBoardProductDate,assembler,tester,productDate,testRemarks,activeTime, shutdownTime)VALUES(
+#{productNum},#{valveNUms},#{vavleProductDate},#{controlMainBoardNums},#{controlMainBoardProductDate},#{telMainBoardNums},#{telMainBoardProductDate},#{cardNum},#{iMSI},#{iMEI},#{iCCID},#{fourMainBoardNums},#{fourMainBoardProductDate},#{assembler},#{tester},SYSDATE(),#{testRemarks},#{activeTime},#{shutdownTime})
     </insert>
     <update id="updatePubProduct">
         update pubProduct set tester=#{tester},testDate=SYSDATE() where ids=#{ids}
@@ -34,5 +37,15 @@
             and pubProduct.productDate<#{endDate}
             ]]></if>
         </where>
+        ORDER BY pubProduct.productDate desc
+    </select>
+    <select id="productNumExist" resultType="int">
+        SELECT count(*) FROM pubProduct WHERE productNum=#{productNum}
+    </select>
+    <select id="valveNUmsExist" resultType="int">
+        SELECT count(*) FROM pubProduct WHERE valveNUms=#{valveNUms}
+    </select>
+    <select id="controlMainBoardNumsExist" resultType="int">
+        SELECT count(*) FROM pubProduct WHERE controlMainBoardNums=#{controlMainBoardNums}
     </select>
 </mapper>

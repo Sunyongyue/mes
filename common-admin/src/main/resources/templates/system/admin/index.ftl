@@ -4,7 +4,8 @@
   <#include "../macro/base.ftl"/>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>TianHe后台</title>
+	<link rel="stylesheet" href="adminlte/layui/css/layui.css" media="all" />
+  <title>天和仪表MES生产管理系统</title>
   <@style/>
 </head>
 <body class="sidebar-mini ajax-template skin-blue fixed">
@@ -35,7 +36,191 @@
 		<!-- Main content -->
 		<section class="content" id="content">
 			<div class="tabs-panel">
-				<div id="main" style="width: 600px;height:400px;"></div>
+					<div style="padding: 20px; background-color: #F2F2F2 ;">
+						<div class="layui-row layui-col-space15">
+							<div class="layui-col-md4" >
+								<div class="layui-card" style="background-color: #0000cc; color: white; font-family: 华文琥珀; font-size: 16px">
+									<div class="layui-card-header" style="color: white;">生产订单</div>
+									<div class="layui-card-body" style="height:260px;" >
+										<table  width="98%" height="98%" >
+											<tr>
+												<td colspan="2">民用</td>
+												<td colspan="2">工业</td>
+											</tr>
+											<tr>
+												<td>当日数量</td>
+												<td><span id="civilDayOrder"></span></td>
+												<td>当日数量</td>
+												<td><span id="industryDayOrder"></td>
+											</tr>
+											<tr>
+												<td>本月数量</td>
+												<td><span id="civilMonthOrder"></td>
+												<td>本月数量</td>
+												<td><span id="industryMonthOrder"></td>
+											</tr>
+											<tr>
+												<td>本年数量</td>
+												<td><span id="civilYearOrder"></td>
+												<td>本年数量</td>
+												<td><span id="industryYearOrder"></td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md4">
+								<div class="layui-card" style="background-color: red;color: white; font-family: 华文琥珀 ; font-size: 16px">
+									<div class="layui-card-header" style="color: white;">销售订单</div>
+									<div class="layui-card-body" style="height: 260px;">
+										<table  width="98%" height="98%" >
+											<tr>
+												<td colspan="2">民用</td>
+												<td colspan="2">工业</td>
+											</tr>
+											<tr>
+												<td>当日数量</td>
+												<td><span id="civilSaleDayOrder"></td>
+												<td>当日数量</td>
+												<td><span id="industrySaleDayOrder"></td>
+											</tr>
+											<tr>
+												<td>本月数量</td>
+												<td><span id="civilSaleMonthOrder"></td>
+												<td>本月数量</td>
+												<td><span id="industrySaleMonthOrder"></td>
+											</tr>
+											<tr>
+												<td>本年数量</td>
+												<td><span id="civilSaleYearOrder"></td>
+												<td>本年数量</td>
+												<td><span id="industrySaleYearOrder"></td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md4">
+								<div class="layui-card" style="background-color: #5d59a6;color: white;font-family: 华文琥珀;font-size: 16px">
+									<div class="layui-card-header" style="color: white;">发货</div>
+									<div class="layui-card-body" style="height: 260px;">
+										<table  width="98%" height="98%" >
+											<tr>
+												<td colspan="2">民用</td>
+												<td colspan="2">工业</td>
+											</tr>
+											<tr>
+												<td>当日数量</td>
+												<td><span id="dayCivilSendGoods"></td>
+												<td>当日数量</td>
+												<td><span id="dayDustrySendGoods"></td>
+											</tr>
+											<tr>
+												<td>本月数量</td>
+												<td><span id="monthCivilSendGoods"></td>
+												<td>本月数量</td>
+												<td><span id="monthDustrySendGoods"></td>
+											</tr>
+											<tr>
+												<td>本年数量</td>
+												<td><span id="yearCivilSendGoods"></td>
+												<td>本年数量</td>
+												<td><span id="yearDustrySendGoods"></td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md4"><#--background-image: url(adminlte/layui/images/background/timg.jpg);-->
+								<div class="layui-card" style="background-color: #00bbee;color: white;font-family: 华文琥珀;font-size: 16px">
+									<div class="layui-card-header" style="color: white;">进货</div>
+									<div class="layui-card-body" style="height: 260px;">
+										<table  width="98%" height="98%" >
+											<tr>
+												<td >名称</td>
+												<td >数量</td>
+											</tr>
+											<tr>
+												<td>阀门</td>
+												<td><span id="dayInVavle"></td>
+											</tr>
+											<tr>
+												<td>主板</td>
+												<td><span id="dayInMainBoard"></td>
+											</tr>
+											<tr>
+												<td>皮膜表</td>
+												<td><span id="dayInEpidermis"></td>
+											</tr>
+											<tr>
+												<td>控制盒</td>
+												<td><span id="dayInControlDiv"></td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md4">
+								<div class="layui-card" style="background-color: #5b9909;color: white;font-family: 华文琥珀;font-size: 16px">
+									<div class="layui-card-header" style="color: white;">原材料库存</div>
+									<div class="layui-card-body" style="height: 260px;">
+										<table  width="98%" height="98%" >
+											<tr>
+												<td >名称</td>
+												<td >数量</td>
+											</tr>
+											<tr>
+												<td>阀门</td>
+												<td><span id="vavle"></td>
+											</tr>
+											<tr>
+												<td>主板</td>
+												<td><span id="mainBoard"></td>
+											</tr>
+											<tr>
+												<td>皮膜表</td>
+												<td><span id="epidermis"></td>
+											</tr>
+											<tr>
+												<td>控制盒</td>
+												<td><span id="controlDiv"></td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-md4">
+								<div class="layui-card" style="background-color: #bf800c;color: white;font-family: 华文琥珀;font-size: 16px">
+									<div class="layui-card-header" style="color: white;">成品库库存</div>
+									<div class="layui-card-body" style="height: 260px;">
+										<table  width="98%" height="98%" >
+											<tr>
+												<td >名称</td>
+												<td >数量</td>
+											</tr>
+											<tr>
+												<td >控制器</td>
+												<td ><span id="control"></td>
+											</tr>
+											<tr>
+												<td>民用表</td>
+												<td><span id="civilWatch"></td>
+											</tr>
+											<tr>
+												<td>商业皮膜表</td>
+												<td><span id="businessWatch"></td>
+											</tr>
+											<#--<tr>
+												<td>阀门</td>
+												<td>1000000</td>
+											</tr>-->
+
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 			</div>
 		</section>
 		</div>
@@ -45,11 +230,72 @@
 	<@jsFile/>
 	<script>
 		$('#navTabs li').click(function (e) {
-			e.preventDefault();
+			/*e.preventDefault();*/
 			$(this).tab('show');
 			setInterval(function(){
 				refresh(true)
 			}, 1);
+		})
+	</script>
+	<script type="text/javascript" src="adminlte/layui/layui.js"></script>
+	<script>
+		layui.use(['element', 'layer'], function() {
+			var element = layui.element;
+			var layer = layui.layer;
+		});
+		$(function () {
+			$.ajax({
+				//几个参数需要注意一下
+				type: "POST",//方法类型
+				dataType: "json",//预期服务器返回的数据类型
+				url: "/myIndexValue" ,//url
+				success: function (result) {
+					if (result.success>0) {
+						$("#civilDayOrder").text(result.civilDayOrder);
+						$("#civilMonthOrder").text(result.civilMonthOrder);
+						$("#civilYearOrder").text(result.civilYearOrder);
+						$("#industryDayOrder").text(result.industryDayOrder);
+						$("#industryMonthOrder").text(result.industryMonthOrder);
+						$("#industryYearOrder").text(result.industryYearOrder);
+						$("#civilSaleDayOrder").text(result.civilSaleDayOrder);
+						$("#civilSaleMonthOrder").text(result.civilSaleMonthOrder);
+						$("#civilSaleYearOrder").text(result.civilSaleYearOrder);
+						$("#industrySaleDayOrder").text(result.industrySaleDayOrder);
+						$("#industrySaleMonthOrder").text(result.industrySaleMonthOrder);
+						$("#industrySaleYearOrder").text(result.industrySaleYearOrder);
+						$("#dayCivilSendGoods").text(result.dayCivilSendGoods);
+						$("#monthCivilSendGoods").text(result.monthCivilSendGoods);
+						$("#yearCivilSendGoods").text(result.yearCivilSendGoods);
+						$("#dayDustrySendGoods").text(result.dayDustrySendGoods);
+						$("#monthDustrySendGoods").text(result.monthDustrySendGoods);
+						$("#yearDustrySendGoods").text(result.yearDustrySendGoods);
+						$("#dayInVavle").text(result.dayInVavle);
+						$("#dayInMainBoard").text(result.dayInMainBoard);
+						$("#dayInControlDiv").text(result.dayInControlDiv);
+						$("#dayInEpidermis").text(result.dayInEpidermis);
+						$("#vavle").text(result.vavle);
+						$("#mainBoard").text(result.mainBoard);
+						$("#controlDiv").text(result.controlDiv);
+						$("#epidermis").text(result.epidermis);
+						$("#control").text(result.control);
+						$("#civilWatch").text(result.civilWatch);
+						$("#businessWatch").text(result.businessWatch);
+
+
+
+
+
+
+					}else{
+						/*  alert("系统错误");*/
+						layer.msg('操作失败', {
+							btnAlign: 'c',
+							time: 10000, //20s后自动关闭
+							btn: ['确定']
+						});
+					}
+				}
+			});
 		})
 	</script>
 	<#--<script src="adminlte/layui/echarts.min.js"></script>

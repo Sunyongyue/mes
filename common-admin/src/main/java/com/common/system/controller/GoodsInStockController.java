@@ -1,6 +1,7 @@
 package com.common.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.common.system.entity.GoodsInStock;
 import com.common.system.entity.GoodsStock;
 import com.common.system.service.GoodsInStockService;
 import com.common.system.service.GoodsStockService;
@@ -36,14 +37,80 @@ public class GoodsInStockController {
         JSONObject object = goodsInStockService.queryGoodsInStock(page, limit);
         return object.toJSONString();
     }
+    @RequestMapping("/countPipelineNumber")
+    @ResponseBody
+    public String countPipelineNumber(String pipelineNumberStart,int nums){
+        if (pipelineNumberStart.length()==18){
+            String substring = pipelineNumberStart.substring(12);
+            int start = Integer.parseInt(substring);
+            String substring2 = pipelineNumberStart.substring(0,12);
+            String s = intToString(nums + start-1);
+            JSONObject object = new JSONObject();
+            object.put("success",1);
+            object.put("date",substring2+s);
+            return object.toString();
+        }else {
+            JSONObject object = new JSONObject();
+            object.put("success",0);
+            return object.toString();
+        }
+    }
+    @RequestMapping("/checkGoodsInStockNum")
+    @ResponseBody
+    public String checkGoodsInStockNum(String pipelineNumberStart){
+        List<GoodsInStock> goodsInStocks = goodsInStockService.queryBypipelineNumber(pipelineNumberStart);
+        JSONObject object =new JSONObject();
+        if (goodsInStocks.isEmpty()){
+            object.put("exsit",1);
+        }else {
+            object.put("exsit",0);
+        }
+        return object.toString();
+    }
+    @RequestMapping("/controlMainBoardNum")
+    @ResponseBody
+    public String controlMainBoardNum(String controlMainBoardNum){
+        List<GoodsInStock> goodsInStocks = goodsInStockService.queryBypipelineNumber(controlMainBoardNum);
+        JSONObject object =new JSONObject();
+        if (goodsInStocks.isEmpty()){
+            object.put("exist",1);
+        }else {
+            object.put("exist",0);
+        }
+        return object.toString();
+    }
+    @RequestMapping("/telMainBoardNum")
+    @ResponseBody
+    public String telMainBoardNum(String telMainBoardNum){
+        List<GoodsInStock> goodsInStocks = goodsInStockService.queryBypipelineNumber(telMainBoardNum);
+        JSONObject object =new JSONObject();
+        if (goodsInStocks.isEmpty()){
+            object.put("exist",1);
+        }else {
+            object.put("exist",0);
+        }
+        return object.toString();
+    }
+    @RequestMapping("/fourMainBoardNum")
+    @ResponseBody
+    public String fourMainBoardNum(String fourMainBoardNum){
+        List<GoodsInStock> goodsInStocks = goodsInStockService.queryBypipelineNumber(fourMainBoardNum);
+        JSONObject object =new JSONObject();
+        if (goodsInStocks.isEmpty()){
+            object.put("exist",1);
+        }else {
+            object.put("exist",0);
+        }
+        return object.toString();
+    }
     @RequestMapping("/addGoodsInStock")
     @ResponseBody
-    public String addGoodsInStock(String pipelineNumberStart,String pipelineNumberEnd, String local, String goodsType, String goodsName, String specifications, String goodsProduceDate, int goodsNums, String supplierName, String pipelineNumber, String operators, String cardNums, String IMSI, String IMEI, String ICCID, String remarks, @SessionAttribute ShiroUser user){
+    public String addGoodsInStock(String pipelineNumberStart,String pipelineNumberEnd, String local, String goodsType, String goodsName, String specifications, String goodsProduceDate, int goodsNums, String supplierName, String pipelineNumber, String operators, String cardNums, String IMSI, String IMEI, String ICCID, String remarks, @SessionAttribute ShiroUser user,String activeTime, String shutdownTime){
         if (pipelineNumberStart.length()>9&&pipelineNumberEnd.length()>9){
-            String substring1 = pipelineNumberStart.substring(10);
+            String substring1 = pipelineNumberStart.substring(12);
             int start = Integer.parseInt(substring1);
-            String substring2 = pipelineNumberStart.substring(0,10);
-            String substring = pipelineNumberEnd.substring(10);
+            String substring2 = pipelineNumberStart.substring(0,12);
+            String substring = pipelineNumberEnd.substring(12);
             int end = Integer.parseInt(substring);
             int i1=0;
             List<GoodsStock> goodsStocks = goodsStockService.queryExist(local, supplierName, goodsType, goodsName, specifications);
@@ -52,13 +119,11 @@ public class GoodsInStockController {
             }else{
                 i1 = goodsStockService.updateGoodsStock(local, supplierName, goodsType, goodsName, specifications, goodsNums, user.getUsername());
             }
-
             if (i1>0){
                 int j =0;
                 for (int i=start;i<=end;i++){
                     j++;
-
-                    goodsInStockService.addGoodsInStock(local, goodsType, goodsName, specifications, goodsProduceDate, "正常", goodsNums, supplierName, substring2+intToString(i), operators, cardNums, IMSI, IMEI, ICCID, remarks, user.getUsername());
+                    goodsInStockService.addGoodsInStock(local, goodsType, goodsName, specifications, goodsProduceDate, "正常", goodsNums, supplierName, substring2+intToString(i), operators, cardNums, IMSI, IMEI, ICCID, remarks, user.getUsername(),activeTime,shutdownTime);
                 }
                 JSONObject object = new JSONObject();
                 object.put("success",1);
@@ -77,13 +142,13 @@ public class GoodsInStockController {
     }
     @RequestMapping("/updateGoodsInStock")
     @ResponseBody
-    public String updateGoodsInStock(int pipelineNumberStart,int pipelineNumberEnd,int id, String local, String goodsType, String goodsName, String specifications, String goodsProduceDate, String status, int goodsNums, String supplierName, String pipelineNumber, String operators, String cardNums, String IMSI, String IMEI, String ICCID, String remarks, @SessionAttribute ShiroUser user){
+    public String updateGoodsInStock(int pipelineNumberStart,int pipelineNumberEnd,int id, String local, String goodsType, String goodsName, String specifications, String goodsProduceDate, String status, int goodsNums, String supplierName, String pipelineNumber, String operators, String cardNums, String IMSI, String IMEI, String ICCID, String remarks, @SessionAttribute ShiroUser user,String activeTime, String shutdownTime){
         int j =0;
 
         for (int i=pipelineNumberStart;i<=pipelineNumberEnd;i++) {
             j++;
             String s = String.valueOf(i);
-            goodsInStockService.updateGoodsInStock(id, local, goodsType, goodsName, specifications, goodsProduceDate, "正常", goodsNums, supplierName, s, operators, cardNums, IMSI, IMEI, ICCID, remarks, user.getUsername());
+            goodsInStockService.updateGoodsInStock(id, local, goodsType, goodsName, specifications, goodsProduceDate, "正常", goodsNums, supplierName, s, operators, cardNums, IMSI, IMEI, ICCID, remarks, user.getUsername(),activeTime,shutdownTime);
         }
         JSONObject object = new JSONObject();
         object.put("success",1);
@@ -115,7 +180,7 @@ public class GoodsInStockController {
                 Row row = null;
                 List<Map<String,String>> list = null;
                 String cellData = null;
-                String columns[] = {"local","supplierName","goodsType","goodsName","specifications","goodsProduceDate","goodsNums","pipelineNumber","operators","cardNums","IMSI","IMEI","ICCID","remarks"};
+                String columns[] = {"local","supplierName","goodsType","goodsName","specifications","goodsProduceDate","goodsNums","pipelineNumber","operators","cardNums","IMSI","IMEI","ICCID","remarks","activeTime","shutdownTime"};
                 wb = readExcel(file);
                 if(wb != null){
                     //用来存放表中数据
@@ -172,6 +237,9 @@ public class GoodsInStockController {
                     String imei = map.get("IMEI");
                     String iccid = map.get("ICCID");
                     String remarks = map.get("remarks");
+                    String activeTime= map.get("activeTime");
+                    String shutdownTime= map.get("shutdownTime");
+
                     List<GoodsStock> goodsStocks = goodsStockService.queryExist(local, supplierName, goodsType, goodsName, specifications);
                     int i1=0;
                     if (goodsStocks.isEmpty()){
@@ -180,7 +248,7 @@ public class GoodsInStockController {
                         i1 = goodsStockService.updateGoodsStock(local, supplierName, goodsType, goodsName, specifications, nums, user.getUsername());
                     }
                     if (i1>0){
-                       goodsInStockService.addGoodsInStock(local, goodsType, goodsName, specifications, format, "正常", nums, supplierName, pipelineNumber, operators, cardNums, imsi, imei, iccid, remarks, user.getUsername());
+                       goodsInStockService.addGoodsInStock(local, goodsType, goodsName, specifications, format, "正常", nums, supplierName, pipelineNumber, operators, cardNums, imsi, imei, iccid, remarks, user.getUsername(),activeTime,shutdownTime);
                     }
                     System.out.println(local+supplierName+goodsType+goodsName+specifications+format+goodsNums+pipelineNumber+operators+cardNums+imsi+imei+iccid+remarks);
                 }

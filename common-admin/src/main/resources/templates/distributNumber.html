@@ -17,46 +17,53 @@
 <div class="demoTable">
     主板编号：
     <div class="layui-inline" style="width: 210px">
-        <input class="layui-input"  id="mainBoardNum" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="mainBoardNum" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入主板编号"/>
     </div>
     通讯编号：
     <div class="layui-inline" style="width: 210px;">
-        <input class="layui-input"  id="telNum" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="telNum" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入通讯编号"/>
     </div>
     起始日期：
     <div class="layui-inline" style="width: 210px">
-        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
     </div>
     截止日期：
     <div class="layui-inline" style="width: 210px">
-        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择截止日期"/>
     </div>
     <button class="layui-btn layui-btn-sm" data-type="reload">查询</button>
 </div>
-<div id="add-main" style="display: none;">
+<div id="add-mainDistributNumber" style="display: none;">
     <div class="my-form">
         <div class="layui-form-item my-form-item" style="margin-top: 10px">
-            <label class="layui-form-label layui-icon" style="width: 170px">通讯编号:</label>
+            <label class="layui-form-label layui-icon" style="width: 170px" >通讯编号:</label>
             <div class="layui-input-inline">
-                <input class="layui-input"  id="telNums" autocomplete="off" placeholder="请输入通讯编号" />
+                <input class="layui-input"  id="telNums" autocomplete="off" placeholder="请输入通讯编号" onkeyup="value=value.replace(/[^\d]/g,'')" onblur="telNumSerch()" />
+                <p id="telNumsP" style="color: red; display: none" >通讯编号已被使用</p>
             </div>
         </div>
         <div class="layui-form-item my-form-item" style="margin-top: 10px">
             <label class="layui-form-label layui-icon" style="width: 170px">控制主板编号:</label>
             <div class="layui-input-inline">
-                <input class="layui-input"  id="controlMainBoardNum" autocomplete="off" placeholder="请输入控制主板编号" />
+                <input class="layui-input"  id="controlMainBoardNum" autocomplete="off" placeholder="请输入控制主板编号" onkeyup="value=value.replace(/[^\d]/g,'')" onblur="controlMainBoardNumSerch()" />
+                <p id="controlMainBoardNumP" style="color: red; display: none" >控制主板编号已被使用</p>
+                <p id="controlMainBoardNumPP" style="color: red; display: none" >控制主板编号不存在</p>
             </div>
         </div>
         <div class="layui-form-item my-form-item" style="margin-top: 10px">
             <label class="layui-form-label layui-icon" style="width: 170px">通讯主板编号:</label>
             <div class="layui-input-inline">
-                <input class="layui-input"  id="telMainBoardNum" autocomplete="off" placeholder="请输入通讯主板编号" />
+                <input class="layui-input"  id="telMainBoardNum" autocomplete="off" placeholder="请输入通讯主板编号" onkeyup="value=value.replace(/[^\d]/g,'')" onblur="telMainBoardNumSerch()"/>
+                <p id="telMainBoardNumP" style="color: red; display: none" >通讯主板编号已被使用</p>
+                <p id="telMainBoardNumPP" style="color: red; display: none" >通讯主板编号不存在</p>
             </div>
         </div>
         <div class="layui-form-item my-form-item">
             <label class="layui-form-label layui-icon" style="width: 170px">485主板编号:</label>
             <div class="layui-input-inline">
-                <input class="layui-input"  id="fourMainBoardNum" autocomplete="off" placeholder="请输入485主板编号" />
+                <input class="layui-input"  id="fourMainBoardNum" autocomplete="off" placeholder="请输入485主板编号" onkeyup="value=value.replace(/[^\d]/g,'')" onblur="fourMainBoardNumSerch()"/>
+                <p id="fourMainBoardNumP" style="color: red; display: none" >485主板编号已被使用</p>
+                <p id="fourMainBoardNumPP" style="color: red; display: none" >485主板编号不存在</p>
             </div>
         </div>
         <div class="layui-form-item my-form-item">
@@ -69,13 +76,13 @@
 </div>
 <script type="text/html" id="toolbarDemoDistrobut">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add" id="add" >添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="addDistributNumber" >添加</button>
        <!-- <button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>-->
-        <button class="layui-btn layui-btn-sm" lay-event="delete" id="delete" >删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="deleteDistributNumber"  >删除</button>
       <!--  <button class="layui-btn layui-btn-sm" lay-event="upload" id="upload" >导入</button>-->
     </div>
 </script>
-<table class="layui-table" lay-data="{url:'/production/queryDistributNumber', page:true, id:'idTest',toolbar:'#toolbarDemoDistrobut',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demo">
+<table class="layui-table" lay-data="{url:'/production/queryDistributNumber', page:true, id:'idTestDistributNumber',toolbar:'#toolbarDemoDistrobut',defaultToolbar:['filter', 'print','exports'] }" lay-filter="distributNumber">
     <thead>
     <tr>
         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
@@ -86,18 +93,18 @@
         <th lay-data="{field:'status', width:150 }">产品状态</th>
         <th lay-data="{field:'operator', width:150}">操作人</th>
         <th lay-data="{field:'operatorTime', width:180}">操作时间</th>
-        <th lay-data="{field:'remarks', width:150}">备注</th>
+        <th lay-data="{field:'remarks', width:500}">备注</th>
     </tr>
     </thead>
 </table>
 
-<script th:src="@{/adminlte/layui/layui.all.js}" charset="utf-8"></script>
+<script th:src="@{/adminlte/layui/layui.js}" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
     layui.use('table', function(){
         var table = layui.table;
         //监听表格复选框选择
-        table.on('checkbox(demo)', function(obj){
+    /*    table.on('checkbox(demo)', function(obj){
             console.log(obj)
         });
         //监听工具条
@@ -111,12 +118,12 @@
                     layer.close(index);
                 });
             } else if(obj.event === 'edit'){
-                /*layer.alert('编辑行：<br/>'+ JSON.stringify(data))*/
+                /!*layer.alert('编辑行：<br/>'+ JSON.stringify(data))*!/
 
             }
-        });
+        });*/
         //监听头工具栏事件
-        table.on('toolbar(demo)', function(obj){
+        table.on('toolbar(distributNumber)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id)
                 ,data = checkStatus.data//获取选中的数据
                 ,deList=[1];
@@ -125,13 +132,13 @@
             });
             deList.push(2);
             switch(obj.event){
-                case 'add':
+                case 'addDistributNumber':
                     layer.open({
                         type:1,
                         title:'添加',
                         btnAlign: 'c',
                         area: ['500px', '350px'],
-                        content: $("#add-main"),
+                        content: $("#add-mainDistributNumber"),
                         btn:['保存','取消'],
                         yes:function(index,layero){
                             var controlMainNum =top.$('#controlMainBoardNum').val();
@@ -139,27 +146,45 @@
                             var telMainNum =top.$("#telMainBoardNum").val();
                             var fourMainNum =top.$("#fourMainBoardNum").val();
                             var remarks =top.$("#remarks").val();
-                            $.ajax({
-                                //几个参数需要注意一下
-                                type: "POST",//方法类型
-                                dataType: "json",//预期服务器返回的数据类型
-                                url: "/production/addDistributNumberMapper" ,//url
-                                data: {telNum:telNums,controlMainNum:controlMainNum,telMainNum:telMainNum,fourMainNum:fourMainNum,remarks:remarks},
-                                success: function (result) {
-                                    console.log(result);//打印服务端返回的数据(调试用)
-                                    if (result.success >0) {
-                                        alert("操作成功");
-                                        table.reload('idTest');
-                                    }else{
-                                        alert("系统错误");
+                            if (controlMainNum=="") {
+                                layer.msg('请输入控制主板编号！', {
+                                    btnAlign: 'c',
+                                    time: 3000, //20s后自动关闭
+                                    btn: ['确定']
+                                });
+                            }else{
+                                $.ajax({
+                                    //几个参数需要注意一下
+                                    type: "POST",//方法类型
+                                    dataType: "json",//预期服务器返回的数据类型
+                                    url: "/production/addDistributNumberMapper" ,//url
+                                    data: {telNum:telNums,controlMainNum:controlMainNum,telMainNum:telMainNum,fourMainNum:fourMainNum,remarks:remarks},
+                                    success: function (result) {
+                                        console.log(result);//打印服务端返回的数据(调试用)
+                                        if (result.success >0) {
+                                            layer.msg('操作成功', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                            table.reload('idTestDistributNumber');
+                                        }else{
+                                            /* alert("系统错误");*/
+                                            layer.msg('操作失败', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                        }
+                                    },
+                                    error : function() {
+                                        alert("异常！");
                                     }
-                                },
-                                error : function() {
-                                    alert("异常！");
-                                }
-                            });
+                                });
 
-                            layer.close(index);
+                                layer.close(index);
+                            }
+
                         },
                         btn2:function (index) {
                             layer.close(index);
@@ -234,7 +259,7 @@
                         })
                     }
                     break;*/
-                case 'delete':
+                case 'deleteDistributNumber':
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     } else {
@@ -247,10 +272,20 @@
                                 data: { deList:JSON.stringify(deList)},
                                 success: function (result) {
                                     if (result.success>0) {
-                                        alert("操作成功");
-                                        table.reload('idTest')
+                                       /* alert("操作成功");*/
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 10000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('idTestDistributNumber')
                                     }else{
-                                        alert("系统错误");
+                                      /*  alert("系统错误");*/
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 10000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
                                     }
                                 },
                                 error : function() {
@@ -269,9 +304,9 @@
                 var mainBoardNum=$("#mainBoardNum").val();
                 var startDate=$("#startDateSearch").val();
                 var endDate=$("#endDateSearch").val();
-                table.reload('idTest',{
+                table.reload('idTestDistributNumber',{
                     url:'/production/distributNumberSearch',
-                    where:{telNum:telNum,mainBoardNum:mainBoardNum,startDate:startDate,endDate:endDate,page:1,limit:10}  ,
+                    where:{telNum:telNum,mainBoardNum:mainBoardNum,startDate:startDate,endDate:endDate}  ,
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
@@ -308,7 +343,7 @@
             ,done: function(res){
                 if(res.code == 0){ //上传成功
                     layer.msg(res.msg);
-                    table.reload('idTest')
+                    table.reload('idTestDistributNumber')
                 }else{
                     layer.msg('上传失败');
                 }
@@ -318,6 +353,167 @@
             }
         });
     });
+    function telNumSerch() {
+    var telNums=$("#telNums").val()
+    $.ajax({
+        //几个参数需要注意一下
+        type: "POST",//方法类型
+        dataType: "json",//预期服务器返回的数据类型
+        url: "/production/telNumsP" ,//url
+        data: {telNum:telNums},
+        success: function (result) {
+            console.log(result);//打印服务端返回的数据(调试用)
+            if (result.exist >0) {
+                $("#telNumsP").show();
+                $("#telNums").val("");
+            }else{
+                $("#telNumsP").hide();
+            }
+        },
+        error : function() {
+            alert("异常！");
+        }
+    });
+
+}
+    function controlMainBoardNumSerch() {
+        var controlMainBoardNum=$("#controlMainBoardNum").val()
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/production/controlP" ,//url
+            data: {controlMainBoardNum:controlMainBoardNum},
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.exist >0) {
+                    $("#controlMainBoardNumP").show();
+                    $("#controlMainBoardNum").val("");
+                }else{
+                    $("#controlMainBoardNumP").hide();
+                }
+            },
+            error : function() {
+                alert("异常！");
+            }
+        });
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/goodsInStock/controlMainBoardNum" ,//url
+            data: {controlMainBoardNum:controlMainBoardNum},
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.exist >0) {
+                    $("#controlMainBoardNumPP").show();
+                    $("#controlMainBoardNum").val("");
+                }else{
+                    $("#controlMainBoardNumPP").hide();
+                }
+            },
+            error : function() {
+                alert("异常！");
+            }
+        });
+    }
+    function telMainBoardNumSerch() {
+        var telMainBoardNum=$("#telMainBoardNum").val()
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/production/telP" ,//url
+            data: {telMainBoardNum:telMainBoardNum},
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.exist >0) {
+                    $("#telMainBoardNumP").show();
+                    $("#telMainBoardNum").val("");
+                }else{
+                    $("#telMainBoardNumP").hide();
+                }
+            },
+            error : function() {
+                alert("异常！");
+            }
+        });
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/goodsInStock/telMainBoardNum" ,//url
+            data: {telMainBoardNum:telMainBoardNum},
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.exist >0) {
+                    $("#telMainBoardNumPP").show();
+                    $("#telMainBoardNum").val("");
+                }else{
+                    $("#telMainBoardNumPP").hide();
+                }
+            },
+            error : function() {
+                alert("异常！");
+            }
+        });
+
+    }
+    function fourMainBoardNumSerch() {
+        var fourMainBoardNum=$("#fourMainBoardNum").val()
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/production/fourP" ,//url
+            data: {fourMainBoardNum:fourMainBoardNum},
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.exist >0) {
+                    $("#fourMainBoardNumP").show();
+                    $("#fourMainBoardNum").val("");
+                }else{
+                    $("#fourMainBoardNumP").hide();
+                }
+            },
+            error : function() {
+                alert("异常！");
+            }
+        });
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/goodsInStock/fourMainBoardNum" ,//url
+            data: {fourMainBoardNum:fourMainBoardNum},
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.exist >0) {
+                    $("#fourMainBoardNumPP").show();
+                    $("#fourMainBoardNum").val("");
+                }else{
+                    $("#fourMainBoardNumPP").hide();
+                }
+            },
+            error : function() {
+                alert("异常！");
+            }
+        });
+    }
+    var unSelected = "#999";
+    var selected = "#333";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    })
 </script>
 
 </body>

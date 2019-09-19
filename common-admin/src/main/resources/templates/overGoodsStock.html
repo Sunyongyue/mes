@@ -11,41 +11,46 @@
 <div class="demoTable">
     产品名称：
     <div class="layui-inline" style="width: 220px;">
-        <input class="layui-input"  id="goodsNameSearch" autocomplete="off" style="width: 200px;height: 25px" />
+        <input class="layui-input"  id="goodsNameSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择产品名称"/>
     </div>
     产品规格：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="goodsSpecificationsSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="goodsSpecificationsSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入产品规格"/>
     </div>
     进气方向：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="intakeDirection" autocomplete="off" style="width: 200px;height: 25px"/>
+     <!--   <input class="layui-input"  id="intakeDirection" autocomplete="off" style="width: 200px;height: 25px"/>-->
+        <select id="intakeDirection" lay-verify=""  style="width: 200px" >
+            <option value="" >请选择进气方向</option>
+            <option value="左进气" >左进气</option>
+            <option value="右进气" >右进气</option>
+        </select>
     </div>
     <div class="layui-inline" style="margin-left: -15px">操作员名称：</div>
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="operatorSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="operatorSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入操作员名称"/>
     </div><br/>
     起始日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
     </div>
     截止日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择截止日期"/>
     </div>
     <button class="layui-btn layui-btn-sm" data-type="reload">查询</button>
 </div>
-<table class="layui-table" lay-data="{url:'/overGoods/queryOverGoodsStock', page:true, id:'idTest',toolbar: 'true',defaultToolbar:['exports'] }" lay-filter="demo">
+<table class="layui-table" lay-data="{totalRow:true,url:'/overGoods/queryOverGoodsStock', page:true, id:'idTestOverStock',toolbar: 'true',defaultToolbar:['exports'] }" lay-filter="demoOverStock">
     <thead>
     <tr>
         <th lay-data="{field:'goodsName', width:150}">产品名称</th>
         <th lay-data="{field:'specifications', width:150}">产品规格</th>
         <th lay-data="{field:'intakeDirection', width:150}">进气方向</th>
-        <th lay-data="{field:'stockWarehouse', width:150 }">库存仓库</th>
+        <th lay-data="{field:'stockWarehouse', width:150 ,totalRowText:'合计：'}">库存仓库</th>
         <th lay-data="{field:'nums', width:150,totalRow:true}">库存数量</th>
         <th lay-data="{field:'operator', width:150}">操作人</th>
-        <th lay-data="{field:'operatorTime', width:150}">操作时间</th>
-        <th lay-data="{field:'remarks', width:200}">备注</th>
+        <th lay-data="{field:'operatorTime', width:200}">操作时间</th>
+        <th lay-data="{field:'remarks', width:520}">备注</th>
     </tr>
     </thead>
 </table>
@@ -62,9 +67,9 @@
                 var specifications = $("#goodsSpecificationsSearch").val();
                 var operator = $("#operatorSearch").val();
                 var endDate = $("#endDateSearch").val();
-                table.reload('idTest',{
+                table.reload('idTestOverStock',{
                     url:'/overGoods/serchOverGoodsStock',
-                    where:{intakeDirection:intakeDirection,goodsName:goodsName,specifications:specifications,operator:operator,startDate:startDate,endDate:endDate,page:1,limit:10}  ,
+                    where:{intakeDirection:intakeDirection,goodsName:goodsName,specifications:specifications,operator:operator,startDate:startDate,endDate:endDate}  ,
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
@@ -88,7 +93,20 @@
             ,type: 'datetime'
         });
     });
-
+    var unSelected = "#999";
+    var selected = "#333";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    })
 </script>
 
 </body>

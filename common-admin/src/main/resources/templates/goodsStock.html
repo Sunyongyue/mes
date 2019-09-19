@@ -18,40 +18,40 @@
     所在地区：
     <div class="layui-inline" style="width: 220px">
         <select name="localSearch2" lay-verify=""  style="width: 200px" onchange="supplierNameSearch()">
-
+            <option value="">请选择所在地区</option>
         </select>
     </div>
     <div class="layui-inline" style="margin-left: -15px">供应商名称：</div>
     <div class="layui-inline" style="width: 220px;">
         <select name="supplierNameSearch2" lay-verify=""  style="width: 200px" onchange="goodsType()">
-
+            <option value="">请选择供应商名称</option>
         </select>
     </div>
     物料类别：
     <div class="layui-inline" style="width: 220px">
         <select name="goodsTypeSearch2" lay-verify=""  style="width: 200px" onchange="goodsName()">
-
+            <option value="">请选择物料类别</option>
         </select>
     </div>
     物料名称：
     <div class="layui-inline" style="width: 220px">
         <select name="goodsNameSearch2" lay-verify=""  style="width: 200px" onchange="specifications()">
-
+            <option value="">请选择物料名称</option>
         </select>
     </div><br/>
     物料规格：
     <div class="layui-inline" style="width: 220px">
         <select name="specificationsSearch2" lay-verify=""  style="width: 200px" >
-
+            <option value="">请选择物料规格</option>
         </select>
     </div>
     起始日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
     </div>
     截止日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择截止日期"/>
     </div>
     <button class="layui-btn layui-btn-sm" data-type="reload">查询</button>
 </div>
@@ -60,23 +60,23 @@
         <button class="layui-btn layui-btn-sm" lay-event="upload" id="upload" >导入</button>
     </div>
 </script>-->
-<table class="layui-table" lay-data="{totalRow:true,url:'/goodStock/goodStockData', page:true, id:'idTest',toolbar: 'true',defaultToolbar:['exports'] }" lay-filter="demo">
+<table class="layui-table" lay-data="{totalRow:true,url:'/goodStock/goodStockData', page:true, id:'idTestStock',toolbar: 'true',defaultToolbar:['exports'] }" lay-filter="demoStock">
     <thead>
     <tr>
         <!--<th lay-data="{type:'checkbox', fixed: 'left'}"></th>-->
         <th lay-data="{field:'goodsType', width:150, sort: true}">物料类别</th>
-        <th lay-data="{field:'goodsName', width:150}">物料名称</th>
-        <th lay-data="{field:'specifications', width:150}">物料规格</th>
+        <th lay-data="{field:'goodsName', width:150,sort: true}">物料名称</th>
+        <th lay-data="{field:'specifications', width:150,sort: true}">物料规格</th>
         <th lay-data="{field:'goodsStock', width:150 ,totalRowText:'合计：'}">库存仓库</th>
         <th lay-data="{field:'nums', width:150,totalRow:true}">库存数量</th>
         <th lay-data="{field:'supplierName', width:150}">供应商名称</th>
         <th lay-data="{field:'operator', width:150}">操作人</th>
         <th lay-data="{field:'operatorTime', width:180}">操作时间</th>
-        <th lay-data="{field:'remarks', width:150}">备注</th>
+        <th lay-data="{field:'remarks', width:500}">备注</th>
     </tr>
     </thead>
 </table>
-<div id="add-main" style="display: none;">
+<div id="add-mainStock" style="display: none;">
     <div class="my-form">
         <form class="layui-form" action="/user/add" method="POST" lay-skin="line">
             <div class="layui-form-item my-form-item">
@@ -102,7 +102,7 @@
     layui.use('table', function(){
         var table = layui.table;
         //监听表格复选框选择
-        table.on('checkbox(demo)', function(obj){
+        table.on('checkbox(demoStock)', function(obj){
             console.log(obj)
         });
         var $ = layui.$, active = {
@@ -129,9 +129,9 @@
                 var specifications = $("[name='specificationsSearch2'] option:selected").text();
                 var startDate = $("#startDateSearch").val();
                 var endDate = $("#endDateSearch").val();
-                table.reload('idTest',{
+                table.reload('idTestStock',{
                     url:'/goodStock/searchGoodsStock',
-                    where:{local:local,supplierName:supplierName,goodsType:goodsType,goodsName:goodsName,specifications:specifications,startDate:startDate,endDate:endDate,page:1,limit:10}  ,
+                    where:{local:local,supplierName:supplierName,goodsType:goodsType,goodsName:goodsName,specifications:specifications,startDate:startDate,endDate:endDate}  ,
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
@@ -195,19 +195,19 @@
                     var list =result.date;
                     $("[name='localSearch2']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择所在地区";
                     $("[name='localSearch2']").append("<option value="+op+">"+bp+"</option>");
                     $.each(list,function (i,val) {
                         $("[name='localSearch2']").append("<option value="+val+">"+val+"</option>");
                         $("#localAdd").append("<option value="+val+">"+val+"</option>");
                     });
                 }else{
-                    alert("地址信息错误");
+                   /* alert("地址信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
     function supplierNameSearch() {
@@ -222,19 +222,19 @@
                 if (result.success>0) {
                     $("[name='supplierNameSearch2']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择供应商名称";
                     $("[name='supplierNameSearch2']").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
                         $("[name='supplierNameSearch2']").append("<option value="+val+">"+val+"</option>");
                     });
                 }else{
-                    alert("供应商信息错误");
+                   /* alert("供应商信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
 
     }
@@ -251,7 +251,7 @@
                 if (result.success>0) {
                     $("[name='goodsTypeSearch2']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择物料类别";
                     $("[name='goodsTypeSearch2']").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
@@ -260,12 +260,12 @@
                         $("[name='goodsTypeSearch2']").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("类别信息错误");
+                    /*alert("类别信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
 
@@ -281,7 +281,7 @@
                 if (result.success>0) {
                     $("[name='goodsNameSearch2']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择物料名称";
                     $("[name='goodsNameSearch2']").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
@@ -290,12 +290,12 @@
                         $("[name='goodsNameSearch2']").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("名称信息错误");
+                    /*alert("名称信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
 
@@ -311,7 +311,7 @@
                 if (result.success>0) {
                     $("[name='specificationsSearch2']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择物料规格";
                     $("[name='specificationsSearch2']").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
@@ -321,15 +321,28 @@
                         $("[name='specificationsSearch2']").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("规格信息错误");
+                   /* alert("规格信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
-
+    var unSelected = "#999";
+    var selected = "#333";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    })
 </script>
 
 </body>

@@ -9,76 +9,87 @@
 </head>
 <body>
 <div class="demoTable">
-    <div class="layui-inline" style="margin-left: -27px">销售任务单号：</div>
+    <div class="layui-inline" style="margin-left:0px">销售单号：</div>
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="productNumSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="productNumSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入销售单号"/>
     </div>
     出厂编号：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="outStockNumbersSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="outStockNumbersSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入出厂编号"/>
     </div>
     产品名称：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="goodsNameSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="goodsNameSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入产品名称"/>
     </div>
     产品规格:
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="goodsSpecificationsSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="goodsSpecificationsSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入产品规格"/>
     </div>
     <button class="layui-btn layui-btn-sm" data-type="reload">查询</button><br/>
     <div class="layui-inline" style="margin-left: -15px">操作员名称：</div>
     <div class="layui-inline" style="width: 220px;">
-        <input class="layui-input"  id="operatorSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="operatorSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入操作员名称"/>
     </div>
     起始日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
     </div>
     截止日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择截止日期"/>
     </div>
 
 </div>
 <div id="add-main-civil" style="display: none;">
     <div class="my-form">
-        <div class="layui-form-item my-form-item" style="margin-top: 10px">
-            <div class="layui-inline">
-                <label class="layui-form-label">销售任务单号</label>
-                <div class="layui-input-inline">
-                    <input type="text" id="saleNumAdd" name="saleNumAdd"  autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item my-form-item" style="margin-top: 10px">
-            <div class="layui-inline">
-                <label class="layui-form-label">生产任务单号</label>
-                <div class="layui-input-inline">
-                    <input type="text" id="productNumAdd" name="productNumAdd"  autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
         <div class="layui-form-item my-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">出厂编号</label>
-                <div class="layui-input-inline">
-                    <input type="text" id="outStockNumbers" name="outStockNums" autocomplete="off" class="layui-input" >
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item my-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">出库类别</label>
-                <div class="layui-input-inline">
+                <label class="layui-form-label" style="width: 170px"><p style="color: red;display: inline">※</p>出库类别</label>
+                <!--<div class="layui-input-inline">
                     <input type="text" id="outStockType" name="outStockType" autocomplete="off" class="layui-input" >
+                </div>-->
+                <select id="outStockType" name="outStockType" style="width: 190px;height: 25px;margin-top: 8px" >
+                    <option value="" ></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item my-form-item" style="margin-top: 10px">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 170px"><p style="color: red;display: inline">※</p>销售单号</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="saleNumAdd" name="saleNumAdd"  autocomplete="off" class="layui-input" placeholder="请输入销售单号">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item my-form-item" style="margin-top: 10px">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 170px"><p style="color: red;display: inline">※</p>生产单号</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="productNumAdd" name="productNumAdd"  autocomplete="off" class="layui-input" placeholder="请输入生产单号">
                 </div>
             </div>
         </div>
         <div class="layui-form-item my-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">备注</label>
+                <label class="layui-form-label"  style="width: 170px"><p style="color: red;display: inline">※</p>出厂编号</label>
                 <div class="layui-input-inline">
-                    <input type="text" id="remarksAdd" name="remarks" autocomplete="off" class="layui-input" >
+                    <input type="text" id="outStockNumbers"  autocomplete="off" class="layui-input" placeholder="请输入出厂编号">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item my-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"  style="width: 170px"><p style="color: red;display: inline">※</p>物流信息</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="logisticsInformationA"  autocomplete="off" class="layui-input" placeholder="请输入物流信息">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item my-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 170px">备注</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="remarksAdd" name="remarks" autocomplete="off" class="layui-input" placeholder="请输入备注">
                 </div>
             </div>
         </div>
@@ -86,29 +97,39 @@
 </div>
 <script type="text/html" id="toolbarDemoOverOut">
 <div class="layui-btn-container">
-    <button class="layui-btn layui-btn-sm" lay-event="add" id="add" >出库</button>
-  <!--  <button class="layui-btn layui-btn-sm" lay-event="check" id="check" >检测</button>-->
+    <button class="layui-btn layui-btn-sm" lay-event="addOverOut"  >出库</button>
+    <button class="layui-btn layui-btn-sm" lay-event="checkOverOut" id="checkOverOut" >检测</button>
+    <button class="layui-btn layui-btn-sm" lay-event="outStockOverOut" id="outStockOverOut" >发货</button>
+    <button class="layui-btn layui-btn-sm" lay-event="deleteOverOut" id="deleteOverOut" >删除</button>
     <!--<button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>-->
   <!--  <button class="layui-btn layui-btn-sm" lay-event="upload" id="upload" >导入</button>-->
 </div>
 </script>
-<table class="layui-table" lay-data="{url:'/overGoods/queryOverGoodsOutStock', page:true, id:'OverOut',toolbar:'#toolbarDemoOverOut',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoOverOut">
+<table class="layui-table" lay-data="{totalRow:true,url:'/overGoods/queryOverGoodsOutStock', page:true, id:'OverOut',toolbar:'#toolbarDemoOverOut',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoOverOut">
     <thead>
     <tr>
-     <!--   <th lay-data="{type:'checkbox', fixed: 'left'}" rowspan="2"></th>-->
-        <th lay-data="{align:'center'}" colspan="10">订货信息</th>
+        <th lay-data="{type:'checkbox', fixed: 'left'}" rowspan="2"></th>
+        <th lay-data="{align:'center'}" colspan="10">出库信息</th>
+        <th lay-data="{align:'center'}" colspan="9">订单信息</th>
+        <th lay-data="{align:'center'}" colspan="7">生产信息</th>
         <th lay-data="{align:'center'}" colspan="6">阀门信息</th>
         <th lay-data="{align:'center'}" colspan="5">控制主板信息</th>
-        <th lay-data="{align:'center'}" colspan="10">通讯主板信息</th>
+        <th lay-data="{align:'center'}" colspan="12">通讯主板信息</th>
         <th lay-data="{align:'center'}" colspan="6">485主板信息</th>
-        <th lay-data="{align:'center'}" colspan="7">生产信息</th>
-        <th lay-data="{field:'outStockNums',width:150}" rowspan="2">出库数量</th>
-        <th lay-data="{field:'outStockType',width:150}" rowspan="2">出库分类</th>
-        <th lay-data="{field:'outStockremarks',width:150}" rowspan="2">备注</th>
+
     <tr>
         <!--<th lay-data="{field:'productNum', width:250}" >生产订单号</th>-->
-       <th lay-data="{field:'outStockNumbers', width:250}" >出厂编号</th>
-        <th lay-data="{field:'saleNum', width:150}" >销售任务单号</th>
+       <th lay-data="{field:'outStockNumbers', width:150}" >出厂编号</th>
+       <th lay-data="{field:'recordStatus', width:250}" >记录状态</th>
+        <th lay-data="{field:'outStockType',width:150,totalRowText:'合计：'}">出库类别</th>
+        <th lay-data="{field:'outStockNums',width:150,totalRow:true}">出库数量</th>
+        <th lay-data="{field:'outStockremarks',width:150}" >备注信息</th>
+        <th lay-data="{field:'outStockTestPeople', width:150}">出厂检测人</th>
+        <th lay-data="{field:'outStockTestTime', width:180}">出厂检测时间</th>
+        <th lay-data="{field:'sendGoodsPeople', width:150}">发货人</th>
+        <th lay-data="{field:'sendGoodsTime', width:180}">发货时间</th>
+        <th lay-data="{field:'logisticsInformation', width:180}">物流信息</th>
+        <th lay-data="{field:'saleNum', width:150}" >销售单号</th>
         <th lay-data="{field:'customerName', width:150}" >客户名称</th>
         <th lay-data="{field:'date', width:150}" >订单日期</th>
         <th lay-data="{field:'projectName', width:150}" >工程名称</th>
@@ -117,20 +138,27 @@
         <th lay-data="{field:'productSpecificationsOrder',width:150}" >规格</th>
         <th lay-data="{field:'customerPressure',width:150}" >使用压力</th>
         <th lay-data="{field:'customerNums',width:150}" >数量</th>
+        <th lay-data="{field:'productNum', width:150}">生产单号</th>
+        <th lay-data="{field:'assembler', width:150}">装配人</th>
+        <th lay-data="{field:'productDate', width:180}">装配时间</th>
+        <th lay-data="{field:'tester', width:150}">检测人</th>
+        <th lay-data="{field:'testDate', width:180}">检测时间</th>
+        <th lay-data="{field:'outFactoryMan', width:150}">成品出库人</th>
+        <th lay-data="{field:'getOutFactoryTime', width:180}">成品出库时间</th>
         <th lay-data="{field:'valveSupplier', width:150 }">阀门供应商</th>
-        <th lay-data="{field:'valveNUms', width:150 }">阀门编号</th>
+        <th lay-data="{field:'valveNUms', width:180 }">阀门编号</th>
         <th lay-data="{field:'valveName', width:150}">阀门名称</th>
         <th lay-data="{field:'valveSpecifications', width:150}">阀门规格</th>
         <th lay-data="{field:'intakeDirection', width:150}">进气方向</th>
         <th lay-data="{field:'vavleProductDate', width:150}">生产日期</th>
         <th lay-data="{field:'controlMainboardSupplier', width:150}">控制主板供应商</th>
-        <th lay-data="{field:'controlMainBoardNums', width:150}">控制主板编号</th>
+        <th lay-data="{field:'controlMainBoardNums', width:180}">控制主板编号</th>
         <th lay-data="{field:'controlMainboardName', width:150 }">控制主板名称</th>
         <th lay-data="{field:'controlMainboardSpecifications', width:150}">控制主板规格</th>
         <th lay-data="{field:'controlMainBoardProductDate', width:150}">生产日期</th>
         <!--<th lay-data="{field:'version', width:150}">程序版本</th>-->
         <th lay-data="{field:'telMainBoardSupplier', width:150}">通信主板供应商</th>
-        <th lay-data="{field:'telMainBoardNums', width:150}">通信主板编号</th>
+        <th lay-data="{field:'telMainBoardNums', width:180}">通信主板编号</th>
         <th lay-data="{field:'telMainBoardName', width:150}">通信主板名称</th>
         <th lay-data="{field:'telMainBoardSpecifications', width:150}">通信主板规格</th>
         <th lay-data="{field:'telType', width:150}">通信方式</th>
@@ -138,6 +166,8 @@
         <th lay-data="{field:'iMSI', width:150}">IMSI号</th>
         <th lay-data="{field:'iMEI', width:150}">IMEI号</th>
         <th lay-data="{field:'iCCID', width:150}">ICCID号</th>
+        <th lay-data="{field:'activeTime', width:150}">激活日期</th>
+        <th lay-data="{field:'shutdownTime', width:150}">截止日期</th>
         <th lay-data="{field:'telMainBoardProductDate', width:150}">生产日期</th>
         <th lay-data="{field:'fourSupplier', width:150}">485供应商</th>
         <th lay-data="{field:'fourMainBoardNums', width:150}">485主板编号</th>
@@ -145,13 +175,6 @@
         <th lay-data="{field:'fourSpecifications', width:150}">485主板规格</th>
         <th lay-data="{field:'telProtocol', width:150}">通信协议</th>
         <th lay-data="{field:'fourMainBoardProductDate', width:150}">生产日期</th>
-        <th lay-data="{field:'productNum', width:150}">生产订单号</th>
-        <th lay-data="{field:'assembler', width:150}">装配人</th>
-        <th lay-data="{field:'productDate', width:150}">装配时间</th>
-        <th lay-data="{field:'tester', width:150}">检测人</th>
-        <th lay-data="{field:'testDate', width:150}">检测时间</th>
-        <th lay-data="{field:'outFactoryMan', width:150}">出厂检测人</th>
-        <th lay-data="{field:'getOutFactoryTime', width:150}">出厂检测时间</th>
     </tr>
     </thead>
 </table>
@@ -171,16 +194,16 @@
                 ,data = checkStatus.data//获取选中的数据
                 ,deList=[1];
             data.forEach(function (n,i) {
-                deList.push(n.ids)
+                deList.push(n.id)
             });
             deList.push(2);
             switch(obj.event){
-                case 'add':
+                case 'addOverOut':
                     layer.open({
                         type:1,
                         title:'添加',
                         btnAlign: 'c',
-                        area: ['320px', '380px'],
+                        area: ['450px', '420px'],
                         btn:['保存','取消'],
                         content: $("#add-main-civil"),
                         yes:function(index,layero){
@@ -189,53 +212,86 @@
                             var outStockNumbers =top.$("#outStockNumbers").val();
                             var outStockType =top.$("#outStockType").val();
                             var remarksAdd =top.$("#remarksAdd").val();
-                            $.ajax({
-                                //几个参数需要注意一下
-                                type: "POST",//方法类型
-                                dataType: "json",//预期服务器返回的数据类型
-                                url: "/overGoods/addOverGoodsOutStock" ,//url
-                                data: {outStockNums:1,productNum:productNumAdd,salenum:saleNumAdd,outStockType:outStockType,outStockremarks:remarksAdd},
-                                success: function (result) {
-                                    console.log(result);//打印服务端返回的数据(调试用)
-                                    if (result.success >0) {
-                                        alert("操作成功");
-                                        table.reload('OverOut');
-                                    }else{
-                                        alert("系统错误");
+                            var logisticsInformation =top.$("#logisticsInformationA").val();
+                            if(saleNumAdd==""||productNumAdd==""||outStockNumbers==""||outStockType==""){
+                                  /*  alert("您还有必填项未填哦！")*/
+                                layer.msg('您还有必填项未填哦！', {
+                                    btnAlign: 'c',
+                                    time: 3000, //20s后自动关闭
+                                    btn: ['确定']
+                                });
+                            }else {
+                                $.ajax({
+                                    //几个参数需要注意一下
+                                    type: "POST",//方法类型
+                                    dataType: "json",//预期服务器返回的数据类型
+                                    url: "/overGoods/addOverGoodsOutStock" ,//url
+                                    data: {outStockNums:1,productNum:productNumAdd,salenum:saleNumAdd,outStockType:outStockType,outStockremarks:remarksAdd,outStockNumbers:outStockNumbers,logisticsInformation:logisticsInformation},
+                                    success: function (result) {
+                                        console.log(result);//打印服务端返回的数据(调试用)
+                                        if (result.success >0) {
+                                            layer.msg('操作成功', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                            table.reload('OverOut');
+                                        }else{
+                                           /* alert("出库失败，请核对库存");*/
+                                            layer.msg('出库失败，请核对库存', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                        }
+                                    },
+                                    error : function() {
+                                        alert("异常！");
                                     }
-                                },
-                                error : function() {
-                                    alert("异常！");
-                                }
-                            });
+                                });
 
-                            layer.close(index);
+                                layer.close(index);
+                            }
+
                         },
                         btn2:function (index) {
                             layer.close(index);
                         },
                     });
                     break;
-                case 'check':
+                case 'checkOverOut':
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     } else if(data.length > 1){
                         layer.msg('只能同时检测一个');
-                    } else {
+                    }else if (checkStatus.data[0].recordStatus=="已发货"){
+                       /* alert("货物已经发出去了！")*/
+                        layer.msg('货物已经发出去了！');
+                    } else if (checkStatus.data[0].recordStatus=="检测中"||checkStatus.data[0].recordStatus=="")  {
                         var id =checkStatus.data[0].id;
+                        var controlMainBoardNums =checkStatus.data[0].controlMainBoardNums;
+                        var productNum =checkStatus.data[0].productNum;
                         layer.confirm('确定检测？',{btn: ['确定', '取消'], title: "提示"},function(index){
                             $.ajax({
                                 //几个参数需要注意一下
                                 type: "POST",//方法类型
                                 dataType: "json",//预期服务器返回的数据类型
-                                url: "" ,//url
-                                data: {ids:id},
+                                url: "/production/overGoodsCheck" ,//url
+                                data: {id:id,productNum:productNum,controlMainBoardNums:controlMainBoardNums},
                                 success: function (result) {
                                     if (result.success>0) {
-                                        alert("操作成功");
+                                       layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
                                         table.reload('OverOut')
                                     }else{
-                                        alert("系统错误");
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
                                     }
                                 },
                                 error : function() {
@@ -246,7 +302,52 @@
                         });
                     }
                     break;
-                case 'delete':
+                case 'outStockOverOut':
+
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    }else if(data.length > 1){
+                        layer.msg('只能同时发货一个');
+                    }else if (checkStatus.data[0].recordStatus=="已发货"){
+                       /* alert("货物已经发出去了！")*/
+                        layer.msg('货物已经发出去了');
+                    } else if (checkStatus.data[0].recordStatus=="检测中") {
+                        var id1 =checkStatus.data[0].id;
+                        var controlMainBoardNums1 =checkStatus.data[0].controlMainBoardNums;
+                        var productNum1=checkStatus.data[0].productNum;
+                        var customerName=checkStatus.data[0].customerName;
+                        layer.confirm('确定发货？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/production/overGoodsOutStock2" ,//url
+                                data: {id:id1,productNum:productNum1,controlMainBoardNums:controlMainBoardNums1,customerName:customerName},
+                                success: function (result) {
+                                    if (result.success>0) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('OverOut')
+                                    }else{
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+                case 'deleteOverOut':
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     } else {
@@ -255,14 +356,22 @@
                                 //几个参数需要注意一下
                                 type: "POST",//方法类型
                                 dataType: "json",//预期服务器返回的数据类型
-                                url: "" ,//url
+                                url: "/overGoods/deleteOverGoodsOutStock" ,//url
                                 data: {deList:JSON.stringify(deList)},
                                 success: function (result) {
                                     if (result.success>0) {
-                                        alert("操作成功");
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
                                         table.reload('OverOut')
                                     }else{
-                                        alert("系统错误");
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
                                     }
                                 },
                                 error : function() {
@@ -273,6 +382,7 @@
                         });
                     }
                     break;
+
             }
         });
         var $ = layui.$, active = {
@@ -302,7 +412,7 @@
               /*  console.log(productNum+goodsName+specifications+operator+startDate+endDate);*/
                 table.reload('OverOut',{
                     url:'/overGoods/searchOverGoodsOutStock',
-                    where:{outStockNumbers:outStockNumbers,salenum:productNum,productNameOrder:goodsName,productSpecificationsOrder:specifications,outFactoryMan:operator,startDate:startDate,endDate:endDate,page:1,limit:10}  ,
+                    where:{outStockNumbers:outStockNumbers,salenum:productNum,productNameOrder:goodsName,productSpecificationsOrder:specifications,outFactoryMan:operator,startDate:startDate,endDate:endDate}  ,
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
@@ -349,6 +459,48 @@
             }
         });
     });
+    $(
+        function(){
+            outTyp();
+        }
+    )
+    function outTyp() {
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/queryLocal" ,//url
+            data:{pid:162},
+            success: function (result) {
+                if (result.success>0) {
+                    var list =result.date;
+                    $("[name='outStockType']").empty();
+                    var op="";
+                    var bp="请选择出库类别";
+                    $("[name='outStockType']").append("<option value="+op+">"+bp+"</option>");
+                    $.each(list,function (i,val) {
+                        $("[name='outStockType']").append("<option value="+val+">"+val+"</option>");
+                    });
+                }else{
+                    alert("信息错误");
+                }
+            }
+        });
+    }
+    var unSelected = "#999";
+    var selected = "#333";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    })
 </script>
 
 </body>

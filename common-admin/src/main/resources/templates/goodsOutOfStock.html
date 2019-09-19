@@ -18,49 +18,99 @@
     所在地区：
     <div class="layui-inline" style="width: 220px">
         <select name="localSearch1" lay-verify=""  style="width: 200px" onchange="supplierNameSearch()">
-            <option value="" ></option>
+            <option value="" >请选择所在地区</option>
         </select>
     </div>
     <div class="layui-inline" style="margin-left: -15px">供应商名称：</div>
     <div class="layui-inline" style="width: 220px;">
         <select name="supplierNameSearch1" lay-verify=""  style="width: 200px" onchange="goodsType()">
-            <option value="" ></option>
+            <option value="" >请选择供应商名称</option>
         </select>
     </div>
     物料类别：
     <div class="layui-inline" style="width: 220px">
         <select name="goodsTypeSearch1" lay-verify=""  style="width: 200px" onchange="goodsName()">
-            <option value="" ></option>
+            <option value="" >请选择物料类别</option>
         </select>
     </div>
     物料名称：
     <div class="layui-inline" style="width: 220px">
         <select name="goodsNameSearch1" lay-verify=""  style="width: 200px" onchange="specifications()">
-            <option value="" ></option>
+            <option value="" >请选择物料名称</option>
         </select>
     </div><br/>
     物料规格：
     <div class="layui-inline" style="width: 220px">
         <select name="specificationsSearch1" lay-verify=""  style="width: 200px" >
-            <option value="" ></option>
+            <option value="" >请选择物料规格</option>
         </select>
     </div>
     起始日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
     </div>
     截止日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择截止日期"/>
     </div>
     <button class="layui-btn layui-btn-sm" data-type="reload">查询</button>
 </div>
-<script type="text/html" id="toolbar">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="out" id="out" >出库</button>
+<div id="sao-Ma-ChuKu" style="display: none;">
+    <div class="my-form">
+        <div class="layui-form-item my-form-item"  >
+            <div class="layui-inline">
+                <label class="layui-form-label layui-icon"  style="width: 170px">供应商:</label>
+                <div class="layui-input-inline">
+                    <input id="supplierNameSaoMa" type="text" readonly="readonly"  autocomplete="off" class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label layui-icon"  style="width: 170px">物料类别:</label>
+                <div class="layui-input-inline">
+                    <input id="goodsTypeSaoMa" type="text"   readonly="readonly" autocomplete="off" class="layui-input"/>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item my-form-item" >
+        <div class="layui-inline">
+            <label class="layui-form-label layui-icon"  style="width: 170px">物料名称:</label>
+            <div class="layui-input-inline">
+                <input id="goodsNameSaoMa" type="text"  readonly="readonly"  autocomplete="off" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label layui-icon"  style="width: 170px">物料规格:</label>
+            <div class="layui-input-inline">
+                <input id="specificationsSaoMa" type="text" readonly="readonly"  autocomplete="off" class="layui-input"/>
+            </div>
+        </div>
+    </div>
+        <div class="layui-form-item my-form-item" >
+            <div class="layui-inline">
+                <label class="layui-form-label layui-icon"  style="width: 170px">出库类别:</label>
+                <div class="layui-input-inline">
+                    <select id="outStockTypeSaoMa" lay-verify=""  style="width: 190px;height: 25px;" >
+                        <option value="" >请选择出库类别</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label layui-icon"  style="width: 170px">备注:</label>
+                <div class="layui-input-inline">
+                    <input id="remarksSaoMa" type="text"  autocomplete="off" class="layui-input"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="toolbarOutStock">
+    <input id="saoMaChuKu" class="layui-input" placeholder="请输入物料流水号"  style="width: 200px; height: 25px;float: left" />
+    <div class="layui-btn-container" style="display: inline-block;">
+        <button class="layui-btn layui-btn-sm" lay-event="outSearch">扫码出库</button>
+        <button class="layui-btn layui-btn-sm" lay-event="out" >出库</button>
     </div>
 </script>
-<table class="layui-table" lay-data="{totalRow:true,url:'/goodsOut/goodsOutData', page:true, id:'idTest',toolbar:'#toolbar',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demo">
+<table class="layui-table" lay-data="{totalRow:true,url:'/goodsOut/goodsOutData', page:true, id:'idTestOutStock',toolbar:'#toolbarOutStock',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoOutStock">
     <thead>
     <tr>
         <th lay-data="{field:'goodsType', width:150}">物料类别</th>
@@ -75,7 +125,7 @@
         <th lay-data="{field:'supplierName', width:150}">供应商名称</th>
         <th lay-data="{field:'operator', width:150}">操作人</th>
         <th lay-data="{field:'operatorTime', width:180}">操作时间</th>
-        <th lay-data="{field:'remarks', width:150}">备注</th>
+        <th lay-data="{field:'remarks', width:500}">备注</th>
     </tr>
     </thead>
 </table>
@@ -86,18 +136,18 @@
     layui.use('table', function(){
         var table = layui.table;
         //监听表格复选框选择
-        table.on('checkbox(demo)', function(obj){
+        table.on('checkbox(demoOutStock)', function(obj){
             console.log(obj)
         });
         //监听头工具栏事件
-        table.on('toolbar(demo)', function(obj){
+        table.on('toolbar(demoOutStock)', function(obj){
             switch(obj.event){
                 case 'out':
                     layer.open({
                         title:'出库',
                         type: 2,
                         content:'/goodsOut/goodsOutFrom',
-                        area: ['1000px', '700px'],
+                        area: ['1300px', '700px'],
                         end: function(){
                             table.reload('idTest');
                         }
@@ -109,6 +159,80 @@
 
                         }
                     );
+                    break;
+                case 'outSearch':
+                    console.log($("#saoMaChuKu").val());
+                    var pipelineNumber= $("#saoMaChuKu").val();
+                    $.ajax({
+                        //几个参数需要注意一下
+                        type: "POST",//方法类型
+                        dataType: "json",//预期服务器返回的数据类型
+                        url: "/goodsOut/saoMaChuKu" ,//url
+                        data:{pipelineNumber:pipelineNumber},
+                        success: function (result) {
+                            if (result.success>0) {
+                                layer.open({
+                                    type:1,
+                                    title:'确认信息',
+                                    btnAlign: 'c',
+                                    area: ['500px', '450px'],
+                                    content: $("#sao-Ma-ChuKu"),
+                                    btn:['保存','取消'],
+                                    success: function (layero, index) {
+                                        top.$('#supplierNameSaoMa').val(result.supplierName);
+                                        top.$('#goodsTypeSaoMa').val(result.goodsType);
+                                        top.$('#goodsNameSaoMa').val(result.goodsName);
+                                        top.$('#specificationsSaoMa').val(result.specifications);
+                                    },
+                                    yes:function(index,layero){
+                                        var supplierName= top.$('#supplierNameSaoMa').val();
+                                        var goodsType= top.$('#goodsTypeSaoMa').val();
+                                        var goodsName=top.$('#goodsNameSaoMa').val();
+                                        var specifications=top.$('#specificationsSaoMa').val();
+                                        var outStockType=top.$('#outStockTypeSaoMa').val();
+                                        var remarks=top.$('#remarksSaoMa').val();
+                                        $.ajax({
+                                            //几个参数需要注意一下
+                                            type: "POST",//方法类型
+                                            dataType: "json",//预期服务器返回的数据类型
+                                            url: "/goodsOut/confirmOut" ,//url
+                                            data: {supplierName:supplierName,goodsType:goodsType,goodsName:goodsName,specifications:specifications
+                                            ,outStockType:outStockType,remarks:remarks,pipelineNumber:pipelineNumber,local:result.local},
+                                            success: function (re) {
+
+                                                if (re.sc >0) {
+                                                    layer.msg('出库成功', {
+                                                        btnAlign: 'c',
+                                                        time: 3000, //20s后自动关闭
+                                                        btn: ['确定']
+                                                    });
+                                                }else{
+                                                    layer.msg('出库失败', {
+                                                        btnAlign: 'c',
+                                                        time: 3000, //20s后自动关闭
+                                                        btn: ['确定']
+                                                    });
+                                                }
+                                            },
+                                            error : function() {
+                                                alert("异常！");
+                                            }
+                                        });
+                                        layer.close(index);
+                                    },
+                                    btn2:function (index) {
+                                        layer.close(index);
+                                    }
+                                })
+                            }else{
+                                layer.msg('未找到该物料信息', {
+                                    btnAlign: 'c',
+                                    time: 3000, //20s后自动关闭
+                                    btn: ['确定']
+                                });
+                            }
+                        }
+                    });
                     break;
             }
         });
@@ -136,9 +260,9 @@
                 var specifications = $("[name='specificationsSearch1'] option:selected").text();
                 var startDate = $("#startDateSearch").val();
                 var endDate = $("#endDateSearch").val();
-                table.reload('idTest',{
+                table.reload('idTestOutStock',{
                     url:'/goodsOut/searchGoodsOutStock',
-                    where:{local:local,supplierName:supplierName,goodsType:goodsType,goodsName:goodsName,specifications:specifications,startDate:startDate,endDate:endDate,page:1,limit:10}  ,
+                    where:{local:local,supplierName:supplierName,goodsType:goodsType,goodsName:goodsName,specifications:specifications,startDate:startDate,endDate:endDate}  ,
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
@@ -169,9 +293,33 @@
     });
     $(
         function () {
-            loadSelect();
+            loadSelect(); outTyp();
         }
-    )
+    );
+
+    function outTyp() {
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/queryLocal" ,//url
+            data:{pid:207},
+            success: function (result) {
+                if (result.success>0) {
+                    var list =result.date;
+                    /*		$("[name='outStockType']").empty();
+                        /!*	var op="";
+                            var bp="请选择出库类别";
+                            $("[name='outStockType']").append("<option value="+op+">"+bp+"</option>");*!/*/
+                    $.each(list,function (i,val) {
+                        $("#outStockTypeSaoMa").append("<option value="+val+">"+val+"</option>");
+                    });
+                }else{
+                    alert("信息错误");
+                }
+            }
+        });
+    }
     function loadSelect() {
         $.ajax({
             //几个参数需要注意一下
@@ -183,19 +331,19 @@
                     var list =result.date;
                     $("[name='localSearch1']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择所在地区";
                     $("[name='localSearch1']").append("<option value="+op+">"+bp+"</option>");
                     $.each(list,function (i,val) {
                         $("[name='localSearch1']").append("<option value="+val+">"+val+"</option>");
                         $("#localAdd").append("<option value="+val+">"+val+"</option>");
                     });
                 }else{
-                    alert("地址信息错误");
+                 /*   alert("地址信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
     function supplierNameSearch() {
@@ -210,19 +358,19 @@
                 if (result.success>0) {
                     $("[name='supplierNameSearch1']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择供应商名称";
                     $("[name='supplierNameSearch1']").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
                         $("[name='supplierNameSearch1']").append("<option value="+val+">"+val+"</option>");
                     });
                 }else{
-                    alert("供应商信息错误");
+                 /*   alert("供应商信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
 
     }
@@ -238,7 +386,7 @@
                 if (result.success>0) {
                     $("[name='goodsTypeSearch1']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择物料类别";
                     $("[name='goodsTypeSearch1']").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
@@ -247,12 +395,12 @@
                         $("[name='goodsTypeSearch1']").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("类别信息错误");
+                  /*  alert("类别信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
     function goodsName() {
@@ -267,7 +415,7 @@
                 if (result.success>0) {
                     $("[name='goodsNameSearch1']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择物料名称";
                     $("[name='goodsNameSearch1']").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
@@ -276,12 +424,12 @@
                         $("[name='goodsNameSearch1']").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("名称信息错误");
+                 /*   alert("名称信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
     function specifications() {
@@ -296,7 +444,7 @@
                 if (result.success>0) {
                     $("[name='specificationsSearch1']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择物料规格";
                     $("[name='specificationsSearch1']").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
@@ -306,14 +454,28 @@
                         $("[name='specificationsSearch1']").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("规格信息错误");
+                    /*alert("规格信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
+    var unSelected = "#999";
+    var selected = "#333";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    })
 </script>
 
 </body>

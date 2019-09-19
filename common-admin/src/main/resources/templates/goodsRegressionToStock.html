@@ -14,7 +14,7 @@
     <button class="layui-btn" data-type="isAll">验证是否全选</button>
 </div>-->
 <!--<h3 style="margin-top: -10px; margin-left:-10px;">检测入库</h3>-->
-<div class="demoTable">
+<div class="demoTableREG">
     所在地区：
     <div class="layui-inline" style="width: 220px">
         <select name="localSearch3" lay-verify=""  style="width: 200px" onchange="supplierNameSearch()">
@@ -24,38 +24,38 @@
     <div class="layui-inline" style="margin-left: -15px">供应商名称：</div>
     <div class="layui-inline" style="width: 220px;">
         <select name="supplierNameSearch3" lay-verify=""  style="width: 200px" onchange="goodsType()">
-            <option value="" ></option>
+            <option value="" >请选择供应商名称</option>
         </select>
     </div>
     物料类别：
     <div class="layui-inline" style="width: 220px">
         <select name="goodsTypeSearch3" lay-verify=""  style="width: 200px" onchange="goodsName()">
-            <option value="" ></option>
+            <option value="" >请选择物料类别</option>
         </select>
     </div>
     物料名称：
     <div class="layui-inline" style="width: 220px">
         <select name="goodsNameSearch3" lay-verify=""  style="width: 200px" onchange="specifications()">
-            <option value="" ></option>
+            <option value="" >请选择物料名称</option>
         </select>
     </div><br/>
     物料规格：
     <div class="layui-inline" style="width: 220px">
         <select name="specificationsSearch3" lay-verify=""  style="width: 200px" >
-            <option value="" ></option>
+            <option value="" >请选择物料规格</option>
         </select>
     </div>
     起始日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
     </div>
     截止日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择截止日期"/>
     </div>
-    <button class="layui-btn layui-btn-sm" data-type="reload">查询</button>
+    <button class="layui-btn layui-btn-sm" data-type="reloadREG">查询</button>
 </div>
-<div id="add-main" style="display: none;">
+<div id="add-mainGoodsReg" style="display: none;">
     <div id="my-from">
         <div class="layui-form-item my-form-item" style="margin-top: 10px">
             <div class="layui-inline">
@@ -147,13 +147,13 @@
 </div>
 <script type="text/html" id="toolbarDemobuz">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add" id="add" >添加</button>
-        <button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>
-        <button class="layui-btn layui-btn-sm" lay-event="delete" id="delete" >删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="addGoodsReg" >添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="updateGoodsReg"  >修改</button>
+        <button class="layui-btn layui-btn-sm" lay-event="deleteGoodsReg">删除</button>
        <!-- <button class="layui-btn layui-btn-sm" lay-event="upload" id="upload" >导入</button>-->
     </div>
 </script>
-<table class="layui-table" lay-data="{totalRow:true,url:'/goodSRegStock/goodSRegStockData', page:true, id:'idTest',toolbar:'#toolbarDemobuz',defaultToolbar:['exports'] }" lay-filter="demo">
+<table class="layui-table" lay-data="{totalRow:true,url:'/goodSRegStock/goodSRegStockData', page:true, id:'idTestGoodsReg',toolbar:'#toolbarDemobuz',defaultToolbar:['exports'] }" lay-filter="demoGoodsReg">
     <thead>
     <tr>
         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
@@ -176,7 +176,7 @@
 <script>
     layui.use('table', function(){
         var table = layui.table;
-        //监听表格复选框选择
+        /*//监听表格复选框选择
         table.on('checkbox(demo)', function(obj){
             console.log(obj)
         });
@@ -191,12 +191,12 @@
                     layer.close(index);
                 });
             } else if(obj.event === 'edit'){
-                /*layer.alert('编辑行：<br/>'+ JSON.stringify(data))*/
+                /!*layer.alert('编辑行：<br/>'+ JSON.stringify(data))*!/
 
             }
-        });
+        });*/
         //监听头工具栏事件
-        table.on('toolbar(demo)', function(obj){
+        table.on('toolbar(demoGoodsReg)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id)
                 ,data = checkStatus.data//获取选中的数据
                 ,deList=[1];
@@ -205,13 +205,13 @@
             });
             deList.push(2);
             switch(obj.event){
-                case 'add':
+                case 'addGoodsReg':
                     layer.open({
                         type:1,
                         title:'添加',
                         btnAlign: 'c',
                         area: ['800px', '400px'],
-                        content: $("#add-main"),
+                        content: $("#add-mainGoodsReg"),
                         btn:['保存','取消'],
                         yes:function(index,layero){
                             var local =top.$('#localAdd').val();
@@ -223,8 +223,13 @@
                             var reason =top.$("#reason").val();
                             var department =top.$("#department").val();
                             var remarks =top.$("#remarksAdd").val();
-                            if (specifications=="请选择规格"||nums==""||department=="") {
-                              alert("您还有必填项未填！")
+                            if (specifications=="请选择规格"||nums==""||department==""||supplierName==""||goodsName=="请选择名称"||specifications=="请选择类别") {
+                              /*alert("您还有必填项未填！")*/
+                                layer.msg('您还有必填项未填', {
+                                    btnAlign: 'c',
+                                    time: 10000, //20s后自动关闭
+                                    btn: ['确定']
+                                });
                             }else {
                                 $.ajax({
                                     //几个参数需要注意一下
@@ -235,15 +240,24 @@
                                     success: function (result) {
                                         console.log(result);//打印服务端返回的数据(调试用)
                                         if (result.success >0) {
-                                            alert("操作成功");
-                                            table.reload('idTest');
+                                          /*  alert("操作成功");*/
+                                            layer.msg('操作成功', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                            table.reload('idTestGoodsReg');
                                         }else{
-                                            alert("系统错误");
+                                            layer.msg('操作失败', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
                                         }
-                                    },
+                                    }/*,
                                     error : function() {
                                         alert("异常！");
-                                    }
+                                    }*/
                                 });
                                 layer.close(index);
                             }
@@ -253,7 +267,7 @@
                         }
                     })
                     break;
-                case 'update':
+                case 'updateGoodsReg':
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     } else if(data.length > 1){
@@ -291,16 +305,26 @@
                                     data: {local:local,supplierName:supplierName,goodsName:goodsName,goodsType:goodsType,specifications:specifications,reason:reason,department:department,nums:nums,remarks:remarks,id:id},
                                     success: function (result) {
                                         if (result.success != null) {
-                                            alert("操作成功");
-                                            table.reload('idTest');
+                                          /*  alert("操作成功");*/
+                                            layer.msg('操作成功', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                            table.reload('idTestGoodsReg');
 
                                         }else{
-                                            alert("系统错误");
+                                           /* alert("系统错误");*/
+                                            layer.msg('操作失败', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
                                         }
-                                    },
+                                    }/*,
                                     error : function() {
                                         alert("异常！");
-                                    }
+                                    }*/
                                 });
                                 layer.close(index);
                             },
@@ -310,7 +334,7 @@
                         })
                     }
                     break;
-                case 'delete':
+                case 'deleteGoodsReg':
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     } else {
@@ -323,15 +347,23 @@
                                 data: {deList:JSON.stringify(deList)},
                                 success: function (result) {
                                     if (result.success>0) {
-                                        alert("操作成功");
-                                        table.reload('idTest')
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('idTestGoodsReg')
                                     }else{
-                                        alert("系统错误");
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
                                     }
-                                },
+                                }/*,
                                 error : function() {
                                     alert("异常！");
-                                }
+                                }*/
                             });
                             layer.close(index);
                         });
@@ -355,7 +387,7 @@
                      layer.msg(checkStatus.isAll ? '全选': '未全选')
                  }
                  ,*/
-            reload:function () {
+            reloadREG:function () {
                 var local = $("[name='localSearch3'] option:selected" ).text();
                 var supplierName = $("[name='supplierNameSearch3'] option:selected").text();
                 var goodsType = $("[name='goodsTypeSearch3'] option:selected").text();
@@ -363,9 +395,9 @@
                 var specifications = $("[name='specificationsSearch3'] option:selected").text();
                 var startDate = $("#startDateSearch").val();
                 var endDate = $("#endDateSearch").val();
-                table.reload('idTest',{
+                table.reload('idTestGoodsReg',{
                     url:'/goodSRegStock/searchGoodsRegStock',
-                    where:{local:local,supplierName:supplierName,goodsType:goodsType,goodsName:goodsName,specifications:specifications,startDate:startDate,endDate:endDate,page:1,limit:10}  ,
+                    where:{local:local,supplierName:supplierName,goodsType:goodsType,goodsName:goodsName,specifications:specifications,startDate:startDate,endDate:endDate}  ,
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
@@ -374,7 +406,7 @@
             }
         };
 
-        $('.demoTable .layui-btn').on('click', function(){
+        $('.demoTableREG .layui-btn').on('click', function(){
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
@@ -406,19 +438,19 @@
                     var list =result.date;
                     $("[name='localSearch3']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择所在地区";
                     $("[name='localSearch3']").append("<option value="+op+">"+bp+"</option>");
                     $.each(list,function (i,val) {
                         $("[name='localSearch3']").append("<option value="+val+">"+val+"</option>");
                         $("#localAdd").append("<option value="+val+">"+val+"</option>");
                     });
                 }else{
-                    alert("地址信息错误");
+                  /*  alert("地址信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
     function supplierNameSearch() {
@@ -433,19 +465,19 @@
                 if (result.success>0) {
                     $("[name='supplierNameSearch3']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择供应商";
                     $("[name='supplierNameSearch3']").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
                         $("[name='supplierNameSearch3']").append("<option value="+val+">"+val+"</option>");
                     });
                 }else{
-                    alert("供应商信息错误");
+                    // alert("供应商信息错误");
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
 
     }
@@ -468,12 +500,12 @@
                         $("#supplierNameAdd").append("<option value="+val+">"+val+"</option>");
                     });
                 }else{
-                    alert("供应商信息错误");
+                  /*  alert("供应商信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
 
     }
@@ -489,7 +521,7 @@
                 if (result.success>0) {
                     $("[name='goodsTypeSearch3']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择物料类别";
                     $("[name='goodsTypeSearch3']").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
@@ -498,12 +530,12 @@
                         $("[name='goodsTypeSearch3']").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("类别信息错误");
+                  /*  alert("类别信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
     function goodsTypeAdd() {
@@ -527,12 +559,12 @@
                         $("#goodsTypeAdd").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("类别信息错误");
+                  /*  alert("类别信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
     function goodsName() {
@@ -547,7 +579,7 @@
                 if (result.success>0) {
                     $("[name='goodsNameSearch3']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择物料名称";
                     $("[name='goodsNameSearch3']").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
@@ -556,12 +588,12 @@
                         $("[name='goodsNameSearch3']").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("名称信息错误");
+                   /* alert("名称信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
     function goodsNameAdd() {
@@ -585,12 +617,12 @@
                         $("#goodsNameAdd").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("名称信息错误");
+                   /* alert("名称信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
     function specifications() {
@@ -605,7 +637,7 @@
                 if (result.success>0) {
                     $("[name='specificationsSearch3']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择物料规格";
                     $("[name='specificationsSearch3']").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
@@ -615,12 +647,12 @@
                         $("[name='specificationsSearch3']").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("规格信息错误");
+                   /* alert("规格信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
     function specificationsAdd() {
@@ -644,14 +676,28 @@
                         $("#specificationsAdd").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("规格信息错误");
+                  /*  alert("规格信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
+    var unSelected = "#999";
+    var selected = "#333";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    })
 </script>
 
 </body>

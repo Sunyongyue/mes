@@ -57,12 +57,12 @@
 </div>
 <script type="text/html" id="toolbarDemos">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add" id="add" >添加</button>
-        <button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>
-        <button class="layui-btn layui-btn-sm" lay-event="delete" id="delete" >删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="addIndustry"  >添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="updateIndustry"  >修改</button>
+        <button class="layui-btn layui-btn-sm" lay-event="deleteIndustry"  >删除</button>
     </div>
 </script>
-<table class="layui-table" lay-data="{totalRow:true,url:'/goodsInStock/goodsInStockDate', page:true, id:'idTest',toolbar:'#toolbarDemos',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demo">
+<table class="layui-table" lay-data="{totalRow:true,url:'/goodsInStock/goodsInStockDate', page:true, id:'idTestIndustry',toolbar:'#toolbarDemos',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoIndustry">
     <thead>
     <tr>
         <th lay-data="{type:'checkbox', fixed: 'left'}" rowspan="2"></th>
@@ -118,11 +118,11 @@
     layui.use('table', function(){
         var table = layui.table;
         //监听表格复选框选择
-        table.on('checkbox(demo)', function(obj){
+        table.on('checkbox(demoIndustry)', function(obj){
             console.log(obj)
         });
         //监听工具条
-        table.on('tool(demo)', function(obj){
+        table.on('tool(demoIndustry)', function(obj){
             var data = obj.data;
             if(obj.event === 'detail'){
                 layer.msg('ID：'+ data.id + ' 的查看操作');
@@ -137,7 +137,7 @@
             }
         });
         //监听头工具栏事件
-        table.on('toolbar(demo)', function(obj){
+        table.on('toolbar(demoIndustry)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id)
                 ,data = checkStatus.data//获取选中的数据
                 ,deList=[1];
@@ -146,13 +146,13 @@
             });
             deList.push(2);
             switch(obj.event){
-                case 'add':
+                case 'addIndustry':
                     layer.open({
                         type:1,
                         title:'添加',
                         btnAlign: 'c',
                         area: ['500px', '600px'],
-                        content: $("#add-main"),
+                        content: $("#add-mainIndustry"),
                         btn:['保存','取消'],
                         yes:function(index,layero){
                             $.ajax({
@@ -165,7 +165,7 @@
                                     console.log(result);//打印服务端返回的数据(调试用)
                                     if (result.success >0) {
                                         alert("操作成功");
-                                        table.reload('idTest');
+                                        table.reload('idTestIndustry');
                                     }else{
                                         alert("系统错误");
                                     }
@@ -182,7 +182,7 @@
                         }
                     })
                     break;
-                case 'update':
+                case 'updateIndustry':
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     } else if(data.length > 1){
@@ -199,7 +199,7 @@
                                 success: function (result) {
                                     if (result.success>0) {
                                         alert("操作成功");
-                                        table.reload('idTest')
+                                        table.reload('idTestIndustry')
                                     }else{
                                         alert("系统错误");
                                     }
@@ -212,7 +212,7 @@
                         });
                     }
                     break;
-                case 'delete':
+                case 'deleteIndustry':
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     } else {
@@ -226,7 +226,7 @@
                                 success: function (result) {
                                     if (result.success>0) {
                                         alert("操作成功");
-                                        table.reload('idTest')
+                                        table.reload('idTestIndustry')
                                     }else{
                                         alert("系统错误");
                                     }
@@ -265,7 +265,7 @@
                 var specifications = $("[name='specificationsSearch'] option:selected").text();
                 var startDate = $("#startDateSearch").val();
                 var endDate = $("#endDateSearch").val();
-                table.reload('idTest',{
+                table.reload('idTestIndustry',{
                     url:'',
                     where:{local:local,supplierName:supplierName,goodsType:goodsType,goodsName:goodsName,specifications:specifications,startDate:startDate,endDate:endDate,page:1,limit:10}  ,
                     page: {

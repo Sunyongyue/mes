@@ -3,7 +3,7 @@
 <mapper namespace="com.common.system.mapper.SaleOrderMapper">
 
     <select id="querySaleOrder" resultType="com.common.system.entity.SaleOrder">
-        select * from sale_order
+        select * from sale_order  ORDER BY operatorTime desc
     </select>
     <insert id="addSaleOrder">
 INSERT into sale_order(saleNum,customerName,`date`,projectName,endDate,productNameOrder,productSpecificationsOrder,customerPressure,customerNums,address,receiver,telPhone,logisticsInformation,remarks,operator,operatorTime)VALUES(
@@ -11,6 +11,9 @@ INSERT into sale_order(saleNum,customerName,`date`,projectName,endDate,productNa
     </insert>
     <select id="queryNum" resultType="int">
         SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{date}
+    </select>
+    <select id="queryOne" resultType="com.common.system.entity.SaleOrder">
+         select * from sale_order where id=#{id}
     </select>
     <delete id="deleteSaleOrder">
         DELETE from sale_order where id in
@@ -32,5 +35,6 @@ INSERT into sale_order(saleNum,customerName,`date`,projectName,endDate,productNa
             and operatorTime<#{endDate}
             ]]></if>
         </where>
+        ORDER BY operatorTime desc
     </select>
 </mapper>

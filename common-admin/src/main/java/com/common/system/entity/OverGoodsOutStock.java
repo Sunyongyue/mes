@@ -93,8 +93,25 @@ public class OverGoodsOutStock {
     private String outStockType;
     //备注
     private String outStockremarks;
+    //出库检测员
+    private String outStockTestPeople;
+    //出库检测时间
+    private String outStockTestTime;
+    //发货人
+    private String sendGoodsPeople;
+    //发货时间
+    private String sendGoodsTime;
+    //记录状态
+    private String recordStatus;
+    //停机时间
+    private String shutdownTime;
+    //激活时间
+    private String activeTime;
+    //物流信息
+    private String logisticsInformation;
     public OverGoodsOutStock(){}
-    public OverGoodsOutStock(int id, String outStockNumbers, String saleNum, String customerName, String date, String projectName, String endDate, String productNameOrder, String productSpecificationsOrder, String customerPressure, int customerNums, String valveSupplier, String valveNUms, String valveName, String valveSpecifications, String intakeDirection, String vavleProductDate, String controlMainboardName, String controlMainboardSpecifications, String controlMainboardSupplier, String controlMainBoardNums, String controlMainBoardProductDate, String telMainBoardName, String telMainBoardSpecifications, String telMainBoardSupplier, String telMainBoardNums, String telMainBoardProductDate, String cardNum, String iMSI, String iMEI, String iCCID, String telType, String fourMainBoardName, String fourSpecifications, String fourSupplier, String fourMainBoardNums, String fourMainBoardProductDate, String telProtocol, String productNum, String assembler, String tester, String productDate, String testDate, String outFactoryMan, String getOutFactoryTime, int outStockNums, String outStockType, String outStockremarks) {
+
+    public OverGoodsOutStock(int id, String outStockNumbers, String saleNum, String customerName, String date, String projectName, String endDate, String productNameOrder, String productSpecificationsOrder, String customerPressure, int customerNums, String valveSupplier, String valveNUms, String valveName, String valveSpecifications, String intakeDirection, String vavleProductDate, String controlMainboardName, String controlMainboardSpecifications, String controlMainboardSupplier, String controlMainBoardNums, String controlMainBoardProductDate, String telMainBoardName, String telMainBoardSpecifications, String telMainBoardSupplier, String telMainBoardNums, String telMainBoardProductDate, String cardNum, String iMSI, String iMEI, String iCCID, String telType, String fourMainBoardName, String fourSpecifications, String fourSupplier, String fourMainBoardNums, String fourMainBoardProductDate, String telProtocol, String productNum, String assembler, String tester, String productDate, String testDate, String outFactoryMan, String getOutFactoryTime, int outStockNums, String outStockType, String outStockremarks, String outStockTestPeople, String outStockTestTime, String sendGoodsPeople, String sendGoodsTime, String recordStatus, String shutdownTime, String activeTime, String logisticsInformation) {
         this.id = id;
         this.outStockNumbers = outStockNumbers;
         this.saleNum = saleNum;
@@ -143,6 +160,70 @@ public class OverGoodsOutStock {
         this.outStockNums = outStockNums;
         this.outStockType = outStockType;
         this.outStockremarks = outStockremarks;
+        this.outStockTestPeople = outStockTestPeople;
+        this.outStockTestTime = outStockTestTime;
+        this.sendGoodsPeople = sendGoodsPeople;
+        this.sendGoodsTime = sendGoodsTime;
+        this.recordStatus = recordStatus;
+        this.shutdownTime = shutdownTime;
+        this.activeTime = activeTime;
+        this.logisticsInformation = logisticsInformation;
+    }
+
+    public String getOutStockTestPeople() {
+        return outStockTestPeople;
+    }
+
+    public String getShutdownTime() {
+        return shutdownTime;
+    }
+
+    public void setShutdownTime(String shutdownTime) {
+        this.shutdownTime = shutdownTime;
+    }
+
+    public String getActiveTime() {
+        return activeTime;
+    }
+
+    public void setActiveTime(String activeTime) {
+        this.activeTime = activeTime;
+    }
+
+    public void setOutStockTestPeople(String outStockTestPeople) {
+        this.outStockTestPeople = outStockTestPeople;
+    }
+
+    public String getOutStockTestTime() {
+        return outStockTestTime;
+    }
+
+    public void setOutStockTestTime(String outStockTestTime) {
+        this.outStockTestTime = outStockTestTime;
+    }
+
+    public String getSendGoodsPeople() {
+        return sendGoodsPeople;
+    }
+
+    public void setSendGoodsPeople(String sendGoodsPeople) {
+        this.sendGoodsPeople = sendGoodsPeople;
+    }
+
+    public String getSendGoodsTime() {
+        return sendGoodsTime;
+    }
+
+    public void setSendGoodsTime(String sendGoodsTime) {
+        this.sendGoodsTime = sendGoodsTime;
+    }
+
+    public String getRecordStatus() {
+        return recordStatus;
+    }
+
+    public void setRecordStatus(String recordStatus) {
+        this.recordStatus = recordStatus;
     }
 
     public int getId() {
@@ -529,6 +610,14 @@ public class OverGoodsOutStock {
         this.outStockremarks = outStockremarks;
     }
 
+    public String getLogisticsInformation() {
+        return logisticsInformation;
+    }
+
+    public void setLogisticsInformation(String logisticsInformation) {
+        this.logisticsInformation = logisticsInformation;
+    }
+
     @Override
     public String toString() {
         return "OverGoodsOutStock{" +
@@ -580,6 +669,14 @@ public class OverGoodsOutStock {
                 ", outStockNums=" + outStockNums +
                 ", outStockType='" + outStockType + '\'' +
                 ", outStockremarks='" + outStockremarks + '\'' +
+                ", outStockTestPeople='" + outStockTestPeople + '\'' +
+                ", outStockTestTime='" + outStockTestTime + '\'' +
+                ", sendGoodsPeople='" + sendGoodsPeople + '\'' +
+                ", sendGoodsTime='" + sendGoodsTime + '\'' +
+                ", recordStatus='" + recordStatus + '\'' +
+                ", shutdownTime='" + shutdownTime + '\'' +
+                ", activeTime='" + activeTime + '\'' +
+                ", logisticsInformation='" + logisticsInformation + '\'' +
                 '}';
     }
 }

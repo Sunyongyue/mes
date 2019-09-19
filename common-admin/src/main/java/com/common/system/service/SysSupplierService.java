@@ -1,6 +1,7 @@
 package com.common.system.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.common.system.entity.SysSupplier;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface SysSupplierService {
     JSONObject local();
     JSONObject supplierNameSearch( String local);
     JSONObject supplierNameOrder();
+    List<SysSupplier> supplierNameOne(@Param("supplierName") String supplierName);
+    int selectBig();
 }

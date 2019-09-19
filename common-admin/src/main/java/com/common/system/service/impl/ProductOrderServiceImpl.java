@@ -48,6 +48,18 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
+    public int updateStatus(String productNum) {
+        int i = orderMapper.updateStatus(productNum);
+        return i;
+    }
+
+    @Override
+    public int updateOver(String productNum) {
+        int i = orderMapper.updateOver(productNum);
+        return i;
+    }
+
+    @Override
     public List<ProductOrder> queryByProductNum(String productNum) {
         List<ProductOrder> productOrders = orderMapper.queryByProductNum(productNum);
         return productOrders;
@@ -68,11 +80,11 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
-    public JSONObject searchProductOrder(String productNum, String goodsName, String specifications, String operator, String startDate, String endDate, Integer page, Integer limit) {
-        List<ProductOrder> productOrders = orderMapper.searchProductOrder(productNum, goodsName, specifications, operator, startDate, endDate);
+    public JSONObject searchProductOrder(String productNum, String goodsName, String specifications, String operator, String status,String startDate, String endDate, Integer page, Integer limit) {
+        List<ProductOrder> productOrders = orderMapper.searchProductOrder(productNum, goodsName, specifications, operator, status,startDate, endDate);
         int size = productOrders.size();
         Page<Object> objects = PageHelper.startPage(page, limit);
-        List<ProductOrder> productOrders1 = orderMapper.searchProductOrder(productNum, goodsName, specifications, operator, startDate, endDate);
+        List<ProductOrder> productOrders1 = orderMapper.searchProductOrder(productNum, goodsName, specifications, operator,status, startDate,endDate);
         String s = JSON.toJSONString(productOrders1);
         JSONArray array = JSONArray.parseArray(s);
         JSONObject object = new JSONObject();

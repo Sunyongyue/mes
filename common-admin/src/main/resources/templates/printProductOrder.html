@@ -30,7 +30,7 @@
 				width: 45px;
 				text-align: center;
 				font-family: "黑体";
-				height: 24px;
+				height: 20px;
 			}
 			.goods{
 				font-size: 11px;
@@ -40,11 +40,14 @@
 	</head>
 	<body >
 	 <div class="box">
-        <div id="printbq" align="center" style="margin-top: 20px;">
+        <div id="printbq" align="center" style="margin-top: 12px;">
         <h3 class="billtitle">天和仪表_生产订单(工业)</h3>
         <div class="foots">
-        	<div style="display: inline-block; margin-left: -32px; border: 1px  dashed; width:500px; height: 35px;"><span style="line-height: 35px;" th:text="${productOrder.productNum}"></span></div>
-            <span  style="font-size: 11px;" th:text="'日期：'+${productOrder.operatorTime}"> </span>
+        	<!--<div style="display: inline-block; margin-left: -32px; border: 1px  dashed; width:500px; height: 52px;"><span style="line-height: 52px;" th:text="${productOrder.productNum}"></span></div>-->
+			<div style="display: inline-block; margin-left:-90px; border: 1px  dashed; width:94px; height: 56px;"><span style="line-height: 56px;font-size: 11px" th:text="${productOrder.productNum}"></span></div>
+			<div style="display: inline-block; margin-left:0px; border: 1px  dashed; width:94px; height: 56px;"><span style="line-height: 56px;font-size: 11px "  th:text="${productOrder.productNum}"></span></div>
+			<div style="display: inline-block; margin-left: 0px; border: 1px  dashed; width:94px; height: 56px;"><span style="line-height: 56px;font-size: 11px " th:text="${productOrder.productNum}"></span></div>
+            <span  style="font-size: 11px;margin-left: 160px; " th:text="'日期：'+${productOrder.operatorTime}"> </span>
         </div>
         <div class="billcontent">
        		<table border="1" cellspacing="0" style="width: 680px;">
@@ -57,7 +60,7 @@
        				<td  class="goods">&nbsp;&nbsp;阀门厂商：<div class="td_div"><span th:text="${productOrder.valveSupplier}"></span></div>阀门名称：<div class="td_div"><span th:text="${productOrder.valveName}"></span></div>型号规格：<div class="td_div"><span th:text="${productOrder.valveSpecifications}"></span></div>进气方向：<div class="td_div"><span th:text="${productOrder.intakeDirection}"></span></div></td>
        			</tr>
        			<tr>
-       				<td rowspan="3" class="main" style="height: 66px;">主板</td>
+       				<td rowspan="3" class="main" style="height: 60px;">主板</td>
        				<td  class="goods">主控板厂商：<div class="td_div"><span th:text="${productOrder.controlMainboardSupplier}"></span></div>控制主板：<div class="td_div"><span th:text="${productOrder.controlMainboardName}"></span></div>型号规格：<div class="td_div"><span th:text="${productOrder.controlMainboardSpecifications}"></span></div>程序版本：<div class="td_div"><span th:text="${productOrder.version}"></span></div></td>
        			</tr>
        			<tr>
@@ -67,17 +70,17 @@
        				<td  class="goods">&nbsp;485板厂商：<div class="td_div"><span th:text="${productOrder.fourSupplier}"></span></div>&nbsp;485主板：<div class="td_div"><span th:text="${productOrder.fourMainBoardName}"></span></div>型号规格：<div class="td_div"><span th:text="${productOrder.fourSpecifications}"></span></div>通信协议：<div class="td_div"><span th:text="${productOrder.telProtocol}"></span></div></td>
        			</tr>
        			<tr>
-       				<td rowspan="4" class="main" style="height:88px;">功能</td>
-       				<td style="border-style:none" class="goods">&nbsp;&nbsp;信号来源：<div class="td_div" th:text="${productOrder.signalSource}"><span></span></div>计费方式：<div class="td_div"><span th:text="${productOrder.charMethod}"></span></div>脉冲当量：<div class="td_div"><span th:text="${productOrder.pulseEquivalent}"></span></div>预留气量：<div class="td_div"><span th:text="${productOrder.reservedAir}"></span></div></td>
+       				<td rowspan="4" class="main" style="height:80px;">参数</td>
+       				<td style="border-style:none" class="goods">&nbsp;&nbsp;信号来源：<div class="td_div" ><span style="font-size: 10px" th:text="${productOrder.signalSource}"></span></div>计费方式：<div class="td_div"><span th:text="${productOrder.charMethod}"></span></div>脉冲当量：<div class="td_div"><span th:text="${productOrder.pulseEquivalent}"></span></div>预留气量：<div class="td_div"><span th:text="${productOrder.reservedAir}"></span></div></td>
        			</tr>
        			<tr>
-       				<td style="border-style:none" class="goods">&nbsp;&nbsp;报警方数：<div class="td_div" th:text="${productOrder.alarmSquare}"><span></span></div>充值上限：<div class="td_div"><span th:text="${productOrder.upperLimitOfRecharge}"></span></div>透支气量：<div class="td_div"><span th:text="${productOrder.overdrawAir}"></span></div>开阀时间：<div class="td_div"><span th:text="${productOrder.valveOpenTime}"></span></div></td>
+       				<td style="border-style:none" class="goods">&nbsp;&nbsp;报警方数：<div class="td_div" th:text="${productOrder.alarmSquare}"><span></span></div>开阀时间：<div class="td_div"><span th:text="${productOrder.valveOpenTime}"></span></div>关阀时间：<div class="td_div" th:text="${productOrder.valveCloseTime}"><span></span></div>窃气检测：<div class="td_div"><span th:text="${productOrder.gasCheck}"></span></div></td>
        			</tr>
        			<tr>
-       				<td  style="border-style:none" class="goods">&nbsp;&nbsp;关阀时间：<div class="td_div" th:text="${productOrder.valveCloseTime}"><span></span></div>窃气检测：<div class="td_div"><span th:text="${productOrder.gasCheck}"></span></div>断线检测：<div class="td_div"><span th:text="${productOrder.disconnectionCheck}"></span></div>低压检测：<div class="td_div"><span th:text="${productOrder.lowPressureCheck}"></span></div></td>
+       				<td  style="border-style:none" class="goods">&nbsp;&nbsp;断线检测：<div class="td_div"><span th:text="${productOrder.disconnectionCheck}"></span></div>低压检测：<div class="td_div"><span th:text="${productOrder.lowPressureCheck}"></span></div>过流检测：<div class="td_div" th:text="${productOrder.overcurrentCheck}"><span></span></div>停用检测：<div class="td_div"><span th:text="${productOrder.stopUseCheck}"></span></div></td>
        			</tr>
        			<tr>
-       				<td style="border-style:none" class="goods">&nbsp;&nbsp;过流功能：<div class="td_div" th:text="${productOrder.overcurrentCheck}"><span></span></div>停用功能：<div class="td_div"><span th:text="${productOrder.stopUseCheck}"></span></div>失联功能：<div class="td_div"><span th:text="${productOrder.noContactCheck}"></span></div>微漏功能：<div class="td_div"><span th:text="${productOrder.microleakageCheck}"></span></div></td>
+       				<td style="border-style:none" class="goods">&nbsp;&nbsp;失联检测：<div class="td_div"><span th:text="${productOrder.noContactCheck}"></span></div>微漏检测：<div class="td_div"><span th:text="${productOrder.microleakageCheck}"></span></div>充值上限：<div class="td_div"><span th:text="${productOrder.upperLimitOfRecharge}"></span></div>透支额度：<div class="td_div"><span th:text="${productOrder.overdrawAir}"></span></div></td>
        			</tr>
        			<tr>
        				<td colspan="2" style="font-size: 12px; font-family:'黑体'; height: 22px;" >&nbsp;&nbsp;备注：<span th:text="${productOrder.remarks}"></span></td>
@@ -85,9 +88,9 @@
        		</table>
         </div>
         <div class="foots">
-          <span style="margin-left: -100px;display: inline-block; width: 160px;font-size: 11px; ">制单人：</span>
-          <span style="display: inline-block; width: 160px;font-size: 11px;">审核人:</span>
-          <span style="display: inline-block; width: 140px;font-size: 11px;">车间主任:</span>
+			<div style="display: inline-block;font-size: 11px;margin-left: -213px; ">制单人：</div>
+			<div style="display: inline-block;font-size: 11px;margin-left: 98px; ">审核人：</div>
+			<div style="display: inline-block;font-size: 11px;margin-left: 90px;  ">车间主任：</div>
         </div>
       </div>
     </div>

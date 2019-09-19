@@ -174,6 +174,12 @@ public class OverGoodsController {
         JSONObject object = goodsInStockService.searchOverGoodsInStock(productNum, goodsName, specifications, operator, startDate, endDate, page, limit);
         return object.toString();
     }
+    @RequestMapping("/searchOverGoodsInStock2")
+    @ResponseBody
+    public String searchOverGoodsInStock2(String productNum){
+        JSONObject object = goodsInStockService.searchOverGoodsInStock(productNum, "", "", "", "", "", 1, 10);
+        return object.toString();
+    }
     @RequestMapping("/outStock")
     public ModelAndView outStock(){
         ModelAndView mav = new ModelAndView("overGoodsOutstock");
@@ -187,8 +193,20 @@ public class OverGoodsController {
     }
     @RequestMapping("/addOverGoodsOutStock")
     @ResponseBody
-    public String addOverGoodsOutStock(String outStockNumbers,String productNum, String salenum, @SessionAttribute ShiroUser user, String getOutFactoryTime, int outStockNums, String outStockType, String outStockremarks){
-        JSONObject object = outStockService.addOverGoodsOutStock(outStockNumbers,productNum, salenum, user.getUsername(), getOutFactoryTime, outStockNums, outStockType,outStockremarks);
+    public String addOverGoodsOutStock(String outStockNumbers,String productNum, String salenum, @SessionAttribute ShiroUser user, String getOutFactoryTime, int outStockNums, String outStockType, String outStockremarks,String logisticsInformation){
+        JSONObject object = outStockService.addOverGoodsOutStock(outStockNumbers,productNum, salenum, user.getUsername(), getOutFactoryTime, outStockNums, outStockType,outStockremarks,logisticsInformation);
+        return object.toString();
+    }
+    @RequestMapping("/deleteOverGoodsOutStock")
+    @ResponseBody
+    public String deleteOverGoodsOutStock(String[] deList){
+        int[] array = new int[deList.length-2];
+        for (int i=1;i<deList.length-1;i++){
+            array[i-1]= Integer.parseInt(deList[i]);
+        }
+        int i = outStockService.deleteOverGoodsOutStock(array);
+        JSONObject object = new JSONObject();
+        object.put("success",i);
         return object.toString();
     }
     @RequestMapping("/uploadOutStock")
@@ -204,7 +222,7 @@ public class OverGoodsController {
                 Row row = null;
                 List<Map<String,String>> list = null;
                 String cellData = null;
-                String columns[] = {"outStockNumbers","productNum","salenum","outStockType","remarks"};
+                String columns[] = {"outStockNumbers","productNum","salenum","outStockType","remarks","logisticsInformation"};
                 wb = readExcel(file);
                 if(wb != null){
                     //用来存放表中数据
@@ -241,7 +259,8 @@ public class OverGoodsController {
                     String salenum = map.get("salenum");
                     String outStockType = map.get("outStockType");
                     String remarks = map.get("remarks");
-                    outStockService.addOverGoodsOutStock(outStockNumbers,productNum,salenum,user.getUsername(),"",1,outStockType,remarks);
+                    String logisticsInformation = map.get("logisticsInformation");
+                    outStockService.addOverGoodsOutStock(outStockNumbers,productNum,salenum,user.getUsername(),"",1,outStockType,remarks,logisticsInformation);
                 }
             } catch (Exception e) {
                 resObj.put("msg", "error");

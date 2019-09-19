@@ -34,8 +34,8 @@ public class LoginController extends BaseController{
             ShiroUser user = (ShiroUser) subject.getPrincipal();
             modelAndView.addObject("user",user);
             session.setAttribute("user",user);
-
         } catch (AuthenticationException e) {
+            session.setAttribute("failed","账号或密码错误！！");
             e.printStackTrace();
         }
         return REDIRECT + "/";

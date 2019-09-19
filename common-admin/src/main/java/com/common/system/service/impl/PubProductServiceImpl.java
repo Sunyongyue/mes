@@ -47,6 +47,12 @@ public class PubProductServiceImpl implements PubProductService {
     }
 
     @Override
+    public PubProduct queryOneByproductNum(String productNum) {
+        PubProduct pubProduct = pubProductMapper.queryOneByproductNum(productNum);
+        return pubProduct;
+    }
+
+    @Override
     public JSONObject addPubProduct(String productNum, String valveNUms, String controlMainBoardNums, String assembler, String tester, String testRemarks) {
         List<GoodsInStock> goodsInStocks = inStockMapper.queryBypipelineNumber(valveNUms);
         String valveProduceDate="";
@@ -71,19 +77,23 @@ public class PubProductServiceImpl implements PubProductService {
         String imsi = "";
         String imei = "";
         String iccid = "";
+        String activeTime="";
+        String shutdownTime="";
         if (!(telInStocks.isEmpty())){
             telProduceDate = telInStocks.get(0).getGoodsProduceDate();
             cardNums = telInStocks.get(0).getCardNums();
             imsi = telInStocks.get(0).getIMSI();
             imei = telInStocks.get(0).getIMEI();
             iccid = telInStocks.get(0).getICCID();
+            activeTime = telInStocks.get(0).getActiveTime();
+            shutdownTime = telInStocks.get(0).getShutdownTime();
         }
         List<GoodsInStock> controlInStocks = inStockMapper.queryBypipelineNumber(controlMainBoardNums);
         String controlProduceDate ="";
         if (!(controlInStocks.isEmpty())){
             controlProduceDate = controlInStocks.get(0).getGoodsProduceDate();
         }
-        int i = pubProductMapper.addPubProduct(productNum, valveNUms, valveProduceDate, controlMainBoardNums, controlProduceDate, telMainNum, telProduceDate, cardNums, imsi, imei, iccid, fourMainNum, fourProduceDate, assembler, tester, testRemarks);
+        int i = pubProductMapper.addPubProduct(productNum, valveNUms, valveProduceDate, controlMainBoardNums, controlProduceDate, telMainNum, telProduceDate, cardNums, imsi, imei, iccid, fourMainNum, fourProduceDate, assembler, tester, testRemarks,activeTime,shutdownTime);
         JSONObject object = new JSONObject();
         object.put("success",i);
         return object;
@@ -120,5 +130,23 @@ public class PubProductServiceImpl implements PubProductService {
         object.put("count",size);
         object.put("data",array);
         return object;
+    }
+
+    @Override
+    public int productNumExist(String productNum) {
+        int i = pubProductMapper.productNumExist(productNum);
+        return i;
+    }
+
+    @Override
+    public int valveNUmsExist(String valveNUms) {
+        int i = pubProductMapper.valveNUmsExist(valveNUms);
+        return i;
+    }
+
+    @Override
+    public int controlMainBoardNumsExist(String controlMainBoardNums) {
+        int i = pubProductMapper.controlMainBoardNumsExist(controlMainBoardNums);
+        return i;
     }
 }

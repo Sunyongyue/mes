@@ -3,11 +3,11 @@
 <mapper namespace="com.common.system.mapper.ProductOrderMapper">
 
     <select id="queryProductOrder" resultType="com.common.system.entity.ProductOrder">
-        select * from product_order
+        select * from product_order  ORDER BY operatorTime desc
     </select>
     <insert id="addProductOrder">
-INSERT into product_order(productNum,alarmSquare,`charMethod`,`controlMainboardName` ,controlMainboardSpecifications , `controlMainboardSupplier` ,disconnectionCheck ,fourMainBoardName ,fourSpecifications ,fourSupplier ,`gasCheck` ,`goodsName`,intakeDirection ,`lowPressureCheck`,microleakageCheck,noContactCheck ,nums, overcurrentCheck ,overdrawAir , pressure ,pulseEquivalent , remarks,reservedAir , signalSource ,specifications , stopUseCheck ,telMainBoardName , telMainBoardSpecifications ,telMainBoardSupplier ,telProtocol ,telType ,upperLimitOfRecharge ,valveCloseTime ,valveName,valveOpenTime ,valveSpecifications ,valveSupplier  ,version , operator ,operatorTime)VALUES(
-#{productNum},#{alarmSquare},#{charMethod},#{controlMainboardName},#{controlMainboardSpecifications},#{controlMainboardSupplier},#{disconnectionCheck},#{fourMainBoardName},#{fourSpecifications},#{fourSupplier},#{gasCheck},#{goodsName},#{intakeDirection},#{lowPressureCheck},#{microleakageCheck},#{noContactCheck},#{nums},#{overcurrentCheck},#{overdrawAir},#{pressure},#{pulseEquivalent},#{remarks},#{reservedAir},#{signalSource},#{specifications},#{stopUseCheck},#{telMainBoardName},#{telMainBoardSpecifications},#{telMainBoardSupplier},#{telProtocol},#{telType},#{upperLimitOfRecharge},#{valveCloseTime},#{valveName},#{valveOpenTime},#{valveSpecifications},#{valveSupplier},#{version},#{operator},SYSDATE());
+INSERT into product_order(productNum,alarmSquare,`charMethod`,`controlMainboardName` ,controlMainboardSpecifications , `controlMainboardSupplier` ,disconnectionCheck ,fourMainBoardName ,fourSpecifications ,fourSupplier ,`gasCheck` ,`goodsName`,intakeDirection ,`lowPressureCheck`,microleakageCheck,noContactCheck ,nums, overcurrentCheck ,overdrawAir , pressure ,pulseEquivalent , remarks,reservedAir , signalSource ,specifications , stopUseCheck ,telMainBoardName , telMainBoardSpecifications ,telMainBoardSupplier ,telProtocol ,telType ,upperLimitOfRecharge ,valveCloseTime ,valveName,valveOpenTime ,valveSpecifications ,valveSupplier  ,version , operator ,operatorTime,`status`)VALUES(
+#{productNum},#{alarmSquare},#{charMethod},#{controlMainboardName},#{controlMainboardSpecifications},#{controlMainboardSupplier},#{disconnectionCheck},#{fourMainBoardName},#{fourSpecifications},#{fourSupplier},#{gasCheck},#{goodsName},#{intakeDirection},#{lowPressureCheck},#{microleakageCheck},#{noContactCheck},#{nums},#{overcurrentCheck},#{overdrawAir},#{pressure},#{pulseEquivalent},#{remarks},#{reservedAir},#{signalSource},#{specifications},#{stopUseCheck},#{telMainBoardName},#{telMainBoardSpecifications},#{telMainBoardSupplier},#{telProtocol},#{telType},#{upperLimitOfRecharge},#{valveCloseTime},#{valveName},#{valveOpenTime},#{valveSpecifications},#{valveSupplier},#{version},#{operator},SYSDATE(),'待生产');
     </insert>
     <select id="queryNums" resultType="int">
         SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{date}
@@ -18,12 +18,18 @@ INSERT into product_order(productNum,alarmSquare,`charMethod`,`controlMainboardN
     <select id="queryById" resultType="com.common.system.entity.ProductOrder">
         select * from product_order where id=#{id}
     </select>
-    <delete id="delteProductOrder">
-        DELETE from product_order where id in
+    <update id="delteProductOrder">
+        update product_order set `status`='已删除' where id in
         <foreach collection="array" item="item" open="(" close=")" separator=",">
             #{item}
         </foreach>
-    </delete>
+    </update>
+    <update id="updateStatus">
+        update product_order set `status`='生产中' where productNum =#{productNum}
+    </update>
+    <update id="updateOver">
+         update product_order set `status`='已完成' where productNum =#{productNum}
+    </update>
     <select id="searchProductOrder" resultType="com.common.system.entity.ProductOrder">
         select * from product_order
         <where>
@@ -31,10 +37,12 @@ INSERT into product_order(productNum,alarmSquare,`charMethod`,`controlMainboardN
             <if test="goodsName !=''">and goodsName = #{goodsName}  </if>
             <if test="specifications !=''">and specifications = #{specifications}  </if>
             <if test="operator !=''">and operator = #{operator}  </if>
+            <if test="status !=''">and `status` = #{status}  </if>
             <if test="startDate !=''">and operatorTime > #{startDate}</if>
             <if test="endDate !=''"> <![CDATA[
             and operatorTime<#{endDate}
             ]]></if>
         </where>
+        ORDER BY operatorTime desc
     </select>
 </mapper>

@@ -1,8 +1,13 @@
 package com.common.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.common.system.entity.ProductOrder;
 import com.common.system.entity.SaleOrder;
+import com.common.system.entity.Sysdata;
+import com.common.system.mapper.SysdataMapper;
 import com.common.system.service.SaleOrderService;
+import com.common.system.service.SysDataService;
+import com.common.system.service.SysPurchaserService;
 import com.common.system.shiro.ShiroUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +19,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/order")
 public class SaleOrderController {
     @Autowired
     SaleOrderService saleOrder;
+    @Autowired
+    SysDataService sysDataService;
+    @Autowired
+    SysPurchaserService sysPurchaserService;
+
     @RequestMapping("/saleOrder")
     public ModelAndView saleOrder(){
         ModelAndView mav = new ModelAndView("saleOrderData");
@@ -28,6 +39,21 @@ public class SaleOrderController {
     @RequestMapping("/sale")
     public ModelAndView sale(){
         ModelAndView mav = new ModelAndView("saleOrder");
+        List<String> purchaserNameList = sysPurchaserService.purchaserNameList();
+        mav.addObject("purchaserNameList",purchaserNameList);
+        List<Sysdata> sysdata = sysDataService.queryLocalList(103);
+        List<Sysdata> goodName = sysDataService.queryLocalList(102);
+        List<Sysdata> pressure = sysDataService.queryLocalList(104);
+        mav.addObject("sysdata",sysdata);
+        mav.addObject("goodName",goodName);
+        mav.addObject("pressure",pressure);
+        return mav;
+    }
+    @RequestMapping("/printSaleOrder")
+    public ModelAndView printProductOrder(Integer id){
+        ModelAndView mav = new ModelAndView("printSaleOrder");
+        SaleOrder saleOrde = saleOrder.queryOne(id);
+        mav.addObject("saleOrder",saleOrde);
         return mav;
     }
     @RequestMapping("/querySaleOrder")
@@ -43,7 +69,7 @@ public class SaleOrderController {
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
         String format = dateFormat.format(date);
         int i = saleOrder.queryNum(format);
-        String s = 66+format.replaceAll("-", "");
+        String s = 88+format.replaceAll("-", "");
         for (int k=0;k<sale.getCustomerNums();k++){
            saleOrder.addSaleOrder((s+intToString(i+1)),sale.getCustomerName(),sale.getDate(),sale.getProjectName(),sale.getEndDate(),sale.getProductNameOrder(),sale.getProductSpecificationsOrder(),sale.getCustomerPressure(),sale.getCustomerNums(),sale.getAddress(),sale.getReceiver(),sale.getTelPhone(),sale.getLogisticsInformation(),sale.getRemarks(),user.getUsername(),sale.getOperatorTime());
            i++;

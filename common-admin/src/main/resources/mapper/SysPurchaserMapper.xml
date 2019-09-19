@@ -4,6 +4,12 @@
     <select id="queryAll" resultType="com.common.system.entity.SysPurchaser">
         select * from syspurchaser
     </select>
+    <select id="queryBypurchaserName" resultType="com.common.system.entity.SysPurchaser">
+        select * from syspurchaser where  purchaserName=#{purchaserName}
+    </select>
+    <select id="selectMax" resultType="int">
+         SELECT MAX(purchaserNums) AS big FROM syspurchaser
+    </select>
    <update id="updatePurchaser">
        update syspurchaser set `local` =#{local} ,purchaserNums=#{purchaserNums},purchaserName=#{purchaserName},gasGroup=#{gasGroup},contacts=#{contacts},tel=#{tel},
        ipAddress=#{ipAddress},ipPort=#{ipPort},email=#{email},localMore=#{localMore},remarks=#{remarks},operator=#{operator},operatorTime=SYSDATE() where id =#{id}
@@ -32,5 +38,8 @@
     </select>
     <select id="local" resultType="string">
         SELECT distinct `local` FROM syspurchaser
+    </select>
+    <select id="purchaserName" resultType="string">
+        SELECT distinct `purchaserName` FROM syspurchaser
     </select>
 </mapper>

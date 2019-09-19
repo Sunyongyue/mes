@@ -1,6 +1,7 @@
 package com.common.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.common.system.entity.SysSupplier;
 import com.common.system.service.SysSupplierService;
 import com.common.system.shiro.ShiroUser;
 import org.apache.poi.ss.usermodel.*;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -192,5 +194,32 @@ public class SupplierController {
     public String querySupplierNameOrder(){
         JSONObject object = supplierService.supplierNameOrder();
         return object.toJSONString();
+    }
+    @RequestMapping("/selectBig")
+    @ResponseBody
+    public String selectBig(){
+        int i = supplierService.selectBig();
+        JSONObject object = new JSONObject();
+        object.put("success",1);
+        object.put("big",i);
+        return object.toString();
+    }
+    @RequestMapping("/supplierNameOne")
+    @ResponseBody
+    public String supplierNameOne(String supplierName){
+        List<SysSupplier> sysSuppliers = supplierService.supplierNameOne(supplierName);
+        JSONObject object = new JSONObject();
+        if (sysSuppliers.size()==1){
+            Date date = new Date();
+            SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
+            String format = dateFormat.format(date);
+            String s = format.replaceAll("-", "");
+            String supplierNums = sysSuppliers.get(0).getSupplierNums().trim();
+            object.put("success",1);
+            object.put("data",supplierNums+s);
+        }else {
+            object.put("success",0);
+        }
+        return object.toString();
     }
 }

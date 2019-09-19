@@ -13,4 +13,9 @@ public interface DistributNumberMapper {
     int deleteDistributNumberMapper(@Param("array") int[] array);
     List<DistributNumber> distributNumberSearch(@Param("telNum") String telNum,@Param("mainBoardNum") String mainBoardNum,@Param("startDate") String startDate,@Param("endDate") String endDate);
     List<DistributNumber> queryByNumber(@Param("number") String number);
+    int queryExistControl(@Param("controlMainNum") String controlMainNum);
+    int queryExistTel(@Param("telMainNum") String telMainNum);
+    int queryExistFour(@Param("fourMainNum") String fourMainNum);
+    int queryExistTelNum(@Param("telNum") String telNum);
+
 }

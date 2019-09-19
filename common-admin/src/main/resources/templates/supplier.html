@@ -18,38 +18,39 @@
     所在地区：
     <div class="layui-inline" style="width: 220px">
         <select name="city" lay-verify=""  style="width: 210px">
-            <option value="" >请选择城市</option>
+            <option value="" >请选择所在地区</option>
         </select>
     </div>
     供应商编号：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="supplierNums" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="supplierNums" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入供应商编号"/>
     </div>
     供应商名称：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="supplierName" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="supplierName" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入供应商名称"/>
     </div>
     <button class="layui-btn layui-btn-sm" data-type="reload">查询</button><br/>
 </div>
-<div id="add-main" style="display: none;">
+<div id="add-mainSupplier" style="display: none;">
     <div class="my-form">
         <form class="layui-form"  lay-skin="line">
             <div class="layui-form-item my-form-item" style="margin-top: 10px">
-                <label class="layui-form-label layui-icon" style="width: 170px">所在地区:</label>
+                <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>供应商编号:</label>
+                <div class="layui-input-inline">
+                    <input id="supplierNumsAdd" type="text" name="supplierNumsAdd" readonly="readonly"  lay-verify="required" placeholder="请输入供应商编号" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item" style="margin-top: 10px">
+                <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>所在地区:</label>
                 <div class="layui-input-inline">
                     <input id="local" type="text" name="local" lay-verify="required" placeholder="请输入所在地区" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
-            <div class="layui-form-item my-form-item" style="margin-top: 10px">
-                <label class="layui-form-label layui-icon" style="width: 170px">供应商编号:</label>
-                <div class="layui-input-inline">
-                    <input id="supplierNumsAdd" type="text" name="supplierNumsAdd" lay-verify="required" placeholder="请输入供应商编号" autocomplete="off"
-                           class="layui-input"/>
-                </div>
-            </div>
+            
             <div class="layui-form-item my-form-item">
-                <label class="layui-form-label layui-icon" style="width: 170px">供应商名称:</label>
+                <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>供应商名称:</label>
                 <div class="layui-input-inline">
                     <input id="supplierNameAdd" type="text" name="supplierNameAdd" lay-verify="required" placeholder="请输入供应商" autocomplete="off"
                            class="layui-input"/>
@@ -93,15 +94,15 @@
         </form>
     </div>
 </div>
-<script type="text/html" id="toolbarDemo">
+<script type="text/html" id="toolbarDemoSupplier">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add" id="add" >添加</button>
-        <button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>
-        <button class="layui-btn layui-btn-sm" lay-event="delete" id="delete" >删除</button>
-        <button class="layui-btn layui-btn-sm" lay-event="upload" id="upload" >导入</button>
+        <button class="layui-btn layui-btn-sm" lay-event="addSupplier"  >添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="updateSupplier"  >修改</button>
+        <button class="layui-btn layui-btn-sm" lay-event="deleteSupplier"  >删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="uploadSupplier"  >导入</button>
     </div>
 </script>
-<table class="layui-table" lay-data="{url:'/supplierDate', page:true, id:'idTest',toolbar:'#toolbarDemo',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demo">
+<table class="layui-table" lay-data="{url:'/supplierDate', page:true, id:'idTestSupplier',toolbar:'#toolbarDemoSupplier',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoSupplier">
     <thead>
     <tr>
         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
@@ -124,11 +125,11 @@
     layui.use('table', function(){
         var table = layui.table;
         //监听表格复选框选择
-        table.on('checkbox(demo)', function(obj){
+        table.on('checkbox(demoSupplier)', function(obj){
             console.log(obj)
         });
         //监听头工具栏事件
-        table.on('toolbar(demo)', function(obj){
+        table.on('toolbar(demoSupplier)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id)
                 ,data = checkStatus.data//获取选中的数据
                 ,deList=[1];
@@ -137,13 +138,13 @@
             });
             deList.push(2);
             switch(obj.event){
-                case 'add':
+                case 'addSupplier':
                     layer.open({
                         type:1,
                         title:'添加',
                         btnAlign: 'c',
                         area: ['500px', '600px'],
-                        content: $("#add-main"),
+                        content: $("#add-mainSupplier"),
                         btn:['保存','取消'],
                         yes:function(index,layero){
                             var local =top.$('#local').val();
@@ -153,33 +154,51 @@
                             var tel =top.$("#tel").val();
                             var localMore =top.$("#localMore").val();
                             var remarks =top.$("#remarks").val();
-                            $.ajax({
-                                //几个参数需要注意一下
-                                type: "POST",//方法类型
-                                dataType: "json",//预期服务器返回的数据类型
-                                url: "/addSupplier" ,//url
-                                data: {local:local,supplierNums:supplierNumsAdd,supplierName:supplierNameAdd,contacts:contacts,tel:tel,localMore:localMore,remarks:remarks},
-                                success: function (result) {
-                                    console.log(result);//打印服务端返回的数据(调试用)
-                                    if (result.success >0) {
-                                        alert("操作成功");
-                                        table.reload('idTest')
-                                    }else{
-                                        alert("系统错误");
+                            if(local==""||supplierNumsAdd==""||supplierNameAdd==""){
+                              /*  alert("您还有必填项未填！")*/
+                                layer.msg('您还有必填项未填！！', {
+                                    btnAlign: 'c',
+                                    time: 3000, //20s后自动关闭
+                                    btn: ['确定']
+                                });
+                            }else {
+                                $.ajax({
+                                    //几个参数需要注意一下
+                                    type: "POST",//方法类型
+                                    dataType: "json",//预期服务器返回的数据类型
+                                    url: "/addSupplier" ,//url
+                                    data: {local:local,supplierNums:supplierNumsAdd,supplierName:supplierNameAdd,contacts:contacts,tel:tel,localMore:localMore,remarks:remarks},
+                                    success: function (result) {
+                                        console.log(result);//打印服务端返回的数据(调试用)
+                                        if (result.success >0) {
+                                            layer.msg('操作成功', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                            table.reload('idTestSupplier')
+                                        }else{
+                                            layer.msg('操作失败', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                        }
+                                    },
+                                    error : function() {
+                                        alert("异常！");
                                     }
-                                },
-                                error : function() {
-                                    alert("异常！");
-                                }
-                            });
-                            layer.close(index);
+                                });
+                                layer.close(index);
+                            }
+
                         },
                         btn2:function (index) {
                             layer.close(index);
                         }
                     })
                     break;
-                case 'update':
+                case 'updateSupplier':
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     } else if(data.length > 1){
@@ -191,7 +210,7 @@
                             title:'修改',
                             btnAlign: 'c',
                             area: ['500px', '600px'],
-                            content: $("#add-main"),
+                            content: $("#add-mainSupplier"),
                             btn:['保存','取消'],
                             success: function (layero, index) {
                                 top.$('#local').val(checkStatus.data[0].local);
@@ -210,25 +229,42 @@
                                 var tel =top.$("#tel").val();
                                 var localMore =top.$("#localMore").val();
                                 var remarks =top.$("#remarks").val();
-                                $.ajax({
-                                    //几个参数需要注意一下
-                                    type: "POST",//方法类型
-                                    dataType: "json",//预期服务器返回的数据类型
-                                    url: "/updateSupplier" ,//url
-                                    data: {id:id,local:local,supplierNums:supplierNums,supplierName:supplierName,contacts:contacts,tel:tel,localMore:localMore,remarks:remarks},
-                                    success: function (result) {
-                                        if (result.success >0) {
-                                            alert("操作成功");
-                                            table.reload('idTest');
-                                        }else{
-                                            alert("系统错误");
+                                if (local==""||supplierNums==""||supplierName==""){
+                                   /* alert("您还有必填项未填！")*/
+                                    layer.msg('您还有必填项未填！', {
+                                        btnAlign: 'c',
+                                        time: 3000, //20s后自动关闭
+                                        btn: ['确定']
+                                    });
+                                } else{
+                                    $.ajax({
+                                        //几个参数需要注意一下
+                                        type: "POST",//方法类型
+                                        dataType: "json",//预期服务器返回的数据类型
+                                        url: "/updateSupplier" ,//url
+                                        data: {id:id,local:local,supplierNums:supplierNums,supplierName:supplierName,contacts:contacts,tel:tel,localMore:localMore,remarks:remarks},
+                                        success: function (result) {
+                                            if (result.success >0) {
+                                                layer.msg('操作成功', {
+                                                    btnAlign: 'c',
+                                                    time: 3000, //20s后自动关闭
+                                                    btn: ['确定']
+                                                });
+                                                table.reload('idTestSupplier');
+                                            }else{
+                                                layer.msg('操作失败', {
+                                                    btnAlign: 'c',
+                                                    time: 3000, //20s后自动关闭
+                                                    btn: ['确定']
+                                                });
+                                            }
+                                        },
+                                        error : function() {
+                                            alert("异常！");
                                         }
-                                    },
-                                    error : function() {
-                                        alert("异常！");
-                                    }
-                                });
-                                layer.close(index);
+                                    });
+                                    layer.close(index);
+                                }
                             },
                             btn2:function (index) {
                                 layer.close(index);
@@ -236,7 +272,7 @@
                         })
                     }
                     break;
-                case 'delete':
+                case 'deleteSupplier':
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     } else {
@@ -249,10 +285,18 @@
                                 data: {deList:JSON.stringify(deList)},
                                 success: function (result) {
                                     if (result.success>0) {
-                                        alert("操作成功");
-                                        table.reload('idTest');
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('idTestSupplier');
                                     }else{
-                                        alert("系统错误");
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
                                     }
                                 },
                                 error : function() {
@@ -270,9 +314,9 @@
                 var supplierNums=$('#supplierNums').val();
                 var local=$("[name='city']").val();
                 var supplierName=$('#supplierName').val();
-                table.reload('idTest',{
+                table.reload('idTestSupplier',{
                     url:'/searchSupplier',
-                    where:{supplierNums:supplierNums,local:local,supplierName:supplierName,page:1,limit:10}  ,
+                    where:{supplierNums:supplierNums,local:local,supplierName:supplierName},
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
@@ -310,9 +354,23 @@
     });
     $(
         function () {
-            loadSelect();
+            loadSelect();selectbig();
         }
-    )
+    );
+    function selectbig() {
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/selectBig" ,//url
+            success: function (result) {
+                if (result.success>0) {
+                    $("#supplierNumsAdd").val(result.big);
+                }else{
+                }
+            }
+        });
+    }
     function loadSelect() {
         $.ajax({
             //几个参数需要注意一下
@@ -327,15 +385,29 @@
                         $("[name='city']").append("<option value="+val+">"+val+"</option>");
                     });
                 }else{
-                    alert("地址信息错误");
+                    /*alert("地址信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
 
     }
+    var unSelected = "#999";
+    var selected = "#333";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    })
 </script>
 
 </body>

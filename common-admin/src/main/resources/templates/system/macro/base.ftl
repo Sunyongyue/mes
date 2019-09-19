@@ -32,24 +32,24 @@
 <#macro header>
 <header class="main-header">
     <a href="" class="logo">
-        <span class="logo-mini"><b>TianHe</b></span>
-        <span class="logo-lg"><b>TianHe</b></span>
+      <#--  <span class="logo-mini"><b>TianHe</b></span>-->
+        <span class="logo-lg"><b>天和仪表</b></span>
     </a>
     <nav class="navbar navbar-static-top">
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">切换导航</span>
         </a>
-
+        <span style="margin-left: 600px; margin-top: 10px; line-height: 50px;color: white">天和仪表MES生产管理系统</span>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <li class="dropdown user user-menu">
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="adminlte/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> <span
-                            class="hidden-xs">TianHe管理后台</span>
+                      <#--  <img src="adminlte/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">--> <span
+                            class="hidden-xs">天和管理后台</span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="user-header">
-                            <img src="adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                            <#--<img src="adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
 
                             <p>
                                 ${user.username!}
@@ -80,10 +80,10 @@
 <#macro footer>
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-        <b>Version</b> 2.3.6
+        <b>Version</b> 1.0.0
     </div>
-    <strong>Copyright &copy; 2019-2226 <a href="">TianHe</a>.
-    </strong> All rights reserved.
+    <strong>Copyright &copy; 2019-2029 <a href="">济宁天和智能仪表有限责任公司 </a>.
+    </strong> 版权所有
 </footer>
 </#macro>
 

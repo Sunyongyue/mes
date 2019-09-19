@@ -17,4 +17,6 @@ public interface SysSupplierMapper {
     List<String> local();
     List<String> supplierNameSearch(@Param("local") String local);
     List<String> supplierNameOrder();
+    List<SysSupplier> supplierNameOne(@Param("supplierName") String supplierName);
+    int selectBig();
 }

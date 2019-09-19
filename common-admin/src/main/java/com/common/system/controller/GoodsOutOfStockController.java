@@ -2,6 +2,8 @@ package com.common.system.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.common.system.entity.GoodsInStock;
+import com.common.system.service.GoodsInStockService;
 import com.common.system.service.GoodsOutStockService;
 import com.common.system.service.GoodsStockService;
 import com.common.system.shiro.ShiroUser;
@@ -23,6 +25,8 @@ public class GoodsOutOfStockController {
     GoodsOutStockService goodsOutStockService;
     @Autowired
     GoodsStockService goodsStockService;
+    @Autowired
+    GoodsInStockService goodsInStockService;
     @RequestMapping("/goodsOutFrom")
     public ModelAndView goodsOutFrom(){
         ModelAndView mav = new ModelAndView("outOfStockFrom");
@@ -33,6 +37,42 @@ public class GoodsOutOfStockController {
     public String queryGoodsOutStock(Integer page,Integer limit){
         JSONObject object = goodsOutStockService.queryGoodsOutStock(page, limit);
         return object.toJSONString();
+    }
+    @RequestMapping("/saoMaChuKu")
+    @ResponseBody
+    public String saoMaChuKu(String pipelineNumber){
+        JSONObject object = new JSONObject();
+        List<GoodsInStock> goodsInStocks = goodsInStockService.queryBypipelineNumber(pipelineNumber);
+        if (goodsInStocks.size()==1){
+            String goodsType = goodsInStocks.get(0).getGoodsType();
+            String goodsName = goodsInStocks.get(0).getGoodsName();
+            String specifications = goodsInStocks.get(0).getSpecifications();
+            String supplierName = goodsInStocks.get(0).getSupplierName();
+            String local = goodsInStocks.get(0).getLocal();
+            object.put("success",1);
+            object.put("goodsType",goodsType);
+            object.put("goodsName",goodsName);
+            object.put("specifications",specifications);
+            object.put("supplierName",supplierName);
+            object.put("local",local);
+            /*goodsOutStockService.addGoodsOutStock(goodsType,goodsName,specifications,"正常","生产",1,pipelineNumber,supplierName,"remarks");*/
+        }else{
+            object.put("success",0);
+        }
+        return object.toString();
+    }
+    @RequestMapping("/confirmOut")
+    @ResponseBody
+    public String confirmOut(String supplierName,String goodsType,String goodsName,String specifications,String outStockType,String remarks,String pipelineNumber,String local,@SessionAttribute ShiroUser user){
+        JSONObject object = new JSONObject();
+        int i = goodsStockService.deleteGoodsStock(local, supplierName, goodsType, goodsName, specifications,1, user.getUsername());
+        if (i>0){
+             goodsOutStockService.addGoodsOutStock(goodsType, goodsName, specifications, "正常", outStockType,1, pipelineNumber, supplierName, remarks, user.getUsername(), local);
+            object.put("sc",1);
+        }else {
+            object.put("sc",0);
+        }
+        return object.toString();
     }
     @RequestMapping("/addGoodsOutStock")
     @ResponseBody

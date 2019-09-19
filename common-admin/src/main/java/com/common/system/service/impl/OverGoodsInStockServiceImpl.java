@@ -44,13 +44,20 @@ public class OverGoodsInStockServiceImpl implements OverGoodsInStockService {
     @Override
     public JSONObject addOverGoodsInStock(String productNum, String operator, String testRemarks) {
         int stock=0;
-        List<PubProduct> pubProducts = productMapper.searchPubProduct(productNum, "", "", "", "", "");
+       /* List<PubProduct> pubProducts = productMapper.searchPubProduct(productNum, "", "", "", "", "");
         String goodsName = pubProducts.get(0).getGoodsName();
         String specifications = pubProducts.get(0).getSpecifications();
         String intakeDirection = pubProducts.get(0).getIntakeDirection();
         String testDate = pubProducts.get(0).getTestDate();
+        int nums = pubProducts.get(0).getNums();*/
+        PubProduct pubProduct = productMapper.queryOneByproductNum(productNum);
+        String goodsName = pubProduct.getGoodsName();
+        String specifications = pubProduct.getSpecifications();
+        String intakeDirection = pubProduct.getIntakeDirection();
+        String testDate = pubProduct.getTestDate();
+        int nums = pubProduct.getNums();
         List<OverGoodsStock> overGoodsStocks = goodsStockMapper.queryExist(goodsName, specifications, intakeDirection);
-        int nums = pubProducts.get(0).getNums();
+
         if (overGoodsStocks.isEmpty()){
             stock = goodsStockMapper.addOverGoodsStock(goodsName, specifications, intakeDirection, "成品库", nums, operator, testRemarks);
         }else {

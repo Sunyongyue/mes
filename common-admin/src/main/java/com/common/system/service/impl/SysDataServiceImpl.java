@@ -71,4 +71,10 @@ public class SysDataServiceImpl implements SysDataService {
         object.put("success",1);
         return object;
     }
+
+    @Override
+    public List<Sysdata> queryLocalList(int pid) {
+        List<Sysdata> sysdata = sysdataMapper.queryLocal(pid);
+        return sysdata;
+    }
 }

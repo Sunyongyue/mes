@@ -72,4 +72,28 @@ public class DistributNumberServiceImpl implements DistributNumberService {
         List<DistributNumber> distributNumbers = distributNumberMapper.queryByNumber(number);
         return distributNumbers;
     }
+
+    @Override
+    public int queryExistControl(String controlMainNum) {
+        int i = distributNumberMapper.queryExistControl(controlMainNum);
+        return i;
+    }
+
+    @Override
+    public int queryExistTel(String telMainNum) {
+        int i = distributNumberMapper.queryExistTel(telMainNum);
+        return i;
+    }
+
+    @Override
+    public int queryExistFour(String fourMainNum) {
+        int i = distributNumberMapper.queryExistFour(fourMainNum);
+        return i;
+    }
+
+    @Override
+    public int queryExistTelNum(String telNum) {
+        int i = distributNumberMapper.queryExistTelNum(telNum);
+        return i;
+    }
 }

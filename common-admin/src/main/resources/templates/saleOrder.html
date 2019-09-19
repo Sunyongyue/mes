@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta name="renderer" content="webkit"/>
@@ -25,7 +25,11 @@
         <div class="layui-inline">
             <label class="layui-form-label">客户名称</label>
             <div class="layui-input-inline">
-                <input type="text" name="customerName" lay-verify="required" placeholder="请输入客户名称" autocomplete="off" class="layui-input">
+              <!--  <input type="text" name="customerName" lay-verify="required" placeholder="请输入客户名称" autocomplete="off" class="layui-input">-->
+                <select name="customerName" lay-verify="required" lay-search="" >
+                    <option value="">请选择客户名称</option>
+                    <option th:each="purchaserName:${purchaserNameList}" th:value="${purchaserName}" th:text="${purchaserName}"></option>
+                </select>
             </div>
         </div>
         <div class="layui-inline">
@@ -52,7 +56,8 @@
             <label class="layui-form-label">产品名称</label>
             <div class="layui-input-inline">
                 <select name="productNameOrder" lay-verify="required" lay-search="">
-                    <option value=""></option>
+                    <option value="">请选择产品名称</option>
+                    <option th:each="goodName1:${goodName}" th:value="${goodName1.dataname}" th:text="${goodName1.dataname}"></option>
                 </select>
             </div>
         </div>
@@ -60,7 +65,8 @@
             <label class="layui-form-label">产品规格</label>
             <div class="layui-input-inline">
                 <select name="productSpecificationsOrder" lay-verify="required" lay-search="">
-                    <option value=""></option>
+                    <option value="">请选择产品规格</option>
+                    <option th:each="sysdata1:${sysdata}" th:value="${sysdata1.dataname}" th:text="${sysdata1.dataname}"></option>
                 </select>
             </div>
         </div>
@@ -71,7 +77,8 @@
             <div class="layui-input-inline">
                <!-- <input type="text" name="customerPressure"  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">-->
                 <select name="customerPressure" lay-verify="required" lay-search="">
-                    <option value=""> </option>
+                    <option value="">请选择使用压力 </option>
+                    <option th:each="pressure1:${pressure}" th:value="${pressure1.dataname}" th:text="${pressure1.dataname}"></option>
                 </select>
             </div>
         </div>
@@ -101,12 +108,12 @@
                 <input type="text" name="telPhone"  lay-verify="phone" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
             </div>
         </div>
-        <div class="layui-inline">
+        <!--<div class="layui-inline">
             <label class="layui-form-label">物流信息</label>
             <div class="layui-input-inline">
                 <input type="text" name="logisticsInformation"  lay-verify="" placeholder="请输入物流信息" autocomplete="off" class="layui-input">
             </div>
-        </div>
+        </div>-->
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">备注</label>
@@ -163,78 +170,6 @@
 
         });
     });
-    $(function(){
-        loadSelect2();specifications2();pressure2();
-    })
-    function loadSelect2() {
-        $.ajax({
-            //几个参数需要注意一下
-            type: "POST",//方法类型
-            dataType: "json",//预期服务器返回的数据类型
-            url: "/queryLocal" ,//url
-            data:{pid:102},
-            success: function (result) {
-                if (result.success>0) {
-                    var list =result.date;
-                    $("[name='productNameOrder']").empty();
-                    var op="";
-                    var bp="请选择产品名称";
-                    $("[name='productNameOrder']").append("<option value="+op+">"+bp+"</option>");
-                    $.each(list,function (i,val) {
-                        $("[name='productNameOrder']").append("<option value="+val+">"+val+"</option>");
-                    });
-                }else{
-                    alert("信息错误");
-                }
-            }
-        });
-    }
-    function specifications2() {
-        $.ajax({
-            //几个参数需要注意一下
-            type: "POST",//方法类型
-            dataType: "json",//预期服务器返回的数据类型
-            url: "/queryLocal" ,//url
-            data:{pid:103},
-            success: function (result) {
-                if (result.success>0) {
-                    var list =result.date;
-                    $("[name='productSpecificationsOrder']").empty();
-                    var op="";
-                    var bp="请选择产品规格";
-                    $("[name='productSpecificationsOrder']").append("<option value="+op+">"+bp+"</option>");
-                    $.each(list,function (i,val) {
-                        $("[name='productSpecificationsOrder']").append("<option value="+val+">"+val+"</option>");
-                    });
-                }else{
-                    alert("信息错误");
-                }
-            }
-        });
-    }
-    function pressure2() {
-        $.ajax({
-            //几个参数需要注意一下
-            type: "POST",//方法类型
-            dataType: "json",//预期服务器返回的数据类型
-            url: "/queryLocal" ,//url
-            data:{pid:104},
-            success: function (result) {
-                if (result.success>0) {
-                    var list =result.date;
-                    $("[name='customerPressure']").empty();
-                    var op="";
-                    var bp="请选择使用压力";
-                    $("[name='customerPressure']").append("<option value="+op+">"+bp+"</option>");
-                    $.each(list,function (i,val) {
-                        $("[name='customerPressure']").append("<option value="+val+">"+val+"</option>");
-                    });
-                }else{
-                    alert("信息错误");
-                }
-            }
-        });
-    }
 </script>
 </body>
 

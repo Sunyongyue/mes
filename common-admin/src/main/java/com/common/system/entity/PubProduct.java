@@ -114,8 +114,13 @@ public class PubProduct {
     private String testDate;
     //备注
     private String testRemarks;
+    //停机时间
+    private String shutdownTime;
+    //激活时间
+    private String activeTime;
     public PubProduct(){}
-    public PubProduct(int ids, int id, String productNum, int alarmSquare, String charMethod, String controlMainboardName, String controlMainboardSpecifications, String controlMainboardSupplier, String disconnectionCheck, String fourMainBoardName, String fourSpecifications, String fourSupplier, String gasCheck, String goodsName, String intakeDirection, String lowPressureCheck, String microleakageCheck, String noContactCheck, int nums, String overcurrentCheck, int overdrawAir, String pressure, String pulseEquivalent, String remarks, int reservedAir, String signalSource, String specifications, String stopUseCheck, String telMainBoardName, String telMainBoardSpecifications, String telMainBoardSupplier, String telProtocol, String telType, int upperLimitOfRecharge, int valveCloseTime, String valveName, int valveOpenTime, String valveSpecifications, String valveSupplier, String version, String operator, String operatorTime, String valveNUms, String vavleProductDate, String controlMainBoardNums, String controlMainBoardProductDate, String telMainBoardNums, String telMainBoardProductDate, String cardNum, String iMSI, String iMEI, String iCCID, String fourMainBoardNums, String fourMainBoardProductDate, String assembler, String tester, String productDate, String testDate, String testRemarks) {
+
+    public PubProduct(int ids, int id, String productNum, int alarmSquare, String charMethod, String controlMainboardName, String controlMainboardSpecifications, String controlMainboardSupplier, String disconnectionCheck, String fourMainBoardName, String fourSpecifications, String fourSupplier, String gasCheck, String goodsName, String intakeDirection, String lowPressureCheck, String microleakageCheck, String noContactCheck, int nums, String overcurrentCheck, int overdrawAir, String pressure, String pulseEquivalent, String remarks, int reservedAir, String signalSource, String specifications, String stopUseCheck, String telMainBoardName, String telMainBoardSpecifications, String telMainBoardSupplier, String telProtocol, String telType, int upperLimitOfRecharge, int valveCloseTime, String valveName, int valveOpenTime, String valveSpecifications, String valveSupplier, String version, String operator, String operatorTime, String valveNUms, String vavleProductDate, String controlMainBoardNums, String controlMainBoardProductDate, String telMainBoardNums, String telMainBoardProductDate, String cardNum, String iMSI, String iMEI, String iCCID, String fourMainBoardNums, String fourMainBoardProductDate, String assembler, String tester, String productDate, String testDate, String testRemarks, String shutdownTime, String activeTime) {
         this.ids = ids;
         this.id = id;
         this.productNum = productNum;
@@ -175,6 +180,24 @@ public class PubProduct {
         this.productDate = productDate;
         this.testDate = testDate;
         this.testRemarks = testRemarks;
+        this.shutdownTime = shutdownTime;
+        this.activeTime = activeTime;
+    }
+
+    public String getShutdownTime() {
+        return shutdownTime;
+    }
+
+    public void setShutdownTime(String shutdownTime) {
+        this.shutdownTime = shutdownTime;
+    }
+
+    public String getActiveTime() {
+        return activeTime;
+    }
+
+    public void setActiveTime(String activeTime) {
+        this.activeTime = activeTime;
     }
 
     public int getIds() {

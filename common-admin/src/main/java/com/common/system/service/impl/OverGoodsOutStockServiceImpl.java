@@ -45,12 +45,12 @@ public class OverGoodsOutStockServiceImpl implements OverGoodsOutStockService {
     }
 
     @Override
-    public JSONObject addOverGoodsOutStock(String outStockNumbers, String productNum, String salenum, String outFactoryMan, String getOutFactoryTime, int outStockNums, String outStockType, String outStockremarks) {
+    public JSONObject addOverGoodsOutStock(String outStockNumbers, String productNum, String salenum, String outFactoryMan, String getOutFactoryTime, int outStockNums, String outStockType, String outStockremarks,String logisticsInformation) {
         List<SaleOrder> saleOrders = saleOrderMapper.searchSaleOrder(salenum, "", "", "", "", "", "", "");
-        List<ProductOrder> productOrders = productOrderMapper.searchProductOrder(productNum, "", "", "", "", "");
+        List<ProductOrder> productOrders = productOrderMapper.searchProductOrder(productNum, "", "", "", "", "","");
         int i1 = goodsStockMapper.deleteGoodsStock(saleOrders.get(0).getProductNameOrder(), saleOrders.get(0).getProductSpecificationsOrder(), productOrders.get(0).getIntakeDirection(), outStockNums,outFactoryMan);
         if (i1>0){
-            int i = outStockMapper.addOverGoodsOutStock(outStockNumbers,productNum, salenum, outFactoryMan, getOutFactoryTime, outStockNums, outStockType, outStockremarks);
+            int i = outStockMapper.addOverGoodsOutStock(outStockNumbers,productNum, salenum, outFactoryMan, getOutFactoryTime, outStockNums, outStockType, outStockremarks,logisticsInformation);
             JSONObject object = new JSONObject();
             object.put("success",i);
             return object;}else {
@@ -76,4 +76,24 @@ public class OverGoodsOutStockServiceImpl implements OverGoodsOutStockService {
         object.put("data",array);
         return object;
     }
+
+    @Override
+    public int outStockPeople(int id, String outStockTestPeople) {
+        int i = outStockMapper.outStockPeople(id, outStockTestPeople);
+        return i;
+    }
+
+    @Override
+    public int sendGoods(int id, String sendGoodsPeople) {
+        int i = outStockMapper.sendGoods(id, sendGoodsPeople);
+        return i;
+    }
+
+    @Override
+    public int deleteOverGoodsOutStock(int[] array) {
+        int i = outStockMapper.deleteOverGoodsOutStock(array);
+        return i;
+    }
+
+
 }

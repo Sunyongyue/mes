@@ -66,9 +66,11 @@ public class SysPurchaserServiceImpl implements SysPurchaserService {
     }
 
     @Override
-    public JSONObject searchPurchaser(String purchaserNums, String local, String purchaserName) {
+    public JSONObject searchPurchaser(String purchaserNums, String local, String purchaserName,Integer page, Integer limit) {
         List<SysPurchaser> sysPurchasers = purchaserMapper.searchPurchaser(purchaserNums, local, purchaserName);
-        String s = JSON.toJSONString(sysPurchasers);
+        Page<Object> objects = PageHelper.startPage(page, limit);
+        List<SysPurchaser> sysPurchasers1 = purchaserMapper.searchPurchaser(purchaserNums, local, purchaserName);
+        String s = JSON.toJSONString(sysPurchasers1);
         JSONArray array = JSONArray.parseArray(s);
         JSONObject object = new JSONObject();
         object.put("code",0);
@@ -87,5 +89,34 @@ public class SysPurchaserServiceImpl implements SysPurchaserService {
         object.put("date",array);
         object.put("success",1);
         return object;
+    }
+
+    @Override
+    public JSONObject purchaserName() {
+        List<String> purchaserName = purchaserMapper.purchaserName();
+        String s = JSON.toJSONString(purchaserName);
+        JSONArray array = JSONArray.parseArray(s);
+        JSONObject object =new JSONObject();
+        object.put("date",array);
+        object.put("success",1);
+        return object;
+    }
+
+    @Override
+    public List<String> purchaserNameList() {
+        List<String> purchaserName = purchaserMapper.purchaserName();
+        return purchaserName;
+    }
+
+    @Override
+    public SysPurchaser queryBypurchaserName(String purchaserName) {
+        SysPurchaser sysPurchaser = purchaserMapper.queryBypurchaserName(purchaserName);
+        return sysPurchaser;
+    }
+
+    @Override
+    public int selectMax() {
+        int i = purchaserMapper.selectMax();
+        return i;
     }
 }

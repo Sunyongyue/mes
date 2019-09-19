@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
-    <title>TianHe后台管理系统</title>
+   <#-- <title>TianHe后台管理系统</title>-->
     <link rel="shortcut icon" type="image/x-icon" href="adminlte/dist/img/favicon.ico">
     <link rel="stylesheet" href="/adminlte/dist/css/login2.css">
     <!--[if IE]>
@@ -51,7 +51,8 @@
     <div class="demo">
         <div class="login">
             <div class="login__check">
-                <img src="/adminlte/dist/img/logo.png" alt="">
+               <#-- <img src="/adminlte/dist/img/logo.png" alt="">-->
+                <h1 style="font-size:50px;color: white">天和管理系统</h1>
             </div>
             <form action="/postLogin" class="login__form" method="post">
                 <!--默认账号密码user、admin、super-->
@@ -62,16 +63,16 @@
                         <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8" />
                     </svg>
                     <!--账号-->
-                    <input type="text" name="username" class="login__input name" placeholder="Username"/>
+                    <input type="text" name="username" class="login__input name" placeholder="用户名"/>
                 </div>
                 <div class="login__row">
                     <svg class="login__icon pass svg-icon" viewBox="0 0 20 20">
                         <path d="M0,20 20,20 20,8 0,8z M10,13 10,16z M4,8 a6,8 0 0,1 12,0" />
                     </svg>
                     <!--密码-->
-                    <input type="password" name="password" class="login__input pass" placeholder="Password"/>
+                    <input type="password" name="password" class="login__input pass" placeholder="密码"/>
                 </div>
-                <p>${failed!}</p>
+                <p style="font-size: 15px;color: red">${failed!}</p>
                 <button type="submit" class="login__submit">登 录</button>
 
             </form>

@@ -8,5 +8,12 @@
     <select id="queryone" resultType="com.common.system.entity.Test" parameterType="int">
         select * from test where id=#{id}
     </select>
-
+   <!-- <insert id="batchCreate">
+        INSERT INTO sample_detection
+        (`name`,testing_basis,testing_basis_name,locale,judgement_basis,judgement_basis_name,content,sample_id)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.name},#{item.testingBasis},#{item.testingBasisName},#{item.locale},#{item.judgementBasis},#{item.judgementBasisName},#{item.content},#{item.sampleId})
+        </foreach>
+    </insert>-->
 </mapper>

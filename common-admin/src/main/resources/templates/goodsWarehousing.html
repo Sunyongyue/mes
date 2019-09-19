@@ -18,48 +18,48 @@
     所在地区：
     <div class="layui-inline" style="width: 220px">
         <select name="localSearch" lay-verify=""  style="width: 200px" onchange="supplierNameSearch()">
-            <option value="" ></option>
+            <option value="" >请选择所在地区</option>
         </select>
     </div>
     <div class="layui-inline" style="margin-left: -15px">供应商名称：</div>
     <div class="layui-inline" style="width: 220px;">
         <select name="supplierNameSearch" lay-verify=""  style="width: 200px" onchange="goodsType()">
-            <option value="" ></option>
+            <option value="" >请选择供应商名称</option>
         </select>
     </div>
     物料类别：
     <div class="layui-inline" style="width: 220px">
         <select name="goodsTypeSearch" lay-verify=""  style="width: 200px" onchange="goodsName()">
-            <option value="" ></option>
+            <option value="" >请选择物料类别</option>
         </select>
     </div>
     物料名称：
     <div class="layui-inline" style="width: 220px">
         <select name="goodsNameSearch" lay-verify=""  style="width: 200px" onchange="specifications()">
-            <option value="" ></option>
+            <option value="" >请选择物料名称</option>
         </select>
     </div><br/>
     物料规格：
     <div class="layui-inline" style="width: 220px">
         <select name="specificationsSearch" lay-verify=""  style="width: 200px" >
-            <option value="" ></option>
+            <option value="" >请选择物料规格</option>
         </select>
     </div>
     起始日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
     </div>
     截止日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择截止日期"/>
     </div>
     <button class="layui-btn layui-btn-sm" data-type="reload">查询</button>
 </div>
-<div id="add-main" style="display: none;">
+<div id="add-mainIn" style="display: none;">
     <div class="my-form">
             <div class="layui-form-item my-form-item" style="margin-top: 10px">
                 <div class="layui-inline">
-                    <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>所在地区:</label>
+                    <label class="layui-form-label layui-icon" style="width: 170px;"><p style="color: red;display: inline">&#xe67a;</p>所在地区:</label>
                     <div class="layui-input-inline">
                         <select id="localAdd"  style="width: 190px;height: 25px;margin-top: 8px" onchange="supplierNameSearchAdd()">
                             <option value="" >请选择地区</option>
@@ -71,7 +71,7 @@
                     <div class="layui-input-inline">
                         <!--   <input id="supplierNameAdd" type="text" name="supplierNameAdd" lay-verify="required" placeholder="请输入供应商名称" autocomplete="off"
                                   class="layui-input"/>-->
-                        <select id="supplierNameAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="goodsTypeAdd()">
+                        <select id="supplierNameAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="goodsTypeAdd()" onblur="pipelineNumberStartO()">
                             <option value="" >请选择供应商</option>
                         </select>
                     </div>
@@ -83,7 +83,7 @@
                     <div class="layui-input-inline">
                         <!-- <input id="goodsTypeAdd" type="text" name="goodsTypeAdd" lay-verify="required" placeholder="请输入物料类别" autocomplete="off"
                                 class="layui-input"/>-->
-                        <select id="goodsTypeAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="goodsNameAdd()">
+                        <select id="goodsTypeAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="goodsNameAdd()" >
                             <option value="" >请选择类别</option>
                         </select>
                     </div>
@@ -93,7 +93,7 @@
                     <div class="layui-input-inline">
                         <!--  <input id="goodsNameAdd" type="text" name="goodsNameAdd" lay-verify="required" placeholder="请输入物料名称" autocomplete="off"
                                  class="layui-input"/>-->
-                        <select id="goodsNameAdd"  lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="specificationsAdd()">
+                        <select id="goodsNameAdd"  lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" onchange="specificationsAdd()" onblur="hide_some()">
                             <option value="" >请选择名称</option>
                         </select>
                     </div>
@@ -124,14 +124,15 @@
                     <label class="layui-form-label layui-icon"  style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>入库数量:</label>
                     <div class="layui-input-inline">
                         <input id="numsAdd" type="text" name="numsAdd" lay-verify="required" placeholder="请输入入库数量" autocomplete="off"
-                               class="layui-input"/>
+                               class="layui-input" onkeyup="value=value.replace(/[^\d]/g,'')" />
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label layui-icon"  style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>物料流水号起:</label>
                     <div class="layui-input-inline">
                         <input id="pipelineNumberStart" type="text" name="pipelineNumber" lay-verify="required" placeholder="请输入物料流水号起" autocomplete="off"
-                               class="layui-input"/>
+                               class="layui-input" onkeyup="value=value.replace(/[^\d]/g,'')" onblur="pipelineNumberCount()" onfocus="numsCount()"/>
+                        <p id="pipelineNumberStartP" style="color: red; display: none" >物料流水号已被使用</p>
                     </div>
                 </div>
             </div>
@@ -144,16 +145,22 @@
                                class="layui-input"/>
                     </div>
                 </div>
-                <div class="layui-inline">
+                <div class="layui-inline" name="some" style="display: none">
                     <label class="layui-form-label layui-icon"  style="width: 170px">运营商:</label>
                     <div class="layui-input-inline">
-                        <input id="operatorsAdd" type="text" name="operatorsAdd" lay-verify="required" placeholder="请输入运营商" autocomplete="off"
-                               class="layui-input"/>
+                       <!-- <input id="operatorsAdd" type="text" name="operatorsAdd" lay-verify="required" placeholder="请输入运营商" autocomplete="off"
+                               class="layui-input"/>-->
+                        <select id="operatorsAdd" lay-verify=""  style="width: 190px;height: 25px;margin-top: 8px" >
+                            <option value="" >请选择运营商</option>
+                            <option value="移动" >移动</option>
+                            <option value="电信" >电信</option>
+                            <option value="联通" >联通</option>
+                        </select>
                     </div>
                 </div>
 
             </div>
-            <div class="layui-form-item my-form-item" >
+            <div class="layui-form-item my-form-item" name="some" style="display: none">
                 <div class="layui-inline">
                     <label class="layui-form-label layui-icon"  style="width: 170px">卡号:</label>
                     <div class="layui-input-inline">
@@ -170,7 +177,7 @@
                 </div>
             </div>
 
-            <div class="layui-form-item my-form-item" >
+            <div class="layui-form-item my-form-item" name="some" style="display: none">
                 <div class="layui-inline">
                     <label class="layui-form-label layui-icon"  style="width: 170px">IMEI号:</label>
                     <div class="layui-input-inline">
@@ -185,26 +192,41 @@
                                class="layui-input"/>
                     </div>
                 </div>
-
             </div>
+        <div class="layui-form-item my-form-item" name="some" style="display: none">
+            <div class="layui-inline">
+                <label class="layui-form-label layui-icon"  style="width: 170px">激活日期:</label>
+                <div class="layui-input-inline">
+                    <input id="activeTime" type="text"  lay-verify="required" placeholder="请输入激活日期" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label layui-icon"  style="width: 170px">截止日期:</label>
+                <div class="layui-input-inline">
+                    <input id="shutdownTime" type="text"  lay-verify="required" placeholder="请输入截止日期" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+        </div>
             <div class="layui-form-item my-form-item" >
                 <label class="layui-form-label layui-icon"  style="width: 170px">备注:</label>
-                <div class="layui-input-inline">
+                <div class="layui-input-inline" style="width: 575px">
                     <input id="remarksAdd" type="text" name="remarksAdd" lay-verify="required" placeholder="请输入备注" autocomplete="off"
                            class="layui-input"/>
                 </div>
             </div>
     </div>
 </div>
-<script type="text/html" id="toolbarDemo">
+<script type="text/html" id="toolbarDemoIn">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add" id="add" >添加</button>
-        <!--<button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>-->
-        <button class="layui-btn layui-btn-sm" lay-event="delete" id="delete" >删除</button>
-        <button class="layui-btn layui-btn-sm" lay-event="upload" id="upload" >导入</button>
+        <button class="layui-btn layui-btn-sm" lay-event="addIn"  >添加</button>
+       <!-- <button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>-->
+        <button class="layui-btn layui-btn-sm" lay-event="deleteIn"  >删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="uploadIn"  >导入</button>
     </div>
 </script>
-<table class="layui-table" lay-data="{totalRow:true,url:'/goodsInStock/goodsInStockDate', page:true, id:'idTest',toolbar:'#toolbarDemo',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demo">
+<table class="layui-table" lay-data="{totalRow:true,url:'/goodsInStock/goodsInStockDate', page:true, id:'idTestIn',toolbar:'#toolbarDemoIn',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoIn">
     <thead>
     <tr>
         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
@@ -223,6 +245,8 @@
         <th lay-data="{field:'iMSI', width:150}">IMSI号</th>
         <th lay-data="{field:'iMEI', width:150}">IMEI号</th>
         <th lay-data="{field:'iCCID', width:150}">ICCID号</th>
+        <th lay-data="{field:'activeTime', width:150}">激活日期</th>
+        <th lay-data="{field:'shutdownTime', width:150}">截止日期</th>
         <th lay-data="{field:'operator', width:150}">操作人</th>
         <th lay-data="{field:'operatorTime', width:180}">操作时间</th>
         <th lay-data="{field:'remarks', width:150}">备注</th>
@@ -236,11 +260,11 @@
     layui.use('table', function(){
         var table = layui.table;
         //监听表格复选框选择
-        table.on('checkbox(demo)', function(obj){
+        table.on('checkbox(demoIn)', function(obj){
             console.log(obj)
         });
         //监听工具条
-        table.on('tool(demo)', function(obj){
+        table.on('tool(demoIn)', function(obj){
             var data = obj.data;
             if(obj.event === 'detail'){
                 layer.msg('ID：'+ data.id + ' 的查看操作');
@@ -255,7 +279,7 @@
             }
         });
         //监听头工具栏事件
-        table.on('toolbar(demo)', function(obj){
+        table.on('toolbar(demoIn)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id)
                 ,data = checkStatus.data//获取选中的数据
                 ,deList=[1];
@@ -264,14 +288,33 @@
             });
             deList.push(2);
             switch(obj.event){
-                case 'add':
+                case 'addIn':
                     layer.open({
                         type:1,
                         title:'添加',
                         btnAlign: 'c',
-                        area: ['900px', '600px'],
-                        content: $("#add-main"),
+                        area: ['900px', '500px'],
+                        content: $("#add-mainIn"),
                         btn:['保存','取消'],
+                        success:function(){
+                            top.$('#localAdd').val("");
+                            top.$("#supplierNameAdd").val("");
+                            top.$("#goodsNameAdd").val("");
+                            top.$("#goodsTypeAdd").val("");
+                            top.$("#specificationsAdd").val("");
+                            top.$("#produceDateAdd").val("");
+                            top.$("#numsAdd").val("");
+                            top.$("#pipelineNumberStart").val("");
+                            top.$("#pipelineNumberEnd").val("");
+                            top.$("#operatorsAdd").val("");
+                            top.$("#CardNumsAdd").val("");
+                            top.$("#IMSIAdd").val("");
+                            top.$("#IMEIAdd").val("");
+                            top.$("#ICCIDAdd").val("");
+                            top.$("#remarksAdd").val("");
+                            top.$("#activeTime").val("");
+                            top.$("#shutdownTime").val("");
+                        },
                         yes:function(index,layero){
                             var local =top.$('#localAdd').val();
                             var supplierNameAdd =top.$("#supplierNameAdd").val();
@@ -288,9 +331,16 @@
                             var IMEI =top.$("#IMEIAdd").val();
                             var ICCID =top.$("#ICCIDAdd").val();
                             var remark =top.$("#remarksAdd").val();
+                            var activeTime =top.$("#activeTime").val();
+                            var shutdownTime =top.$("#shutdownTime").val();
                              console.log(local+"-"+supplierNameAdd+"-"+goodsNameAdd+"-"+goodsType+"-"+specifications+"-"+produceDate+"-"+operators+"-"+nums+pipelineNumberStart+pipelineNumberEnd+remark+CardNums+IMSI+IMEI+ICCID);
-                            if(local==""||supplierNameAdd==""||goodsNameAdd=="请选择名称"||goodsType=="请选择类别"||specifications=="请选择规格"||nums==""||pipelineNumberStart==""||pipelineNumberEnd==""){
-                                alert("您还有必填项未填！")
+                            if(local==""||supplierNameAdd==""||goodsNameAdd=="请选择名称"||goodsType=="请选择类别"||specifications=="请选择规格"||nums==""||pipelineNumberStart==""||pipelineNumberEnd==""||produceDate==""){
+                               /* alert("您还有必填项未填！")*/
+                                layer.msg('您还有必填项未填！', {
+                                    btnAlign: 'c',
+                                    time: 3000, //20s后自动关闭
+                                    btn: ['确定']
+                                });
                             }else{
                                 $.ajax({
                                     //几个参数需要注意一下
@@ -298,14 +348,22 @@
                                     dataType: "json",//预期服务器返回的数据类型
                                     url: "/goodsInStock/addGoodsInStock" ,//url
                                     data: {local:local,goodsType:goodsType,goodsName:goodsNameAdd,supplierName:supplierNameAdd,specifications:specifications,goodsProduceDate:produceDate,goodsNums:nums,pipelineNumberStart:pipelineNumberStart,pipelineNumberEnd:pipelineNumberEnd,operators:operators,cardNums:CardNums,
-                                        IMSI:IMSI,IMEI:IMEI,ICCID:ICCID,remarks:remark},
+                                        IMSI:IMSI,IMEI:IMEI,ICCID:ICCID,remarks:remark,activeTime:activeTime,shutdownTime:shutdownTime},
                                     success: function (result) {
                                         console.log(result);//打印服务端返回的数据(调试用)
                                         if (result.success >0) {
-                                            alert("操作成功");
-                                            table.reload('idTest');
+                                            layer.msg('操作成功', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                            table.reload('idTestIn');
                                         }else{
-                                            alert("系统错误");
+                                            layer.msg('操作失败', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
                                         }
                                     },
                                     error : function() {
@@ -320,7 +378,7 @@
                         }
                     })
                     break;
-                case 'update':
+                case 'updateIn':
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     } else if(data.length > 1){
@@ -360,18 +418,20 @@
                                 var IMEI =top.$("#IMEIAdd").val();
                                 var ICCID =top.$("#ICCIDAdd").val();
                                 var remark =top.$("#remarksAdd").val();
+                                var activeTime =top.$("#activeTime").val();
+                                var shutdownTime =top.$("#shutdownTime").val();
                                 $.ajax({
                                     //几个参数需要注意一下
                                     type: "POST",//方法类型
                                     dataType: "json",//预期服务器返回的数据类型
                                     url: "/goodsInStock/updateGoodsInStock" ,//url
                                     data: {local:local,goodsType:goodsType,goodsName:goodsNameAdd,supplierName:supplierNameAdd,specifications:specifications,goodsProduceDate:produceDate,goodsNums:nums,pipelineNumberStart:pipelineNumberStart,pipelineNumberEnd:pipelineNumberEnd,operators:operators,cardNums:CardNums,
-                                        IMSI:IMSI,IMEI:IMEI,ICCID:ICCID,remarks:remark,id:id},
+                                        IMSI:IMSI,IMEI:IMEI,ICCID:ICCID,remarks:remark,id:id,activeTime:activeTime,shutdownTime:shutdownTime},
                                     success: function (result) {
                                         console.log(result);//打印服务端返回的数据(调试用)
                                         if (result.success >0) {
                                             alert("操作成功");
-                                            table.reload('idTest');
+                                            table.reload('idTestIn');
                                         }else{
                                             alert("操作失败");
                                         }
@@ -388,7 +448,7 @@
                         })
                     }
                     break;
-                case 'delete':
+                case 'deleteIn':
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     } else {
@@ -401,10 +461,18 @@
                                 data: {deList:JSON.stringify(deList)},
                                 success: function (result) {
                                     if (result.success>0) {
-                                        alert("操作成功");
-                                        table.reload('idTest')
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('idTestIn')
                                     }else{
-                                        alert("系统错误");
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
                                     }
                                 },
                                 error : function() {
@@ -441,9 +509,9 @@
                 var specifications = $("[name='specificationsSearch'] option:selected").text();
                 var startDate = $("#startDateSearch").val();
                 var endDate = $("#endDateSearch").val();
-                table.reload('idTest',{
+                table.reload('idTestIn',{
                     url:'/goodsInStock/searchGoodsInStock',
-                    where:{local:local,supplierName:supplierName,goodsType:goodsType,goodsName:goodsName,specifications:specifications,startDate:startDate,endDate:endDate,page:1,limit:10}  ,
+                    where:{local:local,supplierName:supplierName,goodsType:goodsType,goodsName:goodsName,specifications:specifications,startDate:startDate,endDate:endDate}  ,
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
@@ -469,6 +537,14 @@
         });
         laydate.render({
             elem: '#produceDateAdd' //指定元素
+
+        });
+        laydate.render({
+            elem: '#activeTime' //指定元素
+
+        });
+        laydate.render({
+            elem: '#shutdownTime' //指定元素
 
         });
     });
@@ -498,7 +574,102 @@
         function () {
             loadSelect();
         }
-    )
+    );
+    function hide_some() {
+        var goodsNameAdd = $("#goodsNameAdd option:selected" ).text();
+
+        if (goodsNameAdd=="通讯主板"){
+            $("[name='some']").show();
+            $("#numsAdd").val(1);
+        } else{
+            $("[name='some']").hide();
+        }
+    }
+    function pipelineNumberCount() {
+        var nums =$("#numsAdd").val();
+        var pipelineNumberStart =$("#pipelineNumberStart").val();
+        if (nums!="") {
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "/goodsInStock/countPipelineNumber" ,//url
+                data: {pipelineNumberStart:pipelineNumberStart,nums:nums},
+                success: function (result) {
+                    if (result.success>0) {
+                        $("#pipelineNumberEnd").val(result.date);
+                    }else{
+                       /* alert("流水号格式错误");*/
+                        layer.msg('流水号格式错误', {
+                            btnAlign: 'c',
+                            time: 3000, //20s后自动关闭
+                            btn: ['确定']
+                        });
+                    }
+                }/*,
+            error : function() {
+                alert("异常！");
+            }*/
+            });
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "/goodsInStock/checkGoodsInStockNum" ,//url
+                data: {pipelineNumberStart:pipelineNumberStart},
+                success: function (result) {
+                    if (result.exsit>0) {
+                        $("#pipelineNumberStartP").hide();
+                    }else{
+                        $("#pipelineNumberStart").val("");
+                        $("#pipelineNumberStartP").show();
+                        $("#pipelineNumberEnd").val("");
+                    }
+                }/*,
+            error : function() {
+                alert("异常！");
+            }*/
+            });
+        }
+
+
+    }
+    function pipelineNumberStartO() {
+        var supplierName = $("#supplierNameAdd").val();
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/supplierNameOne" ,//url
+            data: {supplierName:supplierName},
+            success: function (result) {
+                if (result.success>0) {
+                   console.log(result.data)
+                    $("#pipelineNumberStart").val(result.data);
+                }else{
+                    layer.msg('供应商重复或不存在', {
+                        btnAlign: 'c',
+                        time: 10000, //20s后自动关闭
+                        btn: ['确定']
+                    });
+                }
+            }/*,
+            error : function() {
+                alert("异常！");
+            }*/
+        });
+    }
+    function numsCount() {
+        var nums =$("#numsAdd").val();
+        if (nums==""){
+            layer.msg('请先输入数量', {
+                btnAlign: 'c',
+                time: 10000, //20s后自动关闭
+                btn: ['确定']
+            });
+            $("#pipelineNumberStart").val("");
+        }
+    }
     function loadSelect() {
         $.ajax({
             //几个参数需要注意一下
@@ -510,19 +681,19 @@
                     var list =result.date;
                     $("[name='localSearch']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择所在地区";
                     $("[name='localSearch']").append("<option value="+op+">"+bp+"</option>");
                     $.each(list,function (i,val) {
                         $("[name='localSearch']").append("<option value="+val+">"+val+"</option>");
                         $("#localAdd").append("<option value="+val+">"+val+"</option>");
                     });
                 }else{
-                    alert("地址信息错误");
+                   /* alert("地址信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
     function supplierNameSearch() {
@@ -537,19 +708,19 @@
                 if (result.success>0) {
                     $("[name='supplierNameSearch']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择供应商名称";
                     $("[name='supplierNameSearch']").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
                         $("[name='supplierNameSearch']").append("<option value="+val+">"+val+"</option>");
                     });
                 }else{
-                    alert("供应商信息错误");
+                   /* alert("供应商信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
 
     }
@@ -567,17 +738,23 @@
                     var op="";
                     var bp="请选择供应商";
                     $("#supplierNameAdd").append("<option value="+op+">"+bp+"</option>");
+                    $("#goodsTypeAdd").empty();
+                    $("#goodsTypeAdd").append("<option value="+op+">"+'请选择类别'+"</option>");
+                    $("#goodsNameAdd").empty();
+                    $("#goodsNameAdd").append("<option value="+op+">"+'请选择名称'+"</option>");
+                    $("#specificationsAdd").empty();
+                    $("#specificationsAdd").append("<option value="+op+">"+'请选择规格'+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
                         $("#supplierNameAdd").append("<option value="+val+">"+val+"</option>");
                     });
                 }else{
-                    alert("供应商信息错误");
+                  /*  alert("供应商信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
 
     }
@@ -593,7 +770,7 @@
                 if (result.success>0) {
                     $("[name='goodsTypeSearch']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择物料类别";
                     $("[name='goodsTypeSearch']").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
@@ -602,12 +779,12 @@
                         $("[name='goodsTypeSearch']").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("类别信息错误");
+                    /*alert("类别信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
     function goodsTypeAdd() {
@@ -624,6 +801,10 @@
                     var op="";
                     var bp="请选择类别";
                     $("#goodsTypeAdd").append("<option value="+op+">"+bp+"</option>");
+                    $("#goodsNameAdd").empty();
+                    $("#goodsNameAdd").append("<option value="+op+">"+'请选择名称'+"</option>");
+                    $("#specificationsAdd").empty();
+                    $("#specificationsAdd").append("<option value="+op+">"+'请选择规格'+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
                         var a =val.id;
@@ -631,12 +812,12 @@
                         $("#goodsTypeAdd").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("类别信息错误");
+                   /* alert("类别信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
     function goodsName() {
@@ -651,7 +832,7 @@
                 if (result.success>0) {
                     $("[name='goodsNameSearch']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择物料名称";
                     $("[name='goodsNameSearch']").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
@@ -660,15 +841,16 @@
                         $("[name='goodsNameSearch']").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("名称信息错误");
+                   /* alert("名称信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
     function goodsNameAdd() {
+        $("#operatorsAdd").attr("display","none");
         var pid=$("#goodsTypeAdd").val();
         $.ajax({
             //几个参数需要注意一下
@@ -682,6 +864,8 @@
                     var op="";
                     var bp="请选择名称";
                     $("#goodsNameAdd").append("<option value="+op+">"+bp+"</option>");
+                    $("#specificationsAdd").empty();
+                    $("#specificationsAdd").append("<option value="+op+">"+'请选择规格'+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
                         var a =val.id;
@@ -689,12 +873,12 @@
                         $("#goodsNameAdd").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("名称信息错误");
+                  /*  alert("名称信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
     function specifications() {
@@ -709,7 +893,7 @@
                 if (result.success>0) {
                     $("[name='specificationsSearch']").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择物料规格";
                     $("[name='specificationsSearch']").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
@@ -719,12 +903,12 @@
                         $("[name='specificationsSearch']").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("规格信息错误");
+                    /*alert("规格信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
     function specificationsAdd() {
@@ -739,7 +923,7 @@
                 if (result.success>0) {
                     $("#specificationsAdd").empty();
                     var op="";
-                    var bp="";
+                    var bp="请选择规格";
                     $("#specificationsAdd").append("<option value="+op+">"+bp+"</option>");
                     var list =result.date;
                     $.each(list,function (i,val) {
@@ -748,14 +932,28 @@
                         $("#specificationsAdd").append("<option value="+a+">"+b+"</option>");
                     });
                 }else{
-                    alert("规格信息错误");
+                  /*  alert("规格信息错误");*/
                 }
-            },
+            }/*,
             error : function() {
                 alert("异常！");
-            }
+            }*/
         });
     }
+    var unSelected = "#999";
+    var selected = "#333";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    })
 </script>
 
 </body>

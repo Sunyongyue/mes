@@ -177,8 +177,8 @@ public class PurchaserController {
     }
     @RequestMapping("/search")
     @ResponseBody
-    public String search(String purchaserNums,String local,String purchaserName){
-        JSONObject object = purchaserService.searchPurchaser(purchaserNums, local, purchaserName);
+    public String search(String purchaserNums,String local,String purchaserName,Integer page, Integer limit){
+        JSONObject object = purchaserService.searchPurchaser(purchaserNums, local, purchaserName,page,limit);
         return object.toJSONString();
     }
     @RequestMapping("/local")
@@ -186,5 +186,20 @@ public class PurchaserController {
     public String local(){
         JSONObject local = purchaserService.local();
         return local.toJSONString();
+    }
+    @RequestMapping("/purchaserName")
+    @ResponseBody
+    public String purchaserName(){
+        JSONObject local = purchaserService.purchaserName();
+        return local.toJSONString();
+    }
+    @RequestMapping("/selectMax")
+    @ResponseBody
+    public String selectMax(){
+        int i = purchaserService.selectMax();
+        JSONObject object = new JSONObject();
+        object.put("success",1);
+        object.put("max", i+1);
+        return object.toJSONString();
     }
 }

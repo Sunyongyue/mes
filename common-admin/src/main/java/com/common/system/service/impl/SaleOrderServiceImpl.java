@@ -71,4 +71,10 @@ public class SaleOrderServiceImpl implements SaleOrderService {
         object.put("data",array);
         return object;
     }
+
+    @Override
+    public SaleOrder queryOne(int id) {
+        SaleOrder saleOrder = saleOrderMapper.queryOne(id);
+        return saleOrder;
+    }
 }

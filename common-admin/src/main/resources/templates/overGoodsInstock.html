@@ -9,45 +9,47 @@
 </head>
 <body>
 <div class="demoTable">
-    <div class="layui-inline" style="margin-left: -27px">生产任务单号：</div>
+    <div class="layui-inline" style="margin-left:0px">生产单号：</div>
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="productNumSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="productNumSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入生产单号"/>
     </div>
     产品名称：
     <div class="layui-inline" style="width: 220px;">
-        <input class="layui-input"  id="goodsNameSearch" autocomplete="off" style="width: 200px;height: 25px" />
+        <input class="layui-input"  id="goodsNameSearch" autocomplete="off" style="width: 200px;height: 25px"  placeholder="请输入产品名称"/>
     </div>
     产品规格：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="goodsSpecificationsSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="goodsSpecificationsSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入产品规格"/>
     </div>
     <div class="layui-inline" style="margin-left: -15px">操作员名称：</div>
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="operatorSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="operatorSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入操作员名称"/>
     </div><br/>
     起始日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
     </div>
     截止日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px"/>
+        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择截止日期"/>
     </div>
     <button class="layui-btn layui-btn-sm" data-type="reload">查询</button>
 </div>
-<div id="add-main" style="display: none;">
+<div id="add-mainOverIn" style="display: none;">
     <div class="my-form">
         <div class="layui-form-item my-form-item" style="margin-top: 20px;margin-left: -40px">
-            <label class="layui-form-label layui-icon"  style="width: 170px;">生产任务单号:</label>
+            <label class="layui-form-label layui-icon"  style="width: 170px;">生产单号:</label>
             <div class="layui-input-inline">
-                <input id="productNumAdd" type="text" name="productNumAdd" autocomplete="off"
-                       class="layui-input"/>
+                <input id="productNumAdd123" type="text" name="productNumAdd123" autocomplete="off" placeholder="请输入生产单号"
+                       class="layui-input" onblur="searchExist()"/>
+                <p id="productNumAddS" style="color: red; display: none" >生产单号已被使用</p>
+                <p id="productNumAddSS" style="color: red; display: none" >未找到该生产单号</p>
             </div>
         </div>
         <div class="layui-form-item my-form-item"  style="margin-left: -40px">
             <label class="layui-form-label layui-icon"  style="width: 170px">备注:</label>
             <div class="layui-input-inline">
-                <input id="remarksAdd" type="text" name="remarksAdd"  autocomplete="off"
+                <input id="remarksAdd123" type="text" name="remarksAdd123"  autocomplete="off" placeholder="请输入备注"
                        class="layui-input"/>
             </div>
         </div>
@@ -55,27 +57,27 @@
 </div>
 <script type="text/html" id="toolbarDemoOverGoodsIn">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="adds" id="add" >添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="adds"  >添加</button>
         <!--<button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>-->
-        <button class="layui-btn layui-btn-sm" lay-event="deletes" id="delete" >删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="deletes"  >删除</button>
        <!-- <button class="layui-btn layui-btn-sm" lay-event="upload" id="upload" >导入</button>-->
     </div>
 </script>
-<table class="layui-table" lay-data="{url:'/overGoods/queryOverGoodsInStock', page:true, id:'idTest',toolbar:'#toolbarDemoOverGoodsIn',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demo">
+<table class="layui-table" lay-data="{totalRow:true,url:'/overGoods/queryOverGoodsInStock', page:true, id:'idTestOverIn',toolbar:'#toolbarDemoOverGoodsIn',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoOverIn">
     <thead>
     <tr>
         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-        <th lay-data="{field:'productNum', width:150}">生产任务单号</th>
+        <th lay-data="{field:'productNum', width:150}">生产单号</th>
         <th lay-data="{field:'goodsName', width:150}">产品名称</th>
         <th lay-data="{field:'specifications', width:150}">产品规格</th>
         <th lay-data="{field:'intakeDirection', width:150}">进气方向</th>
-        <th lay-data="{field:'testDate', width:150 }">生产日期</th>
+        <th lay-data="{field:'testDate', width:180,totalRowText:'合计：' }">生产日期</th>
         <!--<th lay-data="{field:'goodsStock', width:150 }">入库仓库</th>-->
-        <th lay-data="{field:'nums', width:150,totalRow:true}">入库数量</th>
+        <th lay-data="{field:'nums', width:150,totalRow:true,totalRow:true}">入库数量</th>
         <!--<th lay-data="{field:'addGoodsNums', width:150,totalRow:true}">入库后数量</th>-->
         <th lay-data="{field:'operator', width:150}">操作人</th>
-        <th lay-data="{field:'operatorTime', width:150}">操作时间</th>
-        <th lay-data="{field:'testRemarks', width:150}">备注</th>
+        <th lay-data="{field:'operatorTime', width:180}">操作时间</th>
+        <th lay-data="{field:'testRemarks', width:500}">备注</th>
     </tr>
     </thead>
 </table>
@@ -86,11 +88,11 @@
     layui.use('table', function(){
         var table = layui.table;
         //监听表格复选框选择
-        table.on('checkbox(demo)', function(obj){
+        table.on('checkbox(demoOverIn)', function(obj){
             console.log(obj)
         });
         //监听工具条
-        table.on('tool(demo)', function(obj){
+        table.on('tool(demoOverIn)', function(obj){
             var data = obj.data;
             if(obj.event === 'detail'){
                 layer.msg('ID：'+ data.id + ' 的查看操作');
@@ -105,7 +107,7 @@
             }
         });
         //监听头工具栏事件
-        table.on('toolbar(demo)', function(obj){
+        table.on('toolbar(demoOverIn)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id)
                 ,data = checkStatus.data//获取选中的数据
                 ,deList=[1];
@@ -120,32 +122,52 @@
                         title:'添加',
                         btnAlign: 'c',
                         area: ['370px', '300px'],
-                        content: $("#add-main"),
+                        content: $("#add-mainOverIn"),
                         btn:['保存','取消'],
+                        success:function(){
+                           top.$('#productNumAdd123').val("");
+                           top.$("#remarksAdd123").val("");
+                        },
                         yes:function(index,layero){
-                            var productNum =top.$('#productNumAdd').val();
-                            var testRemarks =top.$("#remarksAdd").val();
-                            $.ajax({
-                                //几个参数需要注意一下
-                                type: "POST",//方法类型
-                                dataType: "json",//预期服务器返回的数据类型
-                                url: "/overGoods/addOverGoodsInStock" ,//url
-                                data: {productNum:productNum,testRemarks:testRemarks},
-                                success: function (result) {
-                                    console.log(result);//打印服务端返回的数据(调试用)
-                                    if (result.success >0) {
-                                        alert("操作成功");
-                                        table.reload('idTest');
-                                    }else{
-                                        alert("系统错误");
-                                    }
-                                },
-                                error : function() {
-                                    alert("异常！");
-                                }
-                            });
+                            var productNum =top.$('#productNumAdd123').val();
+                            var testRemarks =top.$("#remarksAdd123").val();
+                            if (testRemarks==""){
+                                layer.msg('请输入备注', {
+                                    btnAlign: 'c',
+                                    time: 3000, //20s后自动关闭
+                                    btn: ['确定']
+                                });
+                            }else {
+                                $.ajax({
+                                    //几个参数需要注意一下
+                                    type: "POST",//方法类型
+                                    dataType: "json",//预期服务器返回的数据类型
+                                    url: "/overGoods/addOverGoodsInStock" ,//url
+                                    data: {productNum:productNum,testRemarks:testRemarks},
+                                    success: function (result) {
+                                        console.log(result);//打印服务端返回的数据(调试用)
+                                        if (result.success >0) {
 
-                            layer.close(index);
+                                            layer.msg('操作成功', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                            table.reload('idTestOverIn');
+                                        }else{
+                                            layer.msg('操作失败', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                        }
+                                    },
+                                    error : function() {
+                                        alert("异常！");
+                                    }
+                                });
+                                layer.close(index);
+                            }
                         },
                         btn2:function (index) {
                             layer.close(index);
@@ -165,10 +187,18 @@
                                 data: {deList:JSON.stringify(deList)},
                                 success: function (result) {
                                     if (result.success>0) {
-                                        alert("操作成功");
-                                        table.reload('idTest')
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('idTestOverIn')
                                     }else{
-                                        alert("系统错误");
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
                                     }
                                 },
                                 error : function() {
@@ -189,9 +219,9 @@
                 var specifications = $("#goodsSpecificationsSearch").val();
                 var operator = $("#operatorSearch").val();
                 var endDate = $("#endDateSearch").val();
-                table.reload('idTest',{
+                table.reload('idTestOverIn',{
                     url:'/overGoods/searchOverGoodsInStock',
-                    where:{productNum:productNum,goodsName:goodsName,specifications:specifications,operator:operator,startDate:startDate,endDate:endDate,page:1,limit:10}  ,
+                    where:{productNum:productNum,goodsName:goodsName,specifications:specifications,operator:operator,startDate:startDate,endDate:endDate}  ,
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
@@ -238,6 +268,55 @@
             }
         });
     });
+    function searchExist() {
+       var productNumAdd = $("#productNumAdd123").val();
+       console.log(productNumAdd+"***********************");
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/order/searchProductOrder1" ,//url
+            data: {productNumAdd:productNumAdd},
+            success: function (result) {
+                if (result.success>0) {
+                    $("#productNumAddSS").hide();
+                }else{
+                   $("#productNumAddSS").show();
+                    $("#productNumAdd123").val("");
+                }
+            }
+        });
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/overGoods/searchOverGoodsInStock2" ,//url
+            data: {productNum:productNumAdd},
+            success: function (result) {
+                console.log("*************"+result.count)
+                if (result.count>0) {
+                    $("#productNumAddS").show();
+                    $("#productNumAdd123").val("");
+                }else{
+                    $("#productNumAddS").hide();
+                }
+            }
+        });
+    }
+    var unSelected = "#999";
+    var selected = "#333";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    })
 </script>
 
 </body>

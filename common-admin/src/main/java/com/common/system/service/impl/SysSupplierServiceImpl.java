@@ -115,4 +115,16 @@ public class SysSupplierServiceImpl implements SysSupplierService {
         object.put("success",1);
         return object;
     }
+
+    @Override
+    public List<SysSupplier> supplierNameOne(String supplierName) {
+        List<SysSupplier> sysSuppliers = supplierMapper.supplierNameOne(supplierName);
+        return sysSuppliers;
+    }
+
+    @Override
+    public int selectBig() {
+        int i = supplierMapper.selectBig();
+        return i+1;
+    }
 }

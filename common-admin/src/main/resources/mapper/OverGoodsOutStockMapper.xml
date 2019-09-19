@@ -5,9 +5,21 @@
         SELECT  * from over_goods_outStock,sale_order,pubproduct,product_order where over_goods_outStock.productNum=pubproduct.productNum and over_goods_outStock.productNum=product_order.productNum and over_goods_outStock.salenum =sale_order.saleNum   ORDER BY over_goods_outStock.getOutFactoryTime desc
     </select>
     <insert id="addOverGoodsOutStock">
-      INSERT into over_goods_outStock(outStockNumbers,productNum,salenum,outFactoryMan,getOutFactoryTime,outStockNums,outStockType,outStockremarks)VALUES(
-      #{outStockNumbers},#{productNum},#{salenum},#{outFactoryMan},SYSDATE(),1,#{outStockType},#{outStockremarks})
+      INSERT into over_goods_outStock(outStockNumbers,productNum,salenum,outFactoryMan,getOutFactoryTime,outStockNums,outStockType,outStockremarks,recordStatus,logisticsInformation)VALUES(
+      #{outStockNumbers},#{productNum},#{salenum},#{outFactoryMan},SYSDATE(),1,#{outStockType},#{outStockremarks},'检测中',#{logisticsInformation})
     </insert>
+    <update id="outStockPeople">
+        update over_goods_outStock set outStockTestPeople=#{outStockTestPeople},outStockTestTime=SYSDATE() where id=#{id}
+    </update>
+    <update id="sendGoods">
+         update over_goods_outStock set sendGoodsPeople=#{sendGoodsPeople},sendGoodsTime=SYSDATE() ,recordStatus='已发货' where id=#{id}
+    </update>
+    <delete id="deleteOverGoodsOutStock">
+        DELETE from over_goods_outstock where id in
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
     <select id="searchOverGoodsOutStock" resultType="com.common.system.entity.OverGoodsOutStock">
         select * from over_goods_outStock,sale_order,pubproduct,product_order
         <where>

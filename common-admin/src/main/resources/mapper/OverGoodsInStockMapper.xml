@@ -3,7 +3,7 @@
 <mapper namespace="com.common.system.mapper.OverGoodsInStockMapper">
 
     <select id="queryOverGoodsInStock" resultType="com.common.system.entity.OverGoodsInStock">
-        select * from over_goods_inStock
+        select * from over_goods_inStock ORDER BY operatorTime desc
     </select>
    <insert id="addOverGoodsInStock">
        INSERT into over_goods_inStock(productNum,goodsName,specifications,intakeDirection,testDate,nums,operator,operatorTime,testRemarks)VALUES(
@@ -27,5 +27,6 @@
             and operatorTime<#{endDate}
             ]]></if>
         </where>
+        ORDER BY operatorTime desc
     </select>
 </mapper>

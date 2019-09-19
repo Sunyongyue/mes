@@ -81,8 +81,10 @@ public class ProductOrder {
     private String operator;
     //操作时间
     private String operatorTime;
+    //状态
+    private String status;
     public ProductOrder(){}
-    public ProductOrder(int id, String productNum, int alarmSquare, String charMethod, String controlMainboardName, String controlMainboardSpecifications, String controlMainboardSupplier, String disconnectionCheck, String fourMainBoardName, String fourSpecifications, String fourSupplier, String gasCheck, String goodsName, String intakeDirection, String lowPressureCheck, String microleakageCheck, String noContactCheck, int nums, String overcurrentCheck, int overdrawAir, String pressure, String pulseEquivalent, String remarks, int reservedAir, String signalSource, String specifications, String stopUseCheck, String telMainBoardName, String telMainBoardSpecifications, String telMainBoardSupplier, String telProtocol, String telType, int upperLimitOfRecharge, int valveCloseTime, String valveName, int valveOpenTime, String valveSpecifications, String valveSupplier, String version, String operator, String operatorTime) {
+    public ProductOrder(int id, String productNum, int alarmSquare, String charMethod, String controlMainboardName, String controlMainboardSpecifications, String controlMainboardSupplier, String disconnectionCheck, String fourMainBoardName, String fourSpecifications, String fourSupplier, String gasCheck, String goodsName, String intakeDirection, String lowPressureCheck, String microleakageCheck, String noContactCheck, int nums, String overcurrentCheck, int overdrawAir, String pressure, String pulseEquivalent, String remarks, int reservedAir, String signalSource, String specifications, String stopUseCheck, String telMainBoardName, String telMainBoardSpecifications, String telMainBoardSupplier, String telProtocol, String telType, int upperLimitOfRecharge, int valveCloseTime, String valveName, int valveOpenTime, String valveSpecifications, String valveSupplier, String version, String operator, String operatorTime,String status) {
         this.id = id;
         this.productNum = productNum;
         this.alarmSquare = alarmSquare;
@@ -124,6 +126,7 @@ public class ProductOrder {
         this.version = version;
         this.operator = operator;
         this.operatorTime = operatorTime;
+        this.status=status;
     }
 
     public int getId() {
@@ -453,7 +456,8 @@ public class ProductOrder {
     public void setOperatorTime(String operatorTime) {
         this.operatorTime = operatorTime.substring(0,19);
     }
-
+    public String getStatus(){return status;}
+    public void setStatus(String status){this.status=status;}
     @Override
     public String toString() {
         return "ProductOrder{" +
@@ -498,6 +502,7 @@ public class ProductOrder {
                 ", version='" + version + '\'' +
                 ", operator='" + operator + '\'' +
                 ", operatorTime='" + operatorTime + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

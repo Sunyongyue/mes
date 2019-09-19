@@ -14,4 +14,7 @@ public interface SysPurchaserMapper {
     int deletePurchaser(@Param("id") int id);
     List<SysPurchaser> searchPurchaser(@Param("purchaserNums") String purchaserNums,@Param("local") String local,@Param("purchaserName") String purchaserName);
     List<String> local();
+    List<String> purchaserName();
+    SysPurchaser queryBypurchaserName(@Param("purchaserName") String purchaserName);
+    int selectMax();
 }

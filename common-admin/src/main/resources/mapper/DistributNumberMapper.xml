@@ -3,11 +3,12 @@
 <mapper namespace="com.common.system.mapper.DistributNumberMapper">
 
     <select id="queryDistributNumber" resultType="com.common.system.entity.DistributNumber">
-        select * from distribut_number
+        select * from distribut_number  ORDER BY operatorTime desc
     </select>
     <select id="queryByNumber" resultType="com.common.system.entity.DistributNumber">
            select * from distribut_number where controlMainNum=#{number}
     </select>
+
    <insert id="addDistributNumberMapper">
         INSERT INTO distribut_number(telNum,controlMainNum,telMainNum,fourMainNum,`status`,remarks,operator,operatorTime)VALUES
         (#{telNum},#{controlMainNum},#{telMainNum},#{fourMainNum},'正常',#{remarks},#{operator},SYSDATE())
@@ -28,5 +29,21 @@
             and operatorTime<#{endDate}
             ]]></if>
         </where>
+        ORDER BY operatorTime desc
+    </select>
+    <select id="queryExistControl" resultType="int">
+    SELECT count(*) FROM distribut_number WHERE controlMainNum=#{controlMainNum}
+    </select>
+    <select id="queryExistTel" resultType="int">
+    SELECT count(*) FROM distribut_number WHERE telMainNum=#{telMainNum}
+    </select>
+    <select id="queryExistFour" resultType="int">
+    SELECT count(*) FROM distribut_number WHERE fourMainNum=#{fourMainNum}
+    </select>
+    <select id="queryExistTelNum" resultType="int">
+    SELECT count(*) FROM distribut_number WHERE telNum=#{telNum}
+    </select>
+    <select id="queryExistAllNum" resultType="int">
+    SELECT count(*) FROM distribut_number WHERE telNum=#{telNum} or fourMainNum=#{fourMainNum} or telMainNum=#{telMainNum} or controlMainNum=#{controlMainNum}
     </select>
 </mapper>

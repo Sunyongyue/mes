@@ -67,7 +67,7 @@ public class SysPurchaser {
     }
 
     public void setPurchaserNums(String purchaserNums) {
-        this.purchaserNums = purchaserNums;
+        this.purchaserNums = purchaserNums.substring(0,4);
     }
 
     public String getPurchaserName() {

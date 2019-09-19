@@ -1,6 +1,7 @@
 package com.common.system.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.common.system.entity.SaleOrder;
 import org.apache.ibatis.annotations.Param;
 
 
@@ -10,4 +11,5 @@ public interface SaleOrderService {
     JSONObject deleteSaleOrder(@Param("array") int[] array);
     int queryNum(@Param("date") String date);
     JSONObject searchSaleOrder(@Param("saleNum") String saleNum,@Param("customerName") String customerName,@Param("projectName") String projectName,@Param("productNameOrder") String productNameOrder,@Param("productSpecificationsOrder") String productSpecificationsOrder,@Param("operator") String operator,@Param("startDate") String startDate,@Param("endDate") String endDate,Integer page, Integer limit);
+    SaleOrder queryOne(@Param("id") int id);
 }

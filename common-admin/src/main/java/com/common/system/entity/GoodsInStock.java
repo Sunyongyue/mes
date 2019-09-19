@@ -33,8 +33,13 @@ public class GoodsInStock {
     private String operator;
     //操作时间
     private String operatorTime;
+    //停机时间
+    private String shutdownTime;
+    //激活时间
+    private String activeTime;
     public GoodsInStock(){}
-    public GoodsInStock(int id, String local, String goodsType, String goodsName, String specifications, String goodsProduceDate, String status, int goodsNums, String supplierName, String pipelineNumber, String operators, String cardNums, String IMSI, String IMEI, String ICCID, String remarks, String operator, String operatorTime) {
+
+    public GoodsInStock(int id, String local, String goodsType, String goodsName, String specifications, String goodsProduceDate, String status, int goodsNums, String supplierName, String pipelineNumber, String operators, String cardNums, String IMSI, String IMEI, String ICCID, String remarks, String operator, String operatorTime, String shutdownTime, String activeTime) {
         this.id = id;
         this.local = local;
         this.goodsType = goodsType;
@@ -53,6 +58,24 @@ public class GoodsInStock {
         this.remarks = remarks;
         this.operator = operator;
         this.operatorTime = operatorTime;
+        this.shutdownTime = shutdownTime;
+        this.activeTime = activeTime;
+    }
+
+    public String getShutdownTime() {
+        return shutdownTime;
+    }
+
+    public void setShutdownTime(String shutdownTime) {
+        this.shutdownTime = shutdownTime;
+    }
+
+    public String getActiveTime() {
+        return activeTime;
+    }
+
+    public void setActiveTime(String activeTime) {
+        this.activeTime = activeTime;
     }
 
     public int getId() {

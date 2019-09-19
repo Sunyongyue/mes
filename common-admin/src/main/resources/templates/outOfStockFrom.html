@@ -29,7 +29,7 @@
 <div style="padding:15px;">
 	<form class="layui-form" id="fromId" action="#">
 			<div id="selectTool" style="display: none">
-			<select  name="selectDemo" lay-filter="selectDemo" lay-search >
+			<select  name="selectDemo" lay-filter="selectDemo" lay-search  >
 				<option value="">请选择地区</option>
 			</select>
 			</div>
@@ -55,6 +55,11 @@
 				<option value="">请选择物料规格</option>
 			</select>
 		</div>
+		<div id="selectTool5" style="display: none">
+			<select name="selectDemo5" lay-filter="selectDemo5" lay-search>
+				<option value="">请选择出库类别</option>
+			</select>
+		</div>
 		<script type="text/html" id="toolbarDemo">
 			<div align="left" class="layui-btn-container">
 				<!--<button id="addTable" class="layui-btn layui-btn-sm layui-btn-normal" lay-event="add">添加行</button>-->
@@ -73,10 +78,11 @@
 <script type="text/javascript" src="/adminlte/layui/layui.js"></script>
 <script type="text/javascript" src="/adminlte/layui/jquery-3.2.1.min.js"></script>
 <script>
-	layui.use(['laydate', 'table', 'form', 'jquery'], function() {
+	layui.use(['laydate', 'table', 'form', 'jquery','layer'], function() {
 		var table = layui.table,
 				form = layui.form,
 				laydate = layui.laydate,
+				layer=layui.layer,
 				$ = layui.jquery;
 		form.on('select(selectDemo)', function(data) {
 			//这里是当选择一个下拉选项的时候 把选择的值赋值给表格的当前行的缓存数据 否则提交到后台的时候下拉框的值是空的
@@ -128,13 +134,23 @@
 				}
 			});
 		});
+		form.on('select(selectDemo5)', function(data) {
+			//这里是当选择一个下拉选项的时候 把选择的值赋值给表格的当前行的缓存数据 否则提交到后台的时候下拉框的值是空的
+			var elem = data.othis.parents('tr');
+			var dataindex = elem.attr("data-index");
+			$.each(tabledata, function(index, value) {
+				if(value.LAY_TABLE_INDEX == dataindex) {
+					value.outStockType = data.value;
+				}
+			});
+		});
 
 		//第一个实例 加载表格
 		var tableIns = table.render({
 			elem: '#demo',
 			/*toolbar: '#toolbarDemo',*/
 		/*	defaultToolbar: ['filter', 'print', 'exports'],*/
-			limit: 100,
+			limit: 150,
 			cols: [
 				[ //表头
 					{
@@ -160,7 +176,7 @@
 				}, {
 					field: 'outStockType',
 					title: '出库分类',
-					edit: 'text'
+					templet: '#selectTool5'
 				},{
 					field: 'nums',
 					title: '出库数量',
@@ -169,11 +185,11 @@
 					field: 'remarks',
 					title: '备注',
 					edit: 'text'
-				}, {
+				}/*, {
 					title: '操作',
 					align: 'center',
 					toolbar: '#bar'
-				}
+				}*/
 				]
 			],
 			data: [{
@@ -353,6 +369,11 @@
 							str=str+val+"\n";
 						});
 						alert(str);
+						layer.msg(str, {
+							btnAlign: 'c',
+							time: 10000, //20s后自动关闭
+							btn: ['确定']
+						});
 						var index = parent.layer.getFrameIndex(window.name);
 						parent.layer.close(index);
 					} else {
@@ -371,8 +392,32 @@
 				goodsTypes();
 				goodsNames();
 				specificationss();
+				outTyp();
 			}
 	)
+	function outTyp() {
+		$.ajax({
+			//几个参数需要注意一下
+			type: "POST",//方法类型
+			dataType: "json",//预期服务器返回的数据类型
+			url: "/queryLocal" ,//url
+			data:{pid:207},
+			success: function (result) {
+				if (result.success>0) {
+					var list =result.date;
+			/*		$("[name='outStockType']").empty();
+				/!*	var op="";
+					var bp="请选择出库类别";
+					$("[name='outStockType']").append("<option value="+op+">"+bp+"</option>");*!/*/
+					$.each(list,function (i,val) {
+						$("[name='selectDemo5']").append("<option value="+val+">"+val+"</option>");
+					});
+				}else{
+					alert("信息错误");
+				}
+			}
+		});
+	}
 	function loadSelect() {
 		$.ajax({
 			//几个参数需要注意一下
@@ -479,6 +524,7 @@
 			}
 		});
 	}
+
 </script>
 
 </body>

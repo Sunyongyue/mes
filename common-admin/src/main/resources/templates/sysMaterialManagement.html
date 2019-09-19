@@ -10,8 +10,8 @@
 </head>
 <body>
 <h3>物料管理</h3>
-<table class="layui-table layui-form" id="tree-table" lay-size="sm"></table>
-<div id="add-main" style="display: none;">
+<table class="layui-table layui-form" id="tree-tableMaterMan" lay-size="sm"></table>
+<div id="add-mainMaterMan" style="display: none;">
     <div class="my-form">
         <form class="layui-form"  lay-skin="line">
             <!--<div class="layui-form-item my-form-item" style="margin-top: 10px">
@@ -66,7 +66,7 @@
         </form>
     </div>
 </div>
-<div id="update-main" style="display: none;">
+<div id="update-mainMaterMan" style="display: none;">
     <div class="my-form">
         <form class="layui-form"  lay-skin="line">
            <!-- <div class="layui-form-item my-form-item" style="margin-top: 10px">
@@ -132,7 +132,7 @@
             layer = layui.layer,
             treeTable = layui.treeTable;
         var	re = treeTable.render({
-            elem: '#tree-table',
+            elem: '#tree-tableMaterMan',
             url:"/sysMaterialManagement/sysMaterialManagementDate",
             icon_key: 'title',
             end: function(e){
@@ -227,7 +227,7 @@
                 title:'添加',
                 btnAlign: 'c',
                 area: ['400px', '400px'],
-                content: $("#add-main"),
+                content: $("#add-mainMaterMan"),
                 btn:['保存','取消'],
                 success:function (layero, index) {
                     /* top.$('#pid').val(data.item.id);*/
@@ -254,10 +254,18 @@
                         success: function (result) {
                             console.log(result);//打印服务端返回的数据(调试用)
                             if (result.success >0) {
-                                alert("操作成功");
+                                layer.msg('操作成功', {
+                                    btnAlign: 'c',
+                                    time: 3000, //20s后自动关闭
+                                    btn: ['确定']
+                                });
                                 treeTable.render(re);
                             }else{
-                                alert("系统错误");
+                                layer.msg('操作失败', {
+                                    btnAlign: 'c',
+                                    time: 3000, //20s后自动关闭
+                                    btn: ['确定']
+                                });
                             }
                         },
                         error : function() {
@@ -278,7 +286,7 @@
                 title:'修改',
                 btnAlign: 'c',
                 area: ['400px', '400px'],
-                content: $("#update-main"),
+                content: $("#update-mainMaterMan"),
                 btn:['保存','取消'],
                 success: function (layero, index) {
                    /* top.$('#pid').val(data.item.pid);*/
@@ -305,10 +313,18 @@
                         data: {title:title,factory:factory,id:data.item.id,pid:pid,materialtype:materialtype,materialName:materialName,materialSpecification:materialSpecification,remarks:remarks},
                         success: function (result) {
                             if (result.success>0) {
-                                alert("操作成功");
+                                layer.msg('操作成功', {
+                                    btnAlign: 'c',
+                                    time: 3000, //20s后自动关闭
+                                    btn: ['确定']
+                                });
                                 treeTable.render(re);
                             }else{
-                                alert("系统错误");
+                                layer.msg('操作失败', {
+                                    btnAlign: 'c',
+                                    time: 3000, //20s后自动关闭
+                                    btn: ['确定']
+                                });
                             }
                         },
                         error : function() {
@@ -335,10 +351,18 @@
                     success: function (result) {
                         console.log(result);//打印服务端返回的数据(调试用)
                         if (result.success>0) {
-                            alert("操作成功");
+                            layer.msg('操作成功', {
+                                btnAlign: 'c',
+                                time: 3000, //20s后自动关闭
+                                btn: ['确定']
+                            });
                             treeTable.render(re);
                         }else{
-                            alert("系统错误");
+                            layer.msg('操作失败', {
+                                btnAlign: 'c',
+                                time: 3000, //20s后自动关闭
+                                btn: ['确定']
+                            });
                         }
                     },
                     error : function() {

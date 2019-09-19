@@ -1,12 +1,11 @@
 package com.common.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.common.system.entity.DistributNumber;
 import com.common.system.entity.ProductOrder;
 import com.common.system.entity.PubProduct;
-import com.common.system.service.ConfigMesService;
-import com.common.system.service.DistributNumberService;
-import com.common.system.service.ProductOrderService;
-import com.common.system.service.PubProductService;
+import com.common.system.entity.SysPurchaser;
+import com.common.system.service.*;
 import com.common.system.shiro.ShiroUser;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -25,6 +24,8 @@ import java.util.*;
 @RequestMapping("/production")
 public class ProductionController {
     @Autowired
+    OverGoodsOutStockService overGoodsOutStockService;
+    @Autowired
     DistributNumberService numberService;
     @Autowired
     PubProductService pubProductService;
@@ -32,10 +33,70 @@ public class ProductionController {
     ConfigMesService configMesService;
     @Autowired
     ProductOrderService productOrderService;
+    @Autowired
+    DistributNumberService distributNumberService;
+    @Autowired
+    SysPurchaserService purchaserService;
     @RequestMapping("/distributNumber")
     public ModelAndView distributNumber(){
         ModelAndView mav = new ModelAndView("distributNumber");
         return mav;
+    }
+    @RequestMapping("/telNumsP")
+    @ResponseBody
+    public String telNumsP(String telNum){
+        int i = numberService.queryExistTelNum(telNum);
+        JSONObject object= new JSONObject();
+        object.put("exist",i);
+        return object.toString();
+    }
+    @RequestMapping("/controlP")
+    @ResponseBody
+    public String controlP(String controlMainBoardNum){
+        int i = numberService.queryExistControl(controlMainBoardNum);
+        JSONObject object= new JSONObject();
+        object.put("exist",i);
+        return object.toString();
+    }
+    @RequestMapping("/telP")
+    @ResponseBody
+    public String telP(String telMainBoardNum){
+        int i = numberService.queryExistTel(telMainBoardNum);
+        JSONObject object= new JSONObject();
+        object.put("exist",i);
+        return object.toString();
+    }
+    @RequestMapping("/productNum")
+    @ResponseBody
+    public String productNum(String productNum){
+        int i = pubProductService.productNumExist(productNum);
+        JSONObject object= new JSONObject();
+        object.put("exist",i);
+        return object.toString();
+    }
+    @RequestMapping("/vavleNum")
+    @ResponseBody
+    public String vavleNum(String vavleNum){
+        int i = pubProductService.valveNUmsExist(vavleNum);
+        JSONObject object= new JSONObject();
+        object.put("exist",i);
+        return object.toString();
+    }
+    @RequestMapping("/mainBoardNum")
+    @ResponseBody
+    public String mainBoardNum(String mainBoardNum){
+        int i = pubProductService.controlMainBoardNumsExist(mainBoardNum);
+        JSONObject object= new JSONObject();
+        object.put("exist",i);
+        return object.toString();
+    }
+    @RequestMapping("/fourP")
+    @ResponseBody
+    public String fourP(String fourMainBoardNum){
+        int i = numberService.queryExistFour(fourMainBoardNum);
+        JSONObject object= new JSONObject();
+        object.put("exist",i);
+        return object.toString();
     }
     @RequestMapping("/pubProduct")
     public ModelAndView pubProduct(){
@@ -194,8 +255,16 @@ public class ProductionController {
     @RequestMapping("/addPubProduct")
     @ResponseBody
     public String addPubProduct(String productNum, String valveNUms, String controlMainBoardNums, @SessionAttribute ShiroUser user, String tester, String testRemarks){
-        JSONObject object = pubProductService.addPubProduct(productNum, valveNUms, controlMainBoardNums, user.getUsername(), "", testRemarks);
-        return object.toString();
+        int i = productOrderService.updateStatus(productNum);
+        if (i>0){
+            JSONObject object = pubProductService.addPubProduct(productNum, valveNUms, controlMainBoardNums, user.getUsername(), "", testRemarks);
+            return object.toString();
+        }else {
+            JSONObject object = new JSONObject();
+            object.put("success",i);
+            return object.toString();
+        }
+
     }
     @RequestMapping("/uploadPubProduct")
     @ResponseBody
@@ -262,11 +331,69 @@ public class ProductionController {
     }
     @RequestMapping("/updatePubProduct")
     @ResponseBody
-    public String updatePubProduct(int ids,@SessionAttribute ShiroUser user){
+    public String updatePubProduct(int ids,String productNum,@SessionAttribute ShiroUser user){
         JSONObject object = pubProductService.updatePubProduct(ids, user.getUsername());
+        int i2 = productOrderService.updateOver(productNum);
         PubProduct pubProduct = pubProductService.queryOneByids(ids);
         List<ProductOrder> productOrders = productOrderService.queryByProductNum(pubProduct.getProductNum());
-        int i = configMesService.addConfigMes(pubProduct.getProductNum(), "天和", "/", "39.98.86.240", 5600, "apn", "codomain", "remarks", "confValveModel", 1, pubProduct.getGoodsName(), 0, "deviceaddr", "useraddr", "uptime", 5, productOrders.get(0).getCharMethod(), "paytype", productOrders.get(0).getValveName(),  productOrders.get(0).getAlarmSquare(), 0,  productOrders.get(0).getReservedAir(),  productOrders.get(0).getUpperLimitOfRecharge(),  productOrders.get(0).getPulseEquivalent(), "清除剩余累计", 25, "月", productOrders.get(0).getOverdrawAir(),  productOrders.get(0).getValveOpenTime(),  productOrders.get(0).getValveCloseTime(),  productOrders.get(0).getSignalSource(), 0, 0, 0, 0);
+        String s = productOrders.get(0).getPulseEquivalent().replaceAll("m³/脉冲", "");
+        Double aDouble = Double.valueOf(s);
+        List<DistributNumber> distributNumbers = distributNumberService.queryByNumber(pubProduct.getControlMainBoardNums());
+        int i1 = configMesService.selectCount(distributNumbers.get(0).getTelNum());
+        String vavleType=productOrders.get(0).getValveName();
+        if (productOrders.get(0).getValveName().contains("快关")){
+            vavleType="普通阀门(快关)";
+        }else if(productOrders.get(0).getValveName().contains("慢关")){
+            vavleType="普通阀门(慢关)";
+        }else{
+            vavleType="工业球阀";
+        }
+        int i = configMesService.addConfigMes(pubProduct.getProductNum(), "天和", "/", "39.98.86.240", 5600, "", "", "", "生产写配置", 1+i1, pubProduct.getGoodsName(), 0, distributNumbers.get(0).getTelNum(), "0", "0", 5, "单一",productOrders.get(0).getCharMethod() , vavleType,  productOrders.get(0).getAlarmSquare(), 0,  productOrders.get(0).getReservedAir(),  productOrders.get(0).getUpperLimitOfRecharge(),  aDouble, "清除剩余累计", 25, "年", productOrders.get(0).getOverdrawAir(),  productOrders.get(0).getValveOpenTime(),  productOrders.get(0).getValveCloseTime(),  productOrders.get(0).getSignalSource(), 0, 0, 0, 0,1,0,0,0,"不设置","1");
+        return object.toString();
+    }
+    @RequestMapping("/overGoodsCheck")
+    @ResponseBody
+    public String overGoodsCheck(int id,String productNum,String controlMainBoardNums,@SessionAttribute ShiroUser user){
+        List<ProductOrder> productOrders = productOrderService.queryByProductNum(productNum);
+        String s = productOrders.get(0).getPulseEquivalent().replaceAll("m³/脉冲", "");
+        Double aDouble = Double.valueOf(s);
+        List<DistributNumber> distributNumbers = distributNumberService.queryByNumber(controlMainBoardNums);
+        int i1 = configMesService.selectCount(distributNumbers.get(0).getTelNum());
+        String vavleType=productOrders.get(0).getValveName();
+        if (productOrders.get(0).getValveName().contains("快关")){
+            vavleType="普通阀门(快关)";
+        }else if(productOrders.get(0).getValveName().contains("慢关")){
+            vavleType="普通阀门(慢关)";
+        }else{
+            vavleType="工业球阀";
+        }
+        int i2 = overGoodsOutStockService.outStockPeople(id,user.getUsername());
+        int i = configMesService.addConfigMes(productNum, "天和", "/", "39.98.86.240", 5600, "", "", "", "检测写配置", 1+i1, productOrders.get(0).getGoodsName(), 0, distributNumbers.get(0).getTelNum(), "0", "0", 5, "单一",productOrders.get(0).getCharMethod() , vavleType,  productOrders.get(0).getAlarmSquare(), 0,  productOrders.get(0).getReservedAir(),  productOrders.get(0).getUpperLimitOfRecharge(),  aDouble, "清除剩余累计", 25, "年", productOrders.get(0).getOverdrawAir(),  productOrders.get(0).getValveOpenTime(),  productOrders.get(0).getValveCloseTime(),  productOrders.get(0).getSignalSource(), 0, 0, 0, 0,1,0,0,0,"不设置","1");
+        JSONObject object = new JSONObject();
+        object.put("success",i);
+        return object.toString();
+    }
+    @RequestMapping("/overGoodsOutStock2")
+    @ResponseBody
+    public String overGoodsOutStock2(int id,String productNum,String controlMainBoardNums,String customerName,@SessionAttribute ShiroUser user ){
+        List<ProductOrder> productOrders = productOrderService.queryByProductNum(productNum);
+        String s = productOrders.get(0).getPulseEquivalent().replaceAll("m³/脉冲", "");
+        Double aDouble = Double.valueOf(s);
+        List<DistributNumber> distributNumbers = distributNumberService.queryByNumber(controlMainBoardNums);
+        int i1 = configMesService.selectCount(distributNumbers.get(0).getTelNum());
+        String vavleType=productOrders.get(0).getValveName();
+        if (productOrders.get(0).getValveName().contains("快关")){
+            vavleType="普通阀门(快关)";
+        }else if(productOrders.get(0).getValveName().contains("慢关")){
+            vavleType="普通阀门(慢关)";
+        }else{
+            vavleType="工业球阀";
+        }
+        SysPurchaser sysPurchaser= purchaserService.queryBypurchaserName(customerName);
+        int i2 = overGoodsOutStockService.sendGoods(id,user.getUsername());
+        int i = configMesService.addConfigMes(productNum, "天和", "/", sysPurchaser.getIpAddress(), Integer.parseInt(sysPurchaser.getIpPort()), "", "", "", "发货写配置", 1+i1, productOrders.get(0).getGoodsName(), 0, distributNumbers.get(0).getTelNum(), "0", "0", 5, "单一",productOrders.get(0).getCharMethod() , vavleType,  productOrders.get(0).getAlarmSquare(), 0,  productOrders.get(0).getReservedAir(),  productOrders.get(0).getUpperLimitOfRecharge(),  aDouble, "清除剩余累计", 25, "年", productOrders.get(0).getOverdrawAir(),  productOrders.get(0).getValveOpenTime(),  productOrders.get(0).getValveCloseTime(),  productOrders.get(0).getSignalSource(), 0, 0, 0, 0,1,0,0,0,"不设置","1");
+        JSONObject object = new JSONObject();
+        object.put("success",i);
         return object.toString();
     }
     @RequestMapping("/dtletePubProduct")
@@ -281,8 +408,8 @@ public class ProductionController {
     }
     @RequestMapping("/searchPubProduct")
     @ResponseBody
-    public String searchPubProduct(String productNum, String goodsName, String specifications, String operator, String startDate, String endDate, Integer page, Integer limit){
-        JSONObject object = pubProductService.searchPubProduct(productNum, goodsName, specifications, operator, startDate, endDate, page, limit);
+    public String searchPubProduct(String productNum, String goodsName, String specifications, String operator, String startDate, String endDate,Integer page, Integer limit){
+        JSONObject object = pubProductService.searchPubProduct(productNum, goodsName, specifications, operator, startDate, endDate,page, limit);
         return object.toString();
     }
 }
