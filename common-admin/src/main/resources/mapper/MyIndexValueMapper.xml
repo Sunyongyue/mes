@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.MyIndexValueMapper">
+    <select id="industryDayOrder" resultType="int">
+        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{day}
+    </select>
+    <select id="industryMonthOrder" resultType="int">
+        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y-%m') = #{month}
+    </select>
+    <select id="industryYearOrder" resultType="int">
+        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y') = #{year}
+    </select>
+    <select id="civilDayOrder" resultType="int">
+        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{day}
+    </select>
+    <select id="civilMonthOrder" resultType="int">
+        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y-%m') = #{month}
+    </select>
+    <select id="civilYearOrder" resultType="int">
+        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y') = #{year}
+    </select>
+    <select id="industrySaleDayOrder" resultType="int">
+        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{day}
+    </select>
+    <select id="industrySaleMonthOrder" resultType="int">
+        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y-%m') = #{month}
+    </select>
+    <select id="industrySaleYearOrder" resultType="int">
+        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y') = #{year}
+    </select>
+    <select id="civilSaleDayOrder" resultType="int">
+        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{day}
+    </select>
+    <select id="civilSaleMonthOrder" resultType="int">
+        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y-%m') = #{month}
+    </select>
+    <select id="civilSaleYearOrder" resultType="int">
+        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y') = #{year}
+    </select>
+    <select id="dayCivilSendGoods" resultType="int">
+        SELECT COUNT(*) FROM over_goods_outstock where DATE_FORMAT(sendGoodsTime,'%Y-%m-%d') = #{day}
+    </select>
+    <select id="monthCivilSendGoods" resultType="int">
+        SELECT COUNT(*) FROM over_goods_outstock where DATE_FORMAT(sendGoodsTime,'%Y-%m') = #{month}
+    </select>
+    <select id="yearCivilSendGoods" resultType="int">
+        SELECT COUNT(*) FROM over_goods_outstock where DATE_FORMAT(sendGoodsTime,'%Y') = #{year}
+    </select>
+    <select id="dayDustrySendGoods" resultType="int">
+        SELECT COUNT(*) FROM over_goods_outstock where DATE_FORMAT(sendGoodsTime,'%Y-%m-%d') = #{day}
+    </select>
+    <select id="monthDustrySendGoods" resultType="int">
+        SELECT COUNT(*) FROM over_goods_outstock where DATE_FORMAT(sendGoodsTime,'%Y-%m') = #{month}
+    </select>
+    <select id="yearDustrySendGoods" resultType="int">
+        SELECT COUNT(*) FROM over_goods_outstock where DATE_FORMAT(sendGoodsTime,'%Y') = #{year}
+    </select>
+    <select id="dayInGoods" resultType="int">
+        SELECT COUNT(*) FROM goods_instock where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{day} and goodsType =#{goodsName}
+    </select>
+    <select id="myGoodsStock" resultType="int">
+        SELECT COALESCE(SUM(nums),0) FROM goods_stock where goodsType =#{goodsName}
+    </select>
+    <select id="myOverGoodsStock" resultType="int">
+        SELECT COALESCE(SUM(nums),0) FROM over_goods_stock where goodsName =#{goodsName}
+    </select>
+
+</mapper>

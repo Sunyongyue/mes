@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.AssistConfMapper">
+
+    <select id="queryByConfPulse" resultType="com.common.system.entity.AssistConf">
+       SELECT * from assist_conf where valveSupplier=#{valveSupplier} and valveName=#{valveName} and valveSpecifications=#{valveSpecifications} and  ConfPulse=#{ConfPulse}
+    </select>
+
+   <!-- <delete id="">
+        DELETE from pubProduct where ids in
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>-->
+    <select id="" resultType="com.common.system.entity.ConfigMes">
+        select  * from config_mes,statuscode
+        <where>
+            <if test="1 !=0"> config_mes.status=statuscode.status</if>
+            <if test="confDeviceAddr !=''">and confDeviceAddr= #{confDeviceAddr}</if>
+            <if test="confValveModel !=''">and confValveModel= #{confValveModel}</if>
+            <if test="startDate !=''">and creat_date > #{startDate}</if>
+            <if test="endDate !=''"> <![CDATA[
+            and creat_date< #{endDate}
+            ]]></if>
+        </where>
+    </select>
+</mapper>

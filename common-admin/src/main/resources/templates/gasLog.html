@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" th:href="@{/adminlte/layui/css/layui.css}"  media="all"/>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<div class="demoTable">
+    通讯编号：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="TelGasLog" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入通讯编号"/>
+    </div>
+    上报类型：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="report_typeSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入上报类型"/>
+    </div>
+    起始日期：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="startGasLog" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
+    </div>
+    截止日期：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="endDateGasLog" autocomplete="off" style="width: 200px;height: 25px " placeholder="请选择截止日期"/>
+    </div>
+    <button class="layui-btn layui-btn-sm" data-type="reloadGasLog">查询</button>
+</div>
+<table class="layui-table" lay-data="{url:'/messsage/queryAllGasHistoryLog', page:true, id:'idTestGasLog' }" lay-filter="demoGasLog">
+    <thead>
+    <tr>
+        <!--<th lay-data="{type:'checkbox', fixed: 'left'}"></th>-->
+        <th lay-data="{field:'sn', width:150}">包序号</th>
+        <th lay-data="{field:'device_addr', width:150}">设备地址</th>
+        <th lay-data="{field:'report_type', width:180}">上报类型</th>
+        <th lay-data="{field:'device_type', width:150}">设备类型</th>
+        <th lay-data="{field:'version', width:150}">程序版本</th>
+        <th lay-data="{field:'signal_intensity', width:150}">信号强度</th>
+        <th lay-data="{field:'creat_date', width:180}">表端时间</th>
+        <th lay-data="{field:'upload_date', width:180}">更新时间</th>
+        <th lay-data="{field:'corporation_code', width:150}">公司代码</th>
+        <th lay-data="{field:'remainded_gas', width:150 }">剩余气量/金额</th>
+        <th lay-data="{field:'accumulative_gas', width:150 }">累计气量/金额</th>
+        <th lay-data="{field:'sum_gas', width:150}">总购气量/金额</th>
+        <th lay-data="{field:'pay_num', width:150}">充值次数</th>
+        <th lay-data="{field:'preinstall_modify_num', width:150}">当前调价次数</th>
+        <th lay-data="{field:'current_modify_num', width:150}">预设调价次数</th>
+        <th lay-data="{field:'current_unit_price', width:150}">当前单价</th>
+        <th lay-data="{field:'current_gas', width:150}">当前阶梯用量</th>
+        <th lay-data="{field:'accumulative_use_gas', width:150}">累计使用气量</th>
+        <th lay-data="{field:'main_circuit', width:150}">主电状态</th>
+        <th lay-data="{field:'auxiliary_circuit', width:150}">备电状态</th>
+        <th lay-data="{field:'valve_status', width:150}">阀门状态</th>
+        <th lay-data="{field:'switch_status', width:150}">开关状态</th>
+        <th lay-data="{field:'pulse_status', width:150}">单路脉冲</th>
+        <th lay-data="{field:'overcurrent_status', width:150}">过流检测</th>
+        <th lay-data="{field:'leakage_status', width:150}">泄露检测</th>
+        <th lay-data="{field:'low_pressure', width:180}">低压检测</th>
+        <th lay-data="{field:'breakage_status', width:180}">断线检测</th>
+        <th lay-data="{field:'data_storage', width:180}">数据储存检测</th>
+        <th lay-data="{field:'open_valve', width:180}">强制开阀</th>
+        <th lay-data="{field:'close_valve', width:180}">强制关阀</th>
+        <!--<th lay-data="{field:'backout_meter', width:180}">反向流量计</th>-->
+        <th lay-data="{field:'micro_leakage', width:150}">微漏检测</th>
+        <th lay-data="{field:'lost_contact', width:150}">失联检测</th>
+        <th lay-data="{field:'nouse_gas', width:150}">不用气天数</th>
+        <th lay-data="{field:'one_day_gas', width:150}">前1日用气量</th>
+        <th lay-data="{field:'two_day_gas', width:150}">前2日用气量</th>
+        <th lay-data="{field:'three_day_gas', width:150}">前3日用气量</th>
+        <th lay-data="{field:'four_day_gas', width:150}">前4日用气量</th>
+        <th lay-data="{field:'five_day_gas', width:150}">前5日用气量</th>
+        <th lay-data="{field:'six_day_gas', width:150}">前6日用气量</th>
+        <th lay-data="{field:'one_month_gas', width:150}">前1月用气量</th>
+        <th lay-data="{field:'two_month_gas', width:150}">前2月用气量</th>
+        <th lay-data="{field:'settlement_date_gas', width:150}">结算日期</th>
+        <th lay-data="{field:'main_circuit_voltage', width:150}">主电电压</th>
+        <th lay-data="{field:'auxiliary_circuit_voltage', width:150}">备电电压</th>
+        <th lay-data="{field:'effective_date', width:180}">生效日期</th>
+        <th lay-data="{field:'cur_step1_vol', width:150}">阶梯一单价</th>
+        <th lay-data="{field:'cur_step2_vol', width:150}">阶梯二单价</th>
+        <th lay-data="{field:'cur_step3_vol', width:150}">阶梯三单价</th>
+        <th lay-data="{field:'cur_step4_vol', width:150}">阶梯四单价</th>
+        <th lay-data="{field:'cur_step5_vol', width:150}">阶梯五单价</th>
+        <th lay-data="{field:'cur_step6_vol', width:150}">阶梯六单价</th>
+    </tr>
+    </thead>
+</table>
+
+<script th:src="@{/adminlte/layui/layui.all.js}" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        //监听表格复选框选择
+        table.on('checkbox(demoGasLog)', function(obj){
+            console.log(obj)
+        });
+        //监听工具条
+        table.on('tool(demoGasLog)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'detail'){
+                layer.msg('ID：'+ data.id + ' 的查看操作');
+            } else if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                /*layer.alert('编辑行：<br/>'+ JSON.stringify(data))*/
+
+            }
+        });
+        //监听头工具栏事件
+        table.on('toolbar(demoGasLog)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id)
+                ,data = checkStatus.data//获取选中的数据
+                ,deList=[1];
+            data.forEach(function (n,i) {
+                deList.push(n.id)
+            });
+            deList.push(2);
+        });
+        var $ = layui.$, active = {
+            reloadGasLog:function () {
+                var startDate = $("#startGasLog").val();
+                var conDeviceAddr = $("#TelGasLog").val();
+                var endDate = $("#endDateGasLog").val();
+                var report_type = $("#report_typeSearch").val();
+
+                table.reload('idTestGasLog',{
+                    url:'/messsage/search',
+                    where:{conDeviceAddr:conDeviceAddr,startDate:startDate,endDate:endDate,report_type:report_type}  ,
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                })
+
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#startGasLog' //指定元素
+
+        });
+        laydate.render({
+            elem: '#endDateGasLog' //指定元素
+
+        });
+    });
+    var unSelected = "#999";
+    var selected = "#333";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    })
+</script>
+
+</body>
+</html>

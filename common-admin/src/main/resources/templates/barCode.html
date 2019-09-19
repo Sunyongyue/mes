@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/adminlte/layui/css/layui.css}" media="all" />
+    <style type="text/css" media="print">
+        @page {
+            size: auto;
+            /* auto is the initial value */
+            margin: 0mm 10mm 0mm 10mm;
+            /* this affects the margin in the printer settings 最关键的还是这个*/
+        }
+
+        body {
+            background-color: #FFFFFF;
+            margin: 0mm;
+            /* this affects the margin on the content before sending to printer */
+        }
+    </style>
+</head>
+
+<body>
+<div class="barCodePrint">
+    <img th:src="@{${productNum}}" width="112px" height="112px" >
+    <span th:text="${productNum}"></span>
+    <img th:src="@{/adminlte/dist/img/6620190909001.png}" width="112px" height="112px" >
+</div>
+<button id="pr" style="margin-left: 350px; margin-top: 15px;" class="layui-btn layui-btn-normal">点击打印</button>
+</body>
+<script th:src="@{/adminlte/layui/layui.js}" charset="utf-8"></script>
+<script>
+    function $(selector) {
+        return document.querySelector(selector);
+    }
+    /*//获取整个页面
+    $("#pr").onclick =function(){
+        window.print();
+    }*/
+
+    /* 实现打印全部页面（也可以打印局部页面 - 看需求） ----
+      我是只打印baby里边的内容
+      获取我们定义的id
+   */
+    $("#pr").onclick = function() {
+        var oldHtml = $("body").innerHTML;
+        var printbox = $(".barCodePrint").innerHTML;
+        $("body").innerHTML = printbox;
+        window.print();
+        $("body").innerHTML = oldHtml;
+
+    }
+</script>
+
+</html>

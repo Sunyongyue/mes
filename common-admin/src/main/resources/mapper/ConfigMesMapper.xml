@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.ConfigMesMapper">
+
+    <select id="queryAllConfigMes" resultType="com.common.system.entity.ConfigMes">
+       SELECT * from config_mes ,statuscode where config_mes.status=statuscode.status order by creat_date desc
+    </select>
+    <insert id="addConfigMes">
+        INSERT into config_mes(productNum,CoName,CoOwnArea,CoIp,CoPort,CoAPN,CoDomain,CoRemarks,ConfValveModel,ConfPktSer,ConfDeviceType,ConfCoNum,ConfDeviceAddr,ConfUserAddr,ConfUpTime,ConfUpCyc,ConfVolType,ConfPayType,ConfValveType,ConfAlarmVol,ConfOverFlowCoef,ConfReserveVol,ConfRechargeLimit,ConfPulse,ConfReserveFlag,ConfPayDay,ConfPayCyc,ConfAllowVol,ConfOpenTime,ConfCloseTime,ConfSignalSrc,ConfChan1,ConfPower1,ConfChan2,ConfPower2,`status`,ConfPayCycNum,microleakageTime, noContactTime, noUseGasDay, flowmeter,fourVersion,creat_date)VALUES(
+#{productNum},#{coName},#{coOwnArea},#{coIp},#{coPort},#{coAPN},#{coDomain},#{coRemarks},#{confValveModel},#{confPktSer},#{confDeviceType},#{confCoNum},#{confDeviceAddr},#{confUserAddr},#{confUpTime},#{confUpCyc},#{confVolType},#{confPayType},#{confValveType},#{confAlarmVol},#{confOverFlowCoef},#{confReserveVol},#{confRechargeLimit},#{confPulse},#{confReserveFlag},#{confPayDay},#{confPayCyc},#{confAllowVol},#{confOpenTime},#{confCloseTime},#{confSignalSrc},#{confChan1},#{confPower1},#{confChan2},#{confPower2},1,#{ConfPayCycNum},#{microleakageTime},#{noContactTime},#{noUseGasDay},#{flowmeter},#{fourVersion},SYSDATE())
+    </insert>
+    <select id="selectCount" resultType="int">
+        SELECT count(*) FROM config_mes WHERE confDeviceAddr=#{confDeviceAddr};
+    </select>
+    <update id="updateConfigMes">
+        update config_mes set `status`=1 where id=#{id}
+    </update>
+   <!-- <delete id="">
+        DELETE from pubProduct where ids in
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>-->
+    <select id="serachConfigMes" resultType="com.common.system.entity.ConfigMes">
+        select  * from config_mes,statuscode
+        <where>
+            <if test="1 !=0"> config_mes.status=statuscode.status</if>
+            <if test="confDeviceAddr !=''">and confDeviceAddr= #{confDeviceAddr}</if>
+            <if test="confValveModel !=''">and confValveModel= #{confValveModel}</if>
+            <if test="startDate !=''">and creat_date > #{startDate}</if>
+            <if test="endDate !=''"> <![CDATA[
+            and creat_date< #{endDate}
+            ]]></if>
+        </where>
+    </select>
+</mapper>

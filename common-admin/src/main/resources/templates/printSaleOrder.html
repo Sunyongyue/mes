@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" th:href="@{/adminlte/layui/css/layui.css}" media="all" />
+		<style type="text/css" media="print">
+			@page {
+				size: auto;
+				/* auto is the initial value */
+				margin: 0mm 10mm 0mm 10mm;
+				/* this affects the margin in the printer settings 最关键的还是这个*/
+			}
+			
+			body {
+				background-color: #FFFFFF;
+				margin: 0mm;
+				/* this affects the margin on the content before sending to printer */
+			}
+		</style>
+		<style>
+			.td_div {
+				display: inline-block;
+				width: 90px;
+				font-size: 10px;
+			}
+			
+			.main {
+				font-size: 12px;
+				width: 45px;
+				text-align: center;
+				font-family: "黑体";
+				height: 50px;
+			}
+			
+			.goods {
+				font-size: 11px;
+				font-family: "黑体";
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="box">
+			<div id="printbq" align="center" style="margin-top: 12px;">
+				<h3 class="billtitle">天和仪表_销售订单</h3>
+				<div class="foots">
+					<!--<div style="display: inline-block; margin-left: -32px; border: 1px  dashed; width:500px; height: 52px;"><span style="line-height: 52px;" th:text="${productOrder.productNum}"></span></div>-->
+					<div style="display: inline-block; margin-left:-90px; border: 1px  dashed; width:94px; height: 56px;"><span style="line-height: 56px;font-size: 11px" th:text="${saleOrder.saleNum}" ></span></div>
+					<div style="display: inline-block; margin-left:0px; border: 1px  dashed; width:94px; height: 56px;"><span style="line-height: 56px;font-size: 11px " th:text="${saleOrder.saleNum}"></span></div>
+					<div style="display: inline-block; margin-left: 0px; border: 1px  dashed; width:94px; height: 56px;"><span style="line-height: 56px;font-size: 11px " th:text="${saleOrder.saleNum}"></span></div>
+					<span style="font-size: 11px;margin-left: 160px; " th:text="'日期：'+${saleOrder.operatorTime}"> </span>
+				</div>
+				<div class="billcontent">
+					<table border="1" cellspacing="0" style="width: 680px;">
+						<tr>
+							<td class="main" rowspan="2">订单</td>
+							<td class="goods" style="border-style:none">&nbsp;&nbsp;工程名称：
+								<div class="td_div"><span th:text="${saleOrder.projectName}"></span></div>产品名称：
+								<div class="td_div"><span th:text="${saleOrder.productNameOrder}"></span></div>产品规格：
+								<div class="td_div"><span th:text="${saleOrder.productSpecificationsOrder}"></span></div>使用压力：
+								<div class="td_div"><span th:text="${saleOrder.customerPressure}"></span></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="goods" style="border-style:none">&nbsp;&nbsp;订货数量：
+								<div class="td_div"><span th:text="${saleOrder.customerNums}"></span></div>订单日期：
+								<div class="td_div"><span th:text="${saleOrder.date}"></span></div>需求日期：
+								<div class="td_div"><span th:text="${saleOrder.endDate}"></span></div>
+								<div class="td_div"><span ></span></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="main" rowspan="2">客户</td>
+							<td class="goods" style="border-style:none">&nbsp;&nbsp;客户名称：
+								<div class="td_div"><span th:text="${saleOrder.customerName}"></span></div>收货地址：
+								<div class="td_div"><span th:text="${saleOrder.address}"></span></div>收货人名：
+								<div class="td_div"><span th:text="${saleOrder.receiver}"></span></div>联系电话：
+								<div class="td_div"><span th:text="${saleOrder.telPhone}"></span></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="goods" style="border-style:none">&nbsp;&nbsp;<!--物流信息：-->备注：
+								<!--<div class="td_div"><span th:text="${saleOrder.logisticsInformation}"></span></div>-->
+								<div class="td_div"><span th:text="${saleOrder.remarks}"></span></div>
+								<div class="td_div"><span ></span></div>
+								<div class="td_div"><span ></span></div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="foots">
+					<div style="display: inline-block;font-size: 11px;margin-left: -213px; ">制单人：</div>
+					<div style="display: inline-block;font-size: 11px;margin-left: 98px; ">审核人：</div>
+					<div style="display: inline-block;font-size: 11px;margin-left: 90px;  ">车间主任：</div>
+				</div>
+			</div>
+		</div>
+		<button id="pr" style="margin-left: 350px; margin-top: 15px;" class="layui-btn layui-btn-normal">点击打印</button>
+	</body>
+	<script th:src="@{/adminlte/layui/layui.js}" charset="utf-8"></script>
+	<script>
+		function $(selector) {
+			return document.querySelector(selector);
+		}
+		/*//获取整个页面
+		$("#pr").onclick =function(){
+		    window.print();
+		}*/
+
+		/* 实现打印全部页面（也可以打印局部页面 - 看需求） ---- 
+   	   我是只打印baby里边的内容
+   	   获取我们定义的id
+   	*/
+		$("#pr").onclick = function() {
+			var oldHtml = $("body").innerHTML;
+			var printbox = $(".box").innerHTML;
+			$("body").innerHTML = printbox;
+			window.print();
+			$("body").innerHTML = oldHtml;
+
+		}
+	</script>
+
+	</html>

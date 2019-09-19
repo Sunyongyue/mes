@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.gasHistoryLogMapper">
+    <select id="queryAllGasHistoryLog" resultType="com.common.system.entity.gasHistoryLog">
+       SELECT * from gas_history_log order by creat_date desc
+    </select>
+
+    <!--<select id="selectCount" resultType="int">
+        SELECT count(*) FROM config_mes WHERE confDeviceAddr=#{confDeviceAddr};
+    </select>-->
+    <!--<update id="updateConfigMes">
+        update config_mes set `status`=1 where id=#{id}
+    </update>-->
+ <!--   <delete id="">
+        DELETE from pubProduct where ids in
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>-->
+    <select id="serchByTelNum" resultType="com.common.system.entity.gasHistoryLog">
+        select  * from gas_history_log
+        <where>
+            <if test="device_addr !=''">and device_addr = #{device_addr}</if>
+            <if test="report_type !=''">and report_type = #{report_type}</if>
+            <if test="startDate !=''">and creat_date > #{startDate}</if>
+            <if test="endDate !=''"> <![CDATA[
+            and creat_date<#{endDate}
+            ]]></if>
+        </where>
+    </select>
+</mapper>
