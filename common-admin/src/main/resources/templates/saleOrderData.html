@@ -14,39 +14,51 @@
     <button class="layui-btn" data-type="isAll">验证是否全选</button>
 </div>-->
 <!--<h3 style="margin-top: -10px; margin-left:-10px;">检测入库</h3>-->
-<div class="demoTable">
+<div class="demoTableSaleOrder">
     <div class="layui-inline" style="margin-left:0px">销售单号：</div>
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="saleNumSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入销售单号"/>
+        <input class="layui-input"  id="saleNumSearchSaleOrder" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入销售单号"/>
     </div>
     客户名称：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="customerNameSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入客户名称"/>
+        <!--<input class="layui-input"  id="customerNameSearchSaleOrder" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入客户名称"/>-->
+        <select id="customerNameSearchSaleOrder" style="width: 200px;height: 25px">
+            <option value="">请选择客户名称</option>
+            <option th:each="purchaserName:${purchaserNameList}" th:value="${purchaserName}" th:text="${purchaserName}"></option>
+        </select>
     </div>
     工程名称：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="projectNameSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入工程名称"/>
+        <input class="layui-input"  id="projectNameSearchSaleOrder" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入工程名称"/>
     </div>
     产品名称：
     <div class="layui-inline" style="width: 210px">
-        <input class="layui-input"  id="productNameOrderSearch" autocomplete="off" style="width: 190px;height: 25px" placeholder="请输入产品名称"/>
+        <!--<input class="layui-input"  id="productNameOrderSearchSaleOrder" autocomplete="off" style="width: 190px;height: 25px" placeholder="请输入产品名称"/>-->
+        <select id="productNameOrderSearchSaleOrder" style="width: 190px;height: 25px">
+            <option value="">请选择产品名称</option>
+            <option th:each="goodsNameP1:${goodsNameP}" th:value="${goodsNameP1.dataname}" th:text="${goodsNameP1.dataname}"></option>
+        </select>
     </div>
     <button class="layui-btn layui-btn-sm" data-type="reload">查询</button><br/>
     产品规格：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="productSpecificationsOrderSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入产品规格"/>
+        <!--<input class="layui-input"  id="productSpecificationsOrderSearchSaleOrder" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入产品规格"/>-->
+        <select id="productSpecificationsOrderSearchSaleOrder" style="width: 200px;height: 25px">
+            <option value="">请选择产品规格</option>
+            <option th:each="specificationsP1:${specificationsP}" th:value="${specificationsP1.dataname}" th:text="${specificationsP1.dataname}"></option>
+        </select>
     </div>
     <div class="layui-inline" style="margin-left: -15px">操作员名称：</div>
     <div class="layui-inline" style="width: 220px;">
-        <input class="layui-input"  id="operatorSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入操作员名称"/>
+        <input class="layui-input"  id="operatorSearchSaleOrder" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入操作员名称"/>
     </div>
     起始日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
+        <input class="layui-input"  id="startDateSearchSaleOrder" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
     </div>
     截止日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 190px;height: 25px" placeholder="请选择截止日期"/>
+        <input class="layui-input"  id="endDateSearchSaleOrder" autocomplete="off" style="width: 190px;height: 25px" placeholder="请选择截止日期"/>
     </div>
 
 </div>
@@ -54,6 +66,7 @@
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="addSaleData" >添加</button>
         <button class="layui-btn layui-btn-sm" lay-event="deleteSaleData" >删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="updateSaleData" >修改</button>
         <!--<button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>-->
         <button class="layui-btn layui-btn-sm" lay-event="printSale" id="printSale" >打印订单</button>
         <button class="layui-btn layui-btn-sm" lay-event="printBarCodeS" >打印条形码</button>
@@ -79,6 +92,8 @@
  <!--       <th lay-data="{field:'logisticsInformation',width:150}" >物流信息</th>-->
         <th lay-data="{field:'operator',width:150}">操作人</th>
         <th lay-data="{field:'operatorTime',width:180}" >操作时间</th>
+        <th lay-data="{field:'kaiPiaoDate',width:180}" >开票时间</th>
+        <th lay-data="{field:'shouKuanDate',width:180}" >收款时间</th>
         <th lay-data="{field:'remarks',width:150}" >备注</th>
     </tr>
     </thead>
@@ -195,30 +210,13 @@
                     } else {
                         var id =checkStatus.data[0].id;
                         layer.confirm('确定？',{btn: ['确定', '取消'], title: "提示"},function(index){
-                            $.ajax({
-                                //几个参数需要注意一下
-                                type: "POST",//方法类型
-                                dataType: "json",//预期服务器返回的数据类型
-                                url: "" ,//url
-                                data: {deList:JSON.stringify(deList)},
-                                success: function (result) {
-                                    if (result.success>0) {
-                                        layer.msg('操作成功', {
-                                            btnAlign: 'c',
-                                            time: 3000, //20s后自动关闭
-                                            btn: ['确定']
-                                        });
-                                        table.reload('idTestSaleData')
-                                    }else{
-                                        layer.msg('操作失败', {
-                                            btnAlign: 'c',
-                                            time: 3000, //20s后自动关闭
-                                            btn: ['确定']
-                                        });
-                                    }
-                                },
-                                error : function() {
-                                    alert("异常！");
+                            layer.open({
+                                type:2,
+                                title:'修改',
+                                area: ['1050px', '505px'],
+                                content: '/order/modify?id='+id,
+                                end:function(){
+                                    table.reload('idTestSaleData');
                                 }
                             });
                             layer.close(index);
@@ -279,14 +277,14 @@
                  }
                  ,*/
             reload:function () {
-                var saleNum = $("#saleNumSearch").val();
-                var customerName = $("#customerNameSearch").val();
-                var projectName = $("#projectNameSearch").val();
-                var productNameOrder = $("#productNameOrderSearch").val();
-                var productSpecificationsOrder = $("#productSpecificationsOrderSearch").val();
-                var operator = $("#operatorSearch").val();
-                var startDate = $("#startDateSearch").val();
-                var endDate = $("#endDateSearch").val();
+                var saleNum = $("#saleNumSearchSaleOrder").val();
+                var customerName = $("#customerNameSearchSaleOrder").val();
+                var projectName = $("#projectNameSearchSaleOrder").val();
+                var productNameOrder = $("#productNameOrderSearchSaleOrder").val();
+                var productSpecificationsOrder = $("#productSpecificationsOrderSearchSaleOrder").val();
+                var operator = $("#operatorSearchSaleOrder").val();
+                var startDate = $("#startDateSearchSaleOrder").val();
+                var endDate = $("#endDateSearchSaleOrder").val();
                 table.reload('idTestSaleData',{
                     url:'/order/searchSaleOrder',
                     where:{saleNum:saleNum,customerName:customerName,projectName:projectName,productNameOrder:productNameOrder,productSpecificationsOrder:productSpecificationsOrder,operator:operator,startDate:startDate,endDate:endDate}  ,
@@ -298,7 +296,7 @@
             }
         };
 
-        $('.demoTable .layui-btn').on('click', function(){
+        $('.demoTableSaleOrder .layui-btn').on('click', function(){
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });

@@ -8,30 +8,38 @@
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
-<div class="demoTable">
+<div class="demoTableOverGoodsInstock">
     <div class="layui-inline" style="margin-left:0px">生产单号：</div>
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="productNumSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入生产单号"/>
+        <input class="layui-input"  id="productNumSearchOverGoodsInstock" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入生产单号"/>
     </div>
     产品名称：
     <div class="layui-inline" style="width: 220px;">
-        <input class="layui-input"  id="goodsNameSearch" autocomplete="off" style="width: 200px;height: 25px"  placeholder="请输入产品名称"/>
+       <!-- <input class="layui-input"  id="goodsNameSearch" autocomplete="off" style="width: 200px;height: 25px"  placeholder="请输入产品名称"/>-->
+        <select id="goodsNameSearchOverGoodsInstock" name="goodsNameSearchOverGoodsInstock" lay-verify=""  style="width: 200px">
+            <option value="" >请选择产品名称</option>
+            <option th:each="goodsNameP1:${goodsNameP}" th:value="${goodsNameP1.dataname}" th:text="${goodsNameP1.dataname}"></option>
+        </select>
     </div>
     产品规格：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="goodsSpecificationsSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入产品规格"/>
+       <!-- <input class="layui-input"  id="goodsSpecificationsSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入产品规格"/>-->
+        <select id="goodsSpecificationsSearchOverGoodsInstock"  style="width: 200px">
+            <option  value="">请选择产品规格</option>
+            <option th:each="specificationsP1:${specificationsP}" th:value="${specificationsP1.dataname}" th:text="${specificationsP1.dataname}"></option>
+        </select>
     </div>
     <div class="layui-inline" style="margin-left: -15px">操作员名称：</div>
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="operatorSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入操作员名称"/>
+        <input class="layui-input"  id="operatorSearchOverGoodsInstock" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入操作员名称"/>
     </div><br/>
     起始日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
+        <input class="layui-input"  id="startDateSearchOverGoodsInstock" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
     </div>
     截止日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择截止日期"/>
+        <input class="layui-input"  id="endDateSearchOverGoodsInstock" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择截止日期"/>
     </div>
     <button class="layui-btn layui-btn-sm" data-type="reload">查询</button>
 </div>
@@ -66,18 +74,42 @@
 <table class="layui-table" lay-data="{totalRow:true,url:'/overGoods/queryOverGoodsInStock', page:true, id:'idTestOverIn',toolbar:'#toolbarDemoOverGoodsIn',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoOverIn">
     <thead>
     <tr>
-        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+        <th lay-data="{type:'checkbox', fixed: 'left'}" rowspan="2"></th>
+        <th lay-data="{align:'center'}" colspan="5">订单信息</th>
+        <th lay-data="{align:'center'}" colspan="4">阀门信息</th>
+        <th lay-data="{align:'center'}" colspan="4">控制主板信息</th>
+        <th lay-data="{align:'center'}" colspan="4">通讯主板信息</th>
+        <th lay-data="{align:'center'}" colspan="4">485主板信息</th>
+        <th lay-data="{field:'testDate', width:180}" rowspan="2">生产日期</th>   <!-- totalRowText:'合计：'-->
+        <!--<th lay-data="{field:'goodsStock', width:150 }">入库仓库</th>-->
+        <!--<th lay-data="{field:'addGoodsNums', width:150,totalRow:true}">入库后数量</th>-->
+        <th lay-data="{field:'operator', width:150}" rowspan="2">操作人</th>
+        <th lay-data="{field:'operatorTime', width:180}" rowspan="2">操作时间</th>
+        <th lay-data="{field:'testRemarks', width:500}" rowspan="2">备注</th>
+    </tr>
+    <tr>
         <th lay-data="{field:'productNum', width:150}">生产单号</th>
         <th lay-data="{field:'goodsName', width:150}">产品名称</th>
         <th lay-data="{field:'specifications', width:150}">产品规格</th>
-        <th lay-data="{field:'intakeDirection', width:150}">进气方向</th>
-        <th lay-data="{field:'testDate', width:180,totalRowText:'合计：' }">生产日期</th>
-        <!--<th lay-data="{field:'goodsStock', width:150 }">入库仓库</th>-->
+        <th lay-data="{field:'pressure', width:150,totalRowText:'合计：'}" >使用压力</th>
         <th lay-data="{field:'nums', width:150,totalRow:true,totalRow:true}">入库数量</th>
-        <!--<th lay-data="{field:'addGoodsNums', width:150,totalRow:true}">入库后数量</th>-->
-        <th lay-data="{field:'operator', width:150}">操作人</th>
-        <th lay-data="{field:'operatorTime', width:180}">操作时间</th>
-        <th lay-data="{field:'testRemarks', width:500}">备注</th>
+        <th lay-data="{field:'valveSupplier', width:150}">阀门厂商</th>
+        <th lay-data="{field:'valveName', width:150}">阀门名称</th>
+        <th lay-data="{field:'valveSpecifications', width:150}">阀门规格</th>
+        <th lay-data="{field:'intakeDirection', width:150}">进气方向</th>
+        <th lay-data="{field:'controlMainboardSupplier', width:150}">控制主板厂商</th>
+        <th lay-data="{field:'controlMainboardName', width:150}">控制主板名称</th>
+        <th lay-data="{field:'controlMainboardSpecifications', width:150}">型号规格</th>
+        <th lay-data="{field:'version', width:150}">程序版本</th>
+        <th lay-data="{field:'telMainBoardSupplier', width:150}">通讯主板厂商</th>
+        <th lay-data="{field:'telMainBoardName', width:150}">通讯主板名称</th>
+        <th lay-data="{field:'telMainBoardSpecifications', width:150}">型号规格</th>
+        <th lay-data="{field:'telType', width:150}">通讯方式</th>
+        <th lay-data="{field:'fourSupplier', width:150}">485主板厂商</th>
+        <th lay-data="{field:'fourMainBoardName', width:150}">485主板名称</th>
+        <th lay-data="{field:'fourSpecifications', width:150}">型号规格</th>
+        <th lay-data="{field:'telProtocol', width:150}">通信协议</th>
+
     </tr>
     </thead>
 </table>
@@ -213,12 +245,12 @@
         });
         var $ = layui.$, active = {
             reload:function () {
-                var startDate = $("#startDateSearch").val();
-                var productNum = $("#productNumSearch").val();
-                var goodsName = $("#goodsNameSearch").val();
-                var specifications = $("#goodsSpecificationsSearch").val();
-                var operator = $("#operatorSearch").val();
-                var endDate = $("#endDateSearch").val();
+                var startDate = $("#startDateSearchOverGoodsInstock").val();
+                var productNum = $("#productNumSearchOverGoodsInstock").val();
+                var goodsName = $("#goodsNameSearchOverGoodsInstock").val();
+                var specifications = $("#goodsSpecificationsSearchOverGoodsInstock").val();
+                var operator = $("#operatorSearchOverGoodsInstock").val();
+                var endDate = $("#endDateSearchOverGoodsInstock").val();
                 table.reload('idTestOverIn',{
                     url:'/overGoods/searchOverGoodsInStock',
                     where:{productNum:productNum,goodsName:goodsName,specifications:specifications,operator:operator,startDate:startDate,endDate:endDate}  ,
@@ -230,7 +262,7 @@
             }
         };
 
-        $('.demoTable .layui-btn').on('click', function(){
+        $('.demoTableOverGoodsInstock .layui-btn').on('click', function(){
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });

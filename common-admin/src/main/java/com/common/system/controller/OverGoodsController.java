@@ -1,9 +1,11 @@
 package com.common.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.common.system.entity.Sysdata;
 import com.common.system.service.OverGoodsInStockService;
 import com.common.system.service.OverGoodsOutStockService;
 import com.common.system.service.OverGoodsStockService;
+import com.common.system.service.SysDataService;
 import com.common.system.shiro.ShiroUser;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -30,9 +32,15 @@ public class OverGoodsController {
     OverGoodsStockService goodsStockService;
     @Autowired
     OverGoodsOutStockService outStockService;
+    @Autowired
+    SysDataService sysDataService;
     @RequestMapping("/inStock")
     public ModelAndView instock(){
         ModelAndView mav = new ModelAndView("overGoodsInstock");
+        List<Sysdata> goodsNameP = sysDataService.queryLocalList(102);
+        List<Sysdata> specificationsP = sysDataService.queryLocalList(103);
+        mav.addObject("goodsNameP",goodsNameP);
+        mav.addObject("specificationsP",specificationsP);
         return mav;
     }
     @RequestMapping("/queryOverGoodsInStock")
@@ -183,6 +191,10 @@ public class OverGoodsController {
     @RequestMapping("/outStock")
     public ModelAndView outStock(){
         ModelAndView mav = new ModelAndView("overGoodsOutstock");
+        List<Sysdata> goodsNameP = sysDataService.queryLocalList(102);
+        List<Sysdata> specificationsP = sysDataService.queryLocalList(103);
+        mav.addObject("goodsNameP",goodsNameP);
+        mav.addObject("specificationsP",specificationsP);
         return mav;
     }
     @RequestMapping("/queryOverGoodsOutStock")
@@ -283,6 +295,10 @@ public class OverGoodsController {
     @RequestMapping("/stock")
     public ModelAndView stock(){
         ModelAndView mav = new ModelAndView("overGoodsStock");
+        List<Sysdata> goodsNameP = sysDataService.queryLocalList(102);
+        List<Sysdata> specificationsP = sysDataService.queryLocalList(103);
+        mav.addObject("goodsNameP",goodsNameP);
+        mav.addObject("specificationsP",specificationsP);
         return mav;
     }
     @RequestMapping("/queryOverGoodsStock")

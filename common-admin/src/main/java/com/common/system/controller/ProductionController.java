@@ -1,10 +1,7 @@
 package com.common.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.common.system.entity.DistributNumber;
-import com.common.system.entity.ProductOrder;
-import com.common.system.entity.PubProduct;
-import com.common.system.entity.SysPurchaser;
+import com.common.system.entity.*;
 import com.common.system.service.*;
 import com.common.system.shiro.ShiroUser;
 import org.apache.poi.ss.usermodel.*;
@@ -37,6 +34,8 @@ public class ProductionController {
     DistributNumberService distributNumberService;
     @Autowired
     SysPurchaserService purchaserService;
+    @Autowired
+    SysDataService sysDataService;
     @RequestMapping("/distributNumber")
     public ModelAndView distributNumber(){
         ModelAndView mav = new ModelAndView("distributNumber");
@@ -101,6 +100,10 @@ public class ProductionController {
     @RequestMapping("/pubProduct")
     public ModelAndView pubProduct(){
         ModelAndView mav = new ModelAndView("pubProduct");
+        List<Sysdata> goodsNameP = sysDataService.queryLocalList(102);
+        List<Sysdata> specificationsP = sysDataService.queryLocalList(103);
+        mav.addObject("goodsNameP",goodsNameP);
+        mav.addObject("specificationsP",specificationsP);
         return mav;
     }
     @RequestMapping("/queryDistributNumber")
@@ -250,6 +253,7 @@ public class ProductionController {
     @ResponseBody
     public String queryPubProduct(Integer page, Integer limit){
         JSONObject object = pubProductService.queryPubProduct(page, limit);
+
         return object.toString();
     }
     @RequestMapping("/addPubProduct")
@@ -339,61 +343,78 @@ public class ProductionController {
         String s = productOrders.get(0).getPulseEquivalent().replaceAll("m³/脉冲", "");
         Double aDouble = Double.valueOf(s);
         List<DistributNumber> distributNumbers = distributNumberService.queryByNumber(pubProduct.getControlMainBoardNums());
-        int i1 = configMesService.selectCount(distributNumbers.get(0).getTelNum());
-        String vavleType=productOrders.get(0).getValveName();
-        if (productOrders.get(0).getValveName().contains("快关")){
-            vavleType="普通阀门(快关)";
-        }else if(productOrders.get(0).getValveName().contains("慢关")){
-            vavleType="普通阀门(慢关)";
+        if (distributNumbers.size()>0){
+            int i1 = configMesService.selectCount(distributNumbers.get(0).getTelNum());
+            String vavleType=productOrders.get(0).getValveName();
+            if (productOrders.get(0).getValveName().contains("快关")){
+                vavleType="普通阀门(快关)";
+            }else if(productOrders.get(0).getValveName().contains("慢关")){
+                vavleType="普通阀门(慢关)";
+            }else{
+                vavleType="工业球阀";
+            }
+            int i = configMesService.addConfigMes(productNum, "天和", "/", "39.98.86.240", 5600, "", "", "", "生产写配置", 1+i1, productOrders.get(0).getGoodsName(), 0, distributNumbers.get(0).getTelNum(), "0", "0", 5, "单一",productOrders.get(0).getCharMethod() , vavleType,  productOrders.get(0).getAlarmSquare(), 0,  productOrders.get(0).getReservedAir(),  productOrders.get(0).getUpperLimitOfRecharge(),  aDouble, "清除剩余累计", 25, "年", productOrders.get(0).getOverdrawAir(),  productOrders.get(0).getValveOpenTime(),  productOrders.get(0).getValveCloseTime(),  productOrders.get(0).getSignalSource(), 0, 0, 0, 0,1,0,0,0,"不设置","1");
+            object.put("cc",1);
         }else{
-            vavleType="工业球阀";
+            object.put("cc",0);
         }
-        int i = configMesService.addConfigMes(pubProduct.getProductNum(), "天和", "/", "39.98.86.240", 5600, "", "", "", "生产写配置", 1+i1, pubProduct.getGoodsName(), 0, distributNumbers.get(0).getTelNum(), "0", "0", 5, "单一",productOrders.get(0).getCharMethod() , vavleType,  productOrders.get(0).getAlarmSquare(), 0,  productOrders.get(0).getReservedAir(),  productOrders.get(0).getUpperLimitOfRecharge(),  aDouble, "清除剩余累计", 25, "年", productOrders.get(0).getOverdrawAir(),  productOrders.get(0).getValveOpenTime(),  productOrders.get(0).getValveCloseTime(),  productOrders.get(0).getSignalSource(), 0, 0, 0, 0,1,0,0,0,"不设置","1");
         return object.toString();
     }
     @RequestMapping("/overGoodsCheck")
     @ResponseBody
     public String overGoodsCheck(int id,String productNum,String controlMainBoardNums,@SessionAttribute ShiroUser user){
+        JSONObject object = new JSONObject();
         List<ProductOrder> productOrders = productOrderService.queryByProductNum(productNum);
         String s = productOrders.get(0).getPulseEquivalent().replaceAll("m³/脉冲", "");
         Double aDouble = Double.valueOf(s);
         List<DistributNumber> distributNumbers = distributNumberService.queryByNumber(controlMainBoardNums);
-        int i1 = configMesService.selectCount(distributNumbers.get(0).getTelNum());
-        String vavleType=productOrders.get(0).getValveName();
-        if (productOrders.get(0).getValveName().contains("快关")){
-            vavleType="普通阀门(快关)";
-        }else if(productOrders.get(0).getValveName().contains("慢关")){
-            vavleType="普通阀门(慢关)";
-        }else{
-            vavleType="工业球阀";
+        if (distributNumbers.size()>0){
+            int i1 = configMesService.selectCount(distributNumbers.get(0).getTelNum());
+            String vavleType=productOrders.get(0).getValveName();
+            if (productOrders.get(0).getValveName().contains("快关")){
+                vavleType="普通阀门(快关)";
+            }else if(productOrders.get(0).getValveName().contains("慢关")){
+                vavleType="普通阀门(慢关)";
+            }else{
+                vavleType="工业球阀";
+            }
+            int i2 = overGoodsOutStockService.outStockPeople(id,user.getUsername());
+            int i = configMesService.addConfigMes(productNum, "天和", "/", "39.98.86.240", 5600, "", "", "", "检测写配置", 1+i1, productOrders.get(0).getGoodsName(), 0, distributNumbers.get(0).getTelNum(), "0", "0", 5, "单一",productOrders.get(0).getCharMethod() , vavleType,  productOrders.get(0).getAlarmSquare(), 0,  productOrders.get(0).getReservedAir(),  productOrders.get(0).getUpperLimitOfRecharge(),  aDouble, "清除剩余累计", 25, "年", productOrders.get(0).getOverdrawAir(),  productOrders.get(0).getValveOpenTime(),  productOrders.get(0).getValveCloseTime(),  productOrders.get(0).getSignalSource(), 0, 0, 0, 0,1,0,0,0,"不设置","1");
+            object.put("success",i);
+            object.put("cc",1);
+        }else {
+            object.put("cc",0);
         }
-        int i2 = overGoodsOutStockService.outStockPeople(id,user.getUsername());
-        int i = configMesService.addConfigMes(productNum, "天和", "/", "39.98.86.240", 5600, "", "", "", "检测写配置", 1+i1, productOrders.get(0).getGoodsName(), 0, distributNumbers.get(0).getTelNum(), "0", "0", 5, "单一",productOrders.get(0).getCharMethod() , vavleType,  productOrders.get(0).getAlarmSquare(), 0,  productOrders.get(0).getReservedAir(),  productOrders.get(0).getUpperLimitOfRecharge(),  aDouble, "清除剩余累计", 25, "年", productOrders.get(0).getOverdrawAir(),  productOrders.get(0).getValveOpenTime(),  productOrders.get(0).getValveCloseTime(),  productOrders.get(0).getSignalSource(), 0, 0, 0, 0,1,0,0,0,"不设置","1");
-        JSONObject object = new JSONObject();
-        object.put("success",i);
+
         return object.toString();
     }
     @RequestMapping("/overGoodsOutStock2")
     @ResponseBody
     public String overGoodsOutStock2(int id,String productNum,String controlMainBoardNums,String customerName,@SessionAttribute ShiroUser user ){
+        JSONObject object = new JSONObject();
         List<ProductOrder> productOrders = productOrderService.queryByProductNum(productNum);
         String s = productOrders.get(0).getPulseEquivalent().replaceAll("m³/脉冲", "");
         Double aDouble = Double.valueOf(s);
         List<DistributNumber> distributNumbers = distributNumberService.queryByNumber(controlMainBoardNums);
-        int i1 = configMesService.selectCount(distributNumbers.get(0).getTelNum());
-        String vavleType=productOrders.get(0).getValveName();
-        if (productOrders.get(0).getValveName().contains("快关")){
-            vavleType="普通阀门(快关)";
-        }else if(productOrders.get(0).getValveName().contains("慢关")){
-            vavleType="普通阀门(慢关)";
-        }else{
-            vavleType="工业球阀";
+        if (distributNumbers.size()>0){
+            int i1 = configMesService.selectCount(distributNumbers.get(0).getTelNum());
+            String vavleType=productOrders.get(0).getValveName();
+            if (productOrders.get(0).getValveName().contains("快关")){
+                vavleType="普通阀门(快关)";
+            }else if(productOrders.get(0).getValveName().contains("慢关")){
+                vavleType="普通阀门(慢关)";
+            }else{
+                vavleType="工业球阀";
+            }
+            SysPurchaser sysPurchaser= purchaserService.queryBypurchaserName(customerName);
+            int i2 = overGoodsOutStockService.sendGoods(id,user.getUsername());
+            int i = configMesService.addConfigMes(productNum, "天和", "/", sysPurchaser.getIpAddress(), Integer.parseInt(sysPurchaser.getIpPort()), "", "", "", "发货写配置", 1+i1, productOrders.get(0).getGoodsName(), 0, distributNumbers.get(0).getTelNum(), "0", "0", 5, "单一",productOrders.get(0).getCharMethod() , vavleType,  productOrders.get(0).getAlarmSquare(), 0,  productOrders.get(0).getReservedAir(),  productOrders.get(0).getUpperLimitOfRecharge(),  aDouble, "清除剩余累计", 25, "年", productOrders.get(0).getOverdrawAir(),  productOrders.get(0).getValveOpenTime(),  productOrders.get(0).getValveCloseTime(),  productOrders.get(0).getSignalSource(), 0, 0, 0, 0,1,0,0,0,"不设置","1");
+            object.put("success",i);
+            object.put("cc",1);
+        }else {
+            object.put("cc",0);
         }
-        SysPurchaser sysPurchaser= purchaserService.queryBypurchaserName(customerName);
-        int i2 = overGoodsOutStockService.sendGoods(id,user.getUsername());
-        int i = configMesService.addConfigMes(productNum, "天和", "/", sysPurchaser.getIpAddress(), Integer.parseInt(sysPurchaser.getIpPort()), "", "", "", "发货写配置", 1+i1, productOrders.get(0).getGoodsName(), 0, distributNumbers.get(0).getTelNum(), "0", "0", 5, "单一",productOrders.get(0).getCharMethod() , vavleType,  productOrders.get(0).getAlarmSquare(), 0,  productOrders.get(0).getReservedAir(),  productOrders.get(0).getUpperLimitOfRecharge(),  aDouble, "清除剩余累计", 25, "年", productOrders.get(0).getOverdrawAir(),  productOrders.get(0).getValveOpenTime(),  productOrders.get(0).getValveCloseTime(),  productOrders.get(0).getSignalSource(), 0, 0, 0, 0,1,0,0,0,"不设置","1");
-        JSONObject object = new JSONObject();
-        object.put("success",i);
+
         return object.toString();
     }
     @RequestMapping("/dtletePubProduct")

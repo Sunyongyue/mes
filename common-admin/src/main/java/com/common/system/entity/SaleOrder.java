@@ -34,8 +34,13 @@ public class SaleOrder {
     private String operator;
     //操作时间
     private String operatorTime;
+    //开票时间
+    private String kaiPiaoDate;
+    //收款时间
+    private String shouKuanDate;
     public SaleOrder(){}
-    public SaleOrder(int id, String saleNum, String customerName, String date, String projectName, String endDate, String productNameOrder, String productSpecificationsOrder, String customerPressure, int customerNums, String address, String receiver, String telPhone, String logisticsInformation, String remarks, String operator, String operatorTime) {
+
+    public SaleOrder(int id, String saleNum, String customerName, String date, String projectName, String endDate, String productNameOrder, String productSpecificationsOrder, String customerPressure, int customerNums, String address, String receiver, String telPhone, String logisticsInformation, String remarks, String operator, String operatorTime, String kaiPiaoDate, String shouKuanDate) {
         this.id = id;
         this.saleNum = saleNum;
         this.customerName = customerName;
@@ -53,6 +58,8 @@ public class SaleOrder {
         this.remarks = remarks;
         this.operator = operator;
         this.operatorTime = operatorTime;
+        this.kaiPiaoDate = kaiPiaoDate;
+        this.shouKuanDate = shouKuanDate;
     }
 
     public int getId() {
@@ -188,7 +195,23 @@ public class SaleOrder {
     }
 
     public void setOperatorTime(String operatorTime) {
-        this.operatorTime = operatorTime.substring(0,19);
+        this.operatorTime = operatorTime;
+    }
+
+    public String getKaiPiaoDate() {
+        return kaiPiaoDate;
+    }
+
+    public void setKaiPiaoDate(String kaiPiaoDate) {
+        this.kaiPiaoDate = kaiPiaoDate;
+    }
+
+    public String getShouKuanDate() {
+        return shouKuanDate;
+    }
+
+    public void setShouKuanDate(String shouKuanDate) {
+        this.shouKuanDate = shouKuanDate;
     }
 
     @Override
@@ -211,6 +234,8 @@ public class SaleOrder {
                 ", remarks='" + remarks + '\'' +
                 ", operator='" + operator + '\'' +
                 ", operatorTime='" + operatorTime + '\'' +
+                ", kaiPiaoDate='" + kaiPiaoDate + '\'' +
+                ", shouKuanDate='" + shouKuanDate + '\'' +
                 '}';
     }
 }

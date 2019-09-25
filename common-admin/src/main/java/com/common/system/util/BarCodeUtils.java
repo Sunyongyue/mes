@@ -26,13 +26,13 @@ import java.util.Map;
 public class BarCodeUtils {
 
     /** 条形码宽度 */
-    private static final int WIDTH = 75;
+    private static final int WIDTH = 135;
 
     /** 条形码高度 */
-    private static final int HEIGHT = 15;
+    private static final int HEIGHT = 75;//75
 
     /** 加文字 条形码 */
-    private static final int WORDHEIGHT = 20;
+    private static final int WORDHEIGHT = 90;//90
 
     /**
      * 设置 条形码参数
@@ -74,7 +74,7 @@ public class BarCodeUtils {
         // 新的图片，把带logo的二维码下面加上文字
         if (StringUtils.isNotEmpty(words)) {
 
-            BufferedImage outImage = new BufferedImage(WIDTH, WORDHEIGHT, BufferedImage.TYPE_INT_RGB);
+            BufferedImage outImage = new BufferedImage(3*WIDTH, WORDHEIGHT, BufferedImage.TYPE_INT_RGB);
 
             Graphics2D g2d = outImage.createGraphics();
 
@@ -84,19 +84,20 @@ public class BarCodeUtils {
             setColorWhite(g2d);
 
             // 画条形码到新的面板
-            g2d.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
+            g2d.drawImage(image, 0, -10, image.getWidth(), image.getHeight(), null);
+            g2d.drawImage(image, image.getWidth(), -10, image.getWidth(), image.getHeight(), null);
+            g2d.drawImage(image, 2*image.getWidth(), -10, image.getWidth(), image.getHeight(), null);
             // 画文字到新的面板
             Color color=new Color(0, 0, 0);
             g2d.setColor(color);
             // 字体、字型、字号
-            g2d.setFont(new Font("黑体", Font.PLAIN, 8));
+            g2d.setFont(new Font("微软雅黑", Font.PLAIN, 13));
             //文字长度
             int strWidth = g2d.getFontMetrics().stringWidth(words);
             //总长度减去文字长度的一半  （居中显示）
             int wordStartX=(WIDTH - strWidth) / 2;
             //height + (outImage.getHeight() - height) / 2 + 12
-            int wordStartY=HEIGHT+5;
-
+            int wordStartY=HEIGHT;
             // 画文字
             g2d.drawString(words, wordStartX, wordStartY);
             g2d.dispose();
@@ -124,14 +125,14 @@ public class BarCodeUtils {
     private static void setColorWhite(Graphics2D g2d){
         g2d.setColor(Color.WHITE);
         //填充整个屏幕
-        g2d.fillRect(0,0,600,600);
+        g2d.fillRect(0,0,405,90);
         //设置笔刷
         g2d.setColor(Color.BLACK);
     }
- /*   public static void main(String[] args) throws IOException {
-        BufferedImage image = insertWords(getBarCode("123456789"), "123456789");
+    public static void main(String[] args) throws IOException {
+        BufferedImage image = insertWords(getBarCode("6620190921003"), "6620190921003");
 //        A80/90R8A(8A侧通孔)
-   *//*     BufferedImage image = insertWords(getBarCode("A80/90R8A8A"), "A80/90R8A(8A侧通孔)");*//*
+       // BufferedImage image = insertWords(getBarCode("A80/90R8A8A"), "A80/90R8A(8A侧通孔)");
         ImageIO.write(image, "jpg", new File("E:/Images/barcode.png"));
-    }*/
+    }
 }

@@ -43,7 +43,20 @@ public class ProductOrderController {
     @RequestMapping("/productOrder")
     public ModelAndView productOrder(){
         ModelAndView mav = new ModelAndView("productOrderData");
+        List<Sysdata> goodsNameP = sysDataService.queryLocalList(102);
+        List<Sysdata> specificationsP = sysDataService.queryLocalList(103);
+        mav.addObject("goodsNameP",goodsNameP);
+        mav.addObject("specificationsP",specificationsP);
         return mav;
+    }
+    @RequestMapping("/jiLian")
+    @ResponseBody
+    public String jiLian(Integer pid){
+        JSONObject object = new JSONObject();
+        List<Sysdata> sysdata = sysDataService.queryLocalList(pid);
+        object.put("success",1);
+        object.put("date",sysdata);
+        return object.toString();
     }
     @RequestMapping("/productOrderFrom")
     public ModelAndView productOrderFrom(){
@@ -98,13 +111,14 @@ public class ProductOrderController {
         return mav;
     }
     @RequestMapping("/printBarCode")
-    public ModelAndView printBarCode(String productNum) throws IOException {
+    @ResponseBody
+    public String printBarCode(String productNum) throws IOException {
        /* for (int i=0;i<3;i++){*/
             BufferedImage image = insertWords(getBarCode(productNum), productNum);
-            ImageIO.write(image, "jpg", new File("E:/GitWorkSpace/common-admin/src/main/resources/static/adminlte/dist/img/"+productNum+".png"));
-           /* DocFlavor dof = DocFlavor.INPUT_STREAM.GIF;
+          /*  ImageIO.write(image, "jpg", new File("E:/GitWorkSpace/common-admin/src/main/resources/static/adminlte/dist/img/"+productNum+".png"));*/
+            DocFlavor dof = DocFlavor.INPUT_STREAM.PNG;
             ByteArrayOutputStream os = new ByteArrayOutputStream();
-            ImageIO.write(image, "jpg", os);
+            ImageIO.write(image, "png", os);
             InputStream is = new ByteArrayInputStream(os.toByteArray());
             PrintService ps = PrintServiceLookup.lookupDefaultPrintService();
             PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
@@ -113,7 +127,7 @@ public class ProductOrderController {
             pras.add(PrintQuality.DRAFT);
             DocAttributeSet das = new HashDocAttributeSet();
             // 设置打印纸张的大小（以毫米为单位）
-            das.add(new MediaPrintableArea(0, 0, 80, 10, 5));
+           /* das.add(new MediaPrintableArea(0, 0, 80, 100, 100));*/
             Doc doc = new SimpleDoc(is, dof, das);
             DocPrintJob job = ps.createPrintJob();
             try {
@@ -121,14 +135,14 @@ public class ProductOrderController {
             } catch (PrintException ex) {
                 ex.printStackTrace();
             }
-            is.close();*/
+            is.close();
       /*  }*/
-        ModelAndView mav = new ModelAndView("barCode");
+       /* ModelAndView mav = new ModelAndView("barCode");
         mav.addObject("productNum","/adminlte/dist/img/"+productNum+".png");
-        return mav;
-       /* JSONObject object =new JSONObject();
+        return mav;*/
+        JSONObject object =new JSONObject();
         object.put("success",1);
-        return object.toString();*/
+        return object.toString();
     }
     @RequestMapping("/productOrderDate")
     @ResponseBody

@@ -8,31 +8,39 @@
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
-<div class="demoTable">
+<div class="demoTablePubProduct">
     <div class="layui-inline" style="margin-left: 0px"> 生产单号：</div>
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="productNumSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入生产单号"/>
+        <input class="layui-input"  id="productNumSearchPubProduct" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入生产单号"/>
     </div>
     产品名称：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="goodsNameSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入产品名称"/>
+        <!--<input class="layui-input"  id="goodsNameSearchPubProduct" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入产品名称"/>-->
+        <select id="goodsNameSearchPubProduct" style="width: 200px;height: 25px">
+            <option value="">请选择产品名称</option>
+            <option th:each="goodsNameP1:${goodsNameP}" th:value="${goodsNameP1.dataname}" th:text="${goodsNameP1.dataname}"></option>
+        </select>
     </div>
     产品规格:
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="goodsSpecificationsSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入产品规格"/>
+       <!-- <input class="layui-input"  id="goodsSpecificationsSearchPubProduct" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入产品规格"/>-->
+        <select id="goodsSpecificationsSearchPubProduct" style="width: 200px;height: 25px">
+            <option value="">请选择产品规格</option>
+            <option th:each="specificationsP1:${specificationsP}" th:value="${specificationsP1.dataname}" th:text="${specificationsP1.dataname}"></option>
+        </select>
     </div>
     <div class="layui-inline" style="margin-left: -15px">操作员名称：</div>
     <div class="layui-inline" style="width: 220px;">
-        <input class="layui-input"  id="operatorSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入操作员名称"/>
+        <input class="layui-input"  id="operatorSearchPubProduct" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入操作员名称"/>
     </div>
     <button class="layui-btn layui-btn-sm" data-type="reload">查询</button><br/>
     起始日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="startDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
+        <input class="layui-input"  id="startDateSearchPubProduct" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
     </div>
     截止日期：
     <div class="layui-inline" style="width: 220px">
-        <input class="layui-input"  id="endDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择截止日期"/>
+        <input class="layui-input"  id="endDateSearchPubProduct" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择截止日期"/>
     </div>
 </div>
 <div id="add-mainPp" style="display: none;">
@@ -260,14 +268,21 @@
                                 url: "/production/updatePubProduct" ,//url
                                 data: {ids:id,productNum:productNum},
                                 success: function (result) {
-                                    if (result.success>0) {
+                                    if (result.success>0&&result.cc>0) {
                                         layer.msg('操作成功', {
                                             btnAlign: 'c',
                                             time: 3000, //20s后自动关闭
                                             btn: ['确定']
                                         });
                                         table.reload('idTestPub')
+                                    }else if(result.cc==0){
+                                        layer.msg('未找到通讯编号信息', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
                                     }else{
+
                                         layer.msg('操作失败', {
                                             btnAlign: 'c',
                                             time: 3000, //20s后自动关闭
@@ -337,12 +352,12 @@
                  }
                  ,*/
             reload:function () {
-                var productNum = $("#productNumSearch").val();
-                var goodsName = $("#goodsNameSearch").val();
-                var specifications = $("#goodsSpecificationsSearch").val();
-                var operator = $("#operatorSearch").val();
-                var startDate = $("#startDateSearch").val();
-                var endDate = $("#endDateSearch").val();
+                var productNum = $("#productNumSearchPubProduct").val();
+                var goodsName = $("#goodsNameSearchPubProduct").val();
+                var specifications = $("#goodsSpecificationsSearchPubProduct").val();
+                var operator = $("#operatorSearchPubProduct").val();
+                var startDate = $("#startDateSearchPubProduct").val();
+                var endDate = $("#endDateSearchPubProduct").val();
 
                 table.reload('idTestPub',{
                     url:'/production/searchPubProduct',
@@ -355,7 +370,7 @@
             }
         };
 
-        $('.demoTable .layui-btn').on('click', function(){
+        $('.demoTablePubProduct .layui-btn').on('click', function(){
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });

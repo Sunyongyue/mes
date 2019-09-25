@@ -23,7 +23,7 @@
             <label class="layui-form-label">产品名称</label>
             <div class="layui-input-inline">
                 <select name="goodsName" lay-verify="required" lay-search="" >
-                    <option value="">请选择产品名称</option>
+                    <option value="" name="">请选择产品名称</option>
                     <option th:each="goodsNameP1:${goodsNameP}" th:value="${goodsNameP1.dataname}" th:text="${goodsNameP1.dataname}"></option>
                 </select>
             </div>
@@ -104,27 +104,27 @@
         <div class="layui-inline">
             <label class="layui-form-label">控制主板厂商</label>
             <div class="layui-input-inline">
-                <select name="controlMainboardSupplier" lay-verify="required" lay-search="">
+                <select name="controlMainboardSupplier" lay-verify="required" lay-search="" lay-filter="controlMainboardSupplierS">
                     <option value="">请选择控制主板厂商</option>
-                    <option th:each="controlMainboardSupplierP1:${controlMainboardSupplierP}" th:value="${controlMainboardSupplierP1.dataname}" th:text="${controlMainboardSupplierP1.dataname}"></option>
+                    <option th:each="controlMainboardSupplierP1:${controlMainboardSupplierP}" th:name="${controlMainboardSupplierP1.id}" th:value="${controlMainboardSupplierP1.dataname}" th:text="${controlMainboardSupplierP1.dataname}"></option>
                 </select>
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">控制主板名称</label>
             <div class="layui-input-inline">
-                <select name="controlMainboardName" lay-verify="required" lay-search="">
+                <select id="controlMainboardNameId" name="controlMainboardName" lay-verify="required" lay-search="" lay-filter="controlMainboardNameS">
                     <option value="">请选择控制主板名称</option>
-                    <option th:each="controlMainboardNameP1:${controlMainboardNameP}" th:value="${controlMainboardNameP1.dataname}" th:text="${controlMainboardNameP1.dataname}"></option>
+                   <!-- <option th:each="controlMainboardNameP1:${controlMainboardNameP}" th:value="${controlMainboardNameP1.dataname}" th:text="${controlMainboardNameP1.dataname}"></option>-->
                 </select>
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">型号规格</label>
             <div class="layui-input-inline">
-                <select name="controlMainboardSpecifications" lay-verify="required" lay-search="">
+                <select id="controlMainboardSpecificationsId" name="controlMainboardSpecifications" lay-verify="required" lay-filter="controlMainboardSpecificationsS">
                     <option value="">请选择型号规格</option>
-                    <option th:each="controlMainboardSpecificationsP1:${controlMainboardSpecificationsP}" th:value="${controlMainboardSpecificationsP1.dataname}" th:text="${controlMainboardSpecificationsP1.dataname}"></option>
+                    <!--<option th:each="controlMainboardSpecificationsP1:${controlMainboardSpecificationsP}" th:value="${controlMainboardSpecificationsP1.dataname}" th:text="${controlMainboardSpecificationsP1.dataname}"></option>-->
                 </select>
             </div>
         </div>
@@ -132,9 +132,9 @@
             <label class="layui-form-label">程序版本</label>
             <div class="layui-input-inline">
                <!-- <input type="text" name="version" lay-verify="" placeholder="" autocomplete="off" class="layui-input" placeholder="请输入程序版本">-->
-                <select name="version" lay-verify="" lay-search="">
+                <select id="versionId" name="version" lay-verify="" lay-search="">
                     <option value="">请选择程序版本</option>
-                    <option th:each="versionP1:${versionP}" th:value="${versionP1.dataname}" th:text="${versionP1.dataname}"></option>
+                    <!--<option th:each="versionP1:${versionP}" th:value="${versionP1.dataname}" th:text="${versionP1.dataname}"></option>-->
                 </select>
             </div>
         </div>
@@ -437,6 +437,126 @@
                             $("[name='valveOpenTime']").val("");
                             $("[name='valveCloseTime']").val("");
                             layer.msg('暂无该功能参数配置信息',{
+                                btnAlign: 'c',
+                                time: 3000, //20s后自动关闭
+                                btn: ['确定']
+                            });
+                        }
+                    }
+                });
+            }else{
+
+            }
+
+        });
+        form.on('select(controlMainboardSupplierS)', function(data){
+            /*console.log(data);*/
+            var controlMainboardSupplier = $("[name='controlMainboardSupplier'] option:selected").attr("name");
+            console.log(controlMainboardSupplier);
+            if (controlMainboardSupplier!="") {
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "/order/jiLian" ,//url
+                    data:{pid:controlMainboardSupplier},
+                    success: function (result) {
+                        if (result.success>0) {
+                            $("#controlMainboardNameId").empty();
+                            var op="";
+                            var bp="请选择控制主板名称";
+                            $("#controlMainboardNameId").append("<option value="+op+" name="+op+" >"+bp+"</option>");
+                            var list =result.date;
+                            $.each(list,function (i,val) {
+                                var a =val.id;
+                                var b =val.dataname;
+                                console.log( a+"**"+b)
+                                $("#controlMainboardNameId").append("<option value="+b+" name="+a+" >"+b+"</option>");
+                            });
+                            form.render('select');
+                             /*layui.form('select').render();*/
+                        }else{
+                            layer.msg('暂无该信息',{
+                                btnAlign: 'c',
+                                time: 3000, //20s后自动关闭
+                                btn: ['确定']
+                            });
+                        }
+                    }
+                });
+            }else{
+
+            }
+
+        });
+        form.on('select(controlMainboardNameS)', function(data){
+            /*console.log(data);*/
+            var controlMainboardNameS = $("[name='controlMainboardName'] option:selected").attr("name");
+            console.log(controlMainboardNameS+"name");
+            if (controlMainboardNameS!="") {
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "/order/jiLian" ,//url
+                    data:{pid:controlMainboardNameS},
+                    success: function (result) {
+                        if (result.success>0) {
+                            $("#controlMainboardSpecificationsId").empty();
+                            var op="";
+                            var bp="请选择规格型号";
+                            $("#controlMainboardSpecificationsId").append("<option value="+op+" name="+op+" >"+bp+"</option>");
+                            var list =result.date;
+                            $.each(list,function (i,val) {
+                                var a =val.id;
+                                var b =val.dataname;
+                                console.log( a+"**"+b)
+                                $("#controlMainboardSpecificationsId").append("<option value="+b+" name="+a+" >"+b+"</option>");
+                            });
+                            form.render('select');
+                            /*layui.form('select').render();*/
+                        }else{
+                            layer.msg('暂无该信息',{
+                                btnAlign: 'c',
+                                time: 3000, //20s后自动关闭
+                                btn: ['确定']
+                            });
+                        }
+                    }
+                });
+            }else{
+
+            }
+
+        });
+        form.on('select(controlMainboardSpecificationsS)', function(data){
+            /*console.log(data);*/
+            var controlMainboardSpecificationsS = $("[name='controlMainboardSpecifications'] option:selected").attr("name");
+            console.log(controlMainboardSpecificationsS+"name");
+            if (controlMainboardSpecificationsS!="") {
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "/order/jiLian" ,//url
+                    data:{pid:controlMainboardSpecificationsS},
+                    success: function (result) {
+                        if (result.success>0) {
+                            $("#versionId").empty();
+                            var op="";
+                            var bp="请选择程序版本";
+                            $("#versionId").append("<option value="+op+" name="+op+" >"+bp+"</option>");
+                            var list =result.date;
+                            $.each(list,function (i,val) {
+                                var a =val.id;
+                                var b =val.dataname;
+                                console.log( a+"**"+b)
+                                $("#versionId").append("<option value="+b+" name="+a+" >"+b+"</option>");
+                            });
+                            form.render('select');
+                            /*layui.form('select').render();*/
+                        }else{
+                            layer.msg('暂无该信息',{
                                 btnAlign: 'c',
                                 time: 3000, //20s后自动关闭
                                 btn: ['确定']

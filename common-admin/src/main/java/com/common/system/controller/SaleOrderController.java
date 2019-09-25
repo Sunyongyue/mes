@@ -34,6 +34,12 @@ public class SaleOrderController {
     @RequestMapping("/saleOrder")
     public ModelAndView saleOrder(){
         ModelAndView mav = new ModelAndView("saleOrderData");
+        List<Sysdata> goodsNameP = sysDataService.queryLocalList(102);
+        List<Sysdata> specificationsP = sysDataService.queryLocalList(103);
+        List<String> purchaserNameList = sysPurchaserService.purchaserNameList();
+        mav.addObject("purchaserNameList",purchaserNameList);
+        mav.addObject("goodsNameP",goodsNameP);
+        mav.addObject("specificationsP",specificationsP);
         return mav;
     }
     @RequestMapping("/sale")
@@ -56,6 +62,21 @@ public class SaleOrderController {
         mav.addObject("saleOrder",saleOrde);
         return mav;
     }
+    @RequestMapping("/modify")
+    public ModelAndView modify(Integer id){
+        ModelAndView mav = new ModelAndView("saleOrderModify");
+        SaleOrder saleOrdeM = saleOrder.queryOne(id);
+        mav.addObject("saleOrderM",saleOrdeM);
+        return mav;
+    }
+    @RequestMapping("/modifyOrderEnd")
+    @ResponseBody
+    public String modifyOrderEnd(Integer saleId,String kaiPiaoDate,String shouKuanDate,String remarks){
+        int i = saleOrder.modifyOrderEnd(saleId, kaiPiaoDate, shouKuanDate, remarks);
+        JSONObject object = new JSONObject();
+        object.put("success",i);
+       return object.toString();
+    }
     @RequestMapping("/querySaleOrder")
     @ResponseBody
     public String querySaleOrder(Integer page, Integer limit){
@@ -71,7 +92,7 @@ public class SaleOrderController {
         int i = saleOrder.queryNum(format);
         String s = 88+format.replaceAll("-", "");
         for (int k=0;k<sale.getCustomerNums();k++){
-           saleOrder.addSaleOrder((s+intToString(i+1)),sale.getCustomerName(),sale.getDate(),sale.getProjectName(),sale.getEndDate(),sale.getProductNameOrder(),sale.getProductSpecificationsOrder(),sale.getCustomerPressure(),sale.getCustomerNums(),sale.getAddress(),sale.getReceiver(),sale.getTelPhone(),sale.getLogisticsInformation(),sale.getRemarks(),user.getUsername(),sale.getOperatorTime());
+           saleOrder.addSaleOrder((s+intToString(i+1)),sale.getCustomerName(),sale.getDate(),sale.getProjectName(),sale.getEndDate(),sale.getProductNameOrder(),sale.getProductSpecificationsOrder(),sale.getCustomerPressure(),sale.getCustomerNums(),sale.getAddress(),sale.getReceiver(),sale.getTelPhone(),sale.getLogisticsInformation(),sale.getRemarks(),user.getUsername(),sale.getOperatorTime(),sale.getKaiPiaoDate(),sale.getShouKuanDate());
            i++;
         }
         JSONObject object = new JSONObject();

@@ -5,7 +5,11 @@
         select * from over_goods_stock ORDER BY operatorTime desc
     </select>
     <select id="queryExist" resultType="com.common.system.entity.OverGoodsStock">
-         select * from over_goods_stock where goodsName=#{goodsName} and specifications=#{specifications} and intakeDirection=#{intakeDirection}
+         select * from over_goods_stock where goodsName=#{goodsName} and specifications=#{specifications} and intakeDirection=#{intakeDirection} and pressure=#{pressure}
+         and valveSupplier=#{valveSupplier} and valveName=#{valveName} and valveSpecifications=#{valveSpecifications} and controlMainboardSupplier=#{controlMainboardSupplier}
+         and controlMainboardName=#{controlMainboardName} and controlMainboardSpecifications=#{controlMainboardSpecifications} and version=#{version} and telMainBoardSupplier=#{telMainBoardSupplier}
+         and telMainBoardName=#{telMainBoardName} and telMainBoardSpecifications=#{telMainBoardSpecifications} and telType=#{telType} and fourSupplier=#{fourSupplier}
+         and fourMainBoardName=#{fourMainBoardName} and fourSpecifications=#{fourSpecifications} and telProtocol=#{telProtocol}
     </select>
     <select id="serchOverGoodsStock" resultType="com.common.system.entity.OverGoodsStock">
         select * from over_goods_stock
@@ -28,13 +32,21 @@
         ORDER BY operatorTime desc
     </select>
     <insert id="addOverGoodsStock">
-      INSERT into over_goods_stock(goodsName,specifications,intakeDirection,stockWarehouse,nums,operator,operatorTime,remarks)VALUES(
-      #{goodsName},#{specifications},#{intakeDirection},'成品库',#{nums},#{operator},SYSDATE(),#{remarks})
+      INSERT into over_goods_stock(goodsName,specifications,intakeDirection,stockWarehouse,nums,operator,operatorTime,remarks,`pressure`, `valveSupplier`, `valveName`, `valveSpecifications`, `controlMainboardSupplier`, `controlMainboardName`, `controlMainboardSpecifications`, `version`, `telMainBoardSupplier`, `telMainBoardName`, `telMainBoardSpecifications`, `telType`, `fourSupplier`, `fourMainBoardName`, `fourSpecifications`, `telProtocol`)VALUES(
+      #{goodsName},#{specifications},#{intakeDirection},'成品库',#{nums},#{operator},SYSDATE(),#{remarks},#{pressure},#{valveSupplier},#{valveName},#{valveSpecifications},#{controlMainboardSupplier},#{controlMainboardName},#{controlMainboardSpecifications},#{version},#{telMainBoardSupplier},#{telMainBoardName},#{telMainBoardSpecifications},#{telType},#{fourSupplier},#{fourMainBoardName},#{fourSpecifications},#{telProtocol})
     </insert>
    <update id="deleteGoodsStock">
-        update over_goods_stock set nums=(nums-#{nums}),operator=#{operator},operatorTime=SYSDATE() where  goodsName=#{goodsName} and specifications=#{specifications} and  intakeDirection=#{intakeDirection} and nums>=#{nums}
+        update over_goods_stock set nums=(nums-#{nums}),operator=#{operator},operatorTime=SYSDATE() where  goodsName=#{goodsName} and specifications=#{specifications} and  intakeDirection=#{intakeDirection} and pressure=#{pressure}
+         and valveSupplier=#{valveSupplier} and valveName=#{valveName} and valveSpecifications=#{valveSpecifications} and controlMainboardSupplier=#{controlMainboardSupplier}
+         and controlMainboardName=#{controlMainboardName} and controlMainboardSpecifications=#{controlMainboardSpecifications} and version=#{version} and telMainBoardSupplier=#{telMainBoardSupplier}
+         and telMainBoardName=#{telMainBoardName} and telMainBoardSpecifications=#{telMainBoardSpecifications} and telType=#{telType} and fourSupplier=#{fourSupplier}
+         and fourMainBoardName=#{fourMainBoardName} and fourSpecifications=#{fourSpecifications} and telProtocol=#{telProtocol}  and nums>=#{nums}
    </update>
     <update id="updateGoodsStock">
-        update over_goods_stock set nums=(nums+#{nums}),operator=#{operator},operatorTime=SYSDATE() where  goodsName=#{goodsName} and specifications=#{specifications} and  intakeDirection=#{intakeDirection}
+        update over_goods_stock set nums=(nums+#{nums}),operator=#{operator},operatorTime=SYSDATE() where  goodsName=#{goodsName} and specifications=#{specifications} and  intakeDirection=#{intakeDirection} and pressure=#{pressure}
+         and valveSupplier=#{valveSupplier} and valveName=#{valveName} and valveSpecifications=#{valveSpecifications} and controlMainboardSupplier=#{controlMainboardSupplier}
+         and controlMainboardName=#{controlMainboardName} and controlMainboardSpecifications=#{controlMainboardSpecifications} and version=#{version} and telMainBoardSupplier=#{telMainBoardSupplier}
+         and telMainBoardName=#{telMainBoardName} and telMainBoardSpecifications=#{telMainBoardSpecifications} and telType=#{telType} and fourSupplier=#{fourSupplier}
+         and fourMainBoardName=#{fourMainBoardName} and fourSpecifications=#{fourSpecifications} and telProtocol=#{telProtocol}
     </update>
 </mapper>

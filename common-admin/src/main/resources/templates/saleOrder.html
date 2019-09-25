@@ -108,7 +108,13 @@
                 <input type="text" name="telPhone"  lay-verify="phone" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
             </div>
         </div>
-        <!--<div class="layui-inline">
+        <div class="layui-inline">
+            <label class="layui-form-label">开票日期</label>
+            <div class="layui-input-inline">
+                <input type="text" name="kaiPiaoDate"  id="kaiPiaoDate" placeholder="请选择开票日期" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+     <!--   <div class="layui-inline">
             <label class="layui-form-label">物流信息</label>
             <div class="layui-input-inline">
                 <input type="text" name="logisticsInformation"  lay-verify="" placeholder="请输入物流信息" autocomplete="off" class="layui-input">
@@ -116,9 +122,17 @@
         </div>-->
     </div>
     <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">收款日期</label>
+            <div class="layui-input-inline">
+                <input type="text" name="shouKuanDate"  id="shouKuanDate" placeholder="请选择收款日期" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
         <label class="layui-form-label">备注</label>
-        <div class="layui-input-block">
-            <input style="width: 800px;" type="text" name="remarks" lay-verify="title" autocomplete="off" placeholder="请输入备注" class="layui-input">
+        <div class="layui-input-inline">
+            <input style="width:525px;" type="text" name="remarks" lay-verify="title" autocomplete="off" placeholder="请输入备注" class="layui-input">
+        </div>
         </div>
     </div>
     <div class="layui-form-item" style="margin-top: 30px">
@@ -167,6 +181,14 @@
         });
         laydate.render({
             elem: '#endDate' //指定元素
+
+        });
+        laydate.render({
+            elem: '#shouKuanDate' //指定元素
+
+        });
+        laydate.render({
+            elem: '#kaiPiaoDate' //指定元素
 
         });
     });

@@ -6,8 +6,8 @@
         select * from over_goods_inStock ORDER BY operatorTime desc
     </select>
    <insert id="addOverGoodsInStock">
-       INSERT into over_goods_inStock(productNum,goodsName,specifications,intakeDirection,testDate,nums,operator,operatorTime,testRemarks)VALUES(
-       #{productNum},#{goodsName},#{specifications},#{intakeDirection},#{testDate},#{nums},#{operator},SYSDATE(),#{testRemarks})
+       INSERT into over_goods_inStock(productNum,goodsName,specifications,intakeDirection,testDate,nums,operator,operatorTime,testRemarks,`pressure`, `valveSupplier`, `valveName`, `valveSpecifications`, `controlMainboardSupplier`, `controlMainboardName`, `controlMainboardSpecifications`, `version`, `telMainBoardSupplier`, `telMainBoardName`, `telMainBoardSpecifications`, `telType`, `fourSupplier`, `fourMainBoardName`, `fourSpecifications`, `telProtocol`)VALUES(
+       #{productNum},#{goodsName},#{specifications},#{intakeDirection},#{testDate},#{nums},#{operator},SYSDATE(),#{testRemarks},#{pressure},#{valveSupplier},#{valveName},#{valveSpecifications},#{controlMainboardSupplier},#{controlMainboardName},#{controlMainboardSpecifications},#{version},#{telMainBoardSupplier},#{telMainBoardName},#{telMainBoardSpecifications},#{telType},#{fourSupplier},#{fourMainBoardName},#{fourSpecifications},#{telProtocol})
     </insert>
     <delete id="deleteOverGoodsInStock">
         DELETE from over_goods_inStock where id in

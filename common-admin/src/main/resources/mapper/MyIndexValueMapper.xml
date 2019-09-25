@@ -59,10 +59,10 @@
         SELECT COUNT(*) FROM goods_instock where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{day} and goodsType =#{goodsName}
     </select>
     <select id="myGoodsStock" resultType="int">
-        SELECT COALESCE(SUM(nums),0) FROM goods_stock where goodsType =#{goodsName}
+        SELECT COALESCE(SUM(nums),0) FROM goods_stock where goodsType like concat('%',#{goodsName},'%')
     </select>
     <select id="myOverGoodsStock" resultType="int">
-        SELECT COALESCE(SUM(nums),0) FROM over_goods_stock where goodsName =#{goodsName}
+        SELECT COALESCE(SUM(nums),0) FROM over_goods_stock where goodsName like concat('%',#{goodsName},'%')
     </select>
 
 </mapper>

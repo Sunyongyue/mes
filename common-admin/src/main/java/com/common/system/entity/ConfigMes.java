@@ -70,7 +70,7 @@ public class ConfigMes {
     private int ConfChan2;
     //抄表功率2
     private int ConfPower2;
-    //状态1 待下发，状态2 已下发,状态3 接收成功,状态4 重复,状态5 执行成功,状态6 执行失败
+    //状态1 待下发，状态2 已下发,状态3 接收成功,状态4 重复,状态5 执行成功,状态6 执行失败//数据迁移7 有线写入 8远程写入
     private  int status;
     //计费周期时长
     private int ConfPayCycNum;

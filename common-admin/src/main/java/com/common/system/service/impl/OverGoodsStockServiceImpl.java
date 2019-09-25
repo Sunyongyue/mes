@@ -33,10 +33,11 @@ public class OverGoodsStockServiceImpl implements OverGoodsStockService {
     }
 
     @Override
-    public int addOverGoodsStock(String goodsName, String specifications, String intakeDirection, String stockWarehouse, int nums, String operator, String remarks) {
-        int i = mapper.addOverGoodsStock(goodsName, specifications, intakeDirection, stockWarehouse, nums, operator, remarks);
+    public int addOverGoodsStock(String goodsName, String specifications, String intakeDirection, String stockWarehouse, int nums, String operator, String remarks, String pressure, String valveSupplier, String valveName, String valveSpecifications, String controlMainboardSupplier, String controlMainboardName, String controlMainboardSpecifications, String version, String telMainBoardSupplier, String telMainBoardName, String telMainBoardSpecifications, String telType, String fourSupplier, String fourMainBoardName, String fourSpecifications, String telProtocol) {
+        int i = mapper.addOverGoodsStock(goodsName, specifications, intakeDirection, stockWarehouse, nums, operator, remarks, pressure, valveSupplier, valveName, valveSpecifications, controlMainboardSupplier, controlMainboardName, controlMainboardSpecifications, version, telMainBoardSupplier, telMainBoardName, telMainBoardSpecifications, telType, fourSupplier, fourMainBoardName, fourSpecifications, telProtocol);
         return i;
     }
+
 
     @Override
     public JSONObject serchOverGoodsStock(String goodsName, String specifications, String intakeDirection, String operator, String startDate, String endDate,Integer page,Integer limit) {
@@ -55,20 +56,22 @@ public class OverGoodsStockServiceImpl implements OverGoodsStockService {
     }
 
     @Override
-    public List<OverGoodsStock> queryExist(String goodsName, String specifications, String intakeDirection) {
-        List<OverGoodsStock> overGoodsStocks = mapper.queryExist(goodsName, specifications, intakeDirection);
+    public List<OverGoodsStock> queryExist(String goodsName, String specifications, String intakeDirection, String pressure, String valveSupplier, String valveName, String valveSpecifications, String controlMainboardSupplier, String controlMainboardName, String controlMainboardSpecifications, String version, String telMainBoardSupplier, String telMainBoardName, String telMainBoardSpecifications, String telType, String fourSupplier, String fourMainBoardName, String fourSpecifications, String telProtocol) {
+        List<OverGoodsStock> overGoodsStocks = mapper.queryExist(goodsName, specifications, intakeDirection, pressure, valveSupplier, valveName, valveSpecifications, controlMainboardSupplier, controlMainboardName, controlMainboardSpecifications, version, telMainBoardSupplier, telMainBoardName, telMainBoardSpecifications, telType, fourSupplier, fourMainBoardName, fourSpecifications, telProtocol);
         return overGoodsStocks;
     }
 
     @Override
-    public int deleteGoodsStock(String goodsName, String specifications, String intakeDirection, int nums, String operator) {
-        int i = mapper.deleteGoodsStock(goodsName, specifications, intakeDirection, nums, operator);
+    public int deleteGoodsStock(String goodsName, String specifications, String intakeDirection, int nums, String operator, String pressure, String valveSupplier, String valveName, String valveSpecifications, String controlMainboardSupplier, String controlMainboardName, String controlMainboardSpecifications, String version, String telMainBoardSupplier, String telMainBoardName, String telMainBoardSpecifications, String telType, String fourSupplier, String fourMainBoardName, String fourSpecifications, String telProtocol) {
+        int i = mapper.deleteGoodsStock(goodsName, specifications, intakeDirection, nums, operator, pressure, valveSupplier, valveName, valveSpecifications, controlMainboardSupplier, controlMainboardName, controlMainboardSpecifications, version, telMainBoardSupplier, telMainBoardName, telMainBoardSpecifications, telType, fourSupplier, fourMainBoardName, fourSpecifications, telProtocol);
         return i;
     }
 
     @Override
-    public int updateGoodsStock(String goodsName, String specifications, String intakeDirection, int nums, String operator) {
-        int i = mapper.updateGoodsStock(goodsName, specifications, intakeDirection, nums, operator);
+    public int updateGoodsStock(String goodsName, String specifications, String intakeDirection, int nums, String operator, String pressure, String valveSupplier, String valveName, String valveSpecifications, String controlMainboardSupplier, String controlMainboardName, String controlMainboardSpecifications, String version, String telMainBoardSupplier, String telMainBoardName, String telMainBoardSpecifications, String telType, String fourSupplier, String fourMainBoardName, String fourSpecifications, String telProtocol) {
+        int i = mapper.updateGoodsStock(goodsName, specifications, intakeDirection, nums, operator, pressure, valveSupplier, valveName, valveSpecifications, controlMainboardSupplier, controlMainboardName, controlMainboardSpecifications, version, telMainBoardSupplier, telMainBoardName, telMainBoardSpecifications, telType, fourSupplier, fourMainBoardName, fourSpecifications, telProtocol);
         return i;
     }
+
+
 }

@@ -34,8 +34,8 @@ public class SaleOrderServiceImpl implements SaleOrderService {
     }
 
     @Override
-    public JSONObject addSaleOrder(String saleNum, String customerName, String date, String projectName, String endDate, String productNameOrder, String productSpecificationsOrder, String customerPressure, int customerNums, String address, String receiver, String telPhone, String logisticsInformation, String remarks, String operator, String operatorTime) {
-        int i = saleOrderMapper.addSaleOrder(saleNum, customerName, date, projectName, endDate, productNameOrder, productSpecificationsOrder, customerPressure, customerNums, address, receiver, telPhone, logisticsInformation, remarks, operator, operatorTime);
+    public JSONObject addSaleOrder(String saleNum, String customerName, String date, String projectName, String endDate, String productNameOrder, String productSpecificationsOrder, String customerPressure, int customerNums, String address, String receiver, String telPhone, String logisticsInformation, String remarks, String operator, String operatorTime,String kaiPiaoDate, String shouKuanDate) {
+        int i = saleOrderMapper.addSaleOrder(saleNum, customerName, date, projectName, endDate, productNameOrder, productSpecificationsOrder, customerPressure, customerNums, address, receiver, telPhone, logisticsInformation, remarks, operator, operatorTime, kaiPiaoDate,  shouKuanDate);
         JSONObject object = new JSONObject();
         object.put("success",i);
         return object;
@@ -76,5 +76,11 @@ public class SaleOrderServiceImpl implements SaleOrderService {
     public SaleOrder queryOne(int id) {
         SaleOrder saleOrder = saleOrderMapper.queryOne(id);
         return saleOrder;
+    }
+
+    @Override
+    public int modifyOrderEnd(Integer saleId, String kaiPiaoDate, String shouKuanDate, String remarks) {
+        int i = saleOrderMapper.modifyOrderEnd(saleId, kaiPiaoDate, shouKuanDate, remarks);
+        return i;
     }
 }
