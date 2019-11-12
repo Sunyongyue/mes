@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" th:href="@{/adminlte/layui/css/layui.css}"  media="all"/>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<div class="demoTable">
+    工序名称：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="orderNameS" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入工序名称"/>
+    </div>
+   <!-- 所在地区：
+    <div class="layui-inline" style="width: 220px">
+        <select name="cityP" lay-verify=""  style="width: 210px">
+            <option value="" >请选择所在地区</option>
+        </select>
+    </div>-->
+    <button class="layui-btn layui-btn-sm" data-type="reload">查询</button><br/>
+</div>
+<div id="add-mainWorkingOrder" style="display: none;">
+    <div class="my-form">
+        <form class="layui-form"  lay-skin="line">
+            <div class="layui-form-item my-form-item" style="margin-top: 10px">
+                <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>工序名:</label>
+                <div class="layui-input-inline">
+                    <input id="orderName" type="text" name="orderName"  lay-verify="required" placeholder="请输入" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item" style="margin-top: 10px">
+                <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>调字轮:</label>
+                <div class="layui-input-inline">
+                    <input id="adjustingWheel" type="text" name="adjustingWheel"  lay-verify="required" placeholder="请输入" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item" style="margin-top: 10px">
+                <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>安装取样片/计数器:</label>
+                <div class="layui-input-inline">
+                    <input id="installationOfSample" type="text" name="installationOfSample" lay-verify="required" placeholder="请输入" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item">
+                <label class="layui-form-label layui-icon" style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>安装线束:</label>
+                <div class="layui-input-inline">
+                    <input id="wiringHarness" type="text" name="wiringHarness" lay-verify="required" placeholder="请输入" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item" >
+                <label class="layui-form-label layui-icon"  style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>安装底壳及线路板:</label>
+                <div class="layui-input-inline">
+                    <input id="installOfBoard" type="text" name="installOfBoard" lay-verify="required" placeholder="请输入" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item" >
+                <label class="layui-form-label layui-icon"  style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>安装标牌及条形码:</label>
+                <div class="layui-input-inline">
+                    <input id="installOfSigns" type="text" name="installOfSigns" lay-verify="required" placeholder="请输入" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item" >
+                <label class="layui-form-label layui-icon"  style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>安装上壳:</label>
+                <div class="layui-input-inline">
+                    <input id="upperShell" type="text" name="upperShell" lay-verify="required" placeholder="请输入" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item" >
+                <label class="layui-form-label layui-icon"  style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>检测人:</label>
+                <div class="layui-input-inline">
+                    <input id="testing" type="text" name="testing" lay-verify="required" placeholder="请输入" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item" >
+                <label class="layui-form-label layui-icon"  style="width: 170px"><p style="color: red;display: inline">&#xe67a;</p>装箱人:</label>
+                <div class="layui-input-inline">
+                    <input id="boxing" type="text" name="boxing" lay-verify="required" placeholder="请输入" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item" >
+                <label class="layui-form-label layui-icon"  style="width: 170px">备注:</label>
+                <div class="layui-input-inline">
+                    <input id="remarks" type="text" name="remarks" lay-verify="required" placeholder="请输入" autocomplete="off"
+                           class="layui-input"/>
+                </div>
+            </div>
+            <!--   <div class="layui-form-item my-form-item" >
+                   <label class="layui-form-label layui-icon"  style="width: 170px">&#xe642;邮箱地址:</label>
+                   <div class="layui-input-inline">
+                       <input id="email" type="text" name="email" lay-verify="required" placeholder="请输入物料流水号止" autocomplete="off"
+                              class="layui-input"/>
+                   </div>
+               </div>-->
+        </form>
+    </div>
+</div>
+<script type="text/html" id="toolbarDemoWorkingOrder">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="addWorkingOrder"  >添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="updateWorkingOrder" >修改</button>
+        <button class="layui-btn layui-btn-sm" lay-event="deleteWorkingOrder">删除</button>
+      <!--  <button class="layui-btn layui-btn-sm" lay-event="uploadPurchaser" id="uploadPurchaser" >导入</button>-->
+    </div>
+</script>
+<table class="layui-table" lay-data="{url:'/product/workOrderDate', page:true, id:'idTestWorkingOrder',toolbar:'#toolbarDemoWorkingOrder',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoWorkingOrder">
+    <thead>
+    <tr>
+        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+        <th lay-data="{field:'orderName', width:150}">工序名称</th>
+        <th lay-data="{field:'adjustingWheel', width:150}">调字轮</th>
+        <th lay-data="{field:'installationOfSample', width:180}">安装取样片/计数器</th>
+        <th lay-data="{field:'wiringHarness', width:150}">安装线束</th>
+        <th lay-data="{field:'installOfBoard', width:150 }">安装底壳及线路板</th>
+        <th lay-data="{field:'installOfSigns', width:150}">安装标牌及条形码</th>
+        <th lay-data="{field:'upperShell', width:180 }">安装上壳</th>
+        <th lay-data="{field:'testing', width:150}">检测</th>
+        <th lay-data="{field:'boxing', width:150}">安装</th>
+        <th lay-data="{field:'remarks', width:300}">备注</th>
+        <th lay-data="{field:'operator', width:150}">操作人</th>
+        <th lay-data="{field:'operatorTime', width:180}">操作时间</th>
+    </tr>
+    </thead>
+</table>
+
+<script th:src="@{/adminlte/layui/layui.all.js}" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        //监听表格复选框选择
+        table.on('checkbox(demoWorkingOrder)', function(obj){
+            console.log(obj)
+        });
+        //监听头工具栏事件
+        table.on('toolbar(demoWorkingOrder)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id)
+                ,data = checkStatus.data//获取选中的数据
+                ,deList=[1];
+            data.forEach(function (n,i) {
+                deList.push(n.id)
+            });
+            deList.push(2);
+            switch(obj.event){
+                case 'addWorkingOrder':
+                    layer.open({
+                        type:1,
+                        title:'添加',
+                        btnAlign: 'c',
+                        area: ['500px', '600px'],
+                        content: $("#add-mainWorkingOrder"),
+                        btn:['保存','取消'],
+                        yes:function(index,layero){
+                            var orderName =top.$('#orderName').val();
+                            var adjustingWheel =top.$("#adjustingWheel").val();
+                            var installationOfSample =top.$("#installationOfSample").val();
+                            var wiringHarness =top.$("#wiringHarness").val();
+                            var installOfBoard =top.$("#installOfBoard").val();
+                            var installOfSigns =top.$("#installOfSigns").val();
+                            var upperShell =top.$("#upperShell").val();
+                            var testing =top.$("#testing").val();
+                            var boxing =top.$("#boxing").val();
+                            var remarks =top.$("#remarks").val();
+                            if (orderName==""||adjustingWheel==""||installationOfSample==""||wiringHarness==""||installOfBoard==""||installOfSigns==""||upperShell==""||testing==""||boxing==""){
+                                /*   alert("您还有必填项未填！")*/
+                                layer.msg('您还有必填项未填！', {
+                                    btnAlign: 'c',
+                                    time: 3000, //20s后自动关闭
+                                    btn: ['确定']
+                                });
+                            }else{
+                                $.ajax({
+                                    //几个参数需要注意一下
+                                    type: "POST",//方法类型
+                                    dataType: "json",//预期服务器返回的数据类型
+                                    url: "/product/addWorkingOrder" ,//url
+                                    data: {orderName:orderName,adjustingWheel:adjustingWheel,installationOfSample:installationOfSample,wiringHarness:wiringHarness,installOfBoard:installOfBoard,installOfSigns:installOfSigns,upperShell:upperShell,testing:testing,remarks:remarks,boxing:boxing},
+                                    success: function (result) {
+                                        console.log(result);//打印服务端返回的数据(调试用)
+                                        if (result.success >0) {
+                                            layer.msg('操作成功', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                            table.reload('idTestWorkingOrder');
+                                        }else{
+                                            layer.msg('操作失败', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                        }
+                                    },
+                                    error : function() {
+                                        alert("异常！");
+                                    }
+                                });
+
+                                layer.close(index);
+                            }
+
+                        },
+                        btn2:function (index) {
+                            layer.close(index);
+                        }
+                    })
+                    break;
+                case 'updateWorkingOrder':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时编辑一个');
+                    } else {
+                        var id =checkStatus.data[0].id;
+                        layer.open({
+                            type:1,
+                            title:'修改',
+                            btnAlign: 'c',
+                            area: ['500px', '600px'],
+                            content: $("#add-mainWorkingOrder"),
+                            btn:['保存','取消'],
+                            success:function (layero, index) {
+                                top.$('#orderName').val(checkStatus.data[0].orderName);
+                                top.$('#adjustingWheel').val(checkStatus.data[0].adjustingWheel);
+                                top.$('#installationOfSample').val(checkStatus.data[0].installationOfSample);
+                                top.$('#wiringHarness').val(checkStatus.data[0].wiringHarness);
+                                top.$('#installOfBoard').val(checkStatus.data[0].installOfBoard);
+                                top.$('#installOfSigns').val(checkStatus.data[0].installOfSigns);
+                                top.$('#upperShell').val(checkStatus.data[0].upperShell);
+                                top.$('#testing').val(checkStatus.data[0].testing);
+                                top.$('#remarks').val(checkStatus.data[0].remarks);
+                                top.$('#boxing').val(checkStatus.data[0].boxing);
+                            },
+                            yes:function(index,layero){
+                                var orderName =top.$('#orderName').val();
+                                var adjustingWheel =top.$("#adjustingWheel").val();
+                                var installationOfSample =top.$("#installationOfSample").val();
+                                var wiringHarness =top.$("#wiringHarness").val();
+                                var installOfBoard =top.$("#installOfBoard").val();
+                                var installOfSigns =top.$("#installOfSigns").val();
+                                var upperShell =top.$("#upperShell").val();
+                                var testing =top.$("#testing").val();
+                                var remarks =top.$("#remarks").val();
+                                var boxing =top.$("#boxing").val();
+                                if (orderName==""||adjustingWheel==""||installationOfSample==""||wiringHarness==""||installOfBoard==""||installOfSigns==""||upperShell==""||testing==""||boxing==""){
+                                    /*   alert("您还有必填项未填！")*/
+                                    layer.msg('您还有必填项未填！', {
+                                        btnAlign: 'c',
+                                        time: 3000, //20s后自动关闭
+                                        btn: ['确定']
+                                    });
+                                }else{
+                                    $.ajax({
+                                        //几个参数需要注意一下
+                                        type: "POST",//方法类型
+                                        dataType: "json",//预期服务器返回的数据类型
+                                        url: "/product/updateWorkingOrder" ,//url
+                                        data: {orderName:orderName,adjustingWheel:adjustingWheel,installationOfSample:installationOfSample,wiringHarness:wiringHarness,installOfBoard:installOfBoard,installOfSigns:installOfSigns,upperShell:upperShell,testing:testing,remarks:remarks,boxing:boxing,id:id},
+                                        success: function (result) {
+                                            console.log(result);//打印服务端返回的数据(调试用)
+                                            if (result.success >0) {
+                                                layer.msg('操作成功', {
+                                                    btnAlign: 'c',
+                                                    time: 3000, //20s后自动关闭
+                                                    btn: ['确定']
+                                                });
+                                                table.reload('idTestWorkingOrder')
+                                            }else{
+                                                layer.msg('操作失败', {
+                                                    btnAlign: 'c',
+                                                    time: 3000, //20s后自动关闭
+                                                    btn: ['确定']
+                                                });
+                                            }
+                                        },
+                                        error : function() {
+                                            alert("异常！");
+                                        }
+                                    });
+                                    layer.close(index);
+                                }
+
+                            },
+                            btn2:function (index) {
+                                layer.close(index);
+                            }
+                        })
+                    }
+                    break;
+                case 'deleteWorkingOrder':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else {
+                        layer.confirm('确定删除',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/product/deleteWorkingOrder" ,//url
+                                data: {deList:JSON.stringify(deList)},
+                                success: function (result) {
+                                    if (result.success>0) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('idTestWorkingOrder')
+                                    }else{
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                }/*,
+                                error : function() {
+                                    alert("异常！");
+                                }*/
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+            }
+        });
+        var $ = layui.$, active = {
+            reload:function () {
+                var orderName=$("#orderNameS").val();
+                console.log(orderName+"------");
+                table.reload('idTestWorkingOrder',{
+                    url:'/product/queryWorkingOrderByName',
+                    where:{orderName:orderName}  ,
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                })
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+    var unSelected = "#999";
+    var selected = "#333";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    })
+</script>
+
+</body>
+</html>

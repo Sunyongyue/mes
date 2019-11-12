@@ -39,8 +39,8 @@
 					<div style="padding: 20px; background-color: #F2F2F2 ;">
 						<div class="layui-row layui-col-space15">
 							<div class="layui-col-md4" >
-								<div class="layui-card" style="background-color: #0000cc; color: white; font-family: 华文琥珀; font-size: 16px">
-									<div class="layui-card-header" style="color: white;">生产订单</div>
+								<div class="layui-card" style="background-color: #00bbee; color: white; font-family: 黑体; font-size: 19px">
+									<div class="layui-card-header" style="color: white;font-size: 19px;font-family: 华文琥珀;">生产订单</div>
 									<div class="layui-card-body" style="height:260px;" >
 										<table  width="98%" height="98%" >
 											<tr>
@@ -70,8 +70,8 @@
 								</div>
 							</div>
 							<div class="layui-col-md4">
-								<div class="layui-card" style="background-color: red;color: white; font-family: 华文琥珀 ; font-size: 16px">
-									<div class="layui-card-header" style="color: white;">销售订单</div>
+								<div class="layui-card" style="background-color: #00bbee;color: white; font-family: 黑体 ; font-size: 19px">
+									<div class="layui-card-header" style="color: white;font-size: 19px;font-family: 华文琥珀;">销售订单</div>
 									<div class="layui-card-body" style="height: 260px;">
 										<table  width="98%" height="98%" >
 											<tr>
@@ -101,8 +101,8 @@
 								</div>
 							</div>
 							<div class="layui-col-md4">
-								<div class="layui-card" style="background-color: #5d59a6;color: white;font-family: 华文琥珀;font-size: 16px">
-									<div class="layui-card-header" style="color: white;">发货</div>
+								<div class="layui-card" style="background-color: #00bbee;color: white;font-family: 黑体;font-size: 19px">
+									<div class="layui-card-header" style="color: white;font-size: 19px;font-family: 华文琥珀;">发货</div>
 									<div class="layui-card-body" style="height: 260px;">
 										<table  width="98%" height="98%" >
 											<tr>
@@ -132,8 +132,8 @@
 								</div>
 							</div>
 							<div class="layui-col-md4"><#--background-image: url(adminlte/layui/images/background/timg.jpg);-->
-								<div class="layui-card" style="background-color: #00bbee;color: white;font-family: 华文琥珀;font-size: 16px">
-									<div class="layui-card-header" style="color: white;">进货</div>
+								<div class="layui-card" style="background-color: #00bbee;color: white;font-family: 黑体;font-size: 19px">
+									<div class="layui-card-header" style="color: white; font-size: 19px;font-family: 华文琥珀;">进货</div>
 									<div class="layui-card-body" style="height: 260px;">
 										<table  width="98%" height="98%" >
 											<tr>
@@ -161,8 +161,8 @@
 								</div>
 							</div>
 							<div class="layui-col-md4">
-								<div class="layui-card" style="background-color: #5b9909;color: white;font-family: 华文琥珀;font-size: 16px">
-									<div class="layui-card-header" style="color: white;">原材料库存</div>
+								<div class="layui-card" style="background-color: #00bbee;color: white;font-family: 黑体;font-size: 19px">
+									<div class="layui-card-header" style="color: white;font-size: 19px;font-family: 华文琥珀;">原材料库存</div>
 									<div class="layui-card-body" style="height: 260px;">
 										<table  width="98%" height="98%" >
 											<tr>
@@ -190,8 +190,8 @@
 								</div>
 							</div>
 							<div class="layui-col-md4">
-								<div class="layui-card" style="background-color: #bf800c;color: white;font-family: 华文琥珀;font-size: 16px">
-									<div class="layui-card-header" style="color: white;">成品库库存</div>
+								<div class="layui-card" style="background-color: #00bbee;color: white;font-family: 黑体;font-size: 19px">
+									<div class="layui-card-header" style="color: white;font-size: 19px;font-family: 华文琥珀">成品库库存</div>
 									<div class="layui-card-body" style="height: 260px;">
 										<table  width="98%" height="98%" >
 											<tr>

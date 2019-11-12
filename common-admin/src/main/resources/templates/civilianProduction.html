@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<META HTTP-EQUIV="expires" CONTENT="0">
+<head>
+    <link rel="stylesheet" th:href="@{/adminlte/layui/css/layui.css}"  media="all"/>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<div class="demoTableCivilianProduction">
+    <div class="layui-inline" style="margin-left: 0px"> 生产单号：</div>
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="CivilProductNumSerach" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入生产单号"/>
+    </div>
+   产品名称：
+    <div class="layui-inline" style="width: 220px">
+      <!--  <input class="layui-input"  id="goodsNameSearchPubProduct" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入产品名称"/>&ndash;&gt;-->
+        <select id="CivilGoodNameCSearch" style="width: 200px;height: 25px">
+            <option value="">请选择产品名称</option>
+            <option th:each="goodsNameP1:${CivilGoodNameC}" th:value="${goodsNameP1.dataname}" th:text="${goodsNameP1.dataname}"></option>
+        </select>
+    </div>
+    产品规格:
+    <div class="layui-inline" style="width: 220px">
+     <!--   <input class="layui-input"  id="goodsSpecificationsSearchPubProduct" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入产品规格"/>&ndash;&gt;-->
+        <select id="CivilSpecificationsSearch" style="width: 200px;height: 25px">
+            <option value="">请选择产品规格</option>
+            <option th:each="specificationsP1:${CivilSpecifications}" th:value="${specificationsP1.dataname}" th:text="${specificationsP1.dataname}"></option>
+        </select>
+    </div>
+    生产工序:
+    <div class="layui-inline" style="width: 220px">
+        <!--   <input class="layui-input"  id="goodsSpecificationsSearchPubProduct" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入产品规格"/>&ndash;&gt;-->
+        <select id="workingOrderSearch" style="width: 200px;height: 25px">
+            <option value="">请选择生产工序</option>
+            <option th:each="CivilWorkingOrder1:${CivilWorkingOrder}" th:value="${CivilWorkingOrder1.id}" th:text="${CivilWorkingOrder1.orderName}"></option>
+        </select>
+    </div>
+    <button class="layui-btn layui-btn-sm" data-type="reload">查询</button><br/>
+    起始日期：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="startDateSearchCivilProductionSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
+    </div>
+    截止日期：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="endDateSearchCivilProductionSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择截止日期"/>
+    </div>
+    通讯编号:
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="TelNumSearchC" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入通讯编号"/>
+    </div>
+</div>
+<div id="add-mainCivilianProduction" style="display: none;">
+    <div class="my-form">
+        <div class="layui-form-item my-form-item" style="margin-top: 10px">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 170px"><p style="color: red;display: inline">※</p>生产单号</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="CivilProductNumAdd" name="CivilProductNumAdd" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入生产单号" onkeyup="value=value.replace(/[^\d]/g,'')"  >
+                    <p id="CivilProductNumAddP" style="color: red; display: none" >未找到该生产单号</p>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 170px"><p style="color: red;display: inline">※</p>生产工序</label>
+                <div class="layui-input-inline">
+                   <!-- <input type="text" id="workingOrderC" name="workingOrderC" lay-verify="" autocomplete="off" class="layui-input" placeholder="请选择生产工序" >-->
+                    <select id="workingOrderC" style="width: 200px;height: 25px;margin-top: 8px">
+                        <option value="">请选择生产工序</option>
+                        <option th:each="CivilWorkingOrder2:${CivilWorkingOrder}" th:value="${CivilWorkingOrder2.id}" th:text="${CivilWorkingOrder2.orderName}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item my-form-item" style="margin-top: 10px">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 170px"><p style="color: red;display: inline">※</p>设备地址</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="telCnumAdd" name="telCnumAdd" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入设备地址" onkeyup="value=value.replace(/[^\d]/g,'')" onblur="telCnumAddSerch()" >
+                    <p id="telCnumAddP" style="color: red; display: none" >设备地址已被使用</p>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 170px"><p style="color: red;display: inline">※</p>数量</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="CNums" name="CNums" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入数量" onkeyup="value=value.replace(/[^\d]/g,'')"  >
+
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item my-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label " style="width: 170px;"><p style="color: red;display: inline">※</p>采购商地区:</label>
+                <div class="layui-input-inline">
+                    <select id="ClocalAdd"  style="width: 190px;height: 25px;margin-top: 8px" onchange="CcompanyNameAdd()">
+                        <option value="" >请选择采购商地区</option>
+                        <option th:each="Clocal1:${Clocal}" th:value="${Clocal1}" th:text="${Clocal1}"></option>
+                    </select>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label " style="width: 170px;"><p style="color: red;display: inline">※</p>公司名称:</label>
+                <div class="layui-input-inline">
+                    <select id="CcompanyName"  style="width: 190px;height: 25px;margin-top: 8px" >
+                        <option value="" >请选择公司名称</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item my-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 170px">备注</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="cRemarksAdd"  lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入备注">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="toolbarDemoCivilScript">
+    <div class="layui-btn-container" >
+        <button class="layui-btn layui-btn-sm" lay-event="add"  >装配</button>
+        <button class="layui-btn layui-btn-sm" lay-event="check"  >测试</button>
+        <button class="layui-btn layui-btn-sm" lay-event="clear"  >清表</button>
+        <button class="layui-btn layui-btn-sm" lay-event="clearEx"  >清异常</button>
+        <button class="layui-btn layui-btn-sm" lay-event="delete"  >删除</button>
+    </div>
+</script>
+<table class="layui-table" lay-data="{url:'', page:true, id:'CivilId',toolbar:'#toolbarDemoCivilScript',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoCivilFilter">
+    <thead>
+ <!--   <tr>
+
+
+        <th lay-data="{align:'center'}" colspan="8">生产订单信息</th>
+        <th lay-data="{align:'center'}" colspan="6">阀门信息</th>
+        <th lay-data="{align:'center'}" colspan="5">控制主板信息</th>
+        <th lay-data="{align:'center'}" colspan="12">通讯主板信息</th>
+        <th lay-data="{align:'center'}" colspan="6">485主板信息</th>
+        <th lay-data="{align:'center'}" colspan="5">工艺</th>
+    </tr>-->
+    <tr>
+        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+        <th lay-data="{field:'productNum', width:150}" >设备地址</th>
+        <th lay-data="{field:'productNum', width:180}" >生产单号</th>
+        <th lay-data="{field:'productNum', width:180}" >生产工序</th>
+        <th lay-data="{field:'goodsName', width:150}" >产品名称</th>
+        <th lay-data="{field:'specifications',width:150}" >产品规格</th>
+        <th lay-data="{field:'operator',width:150}" >计费方式</th>
+        <th lay-data="{field:'operatorTime',width:180}" >脉冲当量</th>
+        <th lay-data="{field:'remarks',width:150}" >报警方数</th>
+        <th lay-data="{field:'valveSupplier', width:150 }">预留气量</th>
+        <th lay-data="{field:'valveNUms', width:180 }">窃气检测</th>
+        <th lay-data="{field:'valveName', width:150}">开阀时间</th>
+        <th lay-data="{field:'valveSpecifications', width:150}">关阀时间</th>
+        <th lay-data="{field:'testRemarks', width:150}">备注</th>
+    </tr>
+    </thead>
+</table>
+
+<script th:src="@{/adminlte/layui/layui.all.js}" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        //监听表格复选框选择
+        table.on('checkbox(demoCivilFilter)', function(obj){
+            console.log(obj)
+        });
+        //监听工具条
+        table.on('tool(demoCivilFilter)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'detail'){
+                layer.msg('ID：'+ data.id + ' 的查看操作');
+            } else if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                /*layer.alert('编辑行：<br/>'+ JSON.stringify(data))*/
+
+            }
+        });
+        //监听头工具栏事件
+        table.on('toolbar(demoCivilFilter)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id)
+                ,data = checkStatus.data//获取选中的数据
+                ,deList=[1];
+            data.forEach(function (n,i) {
+                deList.push(n.ids)
+            });
+            deList.push(2);
+            switch(obj.event){
+                case 'add':
+                    layer.open({
+                        type:1,
+                        title:'添加',
+                        btnAlign: 'c',
+                        area: ['900px', '380px'],
+                        btn:['保存','取消'],
+                        content: $("#add-mainCivilianProduction"),
+                        success:function(){
+                            top.$("#remarksAdd").val("");
+                            top.$("#vavleNumAdd").val("");
+                            top.$("#mainBoardNumAdd").val("");
+                            top.$("#productNumAdd").val("");
+                        },
+                        yes:function(index,layero){
+                            var testRemarks =top.$("#remarksAdd").val();
+                            var valveNUms =top.$("#vavleNumAdd").val();
+                            var controlMainBoardNums =top.$("#mainBoardNumAdd").val();
+                            var productNum1 =top.$("#productNumAdd").val();
+                            if(valveNUms==""||controlMainBoardNums==""||productNum1==""){
+                                /*   alert("您还有必填项未填哦！")*/
+                                layer.msg('您还有必填项未填哦！', {
+                                    btnAlign: 'c',
+                                    time: 3000, //20s后自动关闭
+                                    btn: ['确定']
+                                });
+                            }else {
+                                $.ajax({
+                                    //几个参数需要注意一下
+                                    type: "POST",//方法类型
+                                    dataType: "json",//预期服务器返回的数据类型
+                                    url: "" ,//url
+                                    data: {testRemarks:testRemarks,valveNUms:valveNUms,controlMainBoardNums:controlMainBoardNums,productNum:productNum1},
+                                    success: function (result) {
+                                        console.log(result);//打印服务端返回的数据(调试用)
+                                        if (result.success >0) {
+                                            layer.msg('操作成功', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                            table.reload('idTestPub');
+                                        }else{
+                                            layer.msg('操作失败', {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                        }
+                                    },
+                                    error : function() {
+                                        alert("异常！");
+                                    }
+                                });
+
+                                layer.close(index);
+                            }
+
+                        },
+                        btn2:function (index) {
+                            layer.close(index);
+                        },
+                        end:function(){
+                            table.reload('CivilId');
+                        }
+                    });
+                    break;
+                case 'check':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时测试一个');
+                    } else {
+                        var id =checkStatus.data[0].ids;
+                        var productNum =checkStatus.data[0].productNum;
+                        layer.confirm('确定测试？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "" ,//url
+                                data: {ids:id,productNum:productNum},
+                                success: function (result) {
+                                    if (result.success>0&&result.cc>0) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('CivilId')
+                                    }else if(result.cc==0){
+                                        layer.msg('未找到通讯编号信息', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }else{
+
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+                case 'clear':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时清除一个');
+                    } else {
+                        var id =checkStatus.data[0].ids;
+                        var productNum =checkStatus.data[0].productNum;
+                        layer.confirm('确定清表？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "" ,//url
+                                data: {ids:id,productNum:productNum},
+                                success: function (result) {
+                                    if (result.success>0&&result.cc>0) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('idTestPub')
+                                    }else if(result.cc==0){
+                                        layer.msg('未找到通讯编号信息', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }else{
+
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+                case 'clearEx':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时操作一个');
+                    } else {
+                        var id =checkStatus.data[0].ids;
+                        var productNum =checkStatus.data[0].productNum;
+                        layer.confirm('确定清异常？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "" ,//url
+                                data: {ids:id,productNum:productNum},
+                                success: function (result) {
+                                    if (result.success>0&&result.cc>0) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('CivilId')
+                                    }else if(result.cc==0){
+                                        layer.msg('未找到通讯编号信息', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }else{
+
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+                case 'delete':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else {
+                        layer.confirm('确定删除',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "" ,//url
+                                data: {deList:JSON.stringify(deList)},
+                                success: function (result) {
+                                    if (result.success>0) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('CivilId')
+                                    }else{
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+            }
+        });
+        var $ = layui.$, active = {
+            /*     getCheckData: function(){ //获取选中数据
+                     var checkStatus = table.checkStatus('idTest')
+                         ,data = checkStatus.data;
+                     layer.alert(JSON.stringify(data));
+                 }
+                 ,getCheckLength: function(){ //获取选中数目
+                     var checkStatus = table.checkStatus('idTest')
+                         ,data = checkStatus.data;
+                     layer.msg('选中了：'+ data.length + ' 个');
+                 }
+                 ,isAll: function(){ //验证是否全选
+                     var checkStatus = table.checkStatus('idTest');
+                     layer.msg(checkStatus.isAll ? '全选': '未全选')
+                 }
+                 ,*/
+            reload:function () {
+                var productNum = $("#productNumSearchPubProduct").val();
+                var goodsName = $("#goodsNameSearchPubProduct").val();
+                var specifications = $("#goodsSpecificationsSearchPubProduct").val();
+                var operator = $("#operatorSearchPubProduct").val();
+                var startDate = $("#startDateSearchPubProduct").val();
+                var endDate = $("#endDateSearchPubProduct").val();
+
+                table.reload('CivilId',{
+                    url:'',
+                    where:{productNum:productNum,goodsName:goodsName,specifications:specifications,operator:operator,startDate:startDate,endDate:endDate}  ,
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                })
+
+            }
+        };
+
+        $('.demoTableCivilianProduction .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#startDateSearchCivilProductionSearch' //指定元素
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#endDateSearchCivilProductionSearch' //指定元素
+            ,type: 'datetime'
+        });
+    });
+    layui.use(['upload'],function(){
+        var $ = layui.jquery,
+            upload = layui.upload;
+//指定允许上传的文件类型
+        upload.render({
+            elem: '#upload'
+            ,url: '/production/uploadPubProduct'
+            ,accept: 'file' //普通文件
+            ,exts: 'xlsx' //只允许上传excel文件
+            ,done: function(res){
+                if(res.code == 0){ //上传成功
+                    layer.msg(res.msg);
+                    table.reload('idTestPub');
+                }else{
+                    layer.msg('上传失败');
+                }
+            }
+            ,error: function(index, upload){
+                layer.msg('上传失败');
+            }
+        });
+    });
+    function CcompanyNameAdd() {
+        var local = $("#ClocalAdd").val();
+        console.log(local+"local++")
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/product/companyName" ,//url
+            data:{local:local},
+            success: function (result) {
+                if (result.success>0) {
+                    $("#CcompanyName").empty();
+                    var op="";
+                    var bp="请选择公司名称";
+                    $("#CcompanyName").append("<option value="+op+">"+bp+"</option>");
+                    var list =result.date;
+                    $.each(list,function (i,val) {
+                        var a =val.id;
+                        var b =val.purchaserName;
+                        console.log(b+"**")
+                        $("#CcompanyName").append("<option value="+a+">"+b+"</option>");
+                    });
+                }else{
+                    /*  alert("规格信息错误");*/
+                }
+            }/*,
+            error : function() {
+                alert("异常！");
+            }*/
+        });
+    }
+
+
+    function telCnumAddSerch() {
+        var telCnumAdd=$("#telCnumAdd").val()
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/production/mainBoardNum" ,//url
+            data: {mainBoardNum:mainBoardNumAdd},
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.exist >0) {
+                    $("#mainBoardNumAddP").show();
+                    $("#mainBoardNumAdd").val("");
+                }else{
+                    $("#mainBoardNumAddP").hide();
+                }
+            }/*,
+            error : function() {
+                alert("异常！");
+            }*/
+        });
+
+    }
+    var unSelected = "#999";
+    var selected = "#333";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    })
+</script>
+
+</body>
+</html>

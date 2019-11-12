@@ -2,10 +2,7 @@ package com.common.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.common.system.entity.Sysdata;
-import com.common.system.service.OverGoodsInStockService;
-import com.common.system.service.OverGoodsOutStockService;
-import com.common.system.service.OverGoodsStockService;
-import com.common.system.service.SysDataService;
+import com.common.system.service.*;
 import com.common.system.shiro.ShiroUser;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -34,6 +31,8 @@ public class OverGoodsController {
     OverGoodsOutStockService outStockService;
     @Autowired
     SysDataService sysDataService;
+    @Autowired
+    ProductOrderService productOrderService;
     @RequestMapping("/inStock")
     public ModelAndView instock(){
         ModelAndView mav = new ModelAndView("overGoodsInstock");
@@ -53,6 +52,7 @@ public class OverGoodsController {
     @ResponseBody
     public String addOverGoodsInStock(String productNum, @SessionAttribute ShiroUser user, String testRemarks){
         JSONObject object = goodsInStockService.addOverGoodsInStock(productNum, user.getUsername(), testRemarks);
+        int i2 = productOrderService.updateOver(productNum);
         return object.toString();
     }
     @RequestMapping("/uploadInStock")
@@ -186,6 +186,10 @@ public class OverGoodsController {
     @ResponseBody
     public String searchOverGoodsInStock2(String productNum){
         JSONObject object = goodsInStockService.searchOverGoodsInStock(productNum, "", "", "", "", "", 1, 10);
+        String civil = (String) object.get("civil");
+        if (civil.contains("民用")){
+            object.put("count",0);
+        }
         return object.toString();
     }
     @RequestMapping("/outStock")

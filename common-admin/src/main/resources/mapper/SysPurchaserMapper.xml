@@ -42,4 +42,8 @@
     <select id="purchaserName" resultType="string">
         SELECT distinct `purchaserName` FROM syspurchaser
     </select>
+    <select id="queryByLocal" resultType="com.common.system.entity.SysPurchaser">
+        select * from syspurchaser where `local` = #{local}
+    </select>
+
 </mapper>

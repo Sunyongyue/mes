@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.FlowmeterConfMapper">
+
+    <select id="queryAllFlowmeterConf" resultType="com.common.system.entity.FlowmeterConf">
+       SELECT * from flowmeter_conf
+    </select>
+    <select id="queryOneByName" resultType="com.common.system.entity.FlowmeterConf">
+        SELECT * from flowmeter_conf  where flowmeterFac=#{flowmeterFac}
+    </select>
+</mapper>

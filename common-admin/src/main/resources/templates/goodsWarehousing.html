@@ -223,7 +223,7 @@
         <button class="layui-btn layui-btn-sm" lay-event="addIn"  >添加</button>
        <!-- <button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>-->
         <button class="layui-btn layui-btn-sm" lay-event="deleteIn"  >删除</button>
-        <button class="layui-btn layui-btn-sm" lay-event="uploadIn"  >导入</button>
+        <button class="layui-btn layui-btn-sm" lay-event="uploadIn"  id="uploadIn" >导入</button>
     </div>
 </script>
 <table class="layui-table" lay-data="{totalRow:true,url:'/goodsInStock/goodsInStockDate', page:true, id:'idTestIn',toolbar:'#toolbarDemoIn',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoIn">
@@ -553,7 +553,7 @@
             upload = layui.upload;
 //指定允许上传的文件类型
         upload.render({
-            elem: '#upload'
+            elem: '#uploadIn'
             ,url: '/goodsInStock/upload'
             ,accept: 'file' //普通文件
             ,exts: 'xlsx' //只允许上传excel文件

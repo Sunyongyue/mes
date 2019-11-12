@@ -80,7 +80,7 @@
 <#macro footer>
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-        <b>Version</b> 1.0.0
+        <b>Version</b> 1.0.2
     </div>
     <strong>Copyright &copy; 2019-2029 <a href="">济宁天和智能仪表有限责任公司 </a>.
     </strong> 版权所有

@@ -3,6 +3,7 @@ package com.common.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.common.system.entity.ProductOrder;
 import com.common.system.entity.SaleOrder;
+import com.common.system.entity.SysPurchaser;
 import com.common.system.entity.Sysdata;
 import com.common.system.mapper.SysdataMapper;
 import com.common.system.service.SaleOrderService;
@@ -91,9 +92,14 @@ public class SaleOrderController {
         String format = dateFormat.format(date);
         int i = saleOrder.queryNum(format);
         String s = 88+format.replaceAll("-", "");
-        for (int k=0;k<sale.getCustomerNums();k++){
-           saleOrder.addSaleOrder((s+intToString(i+1)),sale.getCustomerName(),sale.getDate(),sale.getProjectName(),sale.getEndDate(),sale.getProductNameOrder(),sale.getProductSpecificationsOrder(),sale.getCustomerPressure(),sale.getCustomerNums(),sale.getAddress(),sale.getReceiver(),sale.getTelPhone(),sale.getLogisticsInformation(),sale.getRemarks(),user.getUsername(),sale.getOperatorTime(),sale.getKaiPiaoDate(),sale.getShouKuanDate());
-           i++;
+        if (sale.getProductNameOrder().contains("民用")){
+            saleOrder.addSaleOrder((s+intToString(i+1)),sale.getCustomerName(),sale.getDate(),sale.getProjectName(),sale.getEndDate(),sale.getProductNameOrder(),sale.getProductSpecificationsOrder(),sale.getCustomerPressure(),sale.getCustomerNums(),sale.getAddress(),sale.getReceiver(),sale.getTelPhone(),sale.getLogisticsInformation(),sale.getRemarks(),user.getUsername(),sale.getOperatorTime(),sale.getKaiPiaoDate(),sale.getShouKuanDate());
+
+        }else{
+            for (int k=0;k<sale.getCustomerNums();k++){
+                saleOrder.addSaleOrder((s+intToString(i+1)),sale.getCustomerName(),sale.getDate(),sale.getProjectName(),sale.getEndDate(),sale.getProductNameOrder(),sale.getProductSpecificationsOrder(),sale.getCustomerPressure(),1,sale.getAddress(),sale.getReceiver(),sale.getTelPhone(),sale.getLogisticsInformation(),sale.getRemarks(),user.getUsername(),sale.getOperatorTime(),sale.getKaiPiaoDate(),sale.getShouKuanDate());
+                i++;
+            }
         }
         JSONObject object = new JSONObject();
         object.put("success",i);
@@ -115,6 +121,17 @@ public class SaleOrderController {
     public String searchSaleOrder(String saleNum, String customerName, String projectName, String productNameOrder, String productSpecificationsOrder, String operator, String startDate, String endDate,Integer page, Integer limit){
         JSONObject object = saleOrder.searchSaleOrder(saleNum, customerName, projectName, productNameOrder, productSpecificationsOrder, operator, startDate, endDate, page, limit);
         return object.toString();
+    }
+    @RequestMapping("/userInfott")
+    @ResponseBody
+    public String userInfott(String customerName){
+        SysPurchaser sysPurchaser = sysPurchaserService.queryBypurchaserName(customerName);
+        JSONObject object = new JSONObject();
+        object.put("success",1);
+        object.put("sysPurchaser",sysPurchaser);
+        return object.toString();
+
+
     }
     //转换int方法
     public String intToString(int i){

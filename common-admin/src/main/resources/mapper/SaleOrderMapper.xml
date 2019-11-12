@@ -6,8 +6,8 @@
         select * from sale_order  ORDER BY operatorTime desc
     </select>
     <insert id="addSaleOrder">
-INSERT into sale_order(saleNum,customerName,`date`,projectName,endDate,productNameOrder,productSpecificationsOrder,customerPressure,customerNums,address,receiver,telPhone,logisticsInformation,remarks,operator,operatorTime,kaiPiaoDate,shouKuanDate)VALUES(
-#{saleNum},#{customerName},#{date},#{projectName},#{endDate},#{productNameOrder},#{productSpecificationsOrder},#{customerPressure},1,#{address},#{receiver},#{telPhone},#{logisticsInformation},#{remarks},#{operator},SYSDATE(),#{kaiPiaoDate},#{shouKuanDate});
+INSERT into sale_order(saleNum,customerName,`date`,projectName,endDate,productNameOrder,productSpecificationsOrder,customerPressure,customerNums,address,receiver,telPhone,logisticsInformation,remarks,operator,operatorTime,kaiPiaoDate,shouKuanDate,`status`)VALUES(
+#{saleNum},#{customerName},#{date},#{projectName},#{endDate},#{productNameOrder},#{productSpecificationsOrder},#{customerPressure},#{customerNums},#{address},#{receiver},#{telPhone},#{logisticsInformation},#{remarks},#{operator},SYSDATE(),#{kaiPiaoDate},#{shouKuanDate},'正常');
     </insert>
     <select id="queryNum" resultType="int">
         SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{date}
@@ -18,12 +18,12 @@ INSERT into sale_order(saleNum,customerName,`date`,projectName,endDate,productNa
     <update id="modifyOrderEnd">
         update sale_order set kaiPiaoDate=#{kaiPiaoDate},shouKuanDate=#{shouKuanDate},remarks=#{remarks} where id=#{id}
     </update>
-    <delete id="deleteSaleOrder">
-        DELETE from sale_order where id in
+    <update id="deleteSaleOrder">
+        update sale_order set `status`='已删除' where id in
         <foreach collection="array" item="item" open="(" close=")" separator=",">
             #{item}
         </foreach>
-    </delete>
+    </update>
     <select id="searchSaleOrder" resultType="com.common.system.entity.SaleOrder">
         select * from sale_order
         <where>

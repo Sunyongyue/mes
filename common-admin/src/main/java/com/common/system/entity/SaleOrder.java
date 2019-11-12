@@ -38,9 +38,11 @@ public class SaleOrder {
     private String kaiPiaoDate;
     //收款时间
     private String shouKuanDate;
+    //状态
+    private String status;
     public SaleOrder(){}
 
-    public SaleOrder(int id, String saleNum, String customerName, String date, String projectName, String endDate, String productNameOrder, String productSpecificationsOrder, String customerPressure, int customerNums, String address, String receiver, String telPhone, String logisticsInformation, String remarks, String operator, String operatorTime, String kaiPiaoDate, String shouKuanDate) {
+    public SaleOrder(int id, String saleNum, String customerName, String date, String projectName, String endDate, String productNameOrder, String productSpecificationsOrder, String customerPressure, int customerNums, String address, String receiver, String telPhone, String logisticsInformation, String remarks, String operator, String operatorTime, String kaiPiaoDate, String shouKuanDate, String status) {
         this.id = id;
         this.saleNum = saleNum;
         this.customerName = customerName;
@@ -60,6 +62,15 @@ public class SaleOrder {
         this.operatorTime = operatorTime;
         this.kaiPiaoDate = kaiPiaoDate;
         this.shouKuanDate = shouKuanDate;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getId() {
@@ -236,6 +247,7 @@ public class SaleOrder {
                 ", operatorTime='" + operatorTime + '\'' +
                 ", kaiPiaoDate='" + kaiPiaoDate + '\'' +
                 ", shouKuanDate='" + shouKuanDate + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

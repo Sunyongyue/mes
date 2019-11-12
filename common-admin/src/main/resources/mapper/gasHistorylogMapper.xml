@@ -27,5 +27,6 @@
             and creat_date<#{endDate}
             ]]></if>
         </where>
+        order by creat_date desc
     </select>
 </mapper>

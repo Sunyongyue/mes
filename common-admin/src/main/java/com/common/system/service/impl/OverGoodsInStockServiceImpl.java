@@ -156,6 +156,7 @@ public class OverGoodsInStockServiceImpl implements OverGoodsInStockService {
         int size = overGoodsInStocks.size();
         Page<Object> objects = PageHelper.startPage(page, limit);
         List<OverGoodsInStock> overGoodsInStock = overGoodsInStockMapper.searchOverGoodsInStock(productNum, goodsName, specifications, operator, startDate, endDate);
+
         String s = JSON.toJSONString(overGoodsInStock);
         JSONArray array = JSONArray.parseArray(s);
         JSONObject object =new JSONObject();
@@ -163,6 +164,7 @@ public class OverGoodsInStockServiceImpl implements OverGoodsInStockService {
         object.put("msg","");
         object.put("count",size);
         object.put("data",array);
+        object.put("civil",overGoodsInStock.get(0).getGoodsName());
         return object;
     }
 }

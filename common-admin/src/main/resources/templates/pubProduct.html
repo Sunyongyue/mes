@@ -56,7 +56,7 @@
         </div>
         <div class="layui-form-item my-form-item" style="margin-top: 10px">
             <div class="layui-inline">
-                <label class="layui-form-label" style="width: 170px"><p style="color: red;display: inline">※</p>阀门编号</label>
+                <label class="layui-form-label" style="width: 170px">阀门编号</label>
                 <div class="layui-input-inline">
                     <input type="text" id="vavleNumAdd" name="vavleNum" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入阀门编号" onkeyup="value=value.replace(/[^\d]/g,'')" onblur="vavleNumAddSerch()" >
                     <p id="vavleNumAddP" style="color: red; display: none" >阀门编号已被使用</p>
@@ -86,6 +86,8 @@
     <div class="layui-btn-container" >
         <button class="layui-btn layui-btn-sm" lay-event="add"  >装配</button>
         <button class="layui-btn layui-btn-sm" lay-event="check"  >测试</button>
+        <button class="layui-btn layui-btn-sm" lay-event="clear"  >清表</button>
+        <button class="layui-btn layui-btn-sm" lay-event="clearEx"  >清异常</button>
         <!--<button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>-->
         <!--<button class="layui-btn layui-btn-sm" lay-event="upload" id="upload" >导入</button>-->
         <button class="layui-btn layui-btn-sm" lay-event="delete"  >删除</button>
@@ -204,8 +206,8 @@
                             var valveNUms =top.$("#vavleNumAdd").val();
                             var controlMainBoardNums =top.$("#mainBoardNumAdd").val();
                             var productNum1 =top.$("#productNumAdd").val();
-                            if(valveNUms==""||controlMainBoardNums==""||productNum1==""){
-                             /*   alert("您还有必填项未填哦！")*/
+                            if(controlMainBoardNums==""||productNum1==""){
+                             /*   alert("您还有必填项未填哦！")valveNUms==""||*/
                                 layer.msg('您还有必填项未填哦！', {
                                     btnAlign: 'c',
                                     time: 3000, //20s后自动关闭
@@ -266,6 +268,98 @@
                                 type: "POST",//方法类型
                                 dataType: "json",//预期服务器返回的数据类型
                                 url: "/production/updatePubProduct" ,//url
+                                data: {ids:id,productNum:productNum},
+                                success: function (result) {
+                                    if (result.success>0&&result.cc>0) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('idTestPub')
+                                    }else if(result.cc==0){
+                                        layer.msg('未找到通讯编号信息', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }else{
+
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+                case 'clear':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时清除一个');
+                    } else {
+                        var id =checkStatus.data[0].ids;
+                        var productNum =checkStatus.data[0].productNum;
+                        layer.confirm('确定清表？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/production/clear" ,//url
+                                data: {ids:id,productNum:productNum},
+                                success: function (result) {
+                                    if (result.success>0&&result.cc>0) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('idTestPub')
+                                    }else if(result.cc==0){
+                                        layer.msg('未找到通讯编号信息', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }else{
+
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+                case 'clearEx':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时操作一个');
+                    } else {
+                        var id =checkStatus.data[0].ids;
+                        var productNum =checkStatus.data[0].productNum;
+                        layer.confirm('确定清异常？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/production/clearEx" ,//url
                                 data: {ids:id,productNum:productNum},
                                 success: function (result) {
                                     if (result.success>0&&result.cc>0) {
@@ -378,11 +472,11 @@
     layui.use('laydate', function(){
         var laydate = layui.laydate;
         laydate.render({
-            elem: '#startDateSearch' //指定元素
+            elem: '#startDateSearchPubProduct' //指定元素
             ,type: 'datetime'
         });
         laydate.render({
-            elem: '#endDateSearch' //指定元素
+            elem: '#endDateSearchPubProduct' //指定元素
             ,type: 'datetime'
         });
     });

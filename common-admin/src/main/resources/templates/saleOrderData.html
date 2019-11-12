@@ -94,7 +94,8 @@
         <th lay-data="{field:'operatorTime',width:180}" >操作时间</th>
         <th lay-data="{field:'kaiPiaoDate',width:180}" >开票时间</th>
         <th lay-data="{field:'shouKuanDate',width:180}" >收款时间</th>
-        <th lay-data="{field:'remarks',width:150}" >备注</th>
+        <th lay-data="{field:'status',width:150}" >订单状态</th>
+        <th lay-data="{field:'remarks',width:180}" >备注</th>
     </tr>
     </thead>
 </table>
@@ -304,11 +305,11 @@
     layui.use('laydate', function(){
         var laydate = layui.laydate;
         laydate.render({
-            elem: '#startDateSearch' //指定元素
+            elem: '#startDateSearchSaleOrder' //指定元素
             ,type: 'datetime'
         });
         laydate.render({
-            elem: '#endDateSearch' //指定元素
+            elem: '#endDateSearchSaleOrder' //指定元素
             ,type: 'datetime'
         });
     });

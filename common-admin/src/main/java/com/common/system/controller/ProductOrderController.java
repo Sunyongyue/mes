@@ -1,8 +1,10 @@
 package com.common.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.common.system.entity.FlowmeterConf;
 import com.common.system.entity.ProductOrder;
 import com.common.system.entity.Sysdata;
+import com.common.system.service.FlowmeterConfService;
 import com.common.system.service.ProductOrderService;
 import com.common.system.service.SysDataService;
 import com.common.system.shiro.ShiroUser;
@@ -40,6 +42,8 @@ public class ProductOrderController {
     ProductOrderService orderService;
     @Autowired
     SysDataService sysDataService;
+    @Autowired
+    FlowmeterConfService flowmeterConfService;
     @RequestMapping("/productOrder")
     public ModelAndView productOrder(){
         ModelAndView mav = new ModelAndView("productOrderData");
@@ -85,6 +89,7 @@ public class ProductOrderController {
         List<Sysdata> versionP = sysDataService.queryLocalList(224);
         List<Sysdata> telMainBoardSupplierP = sysDataService.queryLocalList(214);
         List<Sysdata> fourSupplierP = sysDataService.queryLocalList(215);
+        List<FlowmeterConf> flowmeterConfs = flowmeterConfService.queryAllFlowmeterConf();
         mav.addObject("goodsNameP",goodsNameP);
         mav.addObject("specificationsP",specificationsP);
         mav.addObject("pressureP",pressureP);
@@ -101,6 +106,8 @@ public class ProductOrderController {
         mav.addObject("versionP",versionP);
         mav.addObject("telMainBoardSupplierP",telMainBoardSupplierP);
         mav.addObject("fourSupplierP",fourSupplierP);
+        mav.addObject("telProtocol",flowmeterConfs);
+
         return mav;
     }
     @RequestMapping("/printProductOrder")
@@ -127,7 +134,7 @@ public class ProductOrderController {
             pras.add(PrintQuality.DRAFT);
             DocAttributeSet das = new HashDocAttributeSet();
             // 设置打印纸张的大小（以毫米为单位）
-           /* das.add(new MediaPrintableArea(0, 0, 80, 100, 100));*/
+            das.add(new MediaPrintableArea(0, 0, 80, 100, 100));
             Doc doc = new SimpleDoc(is, dof, das);
             DocPrintJob job = ps.createPrintJob();
             try {
@@ -158,10 +165,15 @@ public class ProductOrderController {
         String format = dateFormat.format(date);
         int i = orderService.queryNums(format);
         String s =66+format.replaceAll("-", "");
-       for (int k=0;k<data.getNums();k++){
-           orderService.addProductOrder((s+intToString(i+1)),data.getAlarmSquare(),data.getCharMethod(),data.getControlMainboardName(),data.getControlMainboardSpecifications(),data.getControlMainboardSupplier(),data.getDisconnectionCheck(),data.getFourMainBoardName(),data.getFourSpecifications(),data.getFourSupplier(),data.getGasCheck(),data.getGoodsName(),data.getIntakeDirection(),data.getLowPressureCheck(),data.getMicroleakageCheck(),data.getNoContactCheck(),1,data.getOvercurrentCheck(),data.getOverdrawAir(),data.getPressure(),data.getPulseEquivalent(),data.getRemarks(),data.getReservedAir(),data.getSignalSource(),data.getSpecifications(),data.getStopUseCheck(),data.getTelMainBoardName(),data.getTelMainBoardSpecifications(),data.getTelMainBoardSupplier(),data.getTelProtocol(),data.getTelType(),data.getUpperLimitOfRecharge(),data.getValveCloseTime(),data.getValveName(),data.getValveOpenTime(),data.getValveSpecifications(),data.getValveSupplier(),data.getVersion(),user.getUsername());
-           i++;
-       }
+        if(data.getGoodsName().contains("民用")){
+            orderService.addProductOrder((s+intToString(i+1)),data.getAlarmSquare(),data.getCharMethod(),data.getControlMainboardName(),data.getControlMainboardSpecifications(),data.getControlMainboardSupplier(),data.getDisconnectionCheck(),data.getFourMainBoardName(),data.getFourSpecifications(),data.getFourSupplier(),data.getGasCheck(),data.getGoodsName(),data.getIntakeDirection(),data.getLowPressureCheck(),data.getMicroleakageCheck(),data.getNoContactCheck(),data.getNums(),data.getOvercurrentCheck(),data.getOverdrawAir(),data.getPressure(),data.getPulseEquivalent(),data.getRemarks(),data.getReservedAir(),data.getSignalSource(),data.getSpecifications(),data.getStopUseCheck(),data.getTelMainBoardName(),data.getTelMainBoardSpecifications(),data.getTelMainBoardSupplier(),data.getTelProtocol(),data.getTelType(),data.getUpperLimitOfRecharge(),data.getValveCloseTime(),data.getValveName(),data.getValveOpenTime(),data.getValveSpecifications(),data.getValveSupplier(),data.getVersion(),user.getUsername());
+        }else{
+            for (int k=0;k<data.getNums();k++){
+                orderService.addProductOrder((s+intToString(i+1)),data.getAlarmSquare(),data.getCharMethod(),data.getControlMainboardName(),data.getControlMainboardSpecifications(),data.getControlMainboardSupplier(),data.getDisconnectionCheck(),data.getFourMainBoardName(),data.getFourSpecifications(),data.getFourSupplier(),data.getGasCheck(),data.getGoodsName(),data.getIntakeDirection(),data.getLowPressureCheck(),data.getMicroleakageCheck(),data.getNoContactCheck(),1,data.getOvercurrentCheck(),data.getOverdrawAir(),data.getPressure(),data.getPulseEquivalent(),data.getRemarks(),data.getReservedAir(),data.getSignalSource(),data.getSpecifications(),data.getStopUseCheck(),data.getTelMainBoardName(),data.getTelMainBoardSpecifications(),data.getTelMainBoardSupplier(),data.getTelProtocol(),data.getTelType(),data.getUpperLimitOfRecharge(),data.getValveCloseTime(),data.getValveName(),data.getValveOpenTime(),data.getValveSpecifications(),data.getValveSupplier(),data.getVersion(),user.getUsername());
+                i++;
+            }
+        }
+
         JSONObject object = new JSONObject();
        object.put("success",i);
         return object.toString();

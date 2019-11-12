@@ -31,7 +31,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">产品规格</label>
             <div class="layui-input-inline">
-                <select name="specifications" lay-verify="required" lay-search="">
+                <select name="specifications"  lay-search="">
                     <option value="">请选择产品规格</option>
                     <option th:each="specificationsP1:${specificationsP}" th:value="${specificationsP1.dataname}" th:text="${specificationsP1.dataname}"></option>
                 </select>
@@ -41,7 +41,7 @@
             <label class="layui-form-label">使用压力</label>
             <div class="layui-input-inline">
                <!-- <input type="text" name="pressure" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入">-->
-                <select name="pressure" lay-verify="required" lay-search="">
+                <select name="pressure"  lay-search="">
                     <option value="">请选择使用压力</option>
                     <option th:each="pressureP1:${pressureP}" th:value="${pressureP1.dataname}" th:text="${pressureP1.dataname}"></option>
                 </select>
@@ -61,7 +61,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">阀门厂商</label>
             <div class="layui-input-inline">
-                <select name="valveSupplier" lay-verify="required" lay-search="">
+                <select name="valveSupplier"  lay-search="">
                     <option value="">请选择阀门厂商</option>
                     <option th:each="valveSupplierP1:${valveSupplierP}" th:value="${valveSupplierP1.dataname}" th:text="${valveSupplierP1.dataname}"></option>
                 </select>
@@ -70,7 +70,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">阀门名称</label>
             <div class="layui-input-inline">
-                <select name="valveName" lay-verify="required" lay-search="">
+                <select name="valveName"  lay-search="">
                     <option value="">请选择阀门名称</option>
                     <option th:each="valveNameP1:${valveNameP}" th:value="${valveNameP1.dataname}" th:text="${valveNameP1.dataname}"></option>
                 </select>
@@ -79,7 +79,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">规格型号</label>
             <div class="layui-input-inline">
-                <select name="valveSpecifications" lay-verify="required" lay-search="">
+                <select name="valveSpecifications"  lay-search="">
                     <option value="">请选择规格型号</option>
                     <option th:each="valveSpecificationsP1:${valveSpecificationsP}" th:value="${valveSpecificationsP1.dataname}" th:text="${valveSpecificationsP1.dataname}"></option>
                 </select>
@@ -88,7 +88,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">进气方向</label>
             <div class="layui-input-inline">
-            <select name="intakeDirection" lay-verify="required" lay-search="">
+            <select name="intakeDirection" lay-search="">
                 <option value="">请选择进气方向</option>
                 <option value="左进气">左进气</option>
                 <option value="右进气">右进气</option>
@@ -214,9 +214,7 @@
               <!--  <input type="text" name="telProtocol" lay-verify="" placeholder="" autocomplete="off" class="layui-input">-->
                 <select name="telProtocol" lay-verify="" lay-search="">
                     <option value="">请选择通信协议</option>
-                    <option value="苍南">苍南</option>
-                    <option value="天信">天信</option>
-                    <option value="爱知">爱知</option>
+                    <option th:each="telProtocolp:${telProtocol}" th:value="${telProtocolp.flowmeterFac}" th:text="${telProtocolp.flowmeterFac}"></option>
                 </select>
             </div>
         </div>

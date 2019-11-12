@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.WorkingOrderMapper">
+
+    <select id="queryWorkingOrder" resultType="com.common.system.entity.WorkingOrder">
+        select * from workingorder  ORDER BY operatorTime desc
+    </select>
+    <select id="queryWorkingOrderByName" resultType="com.common.system.entity.WorkingOrder">
+        select * from workingorder  where orderName=#{orderName} ORDER BY operatorTime desc
+    </select>
+
+   <insert id="addWorkingOrder">
+       INSERT INTO `workingorder`( `orderName`, `adjustingWheel`, `installationOfSample`, `wiringHarness`, `installOfBoard`, `installOfSigns`, `upperShell`, `testing`, `boxing`, `remarks`, `status`, `operator`, `operatorTime`) VALUES (
+       #{orderName},#{adjustingWheel},#{installationOfSample}, #{wiringHarness}, #{installOfBoard}, #{installOfSigns},#{upperShell}, #{testing}, #{boxing}, #{remarks}, '1', #{operator}, sysdate());
+    </insert>
+    <delete id="deleteWorkingOrder">
+        DELETE from workingorder where id in
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <update id="updateWorkingOrder">
+        UPDATE `workingorder` SET `orderName` = #{orderName}, `adjustingWheel` = #{adjustingWheel}, `installationOfSample` = #{installationOfSample}, `wiringHarness` =#{wiringHarness}, `installOfBoard` = #{installOfBoard}, `installOfSigns` = #{installOfSigns}, `upperShell` =#{upperShell}, `testing` = #{testing}, `boxing` =#{boxing}, `remarks` = #{remarks}, `status` = '1', `operator` = #{operator}, `operatorTime` = sysdate() WHERE `id` = #{id};
+    </update>
+   <!-- <select id="distributNumberSearch" resultType="com.common.system.entity.DistributNumber">
+        select * from distribut_number
+        <where>
+            <if test="telNum !=''">`telNum` = #{telNum}</if>
+            <if test="mainBoardNum !=''">and controlMainNum = #{mainBoardNum} or telMainNum = #{mainBoardNum} or fourMainNum = #{mainBoardNum}  </if>
+            <if test="startDate !=''">and operatorTime > #{startDate}</if>
+            <if test="endDate !=''"> <![CDATA[
+            and operatorTime<#{endDate}
+            ]]></if>
+        </where>
+        ORDER BY operatorTime desc
+    </select>-->
+</mapper>

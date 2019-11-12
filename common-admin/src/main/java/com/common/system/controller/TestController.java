@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
 
 
 @Controller
@@ -52,5 +56,13 @@ public class TestController {
         System.out.println(user.getUsername()+"******");
         return "true";
     }
+    public static void main(String[] args){
+        Random random= new Random();
+
+        for (int j = 0; j <100 ; j++) {
+            int i = random.nextInt(46)+13;
+            System.out.println(i);
+        }
+        }
 
 }
