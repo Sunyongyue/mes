@@ -15,4 +15,5 @@ public interface SaleOrderMapper {
     List<SaleOrder> searchSaleOrder(@Param("saleNum") String saleNum,@Param("customerName") String customerName,@Param("projectName") String projectName,@Param("productNameOrder") String productNameOrder,@Param("productSpecificationsOrder") String productSpecificationsOrder,@Param("operator") String operator,@Param("startDate") String startDate,@Param("endDate") String endDate);
     SaleOrder queryOne(@Param("id") int id);
     int modifyOrderEnd(@Param("id") Integer saleId,@Param("kaiPiaoDate") String kaiPiaoDate,@Param("shouKuanDate") String shouKuanDate,@Param("remarks") String remarks);
+    SaleOrder queryByNum(@Param("saleNum")String saleNum);
 }

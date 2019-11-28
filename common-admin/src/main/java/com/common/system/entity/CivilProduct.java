@@ -33,6 +33,8 @@ public class CivilProduct {
     private String orderName;
     //采购商ID
     private int purchaserId;
+    //采购商名称
+    private String purchaserName;
     //备注
     private String remarks;
     //操作员
@@ -43,9 +45,27 @@ public class CivilProduct {
     private String status;
     //待用
     private String more;
+    //cardNum
+    private String main_Iphone;
+    private String main_StartDate;
+    private String main_EndDate;
+    private String main_ImeiNum;
+    private String main_PrintNum;
+    //指令状态
+    private String code;
+    //配置信息
+    private String ConfValveModel;
     public CivilProduct(){}
+    public CivilProduct(String telNum,String productNum,int workingorderId,int purchaserId,String remarks,String operator){
+        this.telNum=telNum;
+        this.productNum=productNum;
+        this.workingorderId=workingorderId;
+        this.purchaserId=purchaserId;
+        this.remarks=remarks;
+        this.operator=operator;
+    }
 
-    public CivilProduct(int id, String telNum, int productNumId, String productNum, String goodsName, String specifications, String charMethod, String pulseEquivalent, int alarmSquare, int reservedAir, String gasCheck, int valveCloseTime, int valveOpenTime, int workingorderId, String orderName, int purchaserId, String remarks, String operator, String operatorTime, String status, String more) {
+    public CivilProduct(int id, String telNum, int productNumId, String productNum, String goodsName, String specifications, String charMethod, String pulseEquivalent, int alarmSquare, int reservedAir, String gasCheck, int valveCloseTime, int valveOpenTime, int workingorderId, String orderName, int purchaserId, String purchaserName, String remarks, String operator, String operatorTime, String status, String more, String main_Iphone, String main_StartDate, String main_EndDate, String main_ImeiNum, String main_PrintNum) {
         this.id = id;
         this.telNum = telNum;
         this.productNumId = productNumId;
@@ -62,11 +82,49 @@ public class CivilProduct {
         this.workingorderId = workingorderId;
         this.orderName = orderName;
         this.purchaserId = purchaserId;
+        this.purchaserName = purchaserName;
         this.remarks = remarks;
         this.operator = operator;
         this.operatorTime = operatorTime;
         this.status = status;
         this.more = more;
+        this.main_Iphone = main_Iphone;
+        this.main_StartDate = main_StartDate;
+        this.main_EndDate = main_EndDate;
+        this.main_ImeiNum = main_ImeiNum;
+        this.main_PrintNum = main_PrintNum;
+    }
+
+    public CivilProduct(int id, String telNum, int productNumId, String productNum, String goodsName, String specifications, String charMethod, String pulseEquivalent, int alarmSquare, int reservedAir, String gasCheck, int valveCloseTime, int valveOpenTime, int workingorderId, String orderName, int purchaserId, String purchaserName, String remarks, String operator, String operatorTime, String status, String more, String main_Iphone, String main_StartDate, String main_EndDate, String main_ImeiNum, String main_PrintNum, String code, String confValveModel) {
+        this.id = id;
+        this.telNum = telNum;
+        this.productNumId = productNumId;
+        this.productNum = productNum;
+        this.goodsName = goodsName;
+        this.specifications = specifications;
+        this.charMethod = charMethod;
+        this.pulseEquivalent = pulseEquivalent;
+        this.alarmSquare = alarmSquare;
+        this.reservedAir = reservedAir;
+        this.gasCheck = gasCheck;
+        this.valveCloseTime = valveCloseTime;
+        this.valveOpenTime = valveOpenTime;
+        this.workingorderId = workingorderId;
+        this.orderName = orderName;
+        this.purchaserId = purchaserId;
+        this.purchaserName = purchaserName;
+        this.remarks = remarks;
+        this.operator = operator;
+        this.operatorTime = operatorTime;
+        this.status = status;
+        this.more = more;
+        this.main_Iphone = main_Iphone;
+        this.main_StartDate = main_StartDate;
+        this.main_EndDate = main_EndDate;
+        this.main_ImeiNum = main_ImeiNum;
+        this.main_PrintNum = main_PrintNum;
+        this.code = code;
+        ConfValveModel = confValveModel;
     }
 
     public int getId() {
@@ -237,6 +295,70 @@ public class CivilProduct {
         this.more = more;
     }
 
+    public String getPurchaserName() {
+        return purchaserName;
+    }
+
+    public void setPurchaserName(String purchaserName) {
+        this.purchaserName = purchaserName;
+    }
+
+    public String getMain_Iphone() {
+        return main_Iphone;
+    }
+
+    public void setMain_Iphone(String main_Iphone) {
+        this.main_Iphone = main_Iphone;
+    }
+
+    public String getMain_StartDate() {
+        return main_StartDate;
+    }
+
+    public void setMain_StartDate(String main_StartDate) {
+        this.main_StartDate = main_StartDate;
+    }
+
+    public String getMain_EndDate() {
+        return main_EndDate;
+    }
+
+    public void setMain_EndDate(String main_EndDate) {
+        this.main_EndDate = main_EndDate;
+    }
+
+    public String getMain_ImeiNum() {
+        return main_ImeiNum;
+    }
+
+    public void setMain_ImeiNum(String main_ImeiNum) {
+        this.main_ImeiNum = main_ImeiNum;
+    }
+
+    public String getMain_PrintNum() {
+        return main_PrintNum;
+    }
+
+    public void setMain_PrintNum(String main_PrintNum) {
+        this.main_PrintNum = main_PrintNum;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getConfValveModel() {
+        return ConfValveModel;
+    }
+
+    public void setConfValveModel(String confValveModel) {
+        ConfValveModel = confValveModel;
+    }
+
     @Override
     public String toString() {
         return "CivilProduct{" +
@@ -256,11 +378,19 @@ public class CivilProduct {
                 ", workingorderId=" + workingorderId +
                 ", orderName='" + orderName + '\'' +
                 ", purchaserId=" + purchaserId +
+                ", purchaserName='" + purchaserName + '\'' +
                 ", remarks='" + remarks + '\'' +
                 ", operator='" + operator + '\'' +
                 ", operatorTime='" + operatorTime + '\'' +
                 ", status='" + status + '\'' +
                 ", more='" + more + '\'' +
+                ", main_Iphone='" + main_Iphone + '\'' +
+                ", main_StartDate='" + main_StartDate + '\'' +
+                ", main_EndDate='" + main_EndDate + '\'' +
+                ", main_ImeiNum='" + main_ImeiNum + '\'' +
+                ", main_PrintNum='" + main_PrintNum + '\'' +
+                ", code='" + code + '\'' +
+                ", ConfValveModel='" + ConfValveModel + '\'' +
                 '}';
     }
 }

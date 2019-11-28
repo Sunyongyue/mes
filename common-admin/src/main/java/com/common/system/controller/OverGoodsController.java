@@ -50,8 +50,8 @@ public class OverGoodsController {
     }
     @RequestMapping("/addOverGoodsInStock")
     @ResponseBody
-    public String addOverGoodsInStock(String productNum, @SessionAttribute ShiroUser user, String testRemarks){
-        JSONObject object = goodsInStockService.addOverGoodsInStock(productNum, user.getUsername(), testRemarks);
+    public String addOverGoodsInStock(String productNum, @SessionAttribute ShiroUser user, String testRemarks,int num){
+        JSONObject object = goodsInStockService.addOverGoodsInStock(productNum, user.getUsername(), testRemarks,num);
         int i2 = productOrderService.updateOver(productNum);
         return object.toString();
     }
@@ -68,7 +68,7 @@ public class OverGoodsController {
                 Row row = null;
                 List<Map<String,String>> list = null;
                 String cellData = null;
-                String columns[] = {"productNum","remarks"};
+                String columns[] = {"productNum","remarks","num"};
                 wb = readExcel(file);
                 if(wb != null){
                     //用来存放表中数据
@@ -102,7 +102,8 @@ public class OverGoodsController {
                     }*/
                     String productNum = map.get("productNum");
                     String remarks = map.get("remarks");
-                    goodsInStockService.addOverGoodsInStock(productNum,user.getUsername(),remarks);
+                    int num = Integer.parseInt(map.get("num"));
+                    goodsInStockService.addOverGoodsInStock(productNum,user.getUsername(),remarks,num);
                 }
             } catch (Exception e) {
                 resObj.put("msg", "error");

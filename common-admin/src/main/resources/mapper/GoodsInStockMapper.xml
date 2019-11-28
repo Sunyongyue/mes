@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.common.system.mapper.GoodsInStockMapper">
     <select id="queryGoodsInStock" resultType="com.common.system.entity.GoodsInStock">
-        select * from goods_inStock order by operatorTime desc
+        select * from goods_inStock order by id desc
     </select>
     <select id="queryBypipelineNumber" resultType="com.common.system.entity.GoodsInStock">
         select * from goods_inStock where pipelineNumber=#{pipelineNumber}

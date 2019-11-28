@@ -3,7 +3,10 @@
 <mapper namespace="com.common.system.mapper.SaleOrderMapper">
 
     <select id="querySaleOrder" resultType="com.common.system.entity.SaleOrder">
-        select * from sale_order  ORDER BY operatorTime desc
+        select * from sale_order  ORDER BY id desc
+    </select>
+    <select id="queryByNum" resultType="com.common.system.entity.SaleOrder">
+        select * from sale_order where saleNum=#{saleNum}
     </select>
     <insert id="addSaleOrder">
 INSERT into sale_order(saleNum,customerName,`date`,projectName,endDate,productNameOrder,productSpecificationsOrder,customerPressure,customerNums,address,receiver,telPhone,logisticsInformation,remarks,operator,operatorTime,kaiPiaoDate,shouKuanDate,`status`)VALUES(
@@ -38,6 +41,6 @@ INSERT into sale_order(saleNum,customerName,`date`,projectName,endDate,productNa
             and operatorTime<#{endDate}
             ]]></if>
         </where>
-        ORDER BY operatorTime desc
+        ORDER BY id desc
     </select>
 </mapper>

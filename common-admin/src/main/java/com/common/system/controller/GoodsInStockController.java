@@ -6,10 +6,14 @@ import com.common.system.entity.GoodsStock;
 import com.common.system.service.GoodsInStockService;
 import com.common.system.service.GoodsStockService;
 import com.common.system.shiro.ShiroUser;
+import com.xiaoleilu.hutool.poi.excel.ExcelReader;
+import com.xiaoleilu.hutool.poi.excel.ExcelUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +32,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/goodsInStock")
 public class GoodsInStockController {
+    protected static final Logger logger = LoggerFactory.getLogger(GoodsInStockController.class);
     @Autowired
     GoodsInStockService goodsInStockService;
     @Autowired
@@ -169,7 +175,20 @@ public class GoodsInStockController {
     }
     @RequestMapping("/upload")
     @ResponseBody
-    public String upload(@RequestParam("file") MultipartFile file,@SessionAttribute ShiroUser user){
+    public String upload(@RequestParam("file") MultipartFile file,@SessionAttribute ShiroUser user) throws IOException {
+        //getInputStream() 方法  返回InputStream读取文件的内容
+        /*InputStream in = file.getInputStream();                                                                                                                                            //getOriginalFilename（）方法是得到原来的文件名在客户机的文件系统名称
+        String OriginalFilename = file.getOriginalFilename();
+        //getName() 方法   返回参数的名称  这里返回的也就是  file
+        String fileName = file.getName();
+        logger.info("fileName{}-----------",fileName);
+
+        ExcelReader reader = ExcelUtil.getReader(in);
+        List<List<Object>> readAll = reader.read();
+        for (Object r:
+        readAll) {
+            System.out.println(r);
+        }*/
         String str = "导入成功";
         Map<String, String> resObj = new HashMap<>();
         if (!file.isEmpty()) {
@@ -209,9 +228,9 @@ public class GoodsInStockController {
                 }
                 //遍历解析出来的list
                 for (Map<String,String> map : list) {
-                   /* for (Map.Entry<String,String> entry : map.entrySet()) {
+                    for (Map.Entry<String,String> entry : map.entrySet()) {
                         System.out.print(entry.getKey()+":"+entry.getValue()+",");
-                    }*/
+                    }
                     String local = map.get("local");
                     String supplierName = map.get("supplierName");
                     String goodsType = map.get("goodsType");
@@ -220,13 +239,13 @@ public class GoodsInStockController {
                     String goodsProduceDate = map.get("goodsProduceDate");
                     String goodsProduceDate1 = StringUtils.substringBefore(goodsProduceDate, ".");
                     int i = Integer.parseInt(goodsProduceDate1);
-                    /*日期转换*/
+                  //  日期转换
                     Calendar c = new GregorianCalendar(1900,0,-1);
                     Date d = c.getTime();
                     Date date = DateUtils.addDays(d, i);
                     SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
                     String format = sp.format(date);
-                    /*日期转换*/
+                   // 日期转换
                     String goodsNums = map.get("goodsNums");
                     String s = StringUtils.substringBefore(goodsNums, ".");
                     int nums = Integer.parseInt(s);
@@ -264,6 +283,7 @@ public class GoodsInStockController {
         } else {
             return null;
         }
+
     }
     public String intToString(int i){
         if (i<10){

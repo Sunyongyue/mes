@@ -46,7 +46,7 @@ public class ProductOrder {
     //备注
     private String remarks;
     //预存气量
-    private int reservedAir;
+    private String reservedAir;
     //信号来源
     private String signalSource;
     //产品规格
@@ -83,8 +83,9 @@ public class ProductOrder {
     private String operatorTime;
     //状态
     private String status;
+    private String orderType;
     public ProductOrder(){}
-    public ProductOrder(int id, String productNum, int alarmSquare, String charMethod, String controlMainboardName, String controlMainboardSpecifications, String controlMainboardSupplier, String disconnectionCheck, String fourMainBoardName, String fourSpecifications, String fourSupplier, String gasCheck, String goodsName, String intakeDirection, String lowPressureCheck, String microleakageCheck, String noContactCheck, int nums, String overcurrentCheck, int overdrawAir, String pressure, String pulseEquivalent, String remarks, int reservedAir, String signalSource, String specifications, String stopUseCheck, String telMainBoardName, String telMainBoardSpecifications, String telMainBoardSupplier, String telProtocol, String telType, int upperLimitOfRecharge, int valveCloseTime, String valveName, int valveOpenTime, String valveSpecifications, String valveSupplier, String version, String operator, String operatorTime,String status) {
+    public ProductOrder(int id, String productNum, int alarmSquare, String charMethod, String controlMainboardName, String controlMainboardSpecifications, String controlMainboardSupplier, String disconnectionCheck, String fourMainBoardName, String fourSpecifications, String fourSupplier, String gasCheck, String goodsName, String intakeDirection, String lowPressureCheck, String microleakageCheck, String noContactCheck, int nums, String overcurrentCheck, int overdrawAir, String pressure, String pulseEquivalent, String remarks, String reservedAir, String signalSource, String specifications, String stopUseCheck, String telMainBoardName, String telMainBoardSpecifications, String telMainBoardSupplier, String telProtocol, String telType, int upperLimitOfRecharge, int valveCloseTime, String valveName, int valveOpenTime, String valveSpecifications, String valveSupplier, String version, String operator, String operatorTime,String status) {
         this.id = id;
         this.productNum = productNum;
         this.alarmSquare = alarmSquare;
@@ -127,6 +128,14 @@ public class ProductOrder {
         this.operator = operator;
         this.operatorTime = operatorTime;
         this.status=status;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
     }
 
     public int getId() {
@@ -313,11 +322,11 @@ public class ProductOrder {
         this.remarks = remarks;
     }
 
-    public int getReservedAir() {
+    public String getReservedAir() {
         return reservedAir;
     }
 
-    public void setReservedAir(int reservedAir) {
+    public void setReservedAir(String reservedAir) {
         this.reservedAir = reservedAir;
     }
 

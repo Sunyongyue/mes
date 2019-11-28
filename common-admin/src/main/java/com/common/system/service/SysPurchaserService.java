@@ -16,4 +16,5 @@ public interface SysPurchaserService {
     List<String> purchaserNameList();
     SysPurchaser queryBypurchaserName(@Param("purchaserName") String purchaserName);
     int selectMax();
+    SysPurchaser queryById(@Param("id") int id);
 }

@@ -55,6 +55,13 @@
             </div>
         </div>
         <div class="layui-form-item my-form-item"  style="margin-left: -40px">
+            <label class="layui-form-label layui-icon"  style="width: 170px">数量:</label>
+            <div class="layui-input-inline">
+                <input id="nums123" type="text" name="nums123"  autocomplete="off" placeholder="请输入数量"
+                       class="layui-input" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+            </div>
+        </div>
+        <div class="layui-form-item my-form-item"  style="margin-left: -40px">
             <label class="layui-form-label layui-icon"  style="width: 170px">备注:</label>
             <div class="layui-input-inline">
                 <input id="remarksAdd123" type="text" name="remarksAdd123"  autocomplete="off" placeholder="请输入备注"
@@ -159,12 +166,14 @@
                         success:function(){
                            top.$('#productNumAdd123').val("");
                            top.$("#remarksAdd123").val("");
+                           top.$("#nums123").val("");
                         },
                         yes:function(index,layero){
                             var productNum =top.$('#productNumAdd123').val();
                             var testRemarks =top.$("#remarksAdd123").val();
-                            if (testRemarks==""){
-                                layer.msg('请输入备注', {
+                            var nums =top.$("#nums123").val();
+                            if (nums==""){
+                                layer.msg('请输入数量', {
                                     btnAlign: 'c',
                                     time: 3000, //20s后自动关闭
                                     btn: ['确定']
@@ -175,7 +184,7 @@
                                     type: "POST",//方法类型
                                     dataType: "json",//预期服务器返回的数据类型
                                     url: "/overGoods/addOverGoodsInStock" ,//url
-                                    data: {productNum:productNum,testRemarks:testRemarks},
+                                    data: {productNum:productNum,testRemarks:testRemarks,num:nums},
                                     success: function (result) {
                                         console.log(result);//打印服务端返回的数据(调试用)
                                         if (result.success >0) {

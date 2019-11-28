@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.common.system.mapper.OverGoodsOutStockMapper">
     <select id="queryOverGoodsOutStock" resultType="com.common.system.entity.OverGoodsOutStock">
-        SELECT  * from over_goods_outStock,sale_order,pubproduct,product_order where over_goods_outStock.productNum=pubproduct.productNum and over_goods_outStock.productNum=product_order.productNum and over_goods_outStock.salenum =sale_order.saleNum   ORDER BY over_goods_outStock.getOutFactoryTime desc
+        SELECT  * from over_goods_outStock,sale_order,product_order where over_goods_outStock.productNum=product_order.productNum and over_goods_outStock.salenum =sale_order.saleNum   ORDER BY over_goods_outStock.getOutFactoryTime desc
     </select>
     <insert id="addOverGoodsOutStock">
       INSERT into over_goods_outStock(outStockNumbers,productNum,salenum,outFactoryMan,getOutFactoryTime,outStockNums,outStockType,outStockremarks,recordStatus,logisticsInformation)VALUES(
-      #{outStockNumbers},#{productNum},#{salenum},#{outFactoryMan},SYSDATE(),1,#{outStockType},#{outStockremarks},'检测中',#{logisticsInformation})
+      #{outStockNumbers},#{productNum},#{salenum},#{outFactoryMan},SYSDATE(),#{outStockNums},#{outStockType},#{outStockremarks},'检测中',#{logisticsInformation})
     </insert>
     <update id="outStockPeople">
         update over_goods_outStock set outStockTestPeople=#{outStockTestPeople},outStockTestTime=SYSDATE() where id=#{id}
@@ -21,9 +21,9 @@
         </foreach>
     </delete>
     <select id="searchOverGoodsOutStock" resultType="com.common.system.entity.OverGoodsOutStock">
-        select * from over_goods_outStock,sale_order,pubproduct,product_order
+        select * from over_goods_outStock,sale_order,product_order
         <where>
-            <if test="1!=0"> over_goods_outStock.productNum=pubproduct.productNum and over_goods_outStock.productNum=product_order.productNum and over_goods_outStock.salenum =sale_order.saleNum</if>
+            <if test="1!=0">  over_goods_outStock.productNum=product_order.productNum and over_goods_outStock.salenum =sale_order.saleNum</if>
             <if test="outStockNumbers !=''">and over_goods_outStock.outStockNumbers = #{outStockNumbers}</if>
             <if test="salenum !=''">and over_goods_outStock.salenum = #{salenum}</if>
             <if test="productNameOrder !=''">and sale_order.productNameOrder = #{productNameOrder}</if>

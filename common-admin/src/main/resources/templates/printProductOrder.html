@@ -41,7 +41,7 @@
 	<body >
 	 <div class="box">
         <div id="printbq" align="center" style="margin-top: 12px;">
-        <h3 class="billtitle">天和仪表_生产订单(工业)</h3>
+        <h3 class="billtitle" th:text="${productOrder.orderType}">天和仪表_生产订单(工业)</h3>
         <div class="foots">
         	<!--<div style="display: inline-block; margin-left: -32px; border: 1px  dashed; width:500px; height: 52px;"><span style="line-height: 52px;" th:text="${productOrder.productNum}"></span></div>-->
 			<div style="display: inline-block; margin-left:-90px; border: 1px  dashed; width:94px; height: 56px;"><span style="line-height: 56px;font-size: 11px" th:text="${productOrder.productNum}"></span></div>

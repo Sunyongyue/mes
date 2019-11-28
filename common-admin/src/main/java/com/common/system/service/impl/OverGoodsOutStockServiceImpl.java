@@ -50,7 +50,7 @@ public class OverGoodsOutStockServiceImpl implements OverGoodsOutStockService {
         String specifications="";
         String intakeDirection="";
         String testDate="";
-        int nums=1;
+
         String pressure = "";
         String valveSupplier =  "";
         String valveName = "";
@@ -74,7 +74,7 @@ public class OverGoodsOutStockServiceImpl implements OverGoodsOutStockService {
             goodsName = productOrders.get(0).getGoodsName();
             specifications = productOrders.get(0).getSpecifications();
             intakeDirection = productOrders.get(0).getIntakeDirection();
-            nums = productOrders.get(0).getNums();
+
             pressure = productOrders.get(0).getPressure();
             valveSupplier = productOrders.get(0).getValveSupplier();
             valveName = productOrders.get(0).getValveName();

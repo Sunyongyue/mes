@@ -8,7 +8,9 @@
     <select id="queryWorkingOrderByName" resultType="com.common.system.entity.WorkingOrder">
         select * from workingorder  where orderName=#{orderName} ORDER BY operatorTime desc
     </select>
-
+    <select id="queryWorkingOrderById" resultType="com.common.system.entity.WorkingOrder">
+        select * from workingorder  where id=#{workingorderId}
+    </select>
    <insert id="addWorkingOrder">
        INSERT INTO `workingorder`( `orderName`, `adjustingWheel`, `installationOfSample`, `wiringHarness`, `installOfBoard`, `installOfSigns`, `upperShell`, `testing`, `boxing`, `remarks`, `status`, `operator`, `operatorTime`) VALUES (
        #{orderName},#{adjustingWheel},#{installationOfSample}, #{wiringHarness}, #{installOfBoard}, #{installOfSigns},#{upperShell}, #{testing}, #{boxing}, #{remarks}, '1', #{operator}, sysdate());

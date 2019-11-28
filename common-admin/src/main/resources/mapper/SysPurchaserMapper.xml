@@ -7,6 +7,9 @@
     <select id="queryBypurchaserName" resultType="com.common.system.entity.SysPurchaser">
         select * from syspurchaser where  purchaserName=#{purchaserName}
     </select>
+    <select id="queryById" resultType="com.common.system.entity.SysPurchaser">
+        select * from syspurchaser where  id=#{id}
+    </select>
     <select id="selectMax" resultType="int">
          SELECT MAX(purchaserNums) AS big FROM syspurchaser
     </select>

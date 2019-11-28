@@ -20,9 +20,11 @@ public class AssistConfController {
     public String queryAssist(String valveSupplier, String valveName, String valveSpecifications, String ConfPulse){
         JSONObject object = new JSONObject();
 
-        if (valveName.contains("角阀")){
+        if (valveName.contains("角阀")&&!valveName.contains("丝杠")){
             valveName="角阀";
-        }else if (valveName.contains("慢关")){
+        }else if(valveName.contains("丝杠")){
+            valveName="角阀（丝杠）";
+        } else if (valveName.contains("慢关")){
            valveName=valveName.replaceAll("慢关", "");
        }else if (valveName.contains("快关")){
            valveName=valveName.replaceAll("快关", "");

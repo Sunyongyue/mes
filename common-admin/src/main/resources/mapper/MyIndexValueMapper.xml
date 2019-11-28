@@ -2,58 +2,58 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.common.system.mapper.MyIndexValueMapper">
     <select id="industryDayOrder" resultType="int">
-        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{day} and status!='已删除'
+        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{day} and status!='已删除'and goodsName not LIKE CONCAT('%','民用','%')
     </select>
     <select id="industryMonthOrder" resultType="int">
-        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y-%m') = #{month} and status!='已删除'
+        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y-%m') = #{month} and status!='已删除' and goodsName not LIKE CONCAT('%','民用','%')
     </select>
     <select id="industryYearOrder" resultType="int">
-        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y') = #{year} and status!='已删除'
+        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y') = #{year} and status!='已删除' and goodsName not LIKE CONCAT('%','民用','%')
     </select>
     <select id="civilDayOrder" resultType="int">
-        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{day} and status!='已删除'
+        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{day} and status!='已删除' and goodsName  LIKE CONCAT('%','民用','%')
     </select>
     <select id="civilMonthOrder" resultType="int">
-        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y-%m') = #{month} and status!='已删除'
+        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y-%m') = #{month} and status!='已删除' and goodsName  LIKE CONCAT('%','民用','%')
     </select>
     <select id="civilYearOrder" resultType="int">
-        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y') = #{year} and status!='已删除'
+        SELECT COUNT(*) FROM product_order where DATE_FORMAT(operatorTime,'%Y') = #{year} and status!='已删除' and goodsName  LIKE CONCAT('%','民用','%')
     </select>
     <select id="industrySaleDayOrder" resultType="int">
-        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{day} and status!='已删除'
+        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{day} and status!='已删除' and productNameOrder not LIKE CONCAT('%','民用','%')
     </select>
     <select id="industrySaleMonthOrder" resultType="int">
-        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y-%m') = #{month} and status!='已删除'
+        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y-%m') = #{month} and status!='已删除' and productNameOrder not LIKE CONCAT('%','民用','%')
     </select>
     <select id="industrySaleYearOrder" resultType="int">
-        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y') = #{year} and status!='已删除'
+        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y') = #{year} and status!='已删除' and productNameOrder not LIKE CONCAT('%','民用','%')
     </select>
     <select id="civilSaleDayOrder" resultType="int">
-        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{day} and status!='已删除'
+        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{day} and status!='已删除' and productNameOrder  LIKE CONCAT('%','民用','%')
     </select>
     <select id="civilSaleMonthOrder" resultType="int">
-        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y-%m') = #{month} and status!='已删除'
+        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y-%m') = #{month} and status!='已删除' and productNameOrder  LIKE CONCAT('%','民用','%')
     </select>
     <select id="civilSaleYearOrder" resultType="int">
-        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y') = #{year} and status!='已删除'
+        SELECT COUNT(*) FROM sale_order where DATE_FORMAT(operatorTime,'%Y') = #{year} and status!='已删除' and productNameOrder  LIKE CONCAT('%','民用','%')
     </select>
     <select id="dayCivilSendGoods" resultType="int">
-        SELECT COUNT(*) FROM over_goods_outstock where DATE_FORMAT(sendGoodsTime,'%Y-%m-%d') = #{day}
+        SELECT COUNT(outStockNums) FROM over_goods_outstock,product_order where DATE_FORMAT(sendGoodsTime,'%Y-%m-%d') = #{day} and over_goods_outstock.productNum=product_order.productNum and product_order.goodsName  LIKE CONCAT('%','民用','%')
     </select>
     <select id="monthCivilSendGoods" resultType="int">
-        SELECT COUNT(*) FROM over_goods_outstock where DATE_FORMAT(sendGoodsTime,'%Y-%m') = #{month}
+        SELECT COUNT(outStockNums) FROM over_goods_outstock,product_order where DATE_FORMAT(sendGoodsTime,'%Y-%m') = #{month} and over_goods_outstock.productNum=product_order.productNum and product_order.goodsName  LIKE CONCAT('%','民用','%')
     </select>
     <select id="yearCivilSendGoods" resultType="int">
-        SELECT COUNT(*) FROM over_goods_outstock where DATE_FORMAT(sendGoodsTime,'%Y') = #{year}
+        SELECT COUNT(outStockNums) FROM over_goods_outstock,product_order where DATE_FORMAT(sendGoodsTime,'%Y') = #{year} and over_goods_outstock.productNum=product_order.productNum and product_order.goodsName  LIKE CONCAT('%','民用','%')
     </select>
     <select id="dayDustrySendGoods" resultType="int">
-        SELECT COUNT(*) FROM over_goods_outstock where DATE_FORMAT(sendGoodsTime,'%Y-%m-%d') = #{day}
+        SELECT COUNT(outStockNums) FROM over_goods_outstock,product_order where DATE_FORMAT(sendGoodsTime,'%Y-%m-%d') = #{day} and over_goods_outstock.productNum=product_order.productNum and product_order.goodsName not LIKE CONCAT('%','民用','%')
     </select>
     <select id="monthDustrySendGoods" resultType="int">
-        SELECT COUNT(*) FROM over_goods_outstock where DATE_FORMAT(sendGoodsTime,'%Y-%m') = #{month}
+        SELECT COUNT(outStockNums) FROM over_goods_outstock,product_order where DATE_FORMAT(sendGoodsTime,'%Y-%m') = #{month} and over_goods_outstock.productNum=product_order.productNum and product_order.goodsName not LIKE CONCAT('%','民用','%')
     </select>
     <select id="yearDustrySendGoods" resultType="int">
-        SELECT COUNT(*) FROM over_goods_outstock where DATE_FORMAT(sendGoodsTime,'%Y') = #{year}
+        SELECT COUNT(outStockNums) FROM over_goods_outstock,product_order where DATE_FORMAT(sendGoodsTime,'%Y') = #{year} and over_goods_outstock.productNum=product_order.productNum and product_order.goodsName not LIKE CONCAT('%','民用','%')
     </select>
     <select id="dayInGoods" resultType="int">
         SELECT COUNT(*) FROM goods_instock where DATE_FORMAT(operatorTime,'%Y-%m-%d') = #{day} and goodsType =#{goodsName}

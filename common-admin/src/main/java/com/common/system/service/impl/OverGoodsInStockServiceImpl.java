@@ -46,13 +46,13 @@ public class OverGoodsInStockServiceImpl implements OverGoodsInStockService {
     }
 
     @Override
-    public JSONObject addOverGoodsInStock(String productNum, String operator, String testRemarks) {
+    public JSONObject addOverGoodsInStock(String productNum, String operator, String testRemarks,int num) {
         int stock=0;
         String goodsName="";
         String specifications="";
         String intakeDirection="";
         String testDate="";
-        int nums=1;
+        /*int nums=1;*/
         String pressure = "";
         String valveSupplier =  "";
         String valveName = "";
@@ -82,7 +82,7 @@ public class OverGoodsInStockServiceImpl implements OverGoodsInStockService {
              specifications = pubProduct.getSpecifications();
              intakeDirection = pubProduct.getIntakeDirection();
              testDate = pubProduct.getTestDate();
-             nums = pubProduct.getNums();
+            /* nums = pubProduct.getNums();*/
              pressure = pubProduct.getPressure();
              valveSupplier = pubProduct.getValveSupplier();
              valveName = pubProduct.getValveName();
@@ -103,7 +103,7 @@ public class OverGoodsInStockServiceImpl implements OverGoodsInStockService {
             goodsName = productOrders.get(0).getGoodsName();
             specifications = productOrders.get(0).getSpecifications();
             intakeDirection = productOrders.get(0).getIntakeDirection();
-            nums = productOrders.get(0).getNums();
+         /*   nums = productOrders.get(0).getNums();*/
             pressure = productOrders.get(0).getPressure();
             valveSupplier = productOrders.get(0).getValveSupplier();
             valveName = productOrders.get(0).getValveName();
@@ -124,12 +124,12 @@ public class OverGoodsInStockServiceImpl implements OverGoodsInStockService {
         }
         List<OverGoodsStock> overGoodsStocks = goodsStockMapper.queryExist(goodsName,specifications,intakeDirection,pressure,valveSupplier,valveName,valveSpecifications,controlMainboardSupplier,controlMainboardName,controlMainboardSpecifications,version,telMainBoardSupplier,telMainBoardName,telMainBoardSpecifications,telType,fourSupplier,fourMainBoardName,fourSpecifications,telProtocol);
         if (overGoodsStocks.isEmpty()){
-            stock = goodsStockMapper.addOverGoodsStock(goodsName, specifications, intakeDirection, "成品库", nums, operator, testRemarks,pressure,valveSupplier,valveName,valveSpecifications,controlMainboardSupplier,controlMainboardName,controlMainboardSpecifications,version,telMainBoardSupplier,telMainBoardName,telMainBoardSpecifications,telType,fourSupplier,fourMainBoardName,fourSpecifications,telProtocol);
+            stock = goodsStockMapper.addOverGoodsStock(goodsName, specifications, intakeDirection, "成品库", num, operator, testRemarks,pressure,valveSupplier,valveName,valveSpecifications,controlMainboardSupplier,controlMainboardName,controlMainboardSpecifications,version,telMainBoardSupplier,telMainBoardName,telMainBoardSpecifications,telType,fourSupplier,fourMainBoardName,fourSpecifications,telProtocol);
         }else {
-            stock = goodsStockMapper.updateGoodsStock(goodsName, specifications, intakeDirection, nums, operator,pressure,valveSupplier,valveName,valveSpecifications,controlMainboardSupplier,controlMainboardName,controlMainboardSpecifications,version,telMainBoardSupplier,telMainBoardName,telMainBoardSpecifications,telType,fourSupplier,fourMainBoardName,fourSpecifications,telProtocol);
+            stock = goodsStockMapper.updateGoodsStock(goodsName, specifications, intakeDirection, num, operator,pressure,valveSupplier,valveName,valveSpecifications,controlMainboardSupplier,controlMainboardName,controlMainboardSpecifications,version,telMainBoardSupplier,telMainBoardName,telMainBoardSpecifications,telType,fourSupplier,fourMainBoardName,fourSpecifications,telProtocol);
         }
         if (stock>0){
-            int i = overGoodsInStockMapper.addOverGoodsInStock(productNum, goodsName, specifications, intakeDirection, testDate, nums, operator, testRemarks,pressure,valveSupplier,valveName,valveSpecifications,controlMainboardSupplier,controlMainboardName,controlMainboardSpecifications,version,telMainBoardSupplier,telMainBoardName,telMainBoardSpecifications,telType,fourSupplier,fourMainBoardName,fourSpecifications,telProtocol);
+            int i = overGoodsInStockMapper.addOverGoodsInStock(productNum, goodsName, specifications, intakeDirection, testDate, num, operator, testRemarks,pressure,valveSupplier,valveName,valveSpecifications,controlMainboardSupplier,controlMainboardName,controlMainboardSpecifications,version,telMainBoardSupplier,telMainBoardName,telMainBoardSpecifications,telType,fourSupplier,fourMainBoardName,fourSpecifications,telProtocol);
             JSONObject object = new JSONObject();
             object.put("success",i);
             return object;

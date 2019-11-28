@@ -43,7 +43,7 @@ public class ConfigMes {
     //时间系数、过流
     private int ConfOverFlowCoef;
     //预留气量
-    private int ConfReserveVol;
+    private String ConfReserveVol;
     //充值上限
     private int ConfRechargeLimit;
     //脉冲当量
@@ -89,7 +89,7 @@ public class ConfigMes {
     private String code;
     public ConfigMes(){}
 
-    public ConfigMes(int id, String productNum, String coName, String coOwnArea, String coIp, int coPort, String coAPN, String coDomain, String coRemarks, String confValveModel, int confPktSer, String confDeviceType, int confCoNum, String confDeviceAddr, String confUserAddr, String confUpTime, int confUpCyc, String confVolType, String confPayType, String confValveType, int confAlarmVol, int confOverFlowCoef, int confReserveVol, int confRechargeLimit, double confPulse, String confReserveFlag, int confPayDay, String confPayCyc, int confAllowVol, double confOpenTime, double confCloseTime, String confSignalSrc, int confChan1, int confPower1, int confChan2, int confPower2, int status, int confPayCycNum, int microleakageTime, int noContactTime, int noUseGasDay, String flowmeter, String fourVersion, String creat_date,String return_date,String code) {
+    public ConfigMes(int id, String productNum, String coName, String coOwnArea, String coIp, int coPort, String coAPN, String coDomain, String coRemarks, String confValveModel, int confPktSer, String confDeviceType, int confCoNum, String confDeviceAddr, String confUserAddr, String confUpTime, int confUpCyc, String confVolType, String confPayType, String confValveType, int confAlarmVol, int confOverFlowCoef, String confReserveVol, int confRechargeLimit, double confPulse, String confReserveFlag, int confPayDay, String confPayCyc, int confAllowVol, double confOpenTime, double confCloseTime, String confSignalSrc, int confChan1, int confPower1, int confChan2, int confPower2, int status, int confPayCycNum, int microleakageTime, int noContactTime, int noUseGasDay, String flowmeter, String fourVersion, String creat_date,String return_date,String code) {
         this.id = id;
         this.productNum = productNum;
         CoName = coName;
@@ -314,11 +314,11 @@ public class ConfigMes {
         ConfOverFlowCoef = confOverFlowCoef;
     }
 
-    public int getConfReserveVol() {
+    public String getConfReserveVol() {
         return ConfReserveVol;
     }
 
-    public void setConfReserveVol(int confReserveVol) {
+    public void setConfReserveVol(String confReserveVol) {
         ConfReserveVol = confReserveVol;
     }
 

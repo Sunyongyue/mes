@@ -72,4 +72,10 @@ public class WorkingOrderServiceImpl implements WorkingOrderService {
         object.put("success",i);
         return object;
     }
+
+    @Override
+    public WorkingOrder queryWorkingOrderById(int workingorderId) {
+        WorkingOrder workingOrder = workingOrderMapper.queryWorkingOrderById(workingorderId);
+        return workingOrder;
+    }
 }

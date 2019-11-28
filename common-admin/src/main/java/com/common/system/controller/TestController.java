@@ -57,12 +57,17 @@ public class TestController {
         return "true";
     }
     public static void main(String[] args){
-        Random random= new Random();
+      /*  Random random= new Random();
 
         for (int j = 0; j <100 ; j++) {
             int i = random.nextInt(46)+13;
             System.out.println(i);
-        }
-        }
+        }*/
+     /*   SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        Date now = new Date();
+        Date afterDate = new Date(now .getTime() + 300000);
+
+        String format = sdf.format(afterDate);*/
+    }
 
 }

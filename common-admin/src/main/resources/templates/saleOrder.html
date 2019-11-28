@@ -197,7 +197,9 @@
                         parent.layer.close(index);
                     } else {
                         console.log(result.date);
-                        alert("系统错误");
+
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
                     }
                 }
             });

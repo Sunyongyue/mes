@@ -119,4 +119,10 @@ public class SysPurchaserServiceImpl implements SysPurchaserService {
         int i = purchaserMapper.selectMax();
         return i;
     }
+
+    @Override
+    public SysPurchaser queryById(int id) {
+        SysPurchaser sysPurchaser = purchaserMapper.queryById(id);
+        return sysPurchaser;
+    }
 }

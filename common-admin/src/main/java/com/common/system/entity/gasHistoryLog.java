@@ -57,8 +57,51 @@ public class gasHistoryLog {
     private double cur_step6_vol;
     private String upload_date;
     private String creat_date;
+    //流量计编号
+    private String fw_num;
+    //累计已用气量（标况）
+    private String fw_totalGas_standard;
+    //累计已用气量（工况）
+    private String fw_totalGas_work;
+    //瞬时累计已用气量（标况）
+    private String fw_instantTotalGas_standard;
+    //瞬时累计已用气量（工况）
+    private String fw_instantTotalGas_work;
+    //温度
+    private String fw_temperature;
+    //压力
+    private String fw_pre;
+    //k系数
+    private String fw_k;
+    //错误累计已用气量（标况）
+    private String fw_flaseTotalGas_standard;
+    //错误累计已用气量（工况）
+    private String fw_flaseTotalGas_work;
+    //状态
+    private String fw_status;
+    //电压
+    private String fw_vol;
+    //风速
+    private String fw_windFeed;
+    //压力下限
+    private String fw_preLowTest;
+    //压力上限
+    private String fw_preTopTest;
+    //温度下限
+    private String fw_temperatureLowTest;
+    //温度上限
+    private String fw_temperatureTopTest;
+    //温度传感器
+    private String fw_temSensor;
+    //压力传感器
+    private String fw_preSensor;
+    //磁干扰
+    private String fw_magneticInterference;
+    private String fef_overVol;
+    private String fef_tel;
     public gasHistoryLog(){}
-    public gasHistoryLog(String id, String meter_id, String report_type, int length, int sn, String device_addr, String device_type, String corporation_code, String user_addr, double remainded_gas, double accumulative_gas, double sum_gas, int pay_num, int preinstall_modify_num, int current_modify_num, double current_unit_price, double current_gas, double accumulative_use_gas, String main_circuit, String auxiliary_circuit, String valve_status, String switch_status, String pulse_status, String overcurrent_status, String leakage_status, String low_pressure, String breakage_status, String data_storage, String open_valve, String close_valve, String backout_meter, String micro_leakage, String lost_contact, String nouse_gas, int one_day_gas, int two_day_gas, int three_day_gas, int four_day_gas, int five_day_gas, int six_day_gas, int one_month_gas, int two_month_gas, double settlement_date_gas, double main_circuit_voltage, double auxiliary_circuit_voltage, String version, int signal_intensity, String effective_date, double cur_step1_vol, double cur_step2_vol, double cur_step3_vol, double cur_step4_vol, double cur_step5_vol, double cur_step6_vol, String upload_date, String creat_date) {
+
+    public gasHistoryLog(String id, String meter_id, String report_type, int length, int sn, String device_addr, String device_type, String corporation_code, String user_addr, double remainded_gas, double accumulative_gas, double sum_gas, int pay_num, int preinstall_modify_num, int current_modify_num, double current_unit_price, double current_gas, double accumulative_use_gas, String main_circuit, String auxiliary_circuit, String valve_status, String switch_status, String pulse_status, String overcurrent_status, String leakage_status, String low_pressure, String breakage_status, String data_storage, String open_valve, String close_valve, String backout_meter, String micro_leakage, String lost_contact, String nouse_gas, int one_day_gas, int two_day_gas, int three_day_gas, int four_day_gas, int five_day_gas, int six_day_gas, int one_month_gas, int two_month_gas, double settlement_date_gas, double main_circuit_voltage, double auxiliary_circuit_voltage, String version, int signal_intensity, String effective_date, double cur_step1_vol, double cur_step2_vol, double cur_step3_vol, double cur_step4_vol, double cur_step5_vol, double cur_step6_vol, String upload_date, String creat_date, String fw_num, String fw_totalGas_standard, String fw_totalGas_work, String fw_instantTotalGas_standard, String fw_instantTotalGas_work, String fw_temperature, String fw_pre, String fw_k, String fw_flaseTotalGas_standard, String fw_flaseTotalGas_work, String fw_status, String fw_vol, String fw_windFeed, String fw_preLowTest, String fw_preTopTest, String fw_temperatureLowTest, String fw_temperatureTopTest, String fw_temSensor, String fw_preSensor, String fw_magneticInterference, String fef_overVol, String fef_tel) {
         this.id = id;
         this.meter_id = meter_id;
         this.report_type = report_type;
@@ -115,6 +158,204 @@ public class gasHistoryLog {
         this.cur_step6_vol = cur_step6_vol;
         this.upload_date = upload_date;
         this.creat_date = creat_date;
+        this.fw_num = fw_num;
+        this.fw_totalGas_standard = fw_totalGas_standard;
+        this.fw_totalGas_work = fw_totalGas_work;
+        this.fw_instantTotalGas_standard = fw_instantTotalGas_standard;
+        this.fw_instantTotalGas_work = fw_instantTotalGas_work;
+        this.fw_temperature = fw_temperature;
+        this.fw_pre = fw_pre;
+        this.fw_k = fw_k;
+        this.fw_flaseTotalGas_standard = fw_flaseTotalGas_standard;
+        this.fw_flaseTotalGas_work = fw_flaseTotalGas_work;
+        this.fw_status = fw_status;
+        this.fw_vol = fw_vol;
+        this.fw_windFeed = fw_windFeed;
+        this.fw_preLowTest = fw_preLowTest;
+        this.fw_preTopTest = fw_preTopTest;
+        this.fw_temperatureLowTest = fw_temperatureLowTest;
+        this.fw_temperatureTopTest = fw_temperatureTopTest;
+        this.fw_temSensor = fw_temSensor;
+        this.fw_preSensor = fw_preSensor;
+        this.fw_magneticInterference = fw_magneticInterference;
+        this.fef_overVol = fef_overVol;
+        this.fef_tel = fef_tel;
+    }
+
+    public String getFef_overVol() {
+        return fef_overVol;
+    }
+
+    public void setFef_overVol(String fef_overVol) {
+        this.fef_overVol = fef_overVol;
+    }
+
+    public String getFef_tel() {
+        return fef_tel;
+    }
+
+    public void setFef_tel(String fef_tel) {
+        this.fef_tel = fef_tel;
+    }
+
+    public String getFw_num() {
+        return fw_num;
+    }
+
+    public void setFw_num(String fw_num) {
+        this.fw_num = fw_num;
+    }
+
+    public String getFw_totalGas_standard() {
+        return fw_totalGas_standard;
+    }
+
+    public void setFw_totalGas_standard(String fw_totalGas_standard) {
+        this.fw_totalGas_standard = fw_totalGas_standard;
+    }
+
+    public String getFw_totalGas_work() {
+        return fw_totalGas_work;
+    }
+
+    public void setFw_totalGas_work(String fw_totalGas_work) {
+        this.fw_totalGas_work = fw_totalGas_work;
+    }
+
+    public String getFw_instantTotalGas_standard() {
+        return fw_instantTotalGas_standard;
+    }
+
+    public void setFw_instantTotalGas_standard(String fw_instantTotalGas_standard) {
+        this.fw_instantTotalGas_standard = fw_instantTotalGas_standard;
+    }
+
+    public String getFw_instantTotalGas_work() {
+        return fw_instantTotalGas_work;
+    }
+
+    public void setFw_instantTotalGas_work(String fw_instantTotalGas_work) {
+        this.fw_instantTotalGas_work = fw_instantTotalGas_work;
+    }
+
+    public String getFw_temperature() {
+        return fw_temperature;
+    }
+
+    public void setFw_temperature(String fw_temperature) {
+        this.fw_temperature = fw_temperature;
+    }
+
+    public String getFw_pre() {
+        return fw_pre;
+    }
+
+    public void setFw_pre(String fw_pre) {
+        this.fw_pre = fw_pre;
+    }
+
+    public String getFw_k() {
+        return fw_k;
+    }
+
+    public void setFw_k(String fw_k) {
+        this.fw_k = fw_k;
+    }
+
+    public String getFw_flaseTotalGas_standard() {
+        return fw_flaseTotalGas_standard;
+    }
+
+    public void setFw_flaseTotalGas_standard(String fw_flaseTotalGas_standard) {
+        this.fw_flaseTotalGas_standard = fw_flaseTotalGas_standard;
+    }
+
+    public String getFw_flaseTotalGas_work() {
+        return fw_flaseTotalGas_work;
+    }
+
+    public void setFw_flaseTotalGas_work(String fw_flaseTotalGas_work) {
+        this.fw_flaseTotalGas_work = fw_flaseTotalGas_work;
+    }
+
+    public String getFw_status() {
+        return fw_status;
+    }
+
+    public void setFw_status(String fw_status) {
+        this.fw_status = fw_status;
+    }
+
+    public String getFw_vol() {
+        return fw_vol;
+    }
+
+    public void setFw_vol(String fw_vol) {
+        this.fw_vol = fw_vol;
+    }
+
+    public String getFw_windFeed() {
+        return fw_windFeed;
+    }
+
+    public void setFw_windFeed(String fw_windFeed) {
+        this.fw_windFeed = fw_windFeed;
+    }
+
+    public String getFw_preLowTest() {
+        return fw_preLowTest;
+    }
+
+    public void setFw_preLowTest(String fw_preLowTest) {
+        this.fw_preLowTest = fw_preLowTest;
+    }
+
+    public String getFw_preTopTest() {
+        return fw_preTopTest;
+    }
+
+    public void setFw_preTopTest(String fw_preTopTest) {
+        this.fw_preTopTest = fw_preTopTest;
+    }
+
+    public String getFw_temperatureLowTest() {
+        return fw_temperatureLowTest;
+    }
+
+    public void setFw_temperatureLowTest(String fw_temperatureLowTest) {
+        this.fw_temperatureLowTest = fw_temperatureLowTest;
+    }
+
+    public String getFw_temperatureTopTest() {
+        return fw_temperatureTopTest;
+    }
+
+    public void setFw_temperatureTopTest(String fw_temperatureTopTest) {
+        this.fw_temperatureTopTest = fw_temperatureTopTest;
+    }
+
+    public String getFw_temSensor() {
+        return fw_temSensor;
+    }
+
+    public void setFw_temSensor(String fw_temSensor) {
+        this.fw_temSensor = fw_temSensor;
+    }
+
+    public String getFw_preSensor() {
+        return fw_preSensor;
+    }
+
+    public void setFw_preSensor(String fw_preSensor) {
+        this.fw_preSensor = fw_preSensor;
+    }
+
+    public String getFw_magneticInterference() {
+        return fw_magneticInterference;
+    }
+
+    public void setFw_magneticInterference(String fw_magneticInterference) {
+        this.fw_magneticInterference = fw_magneticInterference;
     }
 
     public String getId() {
@@ -567,7 +808,7 @@ public class gasHistoryLog {
 
     @Override
     public String toString() {
-        return "GasHistoryLogService{" +
+        return "gasHistoryLog{" +
                 "id='" + id + '\'' +
                 ", meter_id='" + meter_id + '\'' +
                 ", report_type='" + report_type + '\'' +
@@ -624,6 +865,26 @@ public class gasHistoryLog {
                 ", cur_step6_vol=" + cur_step6_vol +
                 ", upload_date='" + upload_date + '\'' +
                 ", creat_date='" + creat_date + '\'' +
+                ", fw_num='" + fw_num + '\'' +
+                ", fw_totalGas_standard='" + fw_totalGas_standard + '\'' +
+                ", fw_totalGas_work='" + fw_totalGas_work + '\'' +
+                ", fw_instantTotalGas_standard='" + fw_instantTotalGas_standard + '\'' +
+                ", fw_instantTotalGas_work='" + fw_instantTotalGas_work + '\'' +
+                ", fw_temperature='" + fw_temperature + '\'' +
+                ", fw_pre='" + fw_pre + '\'' +
+                ", fw_k='" + fw_k + '\'' +
+                ", fw_flaseTotalGas_standard='" + fw_flaseTotalGas_standard + '\'' +
+                ", fw_flaseTotalGas_work='" + fw_flaseTotalGas_work + '\'' +
+                ", fw_status='" + fw_status + '\'' +
+                ", fw_vol='" + fw_vol + '\'' +
+                ", fw_windFeed='" + fw_windFeed + '\'' +
+                ", fw_preLowTest='" + fw_preLowTest + '\'' +
+                ", fw_preTopTest='" + fw_preTopTest + '\'' +
+                ", fw_temperatureLowTest='" + fw_temperatureLowTest + '\'' +
+                ", fw_temperatureTopTest='" + fw_temperatureTopTest + '\'' +
+                ", fw_temSensor='" + fw_temSensor + '\'' +
+                ", fw_preSensor='" + fw_preSensor + '\'' +
+                ", fw_magneticInterference='" + fw_magneticInterference + '\'' +
                 '}';
     }
 }
