@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.CivilStatusMapper">
+    <select id="queryStatus" resultType="com.common.system.entity.CivilStatus">
+  SELECT
+	e.`code`,
+	d.ConfDeviceAddr,
+	d.ConfPktSer,
+	d.ConfValveModel
+FROM
+	(
+SELECT
+	ConfDeviceAddr,
+	SUBSTRING_INDEX( GROUP_CONCAT( `status` ORDER BY ConfPktSer DESC ), ',', 1 ) AS `status`,
+	SUBSTRING_INDEX( GROUP_CONCAT( ConfValveModel ORDER BY ConfPktSer DESC ), ',', 1 ) AS ConfValveModel,
+	ConfPktSer
+FROM
+	(
+SELECT
+	b.ConfDeviceAddr,
+	b.`status`,
+	b.ConfPktSer,
+	b.ConfValveModel
+FROM
+	civil_product_copy1 a,
+	config_mes b
+WHERE
+	a.telNum = b.ConfDeviceAddr
+	AND a.`status` = '正常'
+ORDER BY
+	b.ConfPktSer DESC
+	) c
+GROUP BY
+	ConfDeviceAddr
+	) d,
+	statuscode e
+WHERE
+	d.`status` = e.`status`
+   </select>
+
+
+</mapper>

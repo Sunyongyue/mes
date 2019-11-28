@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<META HTTP-EQUIV="expires" CONTENT="0">
+<head>
+    <link rel="stylesheet" th:href="@{/adminlte/layui/css/layui.css}"  media="all"/>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <style>
+       body{
+           margin-top: 20px;
+           width: 1300px;
+           margin-left: 50px;
+
+       }
+    </style>
+</head>
+<body>
+<div class="demoTableCivilianProduction">
+    <div class="layui-inline" style="margin-left: 0px">生产单号：</div>
+    <div class="layui-inline" style="width: 160px">
+        <input class="layui-input"  id="CivilProductNumSerachCopy" autocomplete="off" style="width: 150px;height: 25px" placeholder="请输入生产单号" onblur="searchExistCopy()" onkeyup="value=value.replace(/[^\d]/g,'')" />
+    </div>
+    销售单号:
+    <div class="layui-inline" style="width: 160px">
+        <input class="layui-input"  id="CivilSaleNumber" autocomplete="off" style="width: 150px;height: 25px" placeholder="请输入销售单号"onblur="" onkeyup="value=value.replace(/[^\d]/g,'')" />
+    </div>
+    生产工序:
+    <div class="layui-inline" style="width: 160px">
+        <!--   <input class="layui-input"  id="goodsSpecificationsSearchPubProduct" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入产品规格"/>&ndash;&gt;-->
+        <select id="workingOrderSearchCopy" style="width: 150px;height: 25px">
+            <option value="">请选择生产工序</option>
+            <option th:each="CivilWorkingOrder1:${CivilWorkingOrder}" th:value="${CivilWorkingOrder1.id}" th:text="${CivilWorkingOrder1.orderName}"></option>
+        </select>
+    </div>
+    设备地址:
+    <div class="layui-inline" style="width: 160px">
+        <input class="layui-input"  id="TelNumSearchCCopy" autocomplete="off" style="width: 150px;height: 25px" placeholder="请输入通讯编号" onblur="telCnumAddSerchCopy()"/>
+    </div>
+    数量：
+    <div class="layui-inline" style="width: 160px">
+        <input class="layui-input"  id="numA" autocomplete="off" style="width: 150px;height: 25px" placeholder="请输入数量" value="1" onkeyup="value=value.replace(/[^\d]/g,'')" />
+    </div>
+    <button class="layui-btn layui-btn-sm" data-type="reload">添加</button>
+</div>
+<!--<script type="text/html" id="toolbarDemoCivilScript">
+    <div class="layui-btn-container" >
+        <button class="layui-btn layui-btn-sm" lay-event="checkCopy"  >生产写配置</button>
+        <button class="layui-btn layui-btn-sm" lay-event="clearCopy"  >清表</button>
+        <button class="layui-btn layui-btn-sm" lay-event="clearExCopy"  >清异常</button>
+        <button class="layui-btn layui-btn-sm" lay-event="outGoodsCCopy"  >出厂写配置</button>
+    </div>
+</script>-->
+<table class="layui-table" lay-data="{url:'/product/queryAllCopy',id:'CivilCopyId'}">
+    <thead>
+    <tr>
+        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+        <th lay-data="{field:'telNum', width:150}" >设备地址</th>
+        <th lay-data="{field:'confValveModel',width:150}" >配置类型</th>
+        <th lay-data="{field:'code',width:150}" >执行状态</th>
+        <th lay-data="{field:'charMethod',width:150}" >计费方式</th>
+        <th lay-data="{field:'pulseEquivalent',width:150}" >脉冲当量</th>
+        <th lay-data="{field:'alarmSquare',width:150}" >报警方数</th>
+        <th lay-data="{field:'reservedAir', width:150 }">预留气量</th>
+        <th lay-data="{field:'gasCheck', width:180 }">窃气检测</th>
+        <th lay-data="{field:'valveOpenTime', width:180}">开阀时间</th>
+        <th lay-data="{field:'valveCloseTime', width:150}">关阀时间</th>
+    </tr>
+    </thead>
+</table>
+<div class="layui-btn-group CivilCopy" style="margin-left: 30%">
+    <button class="layui-btn layui-btn-normal" data-type="getCheckDataCopy">生产写配置</button>
+    <button class="layui-btn layui-btn-normal" data-type="getCheckLengthCopy" >清表指令</button>
+    <button class="layui-btn layui-btn-normal" data-type="isAllCopy" >清异常指令</button>
+    <button class="layui-btn layui-btn-danger" data-type="outCivilCopy" >出厂写配置</button>
+</div>
+<script th:src="@{/adminlte/layui/layui.all.js}" charset="utf-8"></script>
+<script type="text/javascript" src="/adminlte/layui/jquery-3.2.1.min.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    var table;
+    layui.use('table', function(){
+         table = layui.table;
+        //监听头工具栏事件
+        table.on('toolbar(CivilCopyFilter)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id)
+                ,data = checkStatus.data//获取选中的数据
+                ,deList=[1],telNum=[1],proOrderNum=[1],status=[];
+            data.forEach(function (n,i) {
+                deList.push(n.id);
+                telNum.push(n.telNum);
+                proOrderNum.push(n.productNum);
+                status.push(n.status)
+            });
+            telNum.push(2);
+            deList.push(2);
+            proOrderNum.push(2);
+            switch(obj.event){
+                case 'checkCopy':
+                    console.log(telNum)
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } /*else if(data.length > 1){
+                        layer.msg('只能同时测试一个');
+                    }*/ else if (status.indexOf("已删除")>-1){
+                        layer.msg('包含已删除的设备，请重新选择！');
+                    }else {
+                        layer.confirm('确定测试？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "//" ,//url
+                                data: {telNum:JSON.stringify(telNum),proOrderNum:JSON.stringify(proOrderNum),instructionType:"生产写配置"},
+                                success: function (result) {
+                                    if (result.success<2&&result.sum==true) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('CivilId')
+                                    }else if(result.success>1){
+                                        layer.msg('请选择同一批生产订单的货', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }else{
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+                case 'clearCopy':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } /*else if(data.length > 1){
+                        layer.msg('只能同时测试一个');
+                    }*/ else if (status.indexOf("已删除")>-1){
+                        layer.msg('包含已删除的设备，请重新选择！');
+                    }else {
+                        layer.confirm('确定清表？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/product/cCheck" ,//url
+                                data: {telNum:JSON.stringify(telNum),proOrderNum:JSON.stringify(proOrderNum),instructionType:"清表指令"},
+                                success: function (result) {
+                                    if (result.success<2&&result.sum==true) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('CivilId')
+                                    }else if(result.success>1){
+                                        layer.msg('请选择同一批生产订单的货', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }else{
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+                case 'clearExCopy':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } /*else if(data.length > 1){
+                        layer.msg('只能同时测试一个');
+                    }*/ else if (status.indexOf("已删除")>-1){
+                        layer.msg('包含已删除的设备，请重新选择！');
+                    }else {
+                        layer.confirm('确定清异常？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/product/cCheck" ,//url
+                                data: {telNum:JSON.stringify(telNum),proOrderNum:JSON.stringify(proOrderNum),instructionType:"清异常指令"},
+                                success: function (result) {
+                                    if (result.success<2&&result.sum==true) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('CivilId')
+                                    }else if(result.success>1){
+                                        layer.msg('请选择同一批生产订单的货', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }else{
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+                case 'outGoodsCCopy':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } /*else if(data.length > 1){
+                        layer.msg('只能同时测试一个');
+                    }*/ else if (status.indexOf("已删除")>-1){
+                        layer.msg('包含已删除的设备，请重新选择！');
+                    }else {
+                        layer.confirm('确定发货？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/product/cOut" ,//url
+                                data: {telNum:JSON.stringify(telNum),proOrderNum:JSON.stringify(proOrderNum),instructionType:"发货写配置",id:checkStatus.data[0].purchaserId},
+                                success: function (result) {
+                                    if (result.success<2&&result.sum==true) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('CivilId')
+                                    }else if(result.success>1){
+                                        layer.msg('请选择同一批生产订单的货', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }else{
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+            }
+        });
+        var $ = layui.$, active = {
+            reload:function () {
+                var productNum = $("#CivilProductNumSerachCopy").val();
+                var CivilSaleNumber = $("#CivilSaleNumber").val();
+                var workingOrderSearchCopy = $("#workingOrderSearchCopy").val();
+                var num = $("#numA").val();
+                var telnum = $("#TelNumSearchCCopy").val();
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "/product/addCivilProduct" ,//url
+                    data: {cRemarksAdd:CivilSaleNumber,telCnumAdd:telnum,CNums:num,CivilProductNumAdd:productNum,workingOrderC:workingOrderSearchCopy,CcompanyName:1},
+                    success: function (result) {
+                        console.log(result);//打印服务端返回的数据(调试用)
+                        if (result.success >0) {
+                            layer.msg('操作成功', {
+                                btnAlign: 'c',
+                                time: 3000, //20s后自动关闭
+                                btn: ['确定']
+                            });
+                            table.reload('CivilCopyId');
+                        }else{
+                            layer.msg('操作失败', {
+                                btnAlign: 'c',
+                                time: 3000, //20s后自动关闭
+                                btn: ['确定']
+                            });
+                        }
+                    },
+                    error : function() {
+                        alert("异常！");
+                    }
+                });
+            },
+            getCheckDataCopy: function(){ //获取选中数据
+                var checkStatus = table.checkStatus('CivilCopyId')
+                    ,data = checkStatus.data,telNum=[1],proOrderNum=[1],status=[];
+                data.forEach(function (n,i) {
+                    telNum.push(n.telNum);
+                    proOrderNum.push(n.productNum);
+                    status.push(n.status)
+                });
+                telNum.push(2);
+                proOrderNum.push(2);
+                if(data.length === 0){
+                    layer.msg('请选择一行');
+                }  else if (status.indexOf("已删除")>-1){
+                    layer.msg('包含已删除的设备，请重新选择！');
+                }else {
+                    layer.confirm('确定测试？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                        $.ajax({
+                            //几个参数需要注意一下
+                            type: "POST",//方法类型
+                            dataType: "json",//预期服务器返回的数据类型
+                            url: "/product/cCheck" ,//url
+                            data: {telNum:JSON.stringify(telNum),proOrderNum:JSON.stringify(proOrderNum),instructionType:"生产写配置"},
+                            success: function (result) {
+                                if (result.success<2&&result.sum==true) {
+                                    layer.msg('操作成功', {
+                                        btnAlign: 'c',
+                                        time: 3000, //20s后自动关闭
+                                        btn: ['确定']
+                                    });
+                                    table.reload('CivilCopyId')
+                                }else if(result.success>1){
+                                    layer.msg('请选择同一批生产订单的货', {
+                                        btnAlign: 'c',
+                                        time: 3000, //20s后自动关闭
+                                        btn: ['确定']
+                                    });
+                                }else{
+                                    layer.msg('操作失败', {
+                                        btnAlign: 'c',
+                                        time: 3000, //20s后自动关闭
+                                        btn: ['确定']
+                                    });
+                                }
+                            },
+                            error : function() {
+                                alert("异常！");
+                            }
+                        });
+                        layer.close(index);
+                    });
+                }
+               /* table.reload("")*/
+            }
+            ,getCheckLengthCopy: function(){ //获取选中数目
+                var checkStatus = table.checkStatus('CivilCopyId')
+                    ,data = checkStatus.data,telNum=[1],proOrderNum=[1],status=[];
+                data.forEach(function (n,i) {
+                    telNum.push(n.telNum);
+                    proOrderNum.push(n.productNum);
+                    status.push(n.status)
+                });
+                telNum.push(2);
+                proOrderNum.push(2);
+                if(data.length === 0){
+                    layer.msg('请选择一行');
+                } else if (status.indexOf("已删除")>-1){
+                    layer.msg('包含已删除的设备，请重新选择！');
+                }else {
+                    layer.confirm('确定清表？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                        $.ajax({
+                            //几个参数需要注意一下
+                            type: "POST",//方法类型
+                            dataType: "json",//预期服务器返回的数据类型
+                            url: "/product/cCheck" ,//url
+                            data: {telNum:JSON.stringify(telNum),proOrderNum:JSON.stringify(proOrderNum),instructionType:"清表指令"},
+                            success: function (result) {
+                                if (result.success<2&&result.sum==true) {
+                                    layer.msg('操作成功', {
+                                        btnAlign: 'c',
+                                        time: 3000, //20s后自动关闭
+                                        btn: ['确定']
+                                    });
+                                    table.reload('CivilCopyId')
+                                }else if(result.success>1){
+                                    layer.msg('请选择同一批生产订单的货', {
+                                        btnAlign: 'c',
+                                        time: 3000, //20s后自动关闭
+                                        btn: ['确定']
+                                    });
+                                }else{
+                                    layer.msg('操作失败', {
+                                        btnAlign: 'c',
+                                        time: 3000, //20s后自动关闭
+                                        btn: ['确定']
+                                    });
+                                }
+                            },
+                            error : function() {
+                                alert("异常！");
+                            }
+                        });
+                        layer.close(index);
+                    });
+                }
+            }
+            ,isAllCopy: function(){ //验证是否全选
+                var checkStatus = table.checkStatus('CivilCopyId')
+                ,data = checkStatus.data,telNum=[1],proOrderNum=[1],status=[];
+                data.forEach(function (n,i) {
+                    telNum.push(n.telNum);
+                    proOrderNum.push(n.productNum);
+                    status.push(n.status)
+                });
+                telNum.push(2);
+                proOrderNum.push(2);
+                if(data.length === 0){
+                    layer.msg('请选择一行');
+                }  else if (status.indexOf("已删除")>-1){
+                    layer.msg('包含已删除的设备，请重新选择！');
+                }else {
+                    layer.confirm('确定清异常？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                        $.ajax({
+                            //几个参数需要注意一下
+                            type: "POST",//方法类型
+                            dataType: "json",//预期服务器返回的数据类型
+                            url: "/product/cCheck" ,//url
+                            data: {telNum:JSON.stringify(telNum),proOrderNum:JSON.stringify(proOrderNum),instructionType:"清异常指令"},
+                            success: function (result) {
+                                if (result.success<2&&result.sum==true) {
+                                    layer.msg('操作成功', {
+                                        btnAlign: 'c',
+                                        time: 3000, //20s后自动关闭
+                                        btn: ['确定']
+                                    });
+                                    table.reload('CivilCopyId')
+                                }else if(result.success>1){
+                                    layer.msg('请选择同一批生产订单的货', {
+                                        btnAlign: 'c',
+                                        time: 3000, //20s后自动关闭
+                                        btn: ['确定']
+                                    });
+                                }else{
+                                    layer.msg('操作失败', {
+                                        btnAlign: 'c',
+                                        time: 3000, //20s后自动关闭
+                                        btn: ['确定']
+                                    });
+                                }
+                            },
+                            error : function() {
+                                alert("异常！");
+                            }
+                        });
+                        layer.close(index);
+                    });
+                }
+            } ,outCivilCopy: function(){ //验证是否全选
+                var checkStatus = table.checkStatus('CivilCopyId') ,
+                data = checkStatus.data,telNum=[1],proOrderNum=[1],status=[];
+                data.forEach(function (n,i) {
+                    telNum.push(n.telNum);
+                    proOrderNum.push(n.productNum);
+                    status.push(n.status)
+                });
+                telNum.push(2);
+                proOrderNum.push(2);
+                if(data.length === 0){
+                    layer.msg('请选择一行');
+                }  else if (status.indexOf("已删除")>-1){
+                    layer.msg('包含已删除的设备，请重新选择！');
+                }else {
+                    layer.confirm('确定发货？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                        $.ajax({
+                            //几个参数需要注意一下
+                            type: "POST",//方法类型
+                            dataType: "json",//预期服务器返回的数据类型
+                            url: "/product/cOut" ,//url
+                            data: {telNum:JSON.stringify(telNum),proOrderNum:JSON.stringify(proOrderNum),instructionType:"发货写配置",id:checkStatus.data[0].purchaserId},
+                            success: function (result) {
+                                if (result.success<2&&result.sum==true) {
+                                    layer.msg('操作成功', {
+                                        btnAlign: 'c',
+                                        time: 3000, //20s后自动关闭
+                                        btn: ['确定']
+                                    });
+                                    table.reload('CivilCopyId')
+                                }else if(result.success>1){
+                                    layer.msg('请选择同一批生产订单的货', {
+                                        btnAlign: 'c',
+                                        time: 3000, //20s后自动关闭
+                                        btn: ['确定']
+                                    });
+                                }else{
+                                    layer.msg('操作失败', {
+                                        btnAlign: 'c',
+                                        time: 3000, //20s后自动关闭
+                                        btn: ['确定']
+                                    });
+                                }
+                            },
+                            error : function() {
+                                alert("异常！");
+                            }
+                        });
+                        layer.close(index);
+                    });
+                }
+            }
+        };
+
+        $('.demoTableCivilianProduction .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        $('.CivilCopy .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+
+    var unSelected = "#999";
+    var selected = "#333";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    })
+    function telCnumAddSerchCopy() {
+        var telCnumAdd=$("#TelNumSearchCCopy").val()
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/product/queryByTel" ,//url
+            data: {telNum:telCnumAdd},
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.success >0) {
+                    layer.msg('设备地址已被使用！');
+                    $("#TelNumSearchCCopy").val("");
+                }else{
+                    console.log("OK");
+                }
+            }/*,
+            error : function() {
+                alert("异常！");
+            }*/
+        });
+
+    }
+    function searchExistCopy() {
+        var productNumAdd = $("#CivilProductNumSerachCopy").val();
+
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/order/searchProductOrder1" ,//url
+            data: {productNumAdd:productNumAdd},
+            success: function (result) {
+                if (result.success>0) {
+
+                }else{
+                    layer.msg('未找到生产单号！');
+                    $("#CivilProductNumSerachCopy").val("");
+                }
+            }
+        });
+    }
+    function Refresh(){
+        table.reload("CivilCopyId");
+        setTimeout('Refresh2()',10000);
+    }
+    setTimeout('Refresh()',10000);
+    function Refresh2() {
+        setTimeout('Refresh()',10000);
+    }
+</script>
+
+</body>
+</html>

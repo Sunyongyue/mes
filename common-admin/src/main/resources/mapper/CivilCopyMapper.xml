@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.CivilCopyMapper">
+
+    <select id="queryAllCopy" resultType="com.common.system.entity.CivilProduct">
+    SELECT a.id,a.purchaserId,a.telNum,b.id as productNumId,b.productNum ,b.charMethod,b.pulseEquivalent,b.alarmSquare,b.reservedAir,b.gasCheck,b.valveCloseTime,b.valveOpenTime,a.`status` from civil_product_copy1 a,product_order b where a.productNum=b.productNum and a.`status`='正常' order by a.id desc
+     </select>
+    <insert id="addCivilProductCopy">
+        INSERT INTO `civil_product_copy1`(`telNum`, `productNum`,  `purchaserId`, `remarks`,  `status`) VALUES
+        <foreach collection="list" item="item" separator=",">
+            ( #{item.telNum}, #{item.productNum}, #{item.purchaserId}, #{item.remarks}, '正常')
+        </foreach>
+    </insert>
+    <update id="deleteAllCopy">
+        update civil_product_copy1 set `status`='已删除'
+    </update>
+
+</mapper>

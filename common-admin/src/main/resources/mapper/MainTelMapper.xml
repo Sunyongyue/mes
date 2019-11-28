@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.MainTelMapper">
+    <select id="queryAllMainTel" resultType="com.common.system.entity.MainTel">
+        select * from maintel  ORDER BY id desc
+    </select>
+   <insert id="addMainTel">
+       INSERT INTO `maintel`( `main_DeviceAddr`, `main_Iphone`, `main_StartDate`, `main_EndDate`, `main_CreateTime`, `falg`, `main_Guid`, `main_PrintNum`, `main_ImeiNum`) VALUES
+       <foreach collection="list" item="item" separator=",">
+           (#{item.main_DeviceAddr},#{item.main_Iphone}, #{item.main_StartDate}, #{item.main_EndDate}, #{item.main_CreateTime}, 0,  #{item.main_Guid}, #{item.main_PrintNum},#{item.main_ImeiNum})
+       </foreach>
+    </insert>
+    <delete id="deleteMainTel">
+        DELETE from maintel where id in
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <update id="updateMainTel">
+        UPDATE `maintel` SET `main_DeviceAddr` = #{main_DeviceAddr}, `main_Iphone` = #{main_Iphone}, `main_StartDate` =#{main_StartDate}, `main_EndDate` = #{main_EndDate}, `main_CreateTime` = #{main_CreateTime}, `falg` = 1, `main_Guid` = #{main_Guid}, `main_PrintNum` = #{main_PrintNum}, `main_ImeiNum` = #{main_ImeiNum} WHERE `id` =#{id};
+    </update>
+    <select id="searchMainTe" resultType="com.common.system.entity.MainTel">
+        select * from maintel
+        <where>
+            <if test="main_DeviceAddr !=''">`main_DeviceAddr` = #{main_DeviceAddr}</if>
+            <if test="main_Iphone !=''">and main_Iphone = #{main_Iphone}  </if>
+            <if test="main_ImeiNum !=''">and main_ImeiNum = #{main_ImeiNum}  </if>
+            <if test="startDate !=''">and main_StartDate > #{startDate}</if>
+            <if test="endDate !=''"> <![CDATA[
+            and main_EndDate<#{endDate}
+            ]]></if>
+        </where>
+        ORDER BY id desc
+    </select>
+</mapper>

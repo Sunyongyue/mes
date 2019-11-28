@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.CivilProductMapper">
+
+    <select id="queryAllCivilProduct" resultType="com.common.system.entity.CivilProduct">
+       SELECT a.id,a.telNum,b.id as productNumId,b.productNum ,b.goodsName,b.specifications,b.charMethod,b.pulseEquivalent,b.alarmSquare,b.reservedAir,b.gasCheck,b.valveCloseTime,b.valveOpenTime,c.id as workingorderId,c.orderName,d.id as purchaserId,d.purchaserName,a.remarks,a.operator,a.operatorTime,a.`status`,a.more,e.main_Iphone,e.main_StartDate,e.main_EndDate,e.main_ImeiNum,e.main_PrintNum from civil_product a,product_order b,workingorder c,syspurchaser d ,maintel e where a.productNum=b.productNum and a.workingorderId=c.id and a.purchaserId=d.id and a.telNum=e.main_DeviceAddr order by a.id desc
+    </select>
+    <insert id="addCivilProduct">
+        INSERT INTO `civil_product`(`telNum`, `productNum`, `workingorderId`, `purchaserId`, `remarks`, `operator`, `operatorTime`, `status`, `more`) VALUES
+        <foreach collection="list" item="item" separator=",">
+            ( #{item.telNum}, #{item.productNum},#{item.workingorderId}, #{item.purchaserId}, #{item.remarks}, #{item.operator}, sysdate(), '正常', '1')
+        </foreach>
+    </insert>
+    <select id="queryByTel" resultType="int">
+        SELECT count(*) FROM civil_product WHERE telNum=#{telNum};
+    </select>
+    <update id="deleteCivilProduct">
+        update civil_product set `status`='已删除' where id in
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+    <select id="serachCivilProduct" resultType="com.common.system.entity.CivilProduct">
+        SELECT a.id,a.telNum,b.id as productNumId,b.productNum ,b.goodsName,b.specifications,b.charMethod,b.pulseEquivalent,b.alarmSquare,b.reservedAir,b.gasCheck,b.valveCloseTime,b.valveOpenTime,f.id as workingorderId,f.orderName,d.id as purchaserId,d.purchaserName,a.remarks,a.operator,a.operatorTime,a.`status`,a.more,e.main_Iphone,e.main_StartDate,e.main_EndDate,e.main_ImeiNum,e.main_PrintNum from civil_product a,product_order b,workingorder f,syspurchaser d ,maintel e <where>
+            <if test="1 !=0"> a.productNum=b.productNum</if>
+            <if test="1 !=0">and a.workingorderId=f.id</if>
+            <if test="1 !=0">and a.purchaserId=d.id</if>
+            <if test="1 !=0">and a.telNum=e.main_DeviceAddr</if>
+            <if test="telNum !=''">and a.telNum= #{telNum}</if>
+            <if test="productNum !=''">and a.productNum= #{productNum}</if>
+            <if test="goodsName !=''">and b.goodsName= #{goodsName}</if>
+            <if test="specifications !=''">and b.specifications= #{specifications}</if>
+            <if test="workingorderId !=''">and f.id= #{workingorderId}</if>
+            <if test="startDate !=''">and a.operatorTime > #{startDate}</if>
+            <if test="endDate !=''"> <![CDATA[
+            and a.operatorTime< #{endDate}
+            ]]></if>
+        </where>
+        order by a.id desc
+    </select>
+</mapper>
