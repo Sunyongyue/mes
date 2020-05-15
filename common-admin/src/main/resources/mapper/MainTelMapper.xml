@@ -5,9 +5,9 @@
         select * from maintel  ORDER BY id desc
     </select>
    <insert id="addMainTel">
-       INSERT INTO `maintel`( `main_DeviceAddr`, `main_Iphone`, `main_StartDate`, `main_EndDate`, `main_CreateTime`, `falg`, `main_Guid`, `main_PrintNum`, `main_ImeiNum`) VALUES
+       INSERT INTO `maintel`( `main_DeviceAddr`, `main_Iphone`, `main_StartDate`, `main_EndDate`, `main_CreateTime`, `falg`, `main_Guid`, `main_PrintNum`, `main_ImeiNum`,`operatorTime`) VALUES
        <foreach collection="list" item="item" separator=",">
-           (#{item.main_DeviceAddr},#{item.main_Iphone}, #{item.main_StartDate}, #{item.main_EndDate}, #{item.main_CreateTime}, 0,  #{item.main_Guid}, #{item.main_PrintNum},#{item.main_ImeiNum})
+           (#{item.main_DeviceAddr},#{item.main_Iphone}, #{item.main_StartDate}, #{item.main_EndDate}, #{item.main_CreateTime}, 0,  #{item.main_Guid}, #{item.main_PrintNum},#{item.main_ImeiNum},sysdate())
        </foreach>
     </insert>
     <delete id="deleteMainTel">

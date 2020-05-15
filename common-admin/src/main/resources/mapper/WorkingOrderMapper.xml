@@ -22,7 +22,7 @@
         </foreach>
     </delete>
     <update id="updateWorkingOrder">
-        UPDATE `workingorder` SET `orderName` = #{orderName}, `adjustingWheel` = #{adjustingWheel}, `installationOfSample` = #{installationOfSample}, `wiringHarness` =#{wiringHarness}, `installOfBoard` = #{installOfBoard}, `installOfSigns` = #{installOfSigns}, `upperShell` =#{upperShell}, `testing` = #{testing}, `boxing` =#{boxing}, `remarks` = #{remarks}, `status` = '1', `operator` = #{operator}, `operatorTime` = sysdate() WHERE `id` = #{id};
+        UPDATE `workingorder` SET `orderName` = #{orderName}, `adjustingWheel` = #{adjustingWheel}, `installationOfSample` = #{installationOfSample}, `wiringHarness` =#{wiringHarness}, `installOfBoard` = #{installOfBoard}, `installOfSigns` = #{installOfSigns}, `upperShell` =#{upperShell}, `testing` = #{testing}, `boxing` =#{boxing}, `remarks` = #{remarks}, `status` = '1', `operator` = #{operator}, `operatorTime` = sysdate(),mark=1 WHERE `id` = #{id};
     </update>
    <!-- <select id="distributNumberSearch" resultType="com.common.system.entity.DistributNumber">
         select * from distribut_number

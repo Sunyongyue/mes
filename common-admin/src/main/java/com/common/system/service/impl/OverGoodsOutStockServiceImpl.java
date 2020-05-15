@@ -3,20 +3,20 @@ package com.common.system.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.common.system.entity.CivilStatus;
 import com.common.system.entity.OverGoodsOutStock;
 import com.common.system.entity.ProductOrder;
 import com.common.system.entity.SaleOrder;
-import com.common.system.mapper.OverGoodsOutStockMapper;
-import com.common.system.mapper.OverGoodsStockMapper;
-import com.common.system.mapper.ProductOrderMapper;
-import com.common.system.mapper.SaleOrderMapper;
+import com.common.system.mapper.*;
 import com.common.system.service.OverGoodsOutStockService;
 import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OverGoodsOutStockServiceImpl implements OverGoodsOutStockService {
@@ -28,12 +28,26 @@ public class OverGoodsOutStockServiceImpl implements OverGoodsOutStockService {
     SaleOrderMapper saleOrderMapper;
     @Autowired
     ProductOrderMapper productOrderMapper;
+    @Autowired
+    CivilStatusMapper statusMapper;
     @Override
     public JSONObject queryOverGoodsOutStock(Integer page, Integer limit) {
         List<OverGoodsOutStock> overGoodsOutStocks = outStockMapper.queryOverGoodsOutStock();
         int size = overGoodsOutStocks.size();
         PageHelper.startPage(page,limit);
         List<OverGoodsOutStock> overGoodsOutStock = outStockMapper.queryOverGoodsOutStock();
+        List<CivilStatus> civilStatuses = statusMapper.queryPubStatus();
+        Map<String ,CivilStatus> civilStatusesMap= new HashMap<>();
+        for (CivilStatus c: civilStatuses) {
+            civilStatusesMap.put(c.getProductNum(),c);
+        }
+        for (OverGoodsOutStock o:overGoodsOutStock) {
+            CivilStatus civilStatus = civilStatusesMap.get(o.getProductNum());
+            if (civilStatus!=null){
+                o.setCode(civilStatus.getCode());
+                o.setConfValveModel(civilStatus.getConfValveModel());
+            }
+        }
         String s = JSON.toJSONString(overGoodsOutStock);
         JSONArray array = JSONArray.parseArray(s);
         JSONObject object = new JSONObject();
@@ -112,6 +126,18 @@ public class OverGoodsOutStockServiceImpl implements OverGoodsOutStockService {
         int size = overGoodsOutStocks.size();
         PageHelper.startPage(page,limit);
         List<OverGoodsOutStock> overGoodsOutStock = outStockMapper.searchOverGoodsOutStock(outStockNumbers,salenum, productNameOrder, productSpecificationsOrder, outFactoryMan, startDate, endDate);
+        List<CivilStatus> civilStatuses = statusMapper.queryPubStatus();
+        Map<String ,CivilStatus> civilStatusesMap= new HashMap<>();
+        for (CivilStatus c: civilStatuses) {
+            civilStatusesMap.put(c.getProductNum(),c);
+        }
+        for (OverGoodsOutStock o:overGoodsOutStock) {
+            CivilStatus civilStatus = civilStatusesMap.get(o.getProductNum());
+            if (civilStatus!=null){
+                o.setCode(civilStatus.getCode());
+                o.setConfValveModel(civilStatus.getConfValveModel());
+            }
+        }
         String s = JSON.toJSONString(overGoodsOutStock);
         JSONArray array = JSONArray.parseArray(s);
         JSONObject object = new JSONObject();

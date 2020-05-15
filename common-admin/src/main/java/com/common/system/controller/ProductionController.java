@@ -343,7 +343,7 @@ public class ProductionController {
         String s = productOrders.get(0).getPulseEquivalent().replaceAll("m³/脉冲", "");
         Double aDouble = Double.valueOf(s);
         List<DistributNumber> distributNumbers = distributNumberService.queryByNumber(pubProduct.getControlMainBoardNums());
-        if (distributNumbers.size()>0&&distributNumbers.get(0).getTelNum()!=null){
+        if (distributNumbers.size()>0&&distributNumbers.get(0).getTelNum()!=null&&!distributNumbers.get(0).getTelNum().isEmpty()){
             int i1 = configMesService.selectCount(distributNumbers.get(0).getTelNum());
             String vavleType=productOrders.get(0).getValveName();
             System.out.println(productOrders.get(0).getValveName()+"productOrders.get(0).getValveName()--------------------------------------------------");
@@ -380,7 +380,7 @@ public class ProductionController {
         String s = productOrders.get(0).getPulseEquivalent().replaceAll("m³/脉冲", "");
         Double aDouble = Double.valueOf(s);
         List<DistributNumber> distributNumbers = distributNumberService.queryByNumber(pubProduct.getControlMainBoardNums());
-        if (distributNumbers.size()>0&&distributNumbers.get(0).getTelNum()!=null){
+        if (distributNumbers.size()>0&&distributNumbers.get(0).getTelNum()!=null&&!distributNumbers.get(0).getTelNum().isEmpty()){
             int i1 = configMesService.selectCount(distributNumbers.get(0).getTelNum());
             String vavleType=productOrders.get(0).getValveName();
             if (productOrders.get(0).getValveName().contains("快关")){
@@ -416,7 +416,7 @@ public class ProductionController {
         String s = productOrders.get(0).getPulseEquivalent().replaceAll("m³/脉冲", "");
         Double aDouble = Double.valueOf(s);
         List<DistributNumber> distributNumbers = distributNumberService.queryByNumber(pubProduct.getControlMainBoardNums());
-        if (distributNumbers.size()>0&&distributNumbers.get(0).getTelNum()!=null){
+        if (distributNumbers.size()>0&&distributNumbers.get(0).getTelNum()!=null&&!distributNumbers.get(0).getTelNum().isEmpty()){
             int i1 = configMesService.selectCount(distributNumbers.get(0).getTelNum());
             String vavleType=productOrders.get(0).getValveName();
             if (productOrders.get(0).getValveName().contains("快关")){
@@ -452,7 +452,7 @@ public class ProductionController {
         String s = productOrders.get(0).getPulseEquivalent().replaceAll("m³/脉冲", "");
         Double aDouble = Double.valueOf(s);
         List<DistributNumber> distributNumbers = distributNumberService.queryByNumber(pubProduct.getControlMainBoardNums());
-        if (distributNumbers.size()>0&&distributNumbers.get(0).getTelNum()!=null){
+        if (distributNumbers.size()>0&&distributNumbers.get(0).getTelNum()!=null&&!distributNumbers.get(0).getTelNum().isEmpty()){
             int i1 = configMesService.selectCount(distributNumbers.get(0).getTelNum());
             String vavleType=productOrders.get(0).getValveName();
             if (productOrders.get(0).getValveName().contains("快关")){
@@ -495,7 +495,7 @@ public class ProductionController {
             String s = productOrders.get(0).getPulseEquivalent().replaceAll("m³/脉冲", "");
             Double aDouble = Double.valueOf(s);
             List<DistributNumber> distributNumbers = distributNumberService.queryByNumber(pubProduct.getControlMainBoardNums());
-            if (distributNumbers.size()>0&&distributNumbers.get(0).getTelNum()!=null){
+            if (distributNumbers.size()>0&&distributNumbers.get(0).getTelNum()!=null&&!distributNumbers.get(0).getTelNum().isEmpty()){
                 int i1 = configMesService.selectCount(distributNumbers.get(0).getTelNum());
                 String vavleType=productOrders.get(0).getValveName();
                 if (productOrders.get(0).getValveName().contains("快关")){

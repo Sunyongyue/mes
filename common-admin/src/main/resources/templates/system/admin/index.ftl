@@ -51,19 +51,25 @@
 												<td>当日数量</td>
 												<td><span id="civilDayOrder"></span></td>
 												<td>当日数量</td>
-												<td><span id="industryDayOrder"></td>
+												<td><span id="industryDayOrder"></span></td>
+											</tr>
+											<tr>
+												<td>上周数量</td>
+												<td><span id="civilWeekOrder"></span></td>
+												<td>上周数量</td>
+												<td><span id="industryWeekOrder"></span></td>
 											</tr>
 											<tr>
 												<td>本月数量</td>
-												<td><span id="civilMonthOrder"></td>
+												<td><span id="civilMonthOrder"></span></td>
 												<td>本月数量</td>
-												<td><span id="industryMonthOrder"></td>
+												<td><span id="industryMonthOrder"></span></td>
 											</tr>
 											<tr>
 												<td>本年数量</td>
-												<td><span id="civilYearOrder"></td>
+												<td><span id="civilYearOrder"></span></td>
 												<td>本年数量</td>
-												<td><span id="industryYearOrder"></td>
+												<td><span id="industryYearOrder"></span></td>
 											</tr>
 										</table>
 									</div>
@@ -80,21 +86,27 @@
 											</tr>
 											<tr>
 												<td>当日数量</td>
-												<td><span id="civilSaleDayOrder"></td>
+												<td><span id="civilSaleDayOrder"></span></td>
 												<td>当日数量</td>
-												<td><span id="industrySaleDayOrder"></td>
+												<td><span id="industrySaleDayOrder"></span></td>
+											</tr>
+											<tr>
+												<td>上周数量</td>
+												<td><span id="civilSaleWeekOrder"></span></td>
+												<td>上周数量</td>
+												<td><span id="industrySaleWeekOrder"></span></td>
 											</tr>
 											<tr>
 												<td>本月数量</td>
-												<td><span id="civilSaleMonthOrder"></td>
+												<td><span id="civilSaleMonthOrder"></span></td>
 												<td>本月数量</td>
-												<td><span id="industrySaleMonthOrder"></td>
+												<td><span id="industrySaleMonthOrder"></span></td>
 											</tr>
 											<tr>
 												<td>本年数量</td>
-												<td><span id="civilSaleYearOrder"></td>
+												<td><span id="civilSaleYearOrder"></span></td>
 												<td>本年数量</td>
-												<td><span id="industrySaleYearOrder"></td>
+												<td><span id="industrySaleYearOrder"></span></td>
 											</tr>
 										</table>
 									</div>
@@ -111,21 +123,27 @@
 											</tr>
 											<tr>
 												<td>当日数量</td>
-												<td><span id="dayCivilSendGoods"></td>
+												<td><span id="dayCivilSendGoods"></span></td>
 												<td>当日数量</td>
-												<td><span id="dayDustrySendGoods"></td>
+												<td><span id="dayDustrySendGoods"></span></td>
+											</tr>
+											<tr>
+												<td>上周数量</td>
+												<td><span id="weekCivilSendGoods"></span></td>
+												<td>上周数量</td>
+												<td><span id="weekDustrySendGoods"></span></td>
 											</tr>
 											<tr>
 												<td>本月数量</td>
-												<td><span id="monthCivilSendGoods"></td>
+												<td><span id="monthCivilSendGoods"></span></td>
 												<td>本月数量</td>
-												<td><span id="monthDustrySendGoods"></td>
+												<td><span id="monthDustrySendGoods"></span></td>
 											</tr>
 											<tr>
 												<td>本年数量</td>
-												<td><span id="yearCivilSendGoods"></td>
+												<td><span id="yearCivilSendGoods"></span></td>
 												<td>本年数量</td>
-												<td><span id="yearDustrySendGoods"></td>
+												<td><span id="yearDustrySendGoods"></span></td>
 											</tr>
 										</table>
 									</div>
@@ -142,20 +160,20 @@
 											</tr>
 											<tr>
 												<td>阀门</td>
-												<td><span id="dayInVavle"></td>
+												<td><span id="dayInVavle"></span></td>
 											</tr>
 											<tr>
 												<td>主板</td>
-												<td><span id="dayInMainBoard"></td>
+												<td><span id="dayInMainBoard"></span></td>
 											</tr>
 											<tr>
 												<td>皮膜表</td>
-												<td><span id="dayInEpidermis"></td>
+												<td><span id="dayInEpidermis"></span></td>
 											</tr>
-											<tr>
-												<td>控制盒</td>
-												<td><span id="dayInControlDiv"></td>
-											</tr>
+<#--											<tr>-->
+<#--												<td>控制盒</td>-->
+<#--												<td><span id="dayInControlDiv"></span></td>-->
+<#--											</tr>-->
 										</table>
 									</div>
 								</div>
@@ -171,20 +189,20 @@
 											</tr>
 											<tr>
 												<td>阀门</td>
-												<td><span id="vavle"></td>
+												<td><span id="vavle"></span></td>
 											</tr>
 											<tr>
 												<td>主板</td>
-												<td><span id="mainBoard"></td>
+												<td><span id="mainBoard"></span></td>
 											</tr>
 											<tr>
 												<td>皮膜表</td>
-												<td><span id="epidermis"></td>
+												<td><span id="epidermis"></span></td>
 											</tr>
-											<tr>
+											<#--<tr>
 												<td>控制盒</td>
-												<td><span id="controlDiv"></td>
-											</tr>
+												<td><span id="controlDiv"></span></td>
+											</tr>-->
 										</table>
 									</div>
 								</div>
@@ -200,15 +218,15 @@
 											</tr>
 											<tr>
 												<td >控制器</td>
-												<td ><span id="control"></td>
+												<td ><span id="control"></span></td>
 											</tr>
 											<tr>
 												<td>民用表</td>
-												<td><span id="civilWatch"></td>
+												<td><span id="civilWatch"></span></td>
 											</tr>
 											<tr>
 												<td>商业皮膜表</td>
-												<td><span id="businessWatch"></td>
+												<td><span id="businessWatch"></span></td>
 											</tr>
 											<#--<tr>
 												<td>阀门</td>
@@ -280,6 +298,12 @@
 						$("#control").text(result.control);
 						$("#civilWatch").text(result.civilWatch);
 						$("#businessWatch").text(result.businessWatch);
+						$("#industryWeekOrder").text(result.industryWeekOrder);
+						$("#civilWeekOrder").text(result.civilWeekOrder);
+						$("#industrySaleWeekOrder").text(result.industrySaleWeekOrder);
+						$("#civilSaleWeekOrder").text(result.civilSaleWeekOrder);
+						$("#weekCivilSendGoods").text(result.weekCivilSendGoods);
+						$("#weekDustrySendGoods").text(result.weekDustrySendGoods);
 
 
 

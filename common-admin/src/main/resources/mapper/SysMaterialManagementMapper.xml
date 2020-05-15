@@ -10,7 +10,7 @@
 #{title},#{factory},#{materialtype},#{materialName},#{materialSpecification},#{remarks},#{operator},SYSDATE(),#{pid})
     </insert>
     <update id="updateSysMaterial">
-        UPDATE sysmaterialmanagement SET pid=#{pid} ,title=#{title},factory=#{factory},operator=#{operator},operatorTime=SYSDATE(),materialtype=#{materialtype},materialName=#{materialName},materialSpecification=#{materialSpecification},remarks=#{remarks} where id =#{id}
+        UPDATE sysmaterialmanagement SET pid=#{pid} ,title=#{title},factory=#{factory},operator=#{operator},operatorTime=SYSDATE(),materialtype=#{materialtype},materialName=#{materialName},materialSpecification=#{materialSpecification},remarks=#{remarks},mark=1 where id =#{id}
     </update>
     <delete id="deleteSysMaterial">
         DELETE from sysmaterialmanagement where id=#{id} or pid =#{id}

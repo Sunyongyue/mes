@@ -13,12 +13,12 @@
         INSERT INTO distribut_number(telNum,controlMainNum,telMainNum,fourMainNum,`status`,remarks,operator,operatorTime)VALUES
         (#{telNum},#{controlMainNum},#{telMainNum},#{fourMainNum},'正常',#{remarks},#{operator},SYSDATE())
     </insert>
-    <delete id="deleteDistributNumberMapper">
-        DELETE from distribut_number where id in
+    <update id="deleteDistributNumberMapper">
+        update distribut_number set `status`='已删除',mark=1 where id in
         <foreach collection="array" item="item" open="(" close=")" separator=",">
             #{item}
         </foreach>
-    </delete>
+    </update>
     <select id="distributNumberSearch" resultType="com.common.system.entity.DistributNumber">
         select * from distribut_number
         <where>

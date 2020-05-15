@@ -118,6 +118,10 @@ public class PubProduct {
     private String shutdownTime;
     //激活时间
     private String activeTime;
+    //指令状态
+    private String code;
+    //配置信息
+    private String ConfValveModel;
     public PubProduct(){}
 
     public PubProduct(int ids, int id, String productNum, int alarmSquare, String charMethod, String controlMainboardName, String controlMainboardSpecifications, String controlMainboardSupplier, String disconnectionCheck, String fourMainBoardName, String fourSpecifications, String fourSupplier, String gasCheck, String goodsName, String intakeDirection, String lowPressureCheck, String microleakageCheck, String noContactCheck, int nums, String overcurrentCheck, int overdrawAir, String pressure, String pulseEquivalent, String remarks, String reservedAir, String signalSource, String specifications, String stopUseCheck, String telMainBoardName, String telMainBoardSpecifications, String telMainBoardSupplier, String telProtocol, String telType, int upperLimitOfRecharge, int valveCloseTime, String valveName, int valveOpenTime, String valveSpecifications, String valveSupplier, String version, String operator, String operatorTime, String valveNUms, String vavleProductDate, String controlMainBoardNums, String controlMainBoardProductDate, String telMainBoardNums, String telMainBoardProductDate, String cardNum, String iMSI, String iMEI, String iCCID, String fourMainBoardNums, String fourMainBoardProductDate, String assembler, String tester, String productDate, String testDate, String testRemarks, String shutdownTime, String activeTime) {
@@ -182,6 +186,22 @@ public class PubProduct {
         this.testRemarks = testRemarks;
         this.shutdownTime = shutdownTime;
         this.activeTime = activeTime;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getConfValveModel() {
+        return ConfValveModel;
+    }
+
+    public void setConfValveModel(String confValveModel) {
+        ConfValveModel = confValveModel;
     }
 
     public String getShutdownTime() {

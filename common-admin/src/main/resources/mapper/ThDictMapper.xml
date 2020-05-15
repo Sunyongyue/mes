@@ -9,7 +9,7 @@
         INSERT INTO thDict(pid,title,goodsName,goodsType,goodsUnit,goodsStock) VALUES(#{pid},#{title},#{goodsName},#{goodsType},#{goodsUnit},#{goodsStock})
     </insert>
     <update id="updateThDict">
-        UPDATE thdict SET pid=#{pid} ,title=#{title},goodsName=#{goodsName},goodsType=#{goodsType},goodsUnit=#{goodsUnit},goodsStock=#{goodsStock} where id =#{id}
+        UPDATE thdict SET pid=#{pid} ,title=#{title},goodsName=#{goodsName},goodsType=#{goodsType},goodsUnit=#{goodsUnit},goodsStock=#{goodsStock},mark=1 where id =#{id}
     </update>
     <delete id="deleteThDict">
         DELETE from thdict where id=#{id} or pid =#{id}

@@ -13,4 +13,5 @@ public interface SaleOrderService {
     JSONObject searchSaleOrder(@Param("saleNum") String saleNum,@Param("customerName") String customerName,@Param("projectName") String projectName,@Param("productNameOrder") String productNameOrder,@Param("productSpecificationsOrder") String productSpecificationsOrder,@Param("operator") String operator,@Param("startDate") String startDate,@Param("endDate") String endDate,Integer page, Integer limit);
     SaleOrder queryOne(@Param("id") int id);
     int modifyOrderEnd(@Param("id") Integer saleId,@Param("kaiPiaoDate") String kaiPiaoDate,@Param("shouKuanDate") String shouKuanDate,@Param("remarks") String remarks);
+    int updateStatusByNum(@Param("saleNum") String  saleNum,@Param("status") String status);
 }

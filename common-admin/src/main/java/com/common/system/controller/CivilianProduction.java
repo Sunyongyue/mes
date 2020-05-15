@@ -7,6 +7,8 @@ import com.common.system.entity.*;
 import com.common.system.mapper.*;
 import com.common.system.service.*;
 import com.common.system.shiro.ShiroUser;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,8 +63,23 @@ public class CivilianProduction {
         ModelAndView mav = new ModelAndView("civilianProductionCopy");
         List<WorkingOrder> workingOrders = workingOrderMapper.queryWorkingOrder();
         mav.addObject("CivilWorkingOrder", workingOrders);
-        int i = civilCopyMapper.deleteAllCopy();
         return mav;
+    }
+    @RequestMapping("/closeCivilProductCopy")
+    @ResponseBody
+    public String closeCivilProductCopy(){
+        int i = civilCopyMapper.deleteAllCopy();
+        JSONObject object = new JSONObject();
+        object.put("success",i);
+        return object.toString();
+    }
+    @RequestMapping("/recovery")
+    @ResponseBody
+    public String recovery(String recoveryInput){
+        int i = civilCopyMapper.recoveryAllCopy(recoveryInput);
+        JSONObject object = new JSONObject();
+        object.put("success",i);
+        return object.toString();
     }
     @RequestMapping("/companyName")
     @ResponseBody
@@ -155,8 +172,11 @@ public class CivilianProduction {
     }
     @RequestMapping("/queryAllCopy")
     @ResponseBody
-    public String queryAllCopy(){
-        List<CivilProduct> civilProducts = civilCopyMapper.queryAllCopy();
+    public String queryAllCopy( Integer page, Integer limit,@SessionAttribute ShiroUser user){
+        List<CivilProduct> civilProduct = civilCopyMapper.queryAllCopy(user.getUsername());
+        int size = civilProduct.size();
+        Page<Object> objects = PageHelper.startPage(page, limit);
+        List<CivilProduct> civilProducts = civilCopyMapper.queryAllCopy(user.getUsername());
         List<CivilStatus> civilStatuses = civilStatusMapper.queryStatus();
         Map<String ,CivilStatus> civilStatusesMap= new HashMap<>();
         for (CivilStatus c: civilStatuses) {
@@ -176,7 +196,7 @@ public class CivilianProduction {
         JSONObject object =new JSONObject();
         object.put("code",0);
         object.put("msg","");
-        object.put("count",civilProducts.size());
+        object.put("count",size);
         object.put("data",array);
         return object.toString();
     }
@@ -247,7 +267,7 @@ public class CivilianProduction {
             String format = sdf.format(afterDate);
             for (String tel : telNumCheck) {
                 int i1 = configMesService.selectCount(tel.replace("\"", ""));
-                int i = configMesService.addConfigMes(proOrderNumCheck[0].replace("\"", ""), "天和", "/", "58.58.58.234", 6003, "", "", "", instructionType, 1 + i1, productOrder.get(0).getGoodsName(), 0, tel.replace("\"", ""), "0", format, 1440, "单一", productOrder.get(0).getCharMethod(),"普通阀门(快关)", productOrder.get(0).getAlarmSquare(), 0, productOrder.get(0).getReservedAir(), productOrder.get(0).getUpperLimitOfRecharge(), aDouble, "清除剩余累计", 25, "年", productOrder.get(0).getOverdrawAir(), productOrder.get(0).getValveOpenTime(), productOrder.get(0).getValveCloseTime(), productOrder.get(0).getSignalSource(), 0, 0, 0, 0, 1, 0, 0, 0, teltro, "1");
+                int i = configMesService.addConfigMes(proOrderNumCheck[0].replace("\"", ""), "天和", "/", "58.58.58.234", 6003, "", "", "", instructionType, 1 + i1, productOrder.get(0).getGoodsName(), 0, tel.replace("\"", ""), "0", format, 1440, "单一", productOrder.get(0).getCharMethod(),"普通阀门(快关)", productOrder.get(0).getAlarmSquare(), 0, "0.5", productOrder.get(0).getUpperLimitOfRecharge(), aDouble, "清除剩余累计", 25, "年", productOrder.get(0).getOverdrawAir(), productOrder.get(0).getValveOpenTime(), productOrder.get(0).getValveCloseTime(), productOrder.get(0).getSignalSource(), 0, 0, 0, 0, 1, 0, 0, 0, teltro, "1");
                 sum+=i;
             }
         }
@@ -303,7 +323,7 @@ public class CivilianProduction {
             }
             for (String tel : telNumCheck) {
                 int i1 = configMesService.selectCount(tel.replace("\"", ""));
-                int i = configMesService.addConfigMes(proOrderNumCheck[0].replace("\"", ""), "天和", "/", sysPurchaser.getIpAddress(), Integer.parseInt(sysPurchaser.getIpPort()), "", "", "", instructionType, 1 + i1, productOrder.get(0).getGoodsName(), 0, tel.replace("\"", ""), "0", "00:"+y+":"+y, 1440, "单一", productOrder.get(0).getCharMethod(), "普通阀门(快关)", productOrder.get(0).getAlarmSquare(), 0, productOrder.get(0).getReservedAir(), productOrder.get(0).getUpperLimitOfRecharge(), aDouble, "清除剩余累计", 25, "年", productOrder.get(0).getOverdrawAir(), productOrder.get(0).getValveOpenTime(), productOrder.get(0).getValveCloseTime(), productOrder.get(0).getSignalSource(), 0, 0, 0, 0, 1, 0, 0, 0, teltro, "1");
+                int i = configMesService.addConfigMes(proOrderNumCheck[0].replace("\"", ""), "天和", "/", sysPurchaser.getIpAddress(), Integer.parseInt(sysPurchaser.getIpPort()), "", "", "", instructionType, 1 + i1, productOrder.get(0).getGoodsName(), 0, tel.replace("\"", ""), "0", "00:"+(random.nextInt(46)+13)+":"+(random.nextInt(46)+13), 1440, "单一", productOrder.get(0).getCharMethod(), "普通阀门(快关)", productOrder.get(0).getAlarmSquare(), 0, productOrder.get(0).getReservedAir(), productOrder.get(0).getUpperLimitOfRecharge(), aDouble, "清除剩余累计", 25, "年", productOrder.get(0).getOverdrawAir(), productOrder.get(0).getValveOpenTime(), productOrder.get(0).getValveCloseTime(), productOrder.get(0).getSignalSource(), 0, 0, 0, 0, 1, 0, 0, 0, teltro, "1");
                 sum+=i;
             }
         }

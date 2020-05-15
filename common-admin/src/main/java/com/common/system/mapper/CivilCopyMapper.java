@@ -7,7 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 @Mapper
 public interface CivilCopyMapper {
-   List<CivilProduct> queryAllCopy();
+   List<CivilProduct> queryAllCopy(@Param("operator") String operator);
    int addCivilProductCopy(@Param("list") List<CivilProduct> list);
    int deleteAllCopy();
+   int recoveryAllCopy(@Param("productNum") String productNum);
 }

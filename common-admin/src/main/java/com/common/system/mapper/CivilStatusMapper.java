@@ -8,4 +8,5 @@ import java.util.List;
 @Mapper
 public interface CivilStatusMapper {
      List<CivilStatus> queryStatus();
+     List<CivilStatus> queryPubStatus();
 }

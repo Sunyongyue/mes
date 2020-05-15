@@ -15,7 +15,7 @@
         SELECT count(*) FROM civil_product WHERE telNum=#{telNum};
     </select>
     <update id="deleteCivilProduct">
-        update civil_product set `status`='已删除' where id in
+        update civil_product set `status`='已删除',mark=1 where id in
         <foreach collection="array" item="item" open="(" close=")" separator=",">
             #{item}
         </foreach>

@@ -16,7 +16,7 @@
 #{productNum},#{valveNUms},#{vavleProductDate},#{controlMainBoardNums},#{controlMainBoardProductDate},#{telMainBoardNums},#{telMainBoardProductDate},#{cardNum},#{iMSI},#{iMEI},#{iCCID},#{fourMainBoardNums},#{fourMainBoardProductDate},#{assembler},#{tester},SYSDATE(),#{testRemarks},#{activeTime},#{shutdownTime})
     </insert>
     <update id="updatePubProduct">
-        update pubProduct set tester=#{tester},testDate=SYSDATE() where ids=#{ids}
+        update pubProduct set tester=#{tester},testDate=SYSDATE(),mark=1 where ids=#{ids}
     </update>
     <delete id="dtletePubProduct">
         DELETE from pubProduct where ids in

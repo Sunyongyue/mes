@@ -3,16 +3,18 @@
 <mapper namespace="com.common.system.mapper.CivilCopyMapper">
 
     <select id="queryAllCopy" resultType="com.common.system.entity.CivilProduct">
-    SELECT a.id,a.purchaserId,a.telNum,b.id as productNumId,b.productNum ,b.charMethod,b.pulseEquivalent,b.alarmSquare,b.reservedAir,b.gasCheck,b.valveCloseTime,b.valveOpenTime,a.`status` from civil_product_copy1 a,product_order b where a.productNum=b.productNum and a.`status`='正常' order by a.id desc
+    SELECT a.id,a.purchaserId,a.telNum,b.id as productNumId,b.productNum ,b.charMethod,b.pulseEquivalent,b.alarmSquare,b.reservedAir,b.gasCheck,b.valveCloseTime,b.valveOpenTime,a.`status` from civil_product_copy1 a,product_order b where a.productNum=b.productNum and a.`status`='正常' and a.operator=#{operator} order by a.id desc
      </select>
     <insert id="addCivilProductCopy">
-        INSERT INTO `civil_product_copy1`(`telNum`, `productNum`,  `purchaserId`, `remarks`,  `status`) VALUES
+        INSERT INTO `civil_product_copy1`(`telNum`, `productNum`,  `purchaserId`, `remarks`,  `status`,operator) VALUES
         <foreach collection="list" item="item" separator=",">
-            ( #{item.telNum}, #{item.productNum}, #{item.purchaserId}, #{item.remarks}, '正常')
+            ( #{item.telNum}, #{item.productNum}, #{item.purchaserId}, #{item.remarks}, '正常',#{item.operator})
         </foreach>
     </insert>
     <update id="deleteAllCopy">
         update civil_product_copy1 set `status`='已删除'
     </update>
-
+    <update id="recoveryAllCopy">
+        update civil_product_copy1 set `status`='正常' where productNum=#{productNum}
+    </update>
 </mapper>

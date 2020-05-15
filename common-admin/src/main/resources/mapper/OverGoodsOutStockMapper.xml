@@ -9,10 +9,10 @@
       #{outStockNumbers},#{productNum},#{salenum},#{outFactoryMan},SYSDATE(),#{outStockNums},#{outStockType},#{outStockremarks},'检测中',#{logisticsInformation})
     </insert>
     <update id="outStockPeople">
-        update over_goods_outStock set outStockTestPeople=#{outStockTestPeople},outStockTestTime=SYSDATE() where id=#{id}
+        update over_goods_outStock set outStockTestPeople=#{outStockTestPeople},outStockTestTime=SYSDATE(),mark=1 where id=#{id}
     </update>
     <update id="sendGoods">
-         update over_goods_outStock set sendGoodsPeople=#{sendGoodsPeople},sendGoodsTime=SYSDATE() ,recordStatus='已发货' where id=#{id}
+         update over_goods_outStock set sendGoodsPeople=#{sendGoodsPeople},sendGoodsTime=SYSDATE() ,recordStatus='已发货',mark=1 where id=#{id}
     </update>
     <delete id="deleteOverGoodsOutStock">
         DELETE from over_goods_outstock where id in

@@ -37,6 +37,43 @@ GROUP BY
 WHERE
 	d.`status` = e.`status`
    </select>
-
+	<select id="queryPubStatus" resultType="com.common.system.entity.CivilStatus">
+		SELECT
+	e.`code`,
+	d.ConfDeviceAddr,
+	d.ConfPktSer,
+	d.ConfValveModel,
+	d.productNum
+FROM
+	(
+SELECT
+	ConfDeviceAddr,
+	SUBSTRING_INDEX( GROUP_CONCAT( `status` ORDER BY ConfPktSer DESC ), ',', 1 ) AS `status`,
+	SUBSTRING_INDEX( GROUP_CONCAT( ConfValveModel ORDER BY ConfPktSer DESC ), ',', 1 ) AS ConfValveModel,
+	SUBSTRING_INDEX( GROUP_CONCAT( productNum ORDER BY ConfPktSer DESC ), ',', 1 ) AS productNum,
+	ConfPktSer
+FROM
+	(
+SELECT
+	b.ConfDeviceAddr,
+	b.`status`,
+	b.productNum,
+	b.ConfValveModel,
+	b.ConfPktSer
+FROM
+	pubproduct a,
+	config_mes b
+WHERE
+	a.productNum = b.productNum
+ORDER BY
+	b.ConfPktSer DESC
+	) c
+GROUP BY
+	ConfDeviceAddr
+	) d,
+	statuscode e
+WHERE
+	d.`status` = e.`status`
+	</select>
 
 </mapper>

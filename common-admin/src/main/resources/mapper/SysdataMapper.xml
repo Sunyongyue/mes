@@ -9,7 +9,7 @@
         INSERT INTO sysdata(pid,title,dataname,operator,operatorTime) VALUES(#{pid},#{title},#{dataname},#{operator},SYSDATE())
     </insert>
     <update id="updateSysData">
-        UPDATE sysdata SET pid=#{pid} ,title=#{title},dataname=#{dataname},operator=#{operator},operatorTime=SYSDATE() where id =#{id}
+        UPDATE sysdata SET pid=#{pid} ,title=#{title},dataname=#{dataname},operator=#{operator},operatorTime=SYSDATE(),mark=1 where id =#{id}
     </update>
     <delete id="deleteSysData">
         DELETE from sysdata where id=#{id} or pid =#{id}

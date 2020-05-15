@@ -10,7 +10,7 @@
 </insert>
     <update id="updateGoodsRegStock">
         update goods_regStock set `local`=#{local},goodsType=#{goodsType},goodsName=#{goodsName},specifications=#{specifications},nums=#{nums},supplierName=#{supplierName}
-        ,reason=#{reason},department=#{department},remarks=#{remarks},operator=#{operator},operatorTime=SYSDATE() where id=#{id}
+        ,reason=#{reason},department=#{department},remarks=#{remarks},operator=#{operator},operatorTime=SYSDATE(),mark=1 where id=#{id}
     </update>
     <delete id="deleteGoodsRegStock">
         delete from goods_regStock where id=#{id}

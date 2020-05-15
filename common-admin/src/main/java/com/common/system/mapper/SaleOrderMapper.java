@@ -16,4 +16,5 @@ public interface SaleOrderMapper {
     SaleOrder queryOne(@Param("id") int id);
     int modifyOrderEnd(@Param("id") Integer saleId,@Param("kaiPiaoDate") String kaiPiaoDate,@Param("shouKuanDate") String shouKuanDate,@Param("remarks") String remarks);
     SaleOrder queryByNum(@Param("saleNum")String saleNum);
+    int updateStatusByNum(@Param("saleNum") String  saleNum,@Param("status") String status);
 }

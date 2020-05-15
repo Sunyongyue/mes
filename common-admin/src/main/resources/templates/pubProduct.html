@@ -88,6 +88,7 @@
         <button class="layui-btn layui-btn-sm" lay-event="check"  >测试</button>
         <button class="layui-btn layui-btn-sm" lay-event="clear"  >清表</button>
         <button class="layui-btn layui-btn-sm" lay-event="clearEx"  >清异常</button>
+        <button class="layui-btn layui-btn-sm" lay-event="pubRefresh"  >刷新</button>
         <!--<button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>-->
         <!--<button class="layui-btn layui-btn-sm" lay-event="upload" id="upload" >导入</button>-->
         <button class="layui-btn layui-btn-sm" lay-event="delete"  >删除</button>
@@ -98,7 +99,7 @@
     <tr>
         <th lay-data="{type:'checkbox', fixed: 'left'}" rowspan="2"></th>
 
-        <th lay-data="{align:'center'}" colspan="8">生产订单信息</th>
+        <th lay-data="{align:'center'}" colspan="10">生产订单信息</th>
         <th lay-data="{align:'center'}" colspan="6">阀门信息</th>
         <th lay-data="{align:'center'}" colspan="5">控制主板信息</th>
         <th lay-data="{align:'center'}" colspan="12">通讯主板信息</th>
@@ -108,6 +109,8 @@
     <tr>
         <th lay-data="{field:'productNum', width:180}" >生产单号</th>
         <th lay-data="{field:'goodsName', width:150}" >产品名称</th>
+        <th lay-data="{field:'confValveModel', width:150}" >配置类型</th>
+        <th lay-data="{field:'code', width:150}" >执行状态</th>
         <th lay-data="{field:'specifications',width:150}" >产品规格</th>
         <th lay-data="{field:'pressure',width:150}" >使用压力</th>
         <th lay-data="{field:'nums',width:150}" >数量</th>
@@ -391,6 +394,9 @@
                             layer.close(index);
                         });
                     }
+                    break;
+                case 'pubRefresh':
+                    table.reload('idTestPub');
                     break;
                 case 'delete':
                     if(data.length === 0){

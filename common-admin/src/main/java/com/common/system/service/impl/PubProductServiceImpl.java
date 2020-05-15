@@ -3,9 +3,11 @@ package com.common.system.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.common.system.entity.CivilStatus;
 import com.common.system.entity.DistributNumber;
 import com.common.system.entity.GoodsInStock;
 import com.common.system.entity.PubProduct;
+import com.common.system.mapper.CivilStatusMapper;
 import com.common.system.mapper.DistributNumberMapper;
 import com.common.system.mapper.GoodsInStockMapper;
 import com.common.system.mapper.PubProductMapper;
@@ -15,7 +17,10 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class PubProductServiceImpl implements PubProductService {
     @Autowired
@@ -24,12 +29,26 @@ public class PubProductServiceImpl implements PubProductService {
     DistributNumberMapper numberMapper;
     @Autowired
     GoodsInStockMapper inStockMapper;
+    @Autowired
+    CivilStatusMapper statusMapper;
     @Override
     public JSONObject queryPubProduct(Integer page, Integer limit) {
         List<PubProduct> pubProducts = pubProductMapper.queryPubProduct();
         int size = pubProducts.size();
         Page<Object> objects = PageHelper.startPage(page, limit);
         List<PubProduct> pubProduct = pubProductMapper.queryPubProduct();
+        List<CivilStatus> civilStatuses = statusMapper.queryPubStatus();
+        Map<String ,CivilStatus> civilStatusesMap= new HashMap<>();
+        for (CivilStatus c: civilStatuses) {
+            civilStatusesMap.put(c.getProductNum(),c);
+        }
+        for (PubProduct p:pubProduct) {
+            CivilStatus civilStatus = civilStatusesMap.get(p.getProductNum());
+            if (civilStatus!=null){
+                p.setCode(civilStatus.getCode());
+                p.setConfValveModel(civilStatus.getConfValveModel());
+            }
+        }
         String s = JSON.toJSONString(pubProduct);
         JSONArray array = JSONArray.parseArray(s);
         JSONObject object = new JSONObject();
@@ -122,6 +141,18 @@ public class PubProductServiceImpl implements PubProductService {
         int size = pubProducts.size();
         Page<Object> objects = PageHelper.startPage(page, limit);
         List<PubProduct> pubProduct = pubProductMapper.searchPubProduct(productNum, goodsName, goodsSpecifications, operator, startDate, endDate);
+        List<CivilStatus> civilStatuses = statusMapper.queryPubStatus();
+        Map<String ,CivilStatus> civilStatusesMap= new HashMap<>();
+        for (CivilStatus c: civilStatuses) {
+            civilStatusesMap.put(c.getProductNum(),c);
+        }
+        for (PubProduct p:pubProduct) {
+            CivilStatus civilStatus = civilStatusesMap.get(p.getProductNum());
+            if (civilStatus!=null){
+                p.setCode(civilStatus.getCode());
+                p.setConfValveModel(civilStatus.getConfValveModel());
+            }
+        }
         String s = JSON.toJSONString(pubProduct);
         JSONArray array = JSONArray.parseArray(s);
         JSONObject object = new JSONObject();

@@ -12,7 +12,7 @@
         SELECT MAX(supplierNums) AS big FROM syssupplier
     </select>
     <update id="updateSupplier">
-       update syssupplier set `local` =#{local} ,supplierNums=#{supplierNums},supplierName=#{supplierName},contacts=#{contacts},tel=#{tel},email=#{email},localMore=#{localMore},remarks=#{remarks},operator=#{operator},operatorTime=SYSDATE() where id =#{id}
+       update syssupplier set `local` =#{local} ,supplierNums=#{supplierNums},supplierName=#{supplierName},contacts=#{contacts},tel=#{tel},email=#{email},localMore=#{localMore},remarks=#{remarks},operator=#{operator},operatorTime=SYSDATE(),mark=1 where id =#{id}
    </update>
     <insert id="addSupplier">
         insert into syssupplier (`local`,supplierNums,supplierName,contacts,tel,email,localMore,remarks,operator,operatorTime) values

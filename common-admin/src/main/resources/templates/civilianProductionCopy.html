@@ -35,7 +35,7 @@
     </div>
     设备地址:
     <div class="layui-inline" style="width: 160px">
-        <input class="layui-input"  id="TelNumSearchCCopy" autocomplete="off" style="width: 150px;height: 25px" placeholder="请输入通讯编号" onblur="telCnumAddSerchCopy()"/>
+        <input class="layui-input"  id="TelNumSearchCCopy" autocomplete="off" style="width: 150px;height: 25px" placeholder="请输入通讯编号" />
     </div>
     数量：
     <div class="layui-inline" style="width: 160px">
@@ -51,13 +51,14 @@
         <button class="layui-btn layui-btn-sm" lay-event="outGoodsCCopy"  >出厂写配置</button>
     </div>
 </script>-->
-<table class="layui-table" lay-data="{url:'/product/queryAllCopy',id:'CivilCopyId'}">
+
+<table class="layui-table" lay-data="{url:'/product/queryAllCopy',id:'CivilCopyId',page:true,limits:[10,20,30,36,40,50,60,70,80,90],limit:36}">
     <thead>
     <tr>
         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
         <th lay-data="{field:'telNum', width:150}" >设备地址</th>
         <th lay-data="{field:'confValveModel',width:150}" >配置类型</th>
-        <th lay-data="{field:'code',width:150}" >执行状态</th>
+        <th lay-data="{field:'code',width:150,sort: true}" >执行状态</th>
         <th lay-data="{field:'charMethod',width:150}" >计费方式</th>
         <th lay-data="{field:'pulseEquivalent',width:150}" >脉冲当量</th>
         <th lay-data="{field:'alarmSquare',width:150}" >报警方数</th>
@@ -69,6 +70,7 @@
     </thead>
 </table>
 <div class="layui-btn-group CivilCopy" style="margin-left: 30%">
+    <button class="layui-btn" data-type="civilRefresh">刷新</button>
     <button class="layui-btn layui-btn-normal" data-type="getCheckDataCopy">生产写配置</button>
     <button class="layui-btn layui-btn-normal" data-type="getCheckLengthCopy" >清表指令</button>
     <button class="layui-btn layui-btn-normal" data-type="isAllCopy" >清异常指令</button>
@@ -85,15 +87,14 @@
         table.on('toolbar(CivilCopyFilter)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id)
                 ,data = checkStatus.data//获取选中的数据
-                ,deList=[1],telNum=[1],proOrderNum=[1],status=[];
+                ,telNum=[1],proOrderNum=[1],status=[];
             data.forEach(function (n,i) {
-                deList.push(n.id);
                 telNum.push(n.telNum);
                 proOrderNum.push(n.productNum);
                 status.push(n.status)
             });
             telNum.push(2);
-            deList.push(2);
+
             proOrderNum.push(2);
             switch(obj.event){
                 case 'checkCopy':
@@ -288,47 +289,72 @@
                 var telnum = $("#TelNumSearchCCopy").val();
                 $.ajax({
                     //几个参数需要注意一下
+                    async:false,
                     type: "POST",//方法类型
                     dataType: "json",//预期服务器返回的数据类型
-                    url: "/product/addCivilProduct" ,//url
-                    data: {cRemarksAdd:CivilSaleNumber,telCnumAdd:telnum,CNums:num,CivilProductNumAdd:productNum,workingOrderC:workingOrderSearchCopy,CcompanyName:1},
+                    url: "/product/queryByTel" ,//url
+                    data: {telNum:telnum},
                     success: function (result) {
                         console.log(result);//打印服务端返回的数据(调试用)
                         if (result.success >0) {
-                            layer.msg('操作成功', {
-                                btnAlign: 'c',
-                                time: 3000, //20s后自动关闭
-                                btn: ['确定']
-                            });
-                            table.reload('CivilCopyId');
+                            layer.msg('设备地址已被使用！');
+                            $("#TelNumSearchCCopy").val("");
                         }else{
-                            layer.msg('操作失败', {
-                                btnAlign: 'c',
-                                time: 3000, //20s后自动关闭
-                                btn: ['确定']
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/product/addCivilProduct" ,//url
+                                data: {cRemarksAdd:CivilSaleNumber,telCnumAdd:telnum,CNums:num,CivilProductNumAdd:productNum,workingOrderC:workingOrderSearchCopy,CcompanyName:1},
+                                success: function (result) {
+                                    console.log(result);//打印服务端返回的数据(调试用)
+                                    if (result.success >0) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('CivilCopyId');
+                                    }else{
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
                             });
                         }
-                    },
-                    error : function() {
-                        alert("异常！");
                     }
                 });
+
+
+
+
+
             },
             getCheckDataCopy: function(){ //获取选中数据
                 var checkStatus = table.checkStatus('CivilCopyId')
-                    ,data = checkStatus.data,telNum=[1],proOrderNum=[1],status=[];
+                    ,data = checkStatus.data,telNum=[1],proOrderNum=[1],status=[],confValveModel=[];
                 data.forEach(function (n,i) {
                     telNum.push(n.telNum);
                     proOrderNum.push(n.productNum);
-                    status.push(n.status)
+                    status.push(n.status);
+                    confValveModel.push(n.confValveModel);
                 });
                 telNum.push(2);
                 proOrderNum.push(2);
+                console.log(confValveModel);
                 if(data.length === 0){
                     layer.msg('请选择一行');
                 }  else if (status.indexOf("已删除")>-1){
                     layer.msg('包含已删除的设备，请重新选择！');
-                }else {
+                } else if (confValveModel.indexOf(undefined)>-1){
+                    layer.msg('包含未清表的设备，请重新选择！');
+                } else {
                     layer.confirm('确定测试？',{btn: ['确定', '取消'], title: "提示"},function(index){
                         $.ajax({
                             //几个参数需要注意一下
@@ -472,11 +498,12 @@
                 }
             } ,outCivilCopy: function(){ //验证是否全选
                 var checkStatus = table.checkStatus('CivilCopyId') ,
-                data = checkStatus.data,telNum=[1],proOrderNum=[1],status=[];
+                data = checkStatus.data,telNum=[1],proOrderNum=[1],status=[],confValveModel=[];
                 data.forEach(function (n,i) {
                     telNum.push(n.telNum);
                     proOrderNum.push(n.productNum);
-                    status.push(n.status)
+                    status.push(n.status);
+                    confValveModel.push(n.confValveModel)
                 });
                 telNum.push(2);
                 proOrderNum.push(2);
@@ -484,7 +511,9 @@
                     layer.msg('请选择一行');
                 }  else if (status.indexOf("已删除")>-1){
                     layer.msg('包含已删除的设备，请重新选择！');
-                }else {
+                }else if (confValveModel.indexOf("")>-1||confValveModel.indexOf("清表指令")>-1||confValveModel.indexOf("清异常指令")>-1){
+                    layer.msg('只有生产写配置后才能发货！');
+                } else {
                     layer.confirm('确定发货？',{btn: ['确定', '取消'], title: "提示"},function(index){
                         $.ajax({
                             //几个参数需要注意一下
@@ -521,7 +550,11 @@
                         layer.close(index);
                     });
                 }
+            },
+            civilRefresh:function () {
+                table.reload('CivilCopyId');
             }
+
         };
 
         $('.demoTableCivilianProduction .layui-btn').on('click', function(){
@@ -593,11 +626,11 @@
     }
     function Refresh(){
         table.reload("CivilCopyId");
-        setTimeout('Refresh2()',10000);
+        setTimeout('Refresh2()',20000);
     }
-    setTimeout('Refresh()',10000);
+   /* setTimeout('Refresh()',10000);*/
     function Refresh2() {
-        setTimeout('Refresh()',10000);
+        setTimeout('Refresh()',20000);
     }
 </script>
 

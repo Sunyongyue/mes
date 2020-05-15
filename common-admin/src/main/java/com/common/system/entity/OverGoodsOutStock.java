@@ -109,6 +109,10 @@ public class OverGoodsOutStock {
     private String activeTime;
     //物流信息
     private String logisticsInformation;
+    //指令状态
+    private String code;
+    //配置信息
+    private String ConfValveModel;
     public OverGoodsOutStock(){}
 
     public OverGoodsOutStock(int id, String outStockNumbers, String saleNum, String customerName, String date, String projectName, String endDate, String productNameOrder, String productSpecificationsOrder, String customerPressure, int customerNums, String valveSupplier, String valveNUms, String valveName, String valveSpecifications, String intakeDirection, String vavleProductDate, String controlMainboardName, String controlMainboardSpecifications, String controlMainboardSupplier, String controlMainBoardNums, String controlMainBoardProductDate, String telMainBoardName, String telMainBoardSpecifications, String telMainBoardSupplier, String telMainBoardNums, String telMainBoardProductDate, String cardNum, String iMSI, String iMEI, String iCCID, String telType, String fourMainBoardName, String fourSpecifications, String fourSupplier, String fourMainBoardNums, String fourMainBoardProductDate, String telProtocol, String productNum, String assembler, String tester, String productDate, String testDate, String outFactoryMan, String getOutFactoryTime, int outStockNums, String outStockType, String outStockremarks, String outStockTestPeople, String outStockTestTime, String sendGoodsPeople, String sendGoodsTime, String recordStatus, String shutdownTime, String activeTime, String logisticsInformation) {
@@ -168,6 +172,22 @@ public class OverGoodsOutStock {
         this.shutdownTime = shutdownTime;
         this.activeTime = activeTime;
         this.logisticsInformation = logisticsInformation;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getConfValveModel() {
+        return ConfValveModel;
+    }
+
+    public void setConfValveModel(String confValveModel) {
+        ConfValveModel = confValveModel;
     }
 
     public String getOutStockTestPeople() {

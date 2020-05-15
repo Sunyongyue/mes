@@ -83,4 +83,9 @@ public class SaleOrderServiceImpl implements SaleOrderService {
         int i = saleOrderMapper.modifyOrderEnd(saleId, kaiPiaoDate, shouKuanDate, remarks);
         return i;
     }
+
+    @Override
+    public int updateStatusByNum(String saleNum, String status) {
+        return saleOrderMapper.updateStatusByNum(saleNum, status);
+    }
 }

@@ -116,6 +116,7 @@
     <button class="layui-btn layui-btn-sm" lay-event="addOverOut"  >出库</button>
     <button class="layui-btn layui-btn-sm" lay-event="checkOverOut" id="checkOverOut" >检测</button>
     <button class="layui-btn layui-btn-sm" lay-event="outStockOverOut" id="outStockOverOut" >发货</button>
+    <button class="layui-btn layui-btn-sm" lay-event="outStockRefresh" id="outStockRefresh" >刷新</button>
   <!--  <button class="layui-btn layui-btn-sm" lay-event="deleteOverOut" id="deleteOverOut" >删除</button>-->
     <!--<button class="layui-btn layui-btn-sm" lay-event="update" id="update" >修改</button>-->
   <!--  <button class="layui-btn layui-btn-sm" lay-event="upload" id="upload" >导入</button>-->
@@ -125,7 +126,7 @@
     <thead>
     <tr>
         <th lay-data="{type:'checkbox', fixed: 'left'}" rowspan="2"></th>
-        <th lay-data="{align:'center'}" colspan="10">出库信息</th>
+        <th lay-data="{align:'center'}" colspan="12">出库信息</th>
         <th lay-data="{align:'center'}" colspan="9">订单信息</th>
         <th lay-data="{align:'center'}" colspan="3">生产信息</th>
         <th lay-data="{align:'center'}" colspan="6">阀门信息</th>
@@ -136,6 +137,8 @@
     <tr>
         <!--<th lay-data="{field:'productNum', width:250}" >生产订单号</th>-->
        <th lay-data="{field:'outStockNumbers', width:150}" >出厂编号</th>
+        <th lay-data="{field:'confValveModel', width:150}" >配置类型</th>
+        <th lay-data="{field:'code', width:150}" >执行状态</th>
        <th lay-data="{field:'recordStatus', width:250}" >记录状态</th>
         <th lay-data="{field:'outStockType',width:150,totalRowText:'合计：'}">出库类别</th>
         <th lay-data="{field:'outStockNums',width:150,totalRow:true}">出库数量</th>
@@ -284,7 +287,8 @@
                     }else if (checkStatus.data[0].recordStatus=="已发货"){
                        /* alert("货物已经发出去了！")*/
                         layer.msg('货物已经发出去了！');
-                    } else if (checkStatus.data[0].productNameOrder.indexOf("民用")){
+                    } else if (checkStatus.data[0].productNameOrder.indexOf("民用")>-1){
+
                         layer.msg('请去民用生产进行测试！');
                     } else if (checkStatus.data[0].recordStatus=="检测中"||checkStatus.data[0].recordStatus=="")  {
                         var id =checkStatus.data[0].id;
@@ -327,7 +331,6 @@
                     }
                     break;
                 case 'outStockOverOut':
-
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     }else if(data.length > 1){
@@ -377,6 +380,9 @@
                             layer.close(index);
                         });
                     }
+                    break;
+                case 'outStockRefresh':
+                    table.reload('OverOut');
                     break;
                 case 'deleteOverOut':
                     if(data.length === 0){

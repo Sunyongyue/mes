@@ -28,6 +28,11 @@ public class MyIndexValueServiceImpl implements MyIndexValueService {
     }
 
     @Override
+    public int industryWeekOrder() {
+        return valueMapper.industryWeekOrder();
+    }
+
+    @Override
     public int civilDayOrder(String day) {
         int i = valueMapper.civilDayOrder(day);
         return i;
@@ -43,6 +48,11 @@ public class MyIndexValueServiceImpl implements MyIndexValueService {
     public int civilYearOrder(String year) {
         int i = valueMapper.civilYearOrder(year);
         return i;
+    }
+
+    @Override
+    public int civilWeekOrder() {
+        return valueMapper.civilWeekOrder();
     }
 
     @Override
@@ -64,6 +74,11 @@ public class MyIndexValueServiceImpl implements MyIndexValueService {
     }
 
     @Override
+    public int industrySaleWeekOrder() {
+        return valueMapper.industrySaleWeekOrder();
+    }
+
+    @Override
     public int civilSaleDayOrder(String day) {
         int i = valueMapper.civilSaleDayOrder(day);
         return i;
@@ -79,6 +94,11 @@ public class MyIndexValueServiceImpl implements MyIndexValueService {
     public int civilSaleYearOrder(String year) {
         int i = valueMapper.civilSaleYearOrder(year);
         return i;
+    }
+
+    @Override
+    public int civilSaleWeekOrder() {
+        return valueMapper.civilSaleWeekOrder();
     }
 
     @Override
@@ -101,6 +121,11 @@ public class MyIndexValueServiceImpl implements MyIndexValueService {
     }
 
     @Override
+    public int weekCivilSendGoods() {
+        return valueMapper.weekCivilSendGoods();
+    }
+
+    @Override
     public int dayDustrySendGoods(String day) {
         int i = valueMapper.dayDustrySendGoods(day);
         return i;
@@ -116,6 +141,11 @@ public class MyIndexValueServiceImpl implements MyIndexValueService {
     public int yearDustrySendGoods(String year) {
         int i = valueMapper.yearDustrySendGoods(year);
         return i;
+    }
+
+    @Override
+    public int weekDustrySendGoods() {
+        return valueMapper.weekDustrySendGoods();
     }
 
     @Override

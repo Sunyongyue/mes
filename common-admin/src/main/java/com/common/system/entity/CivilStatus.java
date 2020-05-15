@@ -1,6 +1,8 @@
 package com.common.system.entity;
 
 public class CivilStatus {
+    //生产单号
+    private String productNum;
     //状态
     private String code;
     //通讯号
@@ -15,6 +17,14 @@ public class CivilStatus {
         ConfDeviceAddr = confDeviceAddr;
         ConfPktSer = confPktSer;
         ConfValveModel = confValveModel;
+    }
+
+    public String getProductNum() {
+        return productNum;
+    }
+
+    public void setProductNum(String productNum) {
+        this.productNum = productNum;
     }
 
     public String getCode() {

@@ -6,6 +6,7 @@ import com.common.system.service.TsetService;
 import com.common.system.shiro.ShiroUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -55,6 +56,15 @@ public class TestController {
 
         System.out.println(user.getUsername()+"******");
         return "true";
+    }
+    @RequestMapping("/test7")
+    @ResponseBody
+    @Transactional
+    public int test7(){
+        int i=1;
+        System.out.println(1/0);
+        i++;
+        return i;
     }
     public static void main(String[] args){
       /*  Random random= new Random();

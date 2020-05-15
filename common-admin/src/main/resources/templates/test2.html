@@ -192,24 +192,7 @@
                 layer.confirm('真的删除行么', function (index) {
                     obj.del();
                     layer.close(index);
-                    $.ajax({
-                        url: "/user/del",    //换成自己的url
-                        type: "POST",
-                        dataType: "json",
-                        data: {
-                            id: data.id
-                        },
-                        success: function (e) {
-                            if (e.code == 0) {
-                                layer.msg(e.msg);
-                            } else {
-                                layer.msg(e.msg);
-                            }
-                        },
-                        error: function (e) {
-                            layer.msg(e);
-                        }
-                    })
+
                 });
             } else if (obj.event == 'add') {
                 $.ajax({

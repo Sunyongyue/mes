@@ -118,6 +118,9 @@
         </div>
     </div>
 </div>
+<div id="recoveryProduct" style="display: none">
+    <input class="layui-input" id="recoveryInput" autocomplete="off" style="width: 200px;height: 25px;margin-left: 30px;margin-top: 50px" placeholder="请输入生产单号"/>
+</div>
 <script type="text/html" id="toolbarDemoCivilScript">
     <div class="layui-btn-container" >
         <button class="layui-btn layui-btn-sm" lay-event="add"  >装配</button>
@@ -126,9 +129,10 @@
         <button class="layui-btn layui-btn-sm" lay-event="clearEx"  >清异常</button>
         <button class="layui-btn layui-btn-sm" lay-event="outGoodsC"  >发货</button>-->
         <button class="layui-btn layui-btn-sm" lay-event="delete"  >删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="recovery"  >恢复生产</button>
     </div>
 </script>
-<table class="layui-table" lay-data="{url:'/product/queryAllCivilProduct', page:true,limits:[10,20,30,36,40,50,60,70,80,90],limit:36 ,id:'CivilId',toolbar:'#toolbarDemoCivilScript',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoCivilFilter">
+<table class="layui-table" lay-data="{url:'/product/queryAllCivilProduct', page:true,limits:[10,20,30,36,40,50,60,70,80,90,600],limit:36 ,id:'CivilId',title:'民用生产',toolbar:'#toolbarDemoCivilScript',defaultToolbar:['filter', 'print','exports'] }" lay-filter="demoCivilFilter">
     <thead>
  <!--   <tr>
 
@@ -144,6 +148,7 @@
         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
         <th lay-data="{field:'telNum', width:150}" >设备地址</th>
         <th lay-data="{field:'productNum', width:180}" >生产单号</th>
+        <th lay-data="{field:'remarks', width:150}">销售单号</th>
         <th lay-data="{field:'orderName', width:180}" >生产工序</th>
         <th lay-data="{field:'goodsName', width:150}" >产品名称</th>
         <th lay-data="{field:'specifications',width:150}" >产品规格</th>
@@ -160,7 +165,8 @@
         <th lay-data="{field:'main_StartDate', width:150}">起始日期</th>
         <th lay-data="{field:'main_EndDate', width:150}">截止日期</th>
         <th lay-data="{field:'status', width:150}">生产状态</th>
-        <th lay-data="{field:'remarks', width:150}">备注</th>
+        <th lay-data="{field:'operatorTime', width:150}">操作时间</th>
+
     </tr>
     </thead>
 </table>
@@ -191,18 +197,14 @@
         });
         //监听头工具栏事件
         table.on('toolbar(demoCivilFilter)', function(obj){
-           /* var checkStatus = table.checkStatus(obj.config.id)
+            var checkStatus = table.checkStatus(obj.config.id)
                 ,data = checkStatus.data//获取选中的数据
-                ,deList=[1],telNum=[1],proOrderNum=[1],status=[];
+                ,deList=[1];
             data.forEach(function (n,i) {
                 deList.push(n.id);
-                telNum.push(n.telNum);
-                proOrderNum.push(n.productNum);
-                status.push(n.status)
+
             });
-            telNum.push(2);
             deList.push(2);
-            proOrderNum.push(2);*/
             switch(obj.event){
                 case 'add':
                   /*  layer.open({
@@ -280,7 +282,80 @@
                         content: '/product/civilProductCopy',
                         end:function(){
                             table.reload('CivilId');
+                            $.ajax({
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/product/closeCivilProductCopy" ,
+                                success: function (result) {
+                                    if (result.success >0) {
+                                        layer.msg('此次生产已结束，欢迎再次生产', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }else{
+                                    }
+                                }
+                            })
                         }
+                    });
+                    break;
+                case 'recovery':
+                    layer.confirm('确定恢复？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                        layer.open({
+                            type:1,
+                            title:'恢复生产',
+                            btnAlign: 'c',
+                            area: ['250px', '250px'],
+                            content: $("#recoveryProduct"),
+                            btn:['保存','取消'],
+                            yes:function(index,layero){
+                                var recoveryInput =top.$('#recoveryInput').val();
+                                console.log(recoveryInput);
+                                if (recoveryInput=="") {
+                                    layer.msg('请输入生产单号！', {
+                                        btnAlign: 'c',
+                                        time: 3000, //20s后自动关闭
+                                        btn: ['确定']
+                                    });
+                                }else{
+                                    $.ajax({
+                                        //几个参数需要注意一下
+                                        type: "POST",//方法类型
+                                        dataType: "json",//预期服务器返回的数据类型
+                                        url: "/product/recovery" ,//url
+                                        data: {recoveryInput:recoveryInput},
+                                        success: function (result) {
+                                            console.log(result);//打印服务端返回的数据(调试用)
+                                            if (result.success >0) {
+                                                layer.msg('操作成功', {
+                                                    btnAlign: 'c',
+                                                    time: 3000, //20s后自动关闭
+                                                    btn: ['确定']
+                                                });
+                                            }else{
+                                                /* alert("系统错误");*/
+                                                layer.msg('操作失败', {
+                                                    btnAlign: 'c',
+                                                    time: 3000, //20s后自动关闭
+                                                    btn: ['确定']
+                                                });
+                                            }
+                                        },
+                                        error : function() {
+                                            alert("异常！");
+                                        }
+                                    });
+
+                                    layer.close(index);
+                                }
+
+                            },
+                            btn2:function (index) {
+                                layer.close(index);
+                            }
+                        })
+                        layer.close(index);
                     });
                     break;
                 /*case 'check':

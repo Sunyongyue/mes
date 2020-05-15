@@ -15,7 +15,7 @@
     </select>
    <update id="updatePurchaser">
        update syspurchaser set `local` =#{local} ,purchaserNums=#{purchaserNums},purchaserName=#{purchaserName},gasGroup=#{gasGroup},contacts=#{contacts},tel=#{tel},
-       ipAddress=#{ipAddress},ipPort=#{ipPort},email=#{email},localMore=#{localMore},remarks=#{remarks},operator=#{operator},operatorTime=SYSDATE() where id =#{id}
+       ipAddress=#{ipAddress},ipPort=#{ipPort},email=#{email},localMore=#{localMore},remarks=#{remarks},operator=#{operator},operatorTime=SYSDATE(),mark=1 where id =#{id}
    </update>
     <insert id="addPurchaser">
         insert into syspurchaser (`local`,purchaserNums,purchaserName,gasGroup,contacts,tel,ipAddress,ipPort,email,localMore,remarks,operator,operatorTime) values

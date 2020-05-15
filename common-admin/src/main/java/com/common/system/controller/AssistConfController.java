@@ -22,7 +22,7 @@ public class AssistConfController {
 
         if (valveName.contains("角阀")&&!valveName.contains("丝杠")){
             valveName="角阀";
-        }else if(valveName.contains("丝杠")){
+        }else if(valveName.contains("角阀（丝杠）")){
             valveName="角阀（丝杠）";
         } else if (valveName.contains("慢关")){
            valveName=valveName.replaceAll("慢关", "");

@@ -36,14 +36,14 @@
       #{goodsName},#{specifications},#{intakeDirection},'成品库',#{nums},#{operator},SYSDATE(),#{remarks},#{pressure},#{valveSupplier},#{valveName},#{valveSpecifications},#{controlMainboardSupplier},#{controlMainboardName},#{controlMainboardSpecifications},#{version},#{telMainBoardSupplier},#{telMainBoardName},#{telMainBoardSpecifications},#{telType},#{fourSupplier},#{fourMainBoardName},#{fourSpecifications},#{telProtocol})
     </insert>
    <update id="deleteGoodsStock">
-        update over_goods_stock set nums=(nums-#{nums}),operator=#{operator},operatorTime=SYSDATE() where  goodsName=#{goodsName} and specifications=#{specifications} and  intakeDirection=#{intakeDirection} and pressure=#{pressure}
+        update over_goods_stock set nums=(nums-#{nums}),operator=#{operator},operatorTime=SYSDATE(),mark=1 where  goodsName=#{goodsName} and specifications=#{specifications} and  intakeDirection=#{intakeDirection} and pressure=#{pressure}
          and valveSupplier=#{valveSupplier} and valveName=#{valveName} and valveSpecifications=#{valveSpecifications} and controlMainboardSupplier=#{controlMainboardSupplier}
          and controlMainboardName=#{controlMainboardName} and controlMainboardSpecifications=#{controlMainboardSpecifications} and version=#{version} and telMainBoardSupplier=#{telMainBoardSupplier}
          and telMainBoardName=#{telMainBoardName} and telMainBoardSpecifications=#{telMainBoardSpecifications} and telType=#{telType} and fourSupplier=#{fourSupplier}
          and fourMainBoardName=#{fourMainBoardName} and fourSpecifications=#{fourSpecifications} and telProtocol=#{telProtocol}  and nums>=#{nums}
    </update>
     <update id="updateGoodsStock">
-        update over_goods_stock set nums=(nums+#{nums}),operator=#{operator},operatorTime=SYSDATE() where  goodsName=#{goodsName} and specifications=#{specifications} and  intakeDirection=#{intakeDirection} and pressure=#{pressure}
+        update over_goods_stock set nums=(nums+#{nums}),operator=#{operator},operatorTime=SYSDATE(),mark=1  where  goodsName=#{goodsName} and specifications=#{specifications} and  intakeDirection=#{intakeDirection} and pressure=#{pressure}
          and valveSupplier=#{valveSupplier} and valveName=#{valveName} and valveSpecifications=#{valveSpecifications} and controlMainboardSupplier=#{controlMainboardSupplier}
          and controlMainboardName=#{controlMainboardName} and controlMainboardSpecifications=#{controlMainboardSpecifications} and version=#{version} and telMainBoardSupplier=#{telMainBoardSupplier}
          and telMainBoardName=#{telMainBoardName} and telMainBoardSpecifications=#{telMainBoardSpecifications} and telType=#{telType} and fourSupplier=#{fourSupplier}
