@@ -4,6 +4,9 @@
     <select id="queryAllMainTel" resultType="com.common.system.entity.MainTel">
         select * from maintel  ORDER BY id desc
     </select>
+    <select id="findByTel" resultType="com.common.system.entity.MainTel">
+        select * from maintel  where main_DeviceAddr=#{main_DeviceAddr}
+    </select>
    <insert id="addMainTel">
        INSERT INTO `maintel`( `main_DeviceAddr`, `main_Iphone`, `main_StartDate`, `main_EndDate`, `main_CreateTime`, `falg`, `main_Guid`, `main_PrintNum`, `main_ImeiNum`,`operatorTime`) VALUES
        <foreach collection="list" item="item" separator=",">

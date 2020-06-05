@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.ReturnOrderMapper">
+
+    <select id="allView" resultType="com.common.system.entity.ReturnOrder">
+    SELECT * from return_order a,sale_order b where a.returnNum=b.saleNum order by OperaTime desc
+   </select>
+    <insert id="add">
+        INSERT INTO `return_order`(`returnNum`, `reason`,  `returnSel`, `remark`,  `opera`,`OperaTime`,`productNum`,statu,sort) VALUES
+       (#{returnNum},#{reason},#{returnSel},#{remark},#{opera},SYSDATE(),'','正常',0)
+    </insert>
+    <update id="delete">
+        update return_order set `statu`='已删除' where ids in
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+    <select id="findSome" resultType="com.common.system.entity.ReturnOrder">
+    SELECT * from return_order a,sale_order b
+    <where>
+        <if test="1!=0"> a.returnNum=b.saleNum </if>
+        <if test="saleNum!=''">and a.returnNum=#{saleNum} </if>
+        <if test="opera!=''"> and a.opera=#{opera}</if>
+        <if test="startDate!=''">and a.operaTime>#{startDate}</if>
+        <if test="endDate!=''">and #{endDate}>a.operaTime</if>
+    </where>
+    order by OperaTime desc
+   </select>
+</mapper>

@@ -17,6 +17,30 @@
             #{item}
         </foreach>
     </delete>-->
+    <insert id="insert" parameterType="com.common.system.entity.ChinaGasHistoryLog">
+        INSERT INTO `gas_history_log`(`id`, `meter_id`, `report_type`, `length`, `sn`, `device_addr`, `device_type`,
+         `corporation_code`, `user_addr`, `remainded_gas`, `accumulative_gas`, `sum_gas`, `pay_num`, `preinstall_modify_num`,
+         `current_modify_num`, `current_unit_price`, `current_gas`, `accumulative_use_gas`, `main_circuit`, `auxiliary_circuit`,
+         `valve_status`, `switch_status`, `pulse_status`, `overcurrent_status`, `leakage_status`, `low_pressure`, `breakage_status`,
+         `data_storage`, `open_valve`, `close_valve`, `backout_meter`, `micro_leakage`, `lost_contact`, `nouse_gas`, `one_day_gas`,
+         `two_day_gas`, `three_day_gas`, `four_day_gas`, `five_day_gas`, `six_day_gas`, `one_month_gas`, `two_month_gas`,
+         `settlement_date_gas`, `main_circuit_voltage`, `auxiliary_circuit_voltage`, `version`, `signal_intensity`, `effective_date`,
+         `cur_step1_vol`, `cur_step2_vol`, `cur_step3_vol`, `cur_step4_vol`, `cur_step5_vol`, `cur_step6_vol`, `upload_date`,
+         `creat_date`, `fw_num`, `fw_totalGas_standard`, `fw_totalGas_work`, `fw_instantTotalGas_standard`, `fw_instantTotalGas_work`,
+          `fw_temperature`, `fw_pre`, `fw_k`, `fw_flaseTotalGas_standard`, `fw_flaseTotalGas_work`, `fw_vol`, `fw_windFeed`, `fw_preLowTest`,
+          `fw_preTopTest`, `fw_temperatureLowTest`, `fw_temperatureTopTest`, `fw_temSensor`, `fw_preSensor`, `fw_magneticInterference`,
+           `fef_overVol`, `fef_tel`, `mark`) VALUES (#{id},#{deviceAddr}, #{upReportType}, #{pktLen}, #{pktSer}, #{deviceAddr}, #{deviceType},
+            '0', #{userId}, #{moneyRes},#{moneyUsed},#{moneyTotal}, #{chargeNum},#{preSetPriceNum}, #{curSetPriceNum}, #{curPrice}, #{curVol}, #{totalGas},
+            #{status.mainPower}, #{status.standbyPower},#{status.valveStatus}, #{status.stealingGasCheck}, #{status.singlePulse}, #{status.overCurrent},
+            #{status.leakageCheck},#{status.lowPressureCheck}, #{status.breakageCheck},#{status.dataStorage},#{status.forcedOpenValve}, #{status.forcedClosureValve},
+            #{status.backoutMeterCheck}, #{status.microLeakCheck}, #{status.lostContactCheck}, #{status.noUseGasCheck}, #{day1Used},#{day2Used},#{day3Used},#{day4Used},
+            #{day5Used}, #{day6Used},#{mon1Used}, #{mon2Used},#{payDateUsed}, #{mainVotage}, #{bakVotage},#{progVer},#{singalPower}, #{effectiveDate},
+            #{step1UsedGas}, #{step2UsedGas}, #{step3UsedGas}, #{step4UsedGas}, #{step5UsedGas}, #{step6UsedGas}, #{replyTime}, #{replyTime},
+             #{flowMeterNum},#{flowMeterLJBK},#{flowMeterLJGK},#{flowMeterSSBK}, #{flowMeterSSGK}, #{flowMeterTemp}, #{flowMeterNP}, #{flowMeterK},
+             #{flowMeterELJBK}, #{flowMeterELJGK}, #{flowMeterVotage}, #{flowMeterSpeed},#{flowMeterStatus.pressLowCheck}, #{flowMeterStatus.pressHighCheck},
+             #{flowMeterStatus.tempLowCheck}, #{flowMeterStatus.tempHighCheck}, #{flowMeterStatus.tempSensorCheck}, #{flowMeterStatus.pressSensorCheck},
+             #{flowMeterStatus.magenetCheck},#{status.externalPowerCheck}, #{status.comCheck}, 0);
+    </insert>
     <select id="serchByTelNum" resultType="com.common.system.entity.gasHistoryLog">
         select  * from gas_history_log
         <where>

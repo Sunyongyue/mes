@@ -445,7 +445,8 @@ public class ProductionController {
     }
     @RequestMapping("/overGoodsCheck")
     @ResponseBody
-    public String overGoodsCheck(int id,String productNum,@SessionAttribute ShiroUser user){
+    public String overGoodsCheck(int id,String productNum,String checkPerson,@SessionAttribute ShiroUser user){
+        int i2 = overGoodsOutStockService.outStockPeople(id,checkPerson);
         JSONObject object = new JSONObject();
         List<ProductOrder> productOrders = productOrderService.queryByProductNum(productNum);
         PubProduct pubProduct=pubProductService.queryOneByproductNum(productNum);
@@ -472,7 +473,7 @@ public class ProductionController {
             Date now = new Date();
             Date afterDate = new Date(now .getTime() + 300000);
             String format = sdf.format(afterDate);
-            int i2 = overGoodsOutStockService.outStockPeople(id,user.getUsername());
+
             int i = configMesService.addConfigMes(productNum, "天和", "/", "58.58.58.234", 6003, "", "", "", "检测写配置", 1+i1, productOrders.get(0).getGoodsName(), 0, distributNumbers.get(0).getTelNum(), "0", format, 1440, "单一",productOrders.get(0).getCharMethod() , vavleType,  productOrders.get(0).getAlarmSquare(), 0,  productOrders.get(0).getReservedAir(),  productOrders.get(0).getUpperLimitOfRecharge(),  aDouble, "清除剩余累计", 25, "年", productOrders.get(0).getOverdrawAir(),  productOrders.get(0).getValveOpenTime(),  productOrders.get(0).getValveCloseTime(),  productOrders.get(0).getSignalSource(), 0, 0, 0, 0,1,0,0,0,teltro,"1");
             object.put("success",i);
             object.put("cc",1);
@@ -515,7 +516,7 @@ public class ProductionController {
                 if (!productOrders.get(0).getTelProtocol().isEmpty()){
                     teltro=productOrders.get(0).getTelProtocol();
                 }
-                int i = configMesService.addConfigMes(productNum, "天和", "/", sysPurchaser.getIpAddress(), Integer.parseInt(sysPurchaser.getIpPort()), "", "", "", "发货写配置", 1+i1, productOrders.get(0).getGoodsName(), 0, distributNumbers.get(0).getTelNum(), "0", "00:"+y+":"+y, 1440, "单一",productOrders.get(0).getCharMethod() , vavleType,  productOrders.get(0).getAlarmSquare(), 0,  productOrders.get(0).getReservedAir(),  productOrders.get(0).getUpperLimitOfRecharge(),  aDouble, "清除剩余累计", 25, "年", productOrders.get(0).getOverdrawAir(),  productOrders.get(0).getValveOpenTime(),  productOrders.get(0).getValveCloseTime(),  productOrders.get(0).getSignalSource(), 0, 0, 0, 0,1,0,0,0,teltro,"1");
+                int i = configMesService.addConfigMes(productNum, "天和", "/", sysPurchaser.getIpAddress(), Integer.parseInt(sysPurchaser.getIpPort()), "", "", "", "发货写配置", 1+i1, productOrders.get(0).getGoodsName(), 0, distributNumbers.get(0).getTelNum(), "0", "00:"+(random.nextInt(46)+13)+":"+(random.nextInt(46)+13), 1440, "单一",productOrders.get(0).getCharMethod() , vavleType,  productOrders.get(0).getAlarmSquare(), 0,  productOrders.get(0).getReservedAir(),  productOrders.get(0).getUpperLimitOfRecharge(),  aDouble, "清除剩余累计", 25, "年", productOrders.get(0).getOverdrawAir(),  productOrders.get(0).getValveOpenTime(),  productOrders.get(0).getValveCloseTime(),  productOrders.get(0).getSignalSource(), 0, 0, 0, 0,1,0,0,0,teltro,"1");
                 object.put("success",i);
                 object.put("cc",1);
             }else {

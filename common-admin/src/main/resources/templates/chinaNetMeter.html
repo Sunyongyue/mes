@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<META HTTP-EQUIV="expires" CONTENT="0">
+<head>
+    <link rel="stylesheet" th:href="@{/adminlte/layui/css/layui.css}"  media="all"/>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<div class="chinaNetMeter">
+    <div class="layui-inline" style="margin-left: 0px"> 生产单号：</div>
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="chinaNetProductNumSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入生产单号"/>
+    </div>
+    <div class="layui-inline" style="margin-left: 0px"> 销售单号：</div>
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="chinaNetSaleNumSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入销售单号"/>
+    </div>
+    <div class="layui-inline" style="margin-left: 0px"> 表具状态：</div>
+    <div class="layui-inline" style="width: 220px">
+<!--        <input class="layui-input"  id="" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入表具状态"/>-->
+        <select id="chinaNetStatus" style="width: 200px;height: 25px;margin-top: 8px">
+            <option value="">请选择表具状态</option>
+            <option value="正常">正常</option>
+            <option value="注销">注销</option>
+           </select>
+    </div>
+    通讯编号:
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="chinaNetTelSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请输入通讯编号"/>
+    </div>
+    <button class="layui-btn layui-btn-sm" data-type="reload">查询</button><br/>
+    起始日期：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="chinaNetstartDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择起始日期"/>
+    </div>
+    截止日期：
+    <div class="layui-inline" style="width: 220px">
+        <input class="layui-input"  id="chinaNetendDateSearch" autocomplete="off" style="width: 200px;height: 25px" placeholder="请选择截止日期"/>
+    </div>
+
+</div>
+<div id="add-chinaNet" style="display: none;">
+    <div class="my-form">
+        <div class="layui-form-item my-form-item" style="margin-top: 10px">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 170px"><p style="color: red;display: inline">※</p>生产单号</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="chinaNetProductNum" name="chinaNetProductNum" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入生产单号" onkeyup="value=value.replace(/[^\d]/g,'')"  >
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 170px"><p style="color: red;display: inline">※</p>销售单号</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="chinaNetSaleNum" name="chinaNetSaleNum" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入生产单号" onkeyup="value=value.replace(/[^\d]/g,'')"  >
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item my-form-item" style="margin-top: 10px">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 170px"><p style="color: red;display: inline">※</p>通讯编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="chinaNetTel" name="chinaNetTel" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入通讯编号" onkeyup="value=value.replace(/[^\d]/g,'')"  >
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 170px">备注</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="chinaNetRemarks"  lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入备注">
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<script type="text/html" id="chinaNetToolbar">
+    <div class="layui-btn-container" >
+        <button class="layui-btn layui-btn-sm" lay-event="add"  >装配</button>
+        <button class="layui-btn layui-btn-sm" lay-event="clear"  >清表写配置</button>
+        <button class="layui-btn layui-btn-sm" lay-event="check"  >生产写配置</button>
+        <button class="layui-btn layui-btn-sm" lay-event="outGoodsC"  >出厂写配置</button>
+<!--        <button class="layui-btn layui-btn-sm" lay-event="clearEx"  >清除异常</button>-->
+        <button class="layui-btn layui-btn-sm" lay-event="delete"  >删除</button>
+    </div>
+</script>
+<table class="layui-table" lay-data="{url:'/chinnet/meterNetDate', page:true,limits:[10,20,30,40,50,60,70,80,90,600],limit:10 ,id:'ChinaNetId',title:'电信生产',toolbar:'#chinaNetToolbar',defaultToolbar:['filter', 'print','exports'] }" lay-filter="chinaNetFilter">
+    <thead>
+ <!--   <tr>
+        <th lay-data="{align:'center'}" colspan="8">生产订单信息</th>
+        <th lay-data="{align:'center'}" colspan="6">阀门信息</th>
+        <th lay-data="{align:'center'}" colspan="5">控制主板信息</th>
+        <th lay-data="{align:'center'}" colspan="12">通讯主板信息</th>
+        <th lay-data="{align:'center'}" colspan="6">485主板信息</th>
+        <th lay-data="{align:'center'}" colspan="5">工艺</th>
+    </tr>-->
+    <tr>
+        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+        <th lay-data="{field:'telNum', width:150}" >设备地址</th>
+        <th lay-data="{field:'imei', width:180}" >IMEI</th>
+        <th lay-data="{field:'meterStatus', width:180}" >表具状态</th>
+        <th lay-data="{field:'productOrderNum', width:180}" >生产单号</th>
+        <th lay-data="{field:'saleOrderNum', width:150}">销售单号</th>
+        <th lay-data="{field:'operator', width:150}">操作员</th>
+        <th lay-data="{field:'creatTime', width:180}" >操作时间</th>
+        <th lay-data="{field:'remarks', width:180}" >备注</th>
+    </tr>
+    </thead>
+</table>
+
+<script th:src="@{/adminlte/layui/layui.all.js}" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        //监听表格复选框选择
+        table.on('checkbox(chinaNetFilter)', function(obj){
+            console.log(obj)
+        });
+        //监听工具条
+        table.on('tool(chinaNetFilter)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'detail'){
+                layer.msg('ID：'+ data.id + ' 的查看操作');
+            } else if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                /*layer.alert('编辑行：<br/>'+ JSON.stringify(data))*/
+
+            }
+        });
+        //监听头工具栏事件
+        table.on('toolbar(chinaNetFilter)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id)
+                ,data = checkStatus.data//获取选中的数据
+                ,deList=["1"],status=[];
+            data.forEach(function (n,i) {
+                deList.push(n.id);
+                status.push(n.meterStatus);
+            });
+            deList.push("2");
+            switch(obj.event){
+                case 'add':
+                    layer.open({
+                        type:1,
+                        title:'装配',
+                        btnAlign: 'c',
+                        area: ['900px', '240px'],
+                        btn:['保存','取消'],
+                        content: $("#add-chinaNet"),
+                        success:function(){
+                            top.$("#chinaNetProductNum").val("");
+                            top.$("#chinaNetSaleNum").val("");
+                            top.$("#chinaNetTel").val("");
+                            top.$("#chinaNetRemarks").val("");
+                        },
+                        yes:function(index,layero){
+                            var productOrderNum =top.$("#chinaNetProductNum").val();
+                            var saleOrderNum =top.$("#chinaNetSaleNum").val();
+                            var telNum =top.$("#chinaNetTel").val();
+                            var remarks =top.$("#chinaNetRemarks").val();
+                           if(productOrderNum==""||saleOrderNum==""||telNum==""){
+                                /*   alert("您还有必填项未填哦！")*/
+                                layer.msg('您还有必填项未填哦！', {
+                                    btnAlign: 'c',
+                                    time: 3000, //20s后自动关闭
+                                    btn: ['确定']
+                                });
+                            }else {
+                                $.ajax({
+                                    //几个参数需要注意一下
+                                    type: "POST",//方法类型
+                                    dataType: "json",//预期服务器返回的数据类型
+                                    url: "/chinnet/meterNetAdd" ,//url
+                                    data: {productOrderNum:productOrderNum,saleOrderNum:saleOrderNum,telNum:telNum,remarks:remarks},
+                                    success: function (result) {
+                                        console.log(result);//打印服务端返回的数据(调试用)
+                                        if (result.success >0) {
+                                            layer.msg(result.message, {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                            table.reload('ChinaNetId');
+                                        }else{
+                                            layer.msg(result.message, {
+                                                btnAlign: 'c',
+                                                time: 3000, //20s后自动关闭
+                                                btn: ['确定']
+                                            });
+                                        }
+                                    },
+                                    error : function() {
+                                        alert("异常！");
+                                    }
+                                });
+
+                                layer.close(index);
+                            }
+
+                        },
+                        btn2:function (index) {
+                            layer.close(index);
+                        },
+                        end:function(){
+                            table.reload('ChinaNetId');
+                        }
+                    });
+
+                    break;
+                case 'check':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时测试一个');
+                    } else if (status.indexOf("注销")>-1){
+                        layer.msg('包含已注销的设备，请重新选择！');
+                    }else {
+                        layer.confirm('确定生产写配置？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/chinnet/check" ,//url
+                                data: {id:data[0].id},
+                                success: function (result) {
+                                    if (result.success>1) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('CivilId')
+                                    }else{
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+                case 'clear':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时操作一个');
+                    } else if (status.indexOf("注销")>-1){
+                        layer.msg('包含已注销的设备，请重新选择！');
+                    }else {
+                        layer.confirm('确定清表？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/chinnet/clear" ,//url
+                                data: {id:data[0].id},
+                                success: function (result) {
+                                    if (result.success>1) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('CivilId')
+                                    }else{
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+                case 'clearEx':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时操作一个');
+                    } else if (status.indexOf("注销")>-1){
+                        layer.msg('包含已注销的设备，请重新选择！');
+                    }else {
+                        layer.confirm('确定清异常？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/chinnet/clearEx" ,//url
+                                data: {id:data[0].id},
+                                success: function (result) {
+                                    if (result.success>1) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('CivilId')
+                                    }else{
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+                case 'outGoodsC':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时出厂一个');
+                    } else if (status.indexOf("注销")>-1){
+                        layer.msg('包含已注销的设备，请重新选择！');
+                    }else {
+                        layer.confirm('确定发货？',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            console.log(data[0].id+"------------------------")
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/chinnet/outGoodsC" ,//url
+                                data: {id:data[0].id},
+                                success: function (result) {
+                                    if (result.success>1) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('CivilId')
+                                    }
+                                    else{
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+                case 'delete':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else {
+                        layer.confirm('确定删除',{btn: ['确定', '取消'], title: "提示"},function(index){
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",//方法类型
+                                dataType: "json",//预期服务器返回的数据类型
+                                url: "/chinnet/del" ,//url
+                                data: {deList:deList.toString()},
+                                success: function (result) {
+                                    if (result.success>0) {
+                                        layer.msg('操作成功', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                        table.reload('ChinaNetId')
+                                    }else{
+                                        layer.msg('操作失败', {
+                                            btnAlign: 'c',
+                                            time: 3000, //20s后自动关闭
+                                            btn: ['确定']
+                                        });
+                                    }
+                                },
+                                error : function() {
+                                    alert("异常！");
+                                }
+                            });
+                            layer.close(index);
+                        });
+                    }
+                    break;
+            }
+        });
+        var $ = layui.$, active = {
+            reload:function () {
+                var productOrderNum = $("#chinaNetProductNumSearch").val();
+                var saleOrderNum = $("#chinaNetSaleNumSearch").val();
+                var meterStatus = $("#chinaNetStatus").val();
+                var telNum = $("#chinaNetTelSearch").val();
+                var startDate = $("#chinaNetstartDateSearch").val();
+                var endDate = $("#chinaNetendDateSearch").val();
+               table.reload('ChinaNetId',{
+                    url:'/chinnet/meterNetFind',
+                    where:{productOrderNum:productOrderNum,saleOrderNum:saleOrderNum,meterStatus:meterStatus,telNum:telNum,startDate:startDate,endDate:endDate}  ,
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                })
+
+            }
+        };
+
+        $('.chinaNetMeter .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#chinaNetstartDateSearch' //指定元素
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#chinaNetendDateSearch' //指定元素
+            ,type: 'datetime'
+        });
+    });
+    var unSelected = "#999";
+    var selected = "#333";
+    $(function () {
+        $("select").css("color", unSelected);
+        $("option").css("color", selected);
+        $("select").change(function () {
+            var selItem = $(this).val();
+            if (selItem == $(this).find('option:first').val()) {
+                $(this).css("color", unSelected);
+            } else {
+                $(this).css("color", selected);
+            }
+        });
+    })
+</script>
+
+</body>
+</html>

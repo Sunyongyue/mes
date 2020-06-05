@@ -33,4 +33,10 @@
             ]]></if>
         </where>
     </select>
+    <select id="queryForIot" resultType="com.common.system.entity.ConfigMes">
+          select  * from config_mes,statuscode where  confDeviceAddr= #{confDeviceAddr}
+    </select>
+    <update id="updateConfigMesStatus">
+        update config_mes set  `status`=#{status} where confDeviceAddr= #{confDeviceAddr} and ConfPktSer=#{pktSer}
+    </update>
 </mapper>

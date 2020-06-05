@@ -3,6 +3,7 @@ package com.common.system.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.common.system.entity.ChinaGasHistoryLog;
 import com.common.system.mapper.gasHistoryLogMapper;
 import com.common.system.service.GasHistoryLogService;
 import com.github.pagehelper.Page;
@@ -45,5 +46,11 @@ public class gasHistoryLogServiceImpl implements GasHistoryLogService {
         object.put("count",size);
         object.put("data",array);
         return object;
+    }
+
+    @Override
+    public int insert(ChinaGasHistoryLog gasHistoryLog) {
+
+        return logMapper.insert(gasHistoryLog);
     }
 }

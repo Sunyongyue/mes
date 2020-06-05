@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.system.mapper.ChinaNetMeterMapper">
+
+<!--    <select id="queryAllChinaNetMeter" resultType="com.common.system.entity.ChainNetMeter">-->
+<!--     select * from chain_meter-->
+<!--    </select>-->
+    <insert id="addChinaNetMeter" parameterType="com.common.system.entity.ChainNetMeter">
+        INSERT INTO `chain_meter`(`id`, `productOrderNum`, `saleOrderNum`, `telNum`, `creatTime`, `meterStatus`, `instructStatus`, `remarks`, `operator`)
+         VALUES (#{id}, #{productOrderNum}, #{saleOrderNum}, #{telNum}, sysdate(), #{meterStatus}, #{instructStatus}, #{remarks}, #{operator});
+    </insert>
+        <update id="deleteChinaNetMeter" >
+            update chain_meter set `meterStatus`='注销' where id in
+            <foreach collection="array" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </update>
+    <select id="queryOne" resultType="com.common.system.entity.ChainNetMeter">
+        select * from chain_meter where id=#{id}
+    </select>
+    <select id="queryAllChinaNetMeter" resultType="com.common.system.entity.ChainNetMeter">
+        select *,main_ImeiNum AS imei from chain_meter a ,maintel b
+        <where>
+            <if test="1 !=0">a.telNum = b.main_DeviceAddr</if>
+            <if test="productOrderNum !=''">and `productOrderNum` = #{productOrderNum}</if>
+            <if test="saleOrderNum !=''">and saleOrderNum = #{saleOrderNum} </if>
+            <if test="startDate !=''">and creatTime > #{startDate}</if>
+            <if test="telNum !=''">and telNum = #{telNum}</if>
+            <if test="imei !=''">and imei = #{imei}</if>
+            <if test="meterStatus !=''">and meterStatus = #{meterStatus}</if>
+            <if test="operator !=''">and operator = #{operator}</if>
+            <if test="instructStatus !=''">and instructStatus = #{instructStatus}</if>
+            <if test="endDate !=''"> <![CDATA[
+            and creatTime<#{endDate}
+            ]]></if>
+        </where>
+        ORDER BY creatTime desc
+    </select>
+</mapper>
